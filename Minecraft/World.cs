@@ -476,6 +476,126 @@ namespace Minecraft
             return Color.FromArgb(255, Color.FromArgb(ret));
         }
 
+        public void Fill(RegionFile region, Bitmap selection, Color selectionColor, Biome biome)
+        {
+            foreach (Chunk c in region.Chunks)
+            {
+                if (c.Root == null)
+                    continue;
+                Coord chunkOffset = new Coord(region.Coords);
+                chunkOffset.RegiontoChunk();
+                chunkOffset = new Coord(c.Coords.x - chunkOffset.x, c.Coords.z - chunkOffset.z);
+                chunkOffset.ChunktoAbsolute();
+
+                byte[] biomes = ((TAG_Byte_Array)c.Root[""]["Level"]["Biomes"]).Payload;
+
+                for (int z = 0; z < 16; z++)
+                {
+                    for (int x = 0; x < 16; x++)
+                    {
+                        if (selection.GetPixel(chunkOffset.x + x, chunkOffset.z + z).ToArgb() == selectionColor.ToArgb())
+                        {
+                            biomes[x + z * 16] = (byte)biome;
+                            c.Dirty = true;
+                            region.Dirty = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        public void Fill(RegionFile region, Bitmap selection, Color selectionColor, BiomeUtil util)
+        {
+            foreach (Chunk c in region.Chunks)
+            {
+                if (c.Root == null)
+                    continue;
+                Coord chunkOffset = new Coord(region.Coords);
+                chunkOffset.RegiontoChunk();
+                chunkOffset = new Coord(c.Coords.x - chunkOffset.x, c.Coords.z - chunkOffset.z);
+                chunkOffset.ChunktoAbsolute();
+
+                Coord chunkAbs = new Coord(c.Coords);
+                chunkAbs.ChunktoAbsolute();
+
+                byte[] biomes = ((TAG_Byte_Array)c.Root[""]["Level"]["Biomes"]).Payload;
+
+                for (int z = 0; z < 16; z++)
+                {
+                    for (int x = 0; x < 16; x++)
+                    {
+                        if (selection.GetPixel(chunkOffset.x + x, chunkOffset.z + z).ToArgb() == selectionColor.ToArgb())
+                        {
+                            biomes[x + z * 16] = (byte)util.GetBiome(chunkAbs.x + x, chunkAbs.z + z);
+                            c.Dirty = true;
+                            region.Dirty = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        public void Replace(RegionFile region, Bitmap selection, Color selectionColor, Biome search, Biome replace)
+        {
+            foreach (Chunk c in region.Chunks)
+            {
+                if (c.Root == null)
+                    continue;
+                Coord chunkOffset = new Coord(region.Coords);
+                chunkOffset.RegiontoChunk();
+                chunkOffset = new Coord(c.Coords.x - chunkOffset.x, c.Coords.z - chunkOffset.z);
+                chunkOffset.ChunktoAbsolute();
+
+                byte[] biomes = ((TAG_Byte_Array)c.Root[""]["Level"]["Biomes"]).Payload;
+
+                for (int z = 0; z < 16; z++)
+                {
+                    for (int x = 0; x < 16; x++)
+                    {
+                        if (selection.GetPixel(chunkOffset.x + x, chunkOffset.z + z).ToArgb() == selectionColor.ToArgb())
+                            if (biomes[x + z * 16] == (byte)search)
+                            {
+                                biomes[x + z * 16] = (byte)replace;
+                                c.Dirty = true;
+                                region.Dirty = true;
+                            }
+                    }
+                }
+            }
+        }
+
+        public void Replace(RegionFile region, Bitmap selection, Color selectionColor, Biome search, BiomeUtil replace)
+        {
+            foreach (Chunk c in region.Chunks)
+            {
+                if (c.Root == null)
+                    continue;
+                Coord chunkOffset = new Coord(region.Coords);
+                chunkOffset.RegiontoChunk();
+                chunkOffset = new Coord(c.Coords.x - chunkOffset.x, c.Coords.z - chunkOffset.z);
+                chunkOffset.ChunktoAbsolute();
+
+                Coord chunkAbs = new Coord(c.Coords);
+                chunkAbs.ChunktoAbsolute();
+
+                byte[] biomes = ((TAG_Byte_Array)c.Root[""]["Level"]["Biomes"]).Payload;
+
+                for (int z = 0; z < 16; z++)
+                {
+                    for (int x = 0; x < 16; x++)
+                    {
+                        if (selection.GetPixel(chunkOffset.x + x, chunkOffset.z + z).ToArgb() == selectionColor.ToArgb())
+                            if (biomes[x + z * 16] == (byte)search)
+                            {
+                                biomes[x + z * 16] = (byte)replace.GetBiome(chunkAbs.x + x, chunkAbs.z + z);
+                                c.Dirty = true;
+                                region.Dirty = true;
+                            }
+                    }
+                }
+            }
+        }
+
         public static void SelectChunks(Bitmap b, Color selectionColor)
         {
             using (Graphics g = Graphics.FromImage(b))

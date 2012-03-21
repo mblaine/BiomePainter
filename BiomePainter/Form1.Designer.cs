@@ -56,6 +56,15 @@
             this.lblMagnification = new System.Windows.Forms.Label();
             this.trackMagnification = new System.Windows.Forms.TrackBar();
             this.imgRegion = new BitmapSelector.BitmapSelector();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btnReplace = new System.Windows.Forms.Button();
+            this.cmbReplace2 = new System.Windows.Forms.ComboBox();
+            this.cmbReplace1 = new System.Windows.Forms.ComboBox();
+            this.btnFill = new System.Windows.Forms.Button();
+            this.cmbFill = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.saveCurrentRegionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -65,6 +74,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackPanVertical)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackPanHorizontal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackMagnification)).BeginInit();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -81,6 +91,8 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openWorldToolStripMenuItem,
+            this.closeWorldToolStripMenuItem,
+            this.saveCurrentRegionToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(44, 24);
@@ -89,14 +101,14 @@
             // openWorldToolStripMenuItem
             // 
             this.openWorldToolStripMenuItem.Name = "openWorldToolStripMenuItem";
-            this.openWorldToolStripMenuItem.Size = new System.Drawing.Size(156, 24);
+            this.openWorldToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
             this.openWorldToolStripMenuItem.Text = "Open world";
             this.openWorldToolStripMenuItem.Click += new System.EventHandler(this.openWorldToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(156, 24);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -106,7 +118,7 @@
             this.lstRegions.ItemHeight = 16;
             this.lstRegions.Location = new System.Drawing.Point(12, 31);
             this.lstRegions.Name = "lstRegions";
-            this.lstRegions.Size = new System.Drawing.Size(254, 532);
+            this.lstRegions.Size = new System.Drawing.Size(254, 596);
             this.lstRegions.TabIndex = 1;
             this.lstRegions.SelectedIndexChanged += new System.EventHandler(this.lstRegions_SelectedIndexChanged);
             // 
@@ -360,15 +372,100 @@
             // 
             // imgRegion
             // 
-            this.imgRegion.Location = new System.Drawing.Point(272, 31);
+            this.imgRegion.Location = new System.Drawing.Point(272, 44);
             this.imgRegion.Name = "imgRegion";
             this.imgRegion.Size = new System.Drawing.Size(512, 512);
             this.imgRegion.TabIndex = 2;
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.btnReplace);
+            this.groupBox5.Controls.Add(this.cmbReplace2);
+            this.groupBox5.Controls.Add(this.cmbReplace1);
+            this.groupBox5.Controls.Add(this.btnFill);
+            this.groupBox5.Controls.Add(this.cmbFill);
+            this.groupBox5.Controls.Add(this.label3);
+            this.groupBox5.Location = new System.Drawing.Point(272, 570);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(717, 61);
+            this.groupBox5.TabIndex = 17;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Edit Biomes in Selection";
+            // 
+            // btnReplace
+            // 
+            this.btnReplace.Location = new System.Drawing.Point(634, 20);
+            this.btnReplace.Name = "btnReplace";
+            this.btnReplace.Size = new System.Drawing.Size(75, 24);
+            this.btnReplace.TabIndex = 5;
+            this.btnReplace.Text = "Replace";
+            this.btnReplace.UseVisualStyleBackColor = true;
+            this.btnReplace.Click += new System.EventHandler(this.btnReplace_Click);
+            // 
+            // cmbReplace2
+            // 
+            this.cmbReplace2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbReplace2.FormattingEnabled = true;
+            this.cmbReplace2.Location = new System.Drawing.Point(455, 21);
+            this.cmbReplace2.Name = "cmbReplace2";
+            this.cmbReplace2.Size = new System.Drawing.Size(174, 24);
+            this.cmbReplace2.TabIndex = 4;
+            // 
+            // cmbReplace1
+            // 
+            this.cmbReplace1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbReplace1.FormattingEnabled = true;
+            this.cmbReplace1.Location = new System.Drawing.Point(275, 21);
+            this.cmbReplace1.Name = "cmbReplace1";
+            this.cmbReplace1.Size = new System.Drawing.Size(174, 24);
+            this.cmbReplace1.TabIndex = 3;
+            // 
+            // btnFill
+            // 
+            this.btnFill.Location = new System.Drawing.Point(186, 21);
+            this.btnFill.Name = "btnFill";
+            this.btnFill.Size = new System.Drawing.Size(75, 24);
+            this.btnFill.TabIndex = 2;
+            this.btnFill.Text = "Fill";
+            this.btnFill.UseVisualStyleBackColor = true;
+            this.btnFill.Click += new System.EventHandler(this.btnFill_Click);
+            // 
+            // cmbFill
+            // 
+            this.cmbFill.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFill.FormattingEnabled = true;
+            this.cmbFill.Location = new System.Drawing.Point(6, 21);
+            this.cmbFill.Name = "cmbFill";
+            this.cmbFill.Size = new System.Drawing.Size(174, 24);
+            this.cmbFill.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label3.Location = new System.Drawing.Point(267, 18);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(2, 35);
+            this.label3.TabIndex = 0;
+            // 
+            // saveCurrentRegionToolStripMenuItem
+            // 
+            this.saveCurrentRegionToolStripMenuItem.Name = "saveCurrentRegionToolStripMenuItem";
+            this.saveCurrentRegionToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.saveCurrentRegionToolStripMenuItem.Text = "Save current region";
+            this.saveCurrentRegionToolStripMenuItem.Click += new System.EventHandler(this.saveCurrentRegionToolStripMenuItem_Click);
+            // 
+            // closeWorldToolStripMenuItem
+            // 
+            this.closeWorldToolStripMenuItem.Name = "closeWorldToolStripMenuItem";
+            this.closeWorldToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.closeWorldToolStripMenuItem.Text = "Close world";
+            this.closeWorldToolStripMenuItem.Click += new System.EventHandler(this.closeWorldToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(996, 570);
+            this.ClientSize = new System.Drawing.Size(996, 640);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -382,6 +479,7 @@
             this.Name = "Form1";
             this.ShowIcon = false;
             this.Text = "Biome Painter";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -396,6 +494,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackPanVertical)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackPanHorizontal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackMagnification)).EndInit();
+            this.groupBox5.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -431,6 +530,15 @@
         private System.Windows.Forms.TrackBar trackPanVertical;
         private System.Windows.Forms.TrackBar trackPanHorizontal;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnReplace;
+        private System.Windows.Forms.ComboBox cmbReplace2;
+        private System.Windows.Forms.ComboBox cmbReplace1;
+        private System.Windows.Forms.Button btnFill;
+        private System.Windows.Forms.ComboBox cmbFill;
+        private System.Windows.Forms.ToolStripMenuItem saveCurrentRegionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeWorldToolStripMenuItem;
     }
 }
 

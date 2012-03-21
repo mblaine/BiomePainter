@@ -8,6 +8,8 @@ namespace Minecraft
         public TAG_Compound Root;
         public Coord Coords = new Coord();
         public Int32 Timestamp;
+        public bool Dirty = false;
+        public byte[] RawData = null;
 
         public override String ToString()
         {

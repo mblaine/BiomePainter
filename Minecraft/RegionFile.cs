@@ -11,6 +11,8 @@ namespace Minecraft
     {
         public List<Chunk> Chunks;
         public Coord Coords = new Coord();
+        public String Path;
+        public bool Dirty = false;
 
         public RegionFile()
         {
@@ -19,7 +21,8 @@ namespace Minecraft
 
         public RegionFile(String path)
         {
-            Read(path);
+            Path = path;
+            Read(Path);
         }
 
         //http://www.minecraftwiki.net/wiki/Region_file_format
@@ -79,10 +82,10 @@ namespace Minecraft
                         int compressionType = file.ReadByte();
                         if (compressionType == 1) //GZip
                         {
-                            byte[] data = new byte[exactLength - 1];
-                            file.Read(data, 0, exactLength - 1);
+                            c.RawData = new byte[exactLength - 1];
+                            file.Read(c.RawData, 0, exactLength - 1);
 
-                            GZipStream decompress = new GZipStream(new MemoryStream(data), CompressionMode.Decompress);
+                            GZipStream decompress = new GZipStream(new MemoryStream(c.RawData), CompressionMode.Decompress);
                             MemoryStream mem = new MemoryStream();
                             decompress.CopyTo(mem);
                             mem.Seek(0, SeekOrigin.Begin);
@@ -90,10 +93,10 @@ namespace Minecraft
                         }
                         else if (compressionType == 2) //Zlib
                         {
-                            byte[] data = new byte[exactLength - 1];
-                            file.Read(data, 0, exactLength - 1);
+                            c.RawData = new byte[exactLength - 1];
+                            file.Read(c.RawData, 0, exactLength - 1);
 
-                            ZlibStream decompress = new ZlibStream(new MemoryStream(data), CompressionMode.Decompress);
+                            ZlibStream decompress = new ZlibStream(new MemoryStream(c.RawData), CompressionMode.Decompress);
                             MemoryStream mem = new MemoryStream();
                             decompress.CopyTo(mem);
                             mem.Seek(0, SeekOrigin.Begin);
@@ -112,8 +115,15 @@ namespace Minecraft
             }
         }
 
+        public void Write()
+        {
+            Write(Path);
+        }
+
         public void Write(String path)
         {
+            if (!Dirty)
+                return;
             byte[] header = new byte[8192];
             Array.Clear(header, 0, 8192);
 
@@ -150,31 +160,38 @@ namespace Minecraft
                         Array.Reverse(temp);
                     Array.Copy(temp, 1, header, i, 3);
 
-                    MemoryStream mem = new MemoryStream();
-                    c.Root.Write(mem);
-                    temp = mem.ToArray();
-                    byte[] data = ZlibStream.CompressBuffer(temp);
+                    if (c.RawData == null || c.Dirty)
+                    {
+                        MemoryStream mem = new MemoryStream();
+                        c.Root.Write(mem);
+                        temp = mem.ToArray();
+                        //this is the performance bottleneck when doing 1024 chunks in a row;
+                        //trying to only do when necessary
+                        c.RawData = ZlibStream.CompressBuffer(temp);
+                    }
 
-                    temp = BitConverter.GetBytes(data.Length + 1);
+                    temp = BitConverter.GetBytes(c.RawData.Length + 1);
                     if (BitConverter.IsLittleEndian)
                         Array.Reverse(temp);
 
                     file.Write(temp, 0, 4);
                     file.Write((byte)2);//Zlib
-                    file.Write(data, 0, data.Length);
+                    file.Write(c.RawData, 0, c.RawData.Length);
 
-                    byte[] padding = new byte[(4096 - ((data.Length + 5) % 4096))];
+                    byte[] padding = new byte[(4096 - ((c.RawData.Length + 5) % 4096))];
                     Array.Clear(padding, 0, padding.Length);
                     file.Write(padding);
 
-                    header[i + 3] = (byte)((data.Length + 5) / 4096 + 1);
-                    sectorOffset += (data.Length + 5) / 4096 + 1;
+                    header[i + 3] = (byte)((c.RawData.Length + 5) / 4096 + 1);
+                    sectorOffset += (c.RawData.Length + 5) / 4096 + 1;
+                    c.Dirty = false;
                 }
 
                 file.Seek(0, SeekOrigin.Begin);
                 file.Write(header, 0, 8192);
                 file.Flush();
                 file.Close();
+                Dirty = false;
             }
 
         }
