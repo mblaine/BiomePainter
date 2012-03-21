@@ -37,6 +37,7 @@ namespace BiomePainter
             trackMagnification.Value = 1;
             trackPanHorizontal.Value = 0;
             trackPanVertical.Value = 0;
+            lblMagnification.Text = "Magnification: 1x";
             imgRegion.Reset();
 
             OpenFileDialog dialog = new OpenFileDialog();
@@ -140,19 +141,24 @@ namespace BiomePainter
 
         private void trackMagnification_Scroll(object sender, EventArgs e)
         {
-            imgRegion.Magnification = trackMagnification.Value;
+            imgRegion.Zoom(trackMagnification.Value, imgRegion.OffsetX, imgRegion.OffsetY);
             imgRegion.Redraw();
             lblMagnification.Text = String.Format("Magnification: {0}x", trackMagnification.Value);
-        }
-
-        private void trackPanVertical_Scroll(object sender, EventArgs e)
-        {
-
+            trackPanHorizontal.Value = imgRegion.OffsetX / imgRegion.OffsetStep;
+            trackPanVertical.Value = imgRegion.OffsetY / imgRegion.OffsetStep;
         }
 
         private void trackPanHorizontal_Scroll(object sender, EventArgs e)
         {
-
+            imgRegion.Zoom(imgRegion.Magnification, imgRegion.OffsetStep * trackPanHorizontal.Value, imgRegion.OffsetY);
+            imgRegion.Redraw();
+        }
+ 
+        private void trackPanVertical_Scroll(object sender, EventArgs e)
+        {
+            imgRegion.Zoom(imgRegion.Magnification, imgRegion.OffsetX, imgRegion.OffsetStep * trackPanVertical.Value);
+            imgRegion.Redraw();
         }
     }
+
 }

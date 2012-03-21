@@ -138,6 +138,7 @@ namespace BitmapSelector
 
         private void BitmapSelector_MouseDown(object sender, MouseEventArgs e)
         {
+            Point p = Translate(e.Location);
             if (e.Button == MouseButtons.Left)
                 mouse1Down = true;
             else if (e.Button == MouseButtons.Right)
@@ -150,26 +151,28 @@ namespace BitmapSelector
                     g.CompositingMode = CompositingMode.SourceCopy;
                     SolidBrush b = new SolidBrush(mouse1Down ? SelectionColor : Color.Transparent);
                     if(Brush == BrushType.Round)
-                        g.FillEllipse(b, e.X - BrushDiameter / 2, e.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
+                        g.FillEllipse(b, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
                     else
-                        g.FillRectangle(b, e.X - BrushDiameter / 2, e.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
+                        g.FillRectangle(b, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
                     b.Dispose();
                 }
             }
-            else if (e.X >= 0 && e.X < Width && e.Y >= 0 && e.Y < Height)
-                Layers[0].Image.SetPixel(e.X, e.Y, SelectionColor);
+            else if (p.X >= 0 && p.X < Width && p.Y >= 0 && p.Y < Height)
+                Layers[0].Image.SetPixel(p.X, p.Y, SelectionColor);
 
             Redraw();
         }
 
         private void BitmapSelector_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Location == mouseLast)
+            Point p = Translate(e.Location);
+
+            if (p == mouseLast)
                 return;
-            if (e.X < 0 || e.X >= Width || e.Y < 0 || e.Y >= Height)
+            if (p.X < 0 || p.X >= Width || p.Y < 0 || p.Y >= Height)
                 return;
-            if (ShowToolTips && ToolTips[e.X, e.Y] != null && ToolTips[e.X, e.Y].Length > 0)
-                toolTip.Show(ToolTips[e.X, e.Y], this, new Point(e.X, e.Y));
+            if (ShowToolTips && ToolTips[p.X, p.Y] != null && ToolTips[p.X, p.Y].Length > 0)
+                toolTip.Show(ToolTips[p.X, p.Y], this, new Point(e.X, e.Y));
             else
                 toolTip.Hide(this);
 
@@ -178,35 +181,35 @@ namespace BitmapSelector
                 using (Graphics g = Graphics.FromImage(Layers[0].Image))
                 {
                     g.CompositingMode = CompositingMode.SourceCopy;
-                    Pen p = new Pen(mouse1Down ? SelectionColor : Color.Transparent, BrushDiameter);
+                    Pen pen = new Pen(mouse1Down ? SelectionColor : Color.Transparent, BrushDiameter);
                     SolidBrush b = new SolidBrush(mouse1Down ? SelectionColor : Color.Transparent);
                     
                     if (Brush == BrushType.Round)
                     {
-                        g.DrawLine(p, mouseLast, e.Location);
-                        g.FillEllipse(b, e.X - BrushDiameter / 2, e.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
+                        g.DrawLine(pen, mouseLast, p);
+                        g.FillEllipse(b, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
                     }
                     else //Square
                     {
-                        if (mouseLast.X == e.X || mouseLast.Y == e.Y)
+                        if (mouseLast.X == p.X || mouseLast.Y == p.Y)
                         {
-                            g.DrawLine(p, mouseLast, e.Location);
+                            g.DrawLine(pen, mouseLast, p);
                         }
                         else
                         {
                             Point[] parallelogram = new Point[4];
-                            double m = ((double)(e.Y - mouseLast.Y)) / ((double)(e.X - mouseLast.X));
+                            double m = ((double)(p.Y - mouseLast.Y)) / ((double)(p.X - mouseLast.X));
                             if (m < 0.0)
                             {
-                                parallelogram[0] = new Point(e.X - (int)(BrushDiameter / 2.0), e.Y - (int)(BrushDiameter / 2.0));
-                                parallelogram[1] = new Point(e.X + (int)(BrushDiameter / 2.0), e.Y + (int)(BrushDiameter / 2.0));
+                                parallelogram[0] = new Point(p.X - (int)(BrushDiameter / 2.0), p.Y - (int)(BrushDiameter / 2.0));
+                                parallelogram[1] = new Point(p.X + (int)(BrushDiameter / 2.0), p.Y + (int)(BrushDiameter / 2.0));
                                 parallelogram[2] = new Point(mouseLast.X + (int)(BrushDiameter / 2.0), mouseLast.Y + (int)(BrushDiameter / 2.0));
                                 parallelogram[3] = new Point(mouseLast.X - (int)(BrushDiameter / 2.0), mouseLast.Y - (int)(BrushDiameter / 2.0));
                             }
                             else
                             {
-                                parallelogram[0] = new Point(e.X + (int)(BrushDiameter / 2.0), e.Y - (int)(BrushDiameter / 2.0));
-                                parallelogram[1] = new Point(e.X - (int)(BrushDiameter / 2.0), e.Y + (int)(BrushDiameter / 2.0));
+                                parallelogram[0] = new Point(p.X + (int)(BrushDiameter / 2.0), p.Y - (int)(BrushDiameter / 2.0));
+                                parallelogram[1] = new Point(p.X - (int)(BrushDiameter / 2.0), p.Y + (int)(BrushDiameter / 2.0));
                                 parallelogram[2] = new Point(mouseLast.X - (int)(BrushDiameter / 2.0), mouseLast.Y + (int)(BrushDiameter / 2.0));
                                 parallelogram[3] = new Point(mouseLast.X + (int)(BrushDiameter / 2.0), mouseLast.Y - (int)(BrushDiameter / 2.0));
                             }
@@ -217,13 +220,13 @@ namespace BitmapSelector
                         
                     }
 
-                    p.Dispose();
+                    pen.Dispose();
                     b.Dispose();
                 }
                 Redraw();
             }
 
-            mouseLast = e.Location;
+            mouseLast = p;
         }
 
         private void BitmapSelector_MouseLeave(object sender, EventArgs e)
@@ -275,6 +278,24 @@ namespace BitmapSelector
                         Layers[0].Image.SetPixel(x, y, SelectionColor);
                 }
             }
+        }
+
+        public void Zoom(int magnififcation, int offsetX, int offsetY)
+        {
+            Magnification = magnififcation;
+            OffsetX = offsetX;
+            OffsetY = offsetY;
+
+            //prevent scrolling past the end of the image
+            if (Width - OffsetX < (Width / Magnification))
+                OffsetX = Width - (Width / Magnification);
+            if(Height - OffsetY < (Height / Magnification))
+                OffsetY = Height - (Height / Magnification);
+        }
+
+        private Point Translate(Point e)
+        {
+            return new Point(OffsetX + (e.X / Magnification), OffsetY + (e.Y / Magnification));
         }
     }
 }
