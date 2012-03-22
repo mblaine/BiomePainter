@@ -63,6 +63,13 @@ namespace Minecraft
                     for (int x = 0; x < 16; x++)
                     {
                         int height = heightmap[z * 16 + x];
+                        
+                        //trees runnning into the old height limit in converted worlds
+                        //seem to cause the heightmap entries for its columns to be -128
+                        if (height < 0)
+                        {
+                            height = 128;
+                        }
                         int blockOffset = ((((height - 1) % 16) * 16 + z) * 16 + x);
                         int blockAboveOffset = (((height % 16) * 16 + z) * 16 + x);
                         int block = ((TAG_Byte_Array)sections[(int)Math.Floor((height - 1) / 16.0)]["Blocks"]).Payload[blockOffset];
@@ -551,12 +558,14 @@ namespace Minecraft
                     for (int x = 0; x < 16; x++)
                     {
                         if (selection.GetPixel(chunkOffset.x + x, chunkOffset.z + z).ToArgb() == selectionColor.ToArgb())
+                        {
                             if (biomes[x + z * 16] == (byte)search)
                             {
                                 biomes[x + z * 16] = (byte)replace;
                                 c.Dirty = true;
                                 region.Dirty = true;
                             }
+                        }
                     }
                 }
             }
@@ -583,12 +592,14 @@ namespace Minecraft
                     for (int x = 0; x < 16; x++)
                     {
                         if (selection.GetPixel(chunkOffset.x + x, chunkOffset.z + z).ToArgb() == selectionColor.ToArgb())
+                        {
                             if (biomes[x + z * 16] == (byte)search)
                             {
                                 biomes[x + z * 16] = (byte)replace.GetBiome(chunkAbs.x + x, chunkAbs.z + z);
                                 c.Dirty = true;
                                 region.Dirty = true;
                             }
+                        }
                     }
                 }
             }

@@ -85,6 +85,10 @@
       <Project>{E9C6575E-CAFA-482F-87CE-FC9DB81B34B9}</Project>
       <Name>Minecraft.B17</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Minecraft.B18\Minecraft.B18.csproj">
+      <Project>{22BEDDF9-7578-475B-A2DF-9CA0FB60EC7A}</Project>
+      <Name>Minecraft.B18</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Minecraft\Minecraft.csproj">
       <Project>{973C46F6-1CF8-402B-BBAC-74999E3D2900}</Project>
       <Name>Minecraft</Name>

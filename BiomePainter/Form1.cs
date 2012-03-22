@@ -49,7 +49,7 @@ namespace BiomePainter
             cmbReplace1.Items.AddRange(temp);
             cmbReplace2.Items.AddRange(temp);
 
-            String[] versions = { "Minecraft Beta 1.7.3" };
+            String[] versions = { "Minecraft Beta 1.7.3", "Minecraft Beta 1.8.1" };
 
             cmbFill.Items.AddRange(versions);
             cmbReplace2.Items.AddRange(versions);
@@ -292,13 +292,25 @@ namespace BiomePainter
                 return;
 
             UpdateStatus("Filling selected area");
-            if (((String)cmbFill.SelectedItem).CompareTo("Minecraft Beta 1.7.3") == 0)
+            Biome b;
+            if (Enum.TryParse<Biome>((String)cmbFill.SelectedItem, out b))
             {
-                world.Fill(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, new Minecraft.B17.BiomeGenBase(world.Seed));
+                world.Fill(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, b);
             }
             else
             {
-                world.Fill(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, (Biome)Enum.Parse(typeof(Biome), (String)cmbFill.SelectedItem));
+                BiomeUtil util = null;
+                switch ((String)cmbFill.SelectedItem)
+                {
+                    case "Minecraft Beta 1.7.3":
+                        util = new Minecraft.B17.BiomeGenBase(world.Seed);
+                        break;
+                    default:
+                    case "Minecraft Beta 1.8.1":
+                        util = new Minecraft.B18.WorldChunkManager(world.Seed);
+                        break;
+                }
+                world.Fill(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, util);
             }
 
             imgRegion.ToolTips = new String[imgRegion.Width, imgRegion.Height];
@@ -314,13 +326,25 @@ namespace BiomePainter
                 return;
 
             UpdateStatus("Replacing in selected area");
-            if (((String)cmbReplace2.SelectedItem).CompareTo("Minecraft Beta 1.7.3") == 0)
+            Biome b;
+            if (Enum.TryParse<Biome>((String)cmbReplace2.SelectedItem, out b))
             {
-                world.Replace(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, (Biome)Enum.Parse(typeof(Biome), (String)cmbReplace1.SelectedItem), new Minecraft.B17.BiomeGenBase(world.Seed));
+                world.Replace(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, (Biome)Enum.Parse(typeof(Biome), (String)cmbReplace1.SelectedItem), b);
             }
             else
             {
-                world.Replace(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, (Biome)Enum.Parse(typeof(Biome), (String)cmbReplace1.SelectedItem), (Biome)Enum.Parse(typeof(Biome), (String)cmbReplace2.SelectedItem));
+                BiomeUtil util = null;
+                switch ((String)cmbReplace2.SelectedItem)
+                {
+                    case "Minecraft Beta 1.7.3":
+                        util = new Minecraft.B17.BiomeGenBase(world.Seed);
+                        break;
+                    default:
+                    case "Minecraft Beta 1.8.1":
+                        util = new Minecraft.B18.WorldChunkManager(world.Seed);
+                        break;
+                }
+                world.Replace(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, (Biome)Enum.Parse(typeof(Biome), (String)cmbReplace1.SelectedItem), util);
             }
 
             imgRegion.ToolTips = new String[imgRegion.Width, imgRegion.Height];
