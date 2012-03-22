@@ -35,13 +35,16 @@ namespace Minecraft
             return Directory.GetFiles(RegionDir, "*.mca", SearchOption.TopDirectoryOnly);
         }
 
-        public void RenderRegion(RegionFile region, Bitmap b)
+        public void RenderRegion(RegionFile region, Bitmap b, ProgressUpdate callback = null)
         {
             using (Graphics g = Graphics.FromImage(b))
             {
                 g.Clear(Color.Black);
             }
 
+            int count = 0;
+            if (callback != null)
+                callback("Generating terrain map", 0, 1024);
             foreach (Chunk c in region.Chunks)
             {
                 if (c.Root == null)
@@ -78,17 +81,21 @@ namespace Minecraft
                         b.SetPixel(chunkOffset.x + x, chunkOffset.z + z, ColorLookup(block, damage, blockAbove));
                     }
                 }
-
+                if(callback != null)
+                    callback(null, ++count, 1024);
             }
         }
 
-        public void RenderRegionBiomes(RegionFile region, Bitmap b, String[,] toolTips)
+        public void RenderRegionBiomes(RegionFile region, Bitmap b, String[,] toolTips, ProgressUpdate callback = null)
         {
             using (Graphics g = Graphics.FromImage(b))
             {
                 g.Clear(Color.Transparent);
             }
-            
+
+            int count = 0;
+            if (callback != null)
+                callback("Generating biome map", 0, 1024);
             foreach (Chunk c in region.Chunks)
             {
                 if (c.Root == null)
@@ -173,7 +180,8 @@ namespace Minecraft
                         toolTips[chunkOffset.x + x, chunkOffset.z + z] = biome.ToString();
                     }
                 }
-
+                if (callback != null)
+                    callback(null, ++count, 1024);
             }
         }
 
@@ -476,8 +484,11 @@ namespace Minecraft
             return Color.FromArgb(255, Color.FromArgb(ret));
         }
 
-        public void Fill(RegionFile region, Bitmap selection, Color selectionColor, Biome biome)
+        public void Fill(RegionFile region, Bitmap selection, Color selectionColor, Biome biome, ProgressUpdate callback = null)
         {
+            int count = 0;
+            if (callback != null)
+                callback("Filling selected area", 0, 1024);
             foreach (Chunk c in region.Chunks)
             {
                 if (c.Root == null)
@@ -501,11 +512,17 @@ namespace Minecraft
                         }
                     }
                 }
+                
+                if (callback != null)
+                    callback(null, ++count, 1024);
             }
         }
 
-        public void Fill(RegionFile region, Bitmap selection, Color selectionColor, BiomeUtil util)
+        public void Fill(RegionFile region, Bitmap selection, Color selectionColor, BiomeUtil util, ProgressUpdate callback = null)
         {
+            int count = 0;
+            if (callback != null)
+                callback("Filling selected area", 0, 1024);
             foreach (Chunk c in region.Chunks)
             {
                 if (c.Root == null)
@@ -532,11 +549,16 @@ namespace Minecraft
                         }
                     }
                 }
+                if (callback != null)
+                    callback(null, ++count, 1024);
             }
         }
 
-        public void Replace(RegionFile region, Bitmap selection, Color selectionColor, Biome search, Biome replace)
+        public void Replace(RegionFile region, Bitmap selection, Color selectionColor, Biome search, Biome replace, ProgressUpdate callback = null)
         {
+            int count = 0;
+            if (callback != null)
+                callback("Replacing in selected area", 0, 1024);
             foreach (Chunk c in region.Chunks)
             {
                 if (c.Root == null)
@@ -561,11 +583,16 @@ namespace Minecraft
                             }
                     }
                 }
+                if (callback != null)
+                    callback(null, ++count, 1024);
             }
         }
 
-        public void Replace(RegionFile region, Bitmap selection, Color selectionColor, Biome search, BiomeUtil replace)
+        public void Replace(RegionFile region, Bitmap selection, Color selectionColor, Biome search, BiomeUtil replace, ProgressUpdate callback = null)
         {
+            int count = 0;
+            if (callback != null)
+                callback("Replacing in selected area", 0, 1024);
             foreach (Chunk c in region.Chunks)
             {
                 if (c.Root == null)
@@ -593,13 +620,19 @@ namespace Minecraft
                             }
                     }
                 }
+                if (callback != null)
+                    callback(null, ++count, 1024);
             }
         }
 
-        public static void SelectChunks(Bitmap b, Color selectionColor)
+        public static void SelectChunks(Bitmap b, Color selectionColor, ProgressUpdate callback = null)
         {
             using (Graphics g = Graphics.FromImage(b))
             {
+                int count = 0;
+                if (callback != null)
+                    callback("Expanding selection", 0, 1024);
+
                 Brush brush = new SolidBrush(selectionColor);
                 for (int chunkX = 0; chunkX < 32; chunkX++)
                 {
@@ -622,80 +655,11 @@ namespace Minecraft
 
                         if (shouldSelect)
                             g.FillRectangle(brush, chunkX * 16, chunkZ * 16, 16, 16);
+                        if(callback != null)
+                            callback(null, ++count, 1024);
                     }
                 }
             }
         }
-
-        /*
-        public void GoGoGadget()
-        {
-            WorldChunkManager world = new WorldChunkManager(Seed);
-            String[] files = Directory.GetFiles(RegionDir, "*.mca", SearchOption.TopDirectoryOnly);
-
-            progressUpdate1.Invoke(0, files.Length);
-            int count = 0;
-            foreach (String file in files)
-            {
-                RegionFile region = new RegionFile(file, progressUpdate2);
-                progressUpdate2.Invoke(0, region.Chunks.Count, "Calculating biomes, udpating chunks");
-                int chunkCount = 0;
-                foreach (Chunk c in region.Chunks)
-                {
-                    if (c.Root == null)
-                        continue;
-                    TAG_Byte_Array biomes = (TAG_Byte_Array)((TAG_Compound)((TAG_Compound)c.Root[""])["Level"])["Biomes"];
-                    for (int z = 0; z < 16; z++)
-                    {
-                        for (int x = 0; x < 16; x++)
-                        {
-                            Coord coords = new Coord(c.Coords);
-                            coords.ChunktoAbsolute();
-                            coords.Add(x, z);
-
-                            Biome oldBiome = BiomeGenBase.getBiome(((float)world.getTemperature(coords.x, coords.z)), ((float)world.getHumidity(coords.x, coords.z)));
-                            NewBiome newBiome = (NewBiome)0;
-
-                            switch (oldBiome)
-                            {
-                                case Biome.Taiga:
-                                    newBiome = NewBiome.Taiga;
-                                    break;
-                                case Biome.Tundra:
-                                    newBiome = NewBiome.IcePlains;
-                                    break;
-                                case Biome.Savanna:
-                                case Biome.Plains:
-                                    newBiome = NewBiome.Plains;
-                                    break;
-                                case Biome.Desert:
-                                    newBiome = NewBiome.Desert;
-                                    break;
-                                case Biome.Swampland:
-                                case Biome.Shrubland:
-                                case Biome.Forest:
-                                case Biome.SeasonalForest:
-                                    newBiome = NewBiome.Forest;
-                                    break;
-                                case Biome.Rainforest:
-                                    newBiome = NewBiome.Jungle;
-                                    break;
-                                default:
-                                    throw new Exception("crap");
-                            }
-                            biomes.Payload[x + z * 16] = (byte)newBiome;
-                        }
-                    }
-
-                    progressUpdate2.Invoke(++chunkCount, region.Chunks.Count, null);
-                }
-
-                region.Write(file);
-                progressUpdate1.Invoke(++count, files.Length);
-            }
-
-            threadDone.Invoke(this, null);
-        }
-         */
     }
 }

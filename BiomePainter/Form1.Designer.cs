@@ -31,6 +31,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveCurrentRegionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstRegions = new System.Windows.Forms.ListBox();
             this.chkShowMap = new System.Windows.Forms.CheckBox();
@@ -63,8 +65,9 @@
             this.btnFill = new System.Windows.Forms.Button();
             this.cmbFill = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.saveCurrentRegionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pnlProgress = new System.Windows.Forms.Panel();
+            this.lblProgress = new System.Windows.Forms.Label();
+            this.prgProgress = new System.Windows.Forms.ProgressBar();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -75,6 +78,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackPanHorizontal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackMagnification)).BeginInit();
             this.groupBox5.SuspendLayout();
+            this.pnlProgress.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -104,6 +108,20 @@
             this.openWorldToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
             this.openWorldToolStripMenuItem.Text = "Open world";
             this.openWorldToolStripMenuItem.Click += new System.EventHandler(this.openWorldToolStripMenuItem_Click);
+            // 
+            // closeWorldToolStripMenuItem
+            // 
+            this.closeWorldToolStripMenuItem.Name = "closeWorldToolStripMenuItem";
+            this.closeWorldToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.closeWorldToolStripMenuItem.Text = "Close world";
+            this.closeWorldToolStripMenuItem.Click += new System.EventHandler(this.closeWorldToolStripMenuItem_Click);
+            // 
+            // saveCurrentRegionToolStripMenuItem
+            // 
+            this.saveCurrentRegionToolStripMenuItem.Name = "saveCurrentRegionToolStripMenuItem";
+            this.saveCurrentRegionToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.saveCurrentRegionToolStripMenuItem.Text = "Save current region";
+            this.saveCurrentRegionToolStripMenuItem.Click += new System.EventHandler(this.saveCurrentRegionToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -339,6 +357,7 @@
             this.trackPanVertical.Name = "trackPanVertical";
             this.trackPanVertical.Size = new System.Drawing.Size(186, 37);
             this.trackPanVertical.TabIndex = 18;
+            this.trackPanVertical.TickFrequency = 4;
             this.trackPanVertical.Scroll += new System.EventHandler(this.trackPanVertical_Scroll);
             // 
             // trackPanHorizontal
@@ -348,6 +367,7 @@
             this.trackPanHorizontal.Name = "trackPanHorizontal";
             this.trackPanHorizontal.Size = new System.Drawing.Size(186, 37);
             this.trackPanHorizontal.TabIndex = 17;
+            this.trackPanHorizontal.TickFrequency = 4;
             this.trackPanHorizontal.Scroll += new System.EventHandler(this.trackPanHorizontal_Scroll);
             // 
             // lblMagnification
@@ -447,24 +467,39 @@
             this.label3.Size = new System.Drawing.Size(2, 35);
             this.label3.TabIndex = 0;
             // 
-            // saveCurrentRegionToolStripMenuItem
+            // pnlProgress
             // 
-            this.saveCurrentRegionToolStripMenuItem.Name = "saveCurrentRegionToolStripMenuItem";
-            this.saveCurrentRegionToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
-            this.saveCurrentRegionToolStripMenuItem.Text = "Save current region";
-            this.saveCurrentRegionToolStripMenuItem.Click += new System.EventHandler(this.saveCurrentRegionToolStripMenuItem_Click);
+            this.pnlProgress.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlProgress.Controls.Add(this.prgProgress);
+            this.pnlProgress.Controls.Add(this.lblProgress);
+            this.pnlProgress.Location = new System.Drawing.Point(325, 275);
+            this.pnlProgress.Name = "pnlProgress";
+            this.pnlProgress.Size = new System.Drawing.Size(352, 74);
+            this.pnlProgress.TabIndex = 18;
+            this.pnlProgress.Visible = false;
             // 
-            // closeWorldToolStripMenuItem
+            // lblProgress
             // 
-            this.closeWorldToolStripMenuItem.Name = "closeWorldToolStripMenuItem";
-            this.closeWorldToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
-            this.closeWorldToolStripMenuItem.Text = "Close world";
-            this.closeWorldToolStripMenuItem.Click += new System.EventHandler(this.closeWorldToolStripMenuItem_Click);
+            this.lblProgress.AutoSize = true;
+            this.lblProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProgress.Location = new System.Drawing.Point(3, 4);
+            this.lblProgress.Name = "lblProgress";
+            this.lblProgress.Size = new System.Drawing.Size(120, 29);
+            this.lblProgress.TabIndex = 0;
+            this.lblProgress.Text = "Working...";
+            // 
+            // prgProgress
+            // 
+            this.prgProgress.Location = new System.Drawing.Point(7, 37);
+            this.prgProgress.Name = "prgProgress";
+            this.prgProgress.Size = new System.Drawing.Size(332, 23);
+            this.prgProgress.TabIndex = 1;
             // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(996, 640);
+            this.Controls.Add(this.pnlProgress);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -495,6 +530,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackPanHorizontal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackMagnification)).EndInit();
             this.groupBox5.ResumeLayout(false);
+            this.pnlProgress.ResumeLayout(false);
+            this.pnlProgress.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -539,6 +576,9 @@
         private System.Windows.Forms.ComboBox cmbFill;
         private System.Windows.Forms.ToolStripMenuItem saveCurrentRegionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeWorldToolStripMenuItem;
+        private System.Windows.Forms.Panel pnlProgress;
+        private System.Windows.Forms.Label lblProgress;
+        private System.Windows.Forms.ProgressBar prgProgress;
     }
 }
 

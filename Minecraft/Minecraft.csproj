@@ -49,6 +49,7 @@
     <Compile Include="Chunk.cs" />
     <Compile Include="Coord.cs" />
     <Compile Include="JavaRandom.cs" />
+    <Compile Include="ProgressUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegionFile.cs" />
     <Compile Include="Tag.cs" />

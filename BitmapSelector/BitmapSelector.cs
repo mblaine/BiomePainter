@@ -29,8 +29,6 @@ namespace BitmapSelector
         private bool mouse2Down = false;
         private Point mouseLast = new Point(-1, -1);
 
-
-
         public BitmapSelector()
         {
             InitializeComponent();
