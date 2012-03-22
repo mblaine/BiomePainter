@@ -49,7 +49,7 @@ namespace BiomePainter
             cmbReplace1.Items.AddRange(temp);
             cmbReplace2.Items.AddRange(temp);
 
-            String[] versions = { "Minecraft Beta 1.7.3", "Minecraft Beta 1.8.1" };
+            String[] versions = { "Minecraft Beta 1.7.3", "Minecraft Beta 1.8.1", "Minecraft 1.0.0" };
 
             cmbFill.Items.AddRange(versions);
             cmbReplace2.Items.AddRange(versions);
@@ -157,6 +157,33 @@ namespace BiomePainter
             UpdateStatus("Writing region file");
             region.Write();
             UpdateStatus("");
+        }
+
+        private void reloadCurrentRegionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(region == null)
+                return;
+            else if(region.Dirty)
+            {
+                DialogResult res = MessageBox.Show(this, NEEDTOSAVEMSG, "Save", MessageBoxButtons.YesNoCancel);
+                if (res == DialogResult.Yes)
+                {
+                    UpdateStatus("Writing region file");
+                    region.Write();
+                    UpdateStatus("");
+                }
+                else if (res == DialogResult.Cancel)
+                    return;
+            }
+
+            UpdateStatus("Reading region file");
+            region = new RegionFile(region.Path);
+            UpdateStatus("Generating terrain map");
+            world.RenderRegion(region, imgRegion.Layers[2].Image);
+            UpdateStatus("Generating biome map");
+            world.RenderRegionBiomes(region, imgRegion.Layers[1].Image, imgRegion.ToolTips);
+            UpdateStatus("");
+            imgRegion.Redraw();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -305,9 +332,12 @@ namespace BiomePainter
                     case "Minecraft Beta 1.7.3":
                         util = new Minecraft.B17.BiomeGenBase(world.Seed);
                         break;
-                    default:
                     case "Minecraft Beta 1.8.1":
                         util = new Minecraft.B18.WorldChunkManager(world.Seed);
+                        break;
+                    case "Minecraft 1.0.0":
+                    default:
+                        util = new Minecraft.F10.WorldChunkManager(world.Seed);
                         break;
                 }
                 world.Fill(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, util);
@@ -339,9 +369,12 @@ namespace BiomePainter
                     case "Minecraft Beta 1.7.3":
                         util = new Minecraft.B17.BiomeGenBase(world.Seed);
                         break;
-                    default:
                     case "Minecraft Beta 1.8.1":
                         util = new Minecraft.B18.WorldChunkManager(world.Seed);
+                        break;
+                    case "Minecraft 1.0.0":
+                    default:
+                        util = new Minecraft.F10.WorldChunkManager(world.Seed);
                         break;
                 }
                 world.Replace(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, (Biome)Enum.Parse(typeof(Biome), (String)cmbReplace1.SelectedItem), util);
@@ -359,6 +392,7 @@ namespace BiomePainter
             lblStatus.Text = status;
             lblStatus.Refresh();
         }
+
     }
 
 }

@@ -66,6 +66,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.imgRegion = new BitmapSelector.BitmapSelector();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.reloadCurrentRegionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -94,6 +95,7 @@
             this.openWorldToolStripMenuItem,
             this.closeWorldToolStripMenuItem,
             this.saveCurrentRegionToolStripMenuItem,
+            this.reloadCurrentRegionToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(44, 24);
@@ -102,28 +104,28 @@
             // openWorldToolStripMenuItem
             // 
             this.openWorldToolStripMenuItem.Name = "openWorldToolStripMenuItem";
-            this.openWorldToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.openWorldToolStripMenuItem.Size = new System.Drawing.Size(222, 24);
             this.openWorldToolStripMenuItem.Text = "Open world";
             this.openWorldToolStripMenuItem.Click += new System.EventHandler(this.openWorldToolStripMenuItem_Click);
             // 
             // closeWorldToolStripMenuItem
             // 
             this.closeWorldToolStripMenuItem.Name = "closeWorldToolStripMenuItem";
-            this.closeWorldToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.closeWorldToolStripMenuItem.Size = new System.Drawing.Size(222, 24);
             this.closeWorldToolStripMenuItem.Text = "Close world";
             this.closeWorldToolStripMenuItem.Click += new System.EventHandler(this.closeWorldToolStripMenuItem_Click);
             // 
             // saveCurrentRegionToolStripMenuItem
             // 
             this.saveCurrentRegionToolStripMenuItem.Name = "saveCurrentRegionToolStripMenuItem";
-            this.saveCurrentRegionToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.saveCurrentRegionToolStripMenuItem.Size = new System.Drawing.Size(222, 24);
             this.saveCurrentRegionToolStripMenuItem.Text = "Save current region";
             this.saveCurrentRegionToolStripMenuItem.Click += new System.EventHandler(this.saveCurrentRegionToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(222, 24);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -472,6 +474,13 @@
             this.lblStatus.TabIndex = 18;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // reloadCurrentRegionToolStripMenuItem
+            // 
+            this.reloadCurrentRegionToolStripMenuItem.Name = "reloadCurrentRegionToolStripMenuItem";
+            this.reloadCurrentRegionToolStripMenuItem.Size = new System.Drawing.Size(222, 24);
+            this.reloadCurrentRegionToolStripMenuItem.Text = "Reload current region";
+            this.reloadCurrentRegionToolStripMenuItem.Click += new System.EventHandler(this.reloadCurrentRegionToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -552,6 +561,7 @@
         private System.Windows.Forms.ToolStripMenuItem saveCurrentRegionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeWorldToolStripMenuItem;
         private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.ToolStripMenuItem reloadCurrentRegionToolStripMenuItem;
     }
 }
 

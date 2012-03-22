@@ -1,21 +1,21 @@
 ﻿using System;
 
-namespace Minecraft.B18
+namespace Minecraft.F10
 {
     public class WorldChunkManager : Minecraft.BiomeUtil
     {
         private BiomeCache biomeCache;
+        private GenLayer biomeIndexLayer;
         private GenLayer temperatureLayer;
         private GenLayer rainfallLayer;
-        private GenLayer field_34902_c;
+
 
         public WorldChunkManager(long seed)
             : base(seed)
         {
             biomeCache = new BiomeCache(this);
-
             GenLayer[] agenlayer = GenLayer.func_35497_a(Seed);
-            field_34902_c = agenlayer[1];
+            biomeIndexLayer = agenlayer[1];
             temperatureLayer = agenlayer[2];
             rainfallLayer = agenlayer[3];
         }
@@ -27,17 +27,17 @@ namespace Minecraft.B18
 
         public BiomeGenBase getBiomeGenAt(int i, int j)
         {
-            return biomeCache.func_35725_a(i, j);
+            return biomeCache.getBiomeGenAt(i, j);
         }
 
         public float[] getTemperatures(float[] af, int i, int j, int k, int l)
         {
-            IntCache.func_35268_a();
+            IntCache.resetIntCache();
             if (af == null || af.Length < k * l)
             {
                 af = new float[k * l];
             }
-            int[] ai = temperatureLayer.func_35500_a(i, j, k, l);
+            int[] ai = temperatureLayer.getInts(i, j, k, l);
             for (int i1 = 0; i1 < k * l; i1++)
             {
                 float f = (float)ai[i1] / 65536F;
@@ -53,12 +53,12 @@ namespace Minecraft.B18
 
         public float[] getRainfall(float[] af, int i, int j, int k, int l)
         {
-            IntCache.func_35268_a();
+            IntCache.resetIntCache();
             if (af == null || af.Length < k * l)
             {
                 af = new float[k * l];
             }
-            int[] ai = rainfallLayer.func_35500_a(i, j, k, l);
+            int[] ai = rainfallLayer.getInts(i, j, k, l);
             for (int i1 = 0; i1 < k * l; i1++)
             {
                 float f = (float)ai[i1] / 65536F;
@@ -72,20 +72,20 @@ namespace Minecraft.B18
             return af;
         }
 
-        public BiomeGenBase[] func_35555_a(BiomeGenBase[] abiomegenbase, int i, int j, int k, int l, bool flag)
+        public BiomeGenBase[] getBiomeGenAt(BiomeGenBase[] abiomegenbase, int i, int j, int k, int l, bool flag)
         {
-            IntCache.func_35268_a();
+            IntCache.resetIntCache();
             if (abiomegenbase == null || abiomegenbase.Length < k * l)
             {
                 abiomegenbase = new BiomeGenBase[k * l];
             }
             if (flag && k == 16 && l == 16 && (i & 0xf) == 0 && (j & 0xf) == 0)
             {
-                BiomeGenBase[] abiomegenbase1 = biomeCache.func_35723_d(i, j);
+                BiomeGenBase[] abiomegenbase1 = biomeCache.getCachedBiomes(i, j);
                 Array.Copy(abiomegenbase1, 0, abiomegenbase, 0, k * l);
                 return abiomegenbase;
             }
-            int[] ai = field_34902_c.func_35500_a(i, j, k, l);
+            int[] ai = biomeIndexLayer.getInts(i, j, k, l);
             for (int i1 = 0; i1 < k * l; i1++)
             {
                 abiomegenbase[i1] = BiomeGenBase.biomeList[ai[i1]];
