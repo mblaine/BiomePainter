@@ -7,7 +7,6 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Minecraft;
 using BitmapSelector;
-using System.Diagnostics;
 
 namespace BiomePainter
 {
@@ -68,9 +67,12 @@ namespace BiomePainter
                 DialogResult res = MessageBox.Show(this, NEEDTOSAVEMSG, "Save", MessageBoxButtons.YesNoCancel);
                 if (res == DialogResult.Yes)
                 {
-                    pnlProgress.Visible = true;
-                    region.Write(ProgressUpdate);
-                    pnlProgress.Visible = false;
+                    lblStatus.Text = "Writing region file";
+
+                    UpdateStatus("Writing region file");
+                    region.Write();
+                    UpdateStatus("");
+                    
                 }
                 else if (res == DialogResult.Cancel)
                     e.Cancel = true;
@@ -97,9 +99,9 @@ namespace BiomePainter
                 DialogResult res = MessageBox.Show(this, NEEDTOSAVEMSG, "Save", MessageBoxButtons.YesNoCancel);
                 if (res == DialogResult.Yes)
                 {
-                    pnlProgress.Visible = true;
-                    region.Write(ProgressUpdate);
-                    pnlProgress.Visible = false;
+                    UpdateStatus("Writing region file");
+                    region.Write();
+                    UpdateStatus("");
                 }
                 else if (res == DialogResult.Cancel)
                     return;
@@ -136,9 +138,9 @@ namespace BiomePainter
                 DialogResult res = MessageBox.Show(this, NEEDTOSAVEMSG, "Save", MessageBoxButtons.YesNoCancel);
                 if (res == DialogResult.Yes)
                 {
-                    pnlProgress.Visible = true;
-                    region.Write(ProgressUpdate);
-                    pnlProgress.Visible = false;
+                    UpdateStatus("Writing region file");
+                    region.Write();
+                    UpdateStatus("");
                 }
                 else if (res == DialogResult.Cancel)
                     return;
@@ -152,9 +154,9 @@ namespace BiomePainter
             if (region == null)
                 return;
 
-            pnlProgress.Visible = true;
-            region.Write(ProgressUpdate);
-            pnlProgress.Visible = false;
+            UpdateStatus("Writing region file");
+            region.Write();
+            UpdateStatus("");
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -172,9 +174,9 @@ namespace BiomePainter
                 DialogResult res = MessageBox.Show(this, NEEDTOSAVEMSG, "Save", MessageBoxButtons.YesNoCancel);
                 if (res == DialogResult.Yes)
                 {
-                    pnlProgress.Visible = true;
-                    region.Write(ProgressUpdate);
-                    pnlProgress.Visible = false;
+                    UpdateStatus("Writing region file");
+                    region.Write();
+                    UpdateStatus("");
                 }
                 else if (res == DialogResult.Cancel)
                 {
@@ -186,13 +188,15 @@ namespace BiomePainter
             Match m = Regex.Match(lstRegions.SelectedItem.ToString(), @"Region (-?\d+), (-?\d+)");
             String path = String.Format("{0}{1}r.{2}.{3}.mca", world.RegionDir, Path.DirectorySeparatorChar, m.Groups[1].Value, m.Groups[2].Value);
 
-            pnlProgress.Visible = true;
-            region = new RegionFile(path, ProgressUpdate);
+            UpdateStatus("Reading region file");
+            region = new RegionFile(path);
             imgRegion.Reset();
-            world.RenderRegion(region, imgRegion.Layers[2].Image, ProgressUpdate);
-            world.RenderRegionBiomes(region, imgRegion.Layers[1].Image, imgRegion.ToolTips, ProgressUpdate);
+            UpdateStatus("Generating terrain map");
+            world.RenderRegion(region, imgRegion.Layers[2].Image);
+            UpdateStatus("Generating biome map");
+            world.RenderRegionBiomes(region, imgRegion.Layers[1].Image, imgRegion.ToolTips);
+            UpdateStatus("");
             imgRegion.Redraw();
-            pnlProgress.Visible = false;
             lastSelectedRegionIndex = lstRegions.SelectedIndex;
         }
 
@@ -239,10 +243,10 @@ namespace BiomePainter
 
         private void btnSelectChunks_Click(object sender, EventArgs e)
         {
-            pnlProgress.Visible = true;
-            World.SelectChunks(imgRegion.Layers[0].Image, imgRegion.SelectionColor, ProgressUpdate);
+            UpdateStatus("Expanding selection");
+            World.SelectChunks(imgRegion.Layers[0].Image, imgRegion.SelectionColor);
+            UpdateStatus("");
             imgRegion.Redraw();
-            pnlProgress.Visible = false;
         }
 
         private void radRoundBrush_CheckedChanged(object sender, EventArgs e)
@@ -287,20 +291,21 @@ namespace BiomePainter
             if (world == null || region == null)
                 return;
 
-            pnlProgress.Visible = true;
+            UpdateStatus("Filling selected area");
             if (((String)cmbFill.SelectedItem).CompareTo("Minecraft Beta 1.7.3") == 0)
             {
-                world.Fill(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, new Minecraft.B17.BiomeGenBase(world.Seed), ProgressUpdate);
+                world.Fill(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, new Minecraft.B17.BiomeGenBase(world.Seed));
             }
             else
             {
-                world.Fill(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, (Biome)Enum.Parse(typeof(Biome), (String)cmbFill.SelectedItem), ProgressUpdate);
+                world.Fill(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, (Biome)Enum.Parse(typeof(Biome), (String)cmbFill.SelectedItem));
             }
 
             imgRegion.ToolTips = new String[imgRegion.Width, imgRegion.Height];
-            world.RenderRegionBiomes(region, imgRegion.Layers[1].Image, imgRegion.ToolTips, ProgressUpdate);
+            UpdateStatus("Generating biome map");
+            world.RenderRegionBiomes(region, imgRegion.Layers[1].Image, imgRegion.ToolTips);
+            UpdateStatus("");
             imgRegion.Redraw();
-            pnlProgress.Visible = false;
         }
 
         private void btnReplace_Click(object sender, EventArgs e)
@@ -308,29 +313,27 @@ namespace BiomePainter
             if (world == null || region == null)
                 return;
 
-            pnlProgress.Visible = true;
+            UpdateStatus("Replacing in selected area");
             if (((String)cmbReplace2.SelectedItem).CompareTo("Minecraft Beta 1.7.3") == 0)
             {
-                world.Replace(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, (Biome)Enum.Parse(typeof(Biome), (String)cmbReplace1.SelectedItem), new Minecraft.B17.BiomeGenBase(world.Seed), ProgressUpdate);
+                world.Replace(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, (Biome)Enum.Parse(typeof(Biome), (String)cmbReplace1.SelectedItem), new Minecraft.B17.BiomeGenBase(world.Seed));
             }
             else
             {
-                world.Replace(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, (Biome)Enum.Parse(typeof(Biome), (String)cmbReplace1.SelectedItem), (Biome)Enum.Parse(typeof(Biome), (String)cmbReplace2.SelectedItem), ProgressUpdate);
+                world.Replace(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, (Biome)Enum.Parse(typeof(Biome), (String)cmbReplace1.SelectedItem), (Biome)Enum.Parse(typeof(Biome), (String)cmbReplace2.SelectedItem));
             }
 
             imgRegion.ToolTips = new String[imgRegion.Width, imgRegion.Height];
-            world.RenderRegionBiomes(region, imgRegion.Layers[1].Image, imgRegion.ToolTips, ProgressUpdate);
+            UpdateStatus("Generating biome map");
+            world.RenderRegionBiomes(region, imgRegion.Layers[1].Image, imgRegion.ToolTips);
+            UpdateStatus("");
             imgRegion.Redraw();
-            pnlProgress.Visible = false;
         }
 
-        public void ProgressUpdate(String label, int value, int max)
+        private void UpdateStatus(String status)
         {
-            if (label != null)
-                lblProgress.Text = label;
-            prgProgress.Maximum = max;
-            prgProgress.Value = value;
-            pnlProgress.Refresh();
+            lblStatus.Text = status;
+            lblStatus.Refresh();
         }
     }
 

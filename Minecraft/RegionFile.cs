@@ -19,14 +19,14 @@ namespace Minecraft
             Chunks = new List<Chunk>();
         }
 
-        public RegionFile(String path, ProgressUpdate callback = null)
+        public RegionFile(String path)
         {
             Path = path;
-            Read(Path, callback);
+            Read(Path);
         }
 
         //http://www.minecraftwiki.net/wiki/Region_file_format
-        public void Read(String path, ProgressUpdate callback = null)
+        public void Read(String path)
         {
             Chunks = new List<Chunk>();
             Match m = Regex.Match(path, @"r\.(-?\d+)\.(-?\d+)\.mca");
@@ -38,10 +38,6 @@ namespace Minecraft
             using (BinaryReader file = new BinaryReader(File.Open(path, FileMode.Open)))
             {
                 file.Read(header, 0, 8192);
-
-                int count = 0;
-                if (callback != null)
-                    callback("Reading region file", 0, 1024);
 
                 for (int chunkZ = 0; chunkZ < 32; chunkZ++)
                 {
@@ -112,8 +108,6 @@ namespace Minecraft
                         }
 
                         Chunks.Add(c);
-                        if (callback != null)
-                            callback(null, ++count, 1024);
                     }
                 }
 
@@ -121,12 +115,12 @@ namespace Minecraft
             }
         }
 
-        public void Write(ProgressUpdate callback = null)
+        public void Write()
         {
-            Write(Path, callback);
+            Write(Path);
         }
 
-        public void Write(String path, ProgressUpdate callback = null)
+        public void Write(String path)
         {
             if (!Dirty)
                 return;
@@ -138,9 +132,6 @@ namespace Minecraft
             {
                 file.Write(header, 0, 8192);
 
-                int count = 0;
-                if(callback != null)
-                    callback("Writing region file", 0, 1024);
                 foreach (Chunk c in Chunks)
                 {
                     int chunkX = c.Coords.x % 32;
@@ -194,9 +185,6 @@ namespace Minecraft
                     header[i + 3] = (byte)((c.RawData.Length + 5) / 4096 + 1);
                     sectorOffset += (c.RawData.Length + 5) / 4096 + 1;
                     c.Dirty = false;
-
-                    if(callback != null)
-                        callback(null, ++count, 1024);
                 }
 
                 file.Seek(0, SeekOrigin.Begin);

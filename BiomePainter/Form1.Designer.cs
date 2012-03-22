@@ -57,7 +57,6 @@
             this.trackPanHorizontal = new System.Windows.Forms.TrackBar();
             this.lblMagnification = new System.Windows.Forms.Label();
             this.trackMagnification = new System.Windows.Forms.TrackBar();
-            this.imgRegion = new BitmapSelector.BitmapSelector();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.btnReplace = new System.Windows.Forms.Button();
             this.cmbReplace2 = new System.Windows.Forms.ComboBox();
@@ -65,9 +64,8 @@
             this.btnFill = new System.Windows.Forms.Button();
             this.cmbFill = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.pnlProgress = new System.Windows.Forms.Panel();
-            this.lblProgress = new System.Windows.Forms.Label();
-            this.prgProgress = new System.Windows.Forms.ProgressBar();
+            this.imgRegion = new BitmapSelector.BitmapSelector();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -78,7 +76,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackPanHorizontal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackMagnification)).BeginInit();
             this.groupBox5.SuspendLayout();
-            this.pnlProgress.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -390,13 +387,6 @@
             this.trackMagnification.Value = 1;
             this.trackMagnification.Scroll += new System.EventHandler(this.trackMagnification_Scroll);
             // 
-            // imgRegion
-            // 
-            this.imgRegion.Location = new System.Drawing.Point(272, 44);
-            this.imgRegion.Name = "imgRegion";
-            this.imgRegion.Size = new System.Drawing.Size(512, 512);
-            this.imgRegion.TabIndex = 2;
-            // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.btnReplace);
@@ -467,39 +457,26 @@
             this.label3.Size = new System.Drawing.Size(2, 35);
             this.label3.TabIndex = 0;
             // 
-            // pnlProgress
+            // imgRegion
             // 
-            this.pnlProgress.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pnlProgress.Controls.Add(this.prgProgress);
-            this.pnlProgress.Controls.Add(this.lblProgress);
-            this.pnlProgress.Location = new System.Drawing.Point(325, 275);
-            this.pnlProgress.Name = "pnlProgress";
-            this.pnlProgress.Size = new System.Drawing.Size(352, 74);
-            this.pnlProgress.TabIndex = 18;
-            this.pnlProgress.Visible = false;
+            this.imgRegion.Location = new System.Drawing.Point(272, 31);
+            this.imgRegion.Name = "imgRegion";
+            this.imgRegion.Size = new System.Drawing.Size(512, 512);
+            this.imgRegion.TabIndex = 2;
             // 
-            // lblProgress
+            // lblStatus
             // 
-            this.lblProgress.AutoSize = true;
-            this.lblProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProgress.Location = new System.Drawing.Point(3, 4);
-            this.lblProgress.Name = "lblProgress";
-            this.lblProgress.Size = new System.Drawing.Size(120, 29);
-            this.lblProgress.TabIndex = 0;
-            this.lblProgress.Text = "Working...";
-            // 
-            // prgProgress
-            // 
-            this.prgProgress.Location = new System.Drawing.Point(7, 37);
-            this.prgProgress.Name = "prgProgress";
-            this.prgProgress.Size = new System.Drawing.Size(332, 23);
-            this.prgProgress.TabIndex = 1;
+            this.lblStatus.Location = new System.Drawing.Point(272, 546);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(512, 23);
+            this.lblStatus.TabIndex = 18;
+            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(996, 640);
-            this.Controls.Add(this.pnlProgress);
+            this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -530,8 +507,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackPanHorizontal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackMagnification)).EndInit();
             this.groupBox5.ResumeLayout(false);
-            this.pnlProgress.ResumeLayout(false);
-            this.pnlProgress.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -576,9 +551,7 @@
         private System.Windows.Forms.ComboBox cmbFill;
         private System.Windows.Forms.ToolStripMenuItem saveCurrentRegionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeWorldToolStripMenuItem;
-        private System.Windows.Forms.Panel pnlProgress;
-        private System.Windows.Forms.Label lblProgress;
-        private System.Windows.Forms.ProgressBar prgProgress;
+        private System.Windows.Forms.Label lblStatus;
     }
 }
 

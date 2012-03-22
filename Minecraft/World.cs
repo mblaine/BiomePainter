@@ -35,16 +35,13 @@ namespace Minecraft
             return Directory.GetFiles(RegionDir, "*.mca", SearchOption.TopDirectoryOnly);
         }
 
-        public void RenderRegion(RegionFile region, Bitmap b, ProgressUpdate callback = null)
+        public void RenderRegion(RegionFile region, Bitmap b)
         {
             using (Graphics g = Graphics.FromImage(b))
             {
                 g.Clear(Color.Black);
             }
 
-            int count = 0;
-            if (callback != null)
-                callback("Generating terrain map", 0, 1024);
             foreach (Chunk c in region.Chunks)
             {
                 if (c.Root == null)
@@ -81,21 +78,16 @@ namespace Minecraft
                         b.SetPixel(chunkOffset.x + x, chunkOffset.z + z, ColorLookup(block, damage, blockAbove));
                     }
                 }
-                if(callback != null)
-                    callback(null, ++count, 1024);
             }
         }
 
-        public void RenderRegionBiomes(RegionFile region, Bitmap b, String[,] toolTips, ProgressUpdate callback = null)
+        public void RenderRegionBiomes(RegionFile region, Bitmap b, String[,] toolTips)
         {
             using (Graphics g = Graphics.FromImage(b))
             {
                 g.Clear(Color.Transparent);
             }
 
-            int count = 0;
-            if (callback != null)
-                callback("Generating biome map", 0, 1024);
             foreach (Chunk c in region.Chunks)
             {
                 if (c.Root == null)
@@ -180,8 +172,6 @@ namespace Minecraft
                         toolTips[chunkOffset.x + x, chunkOffset.z + z] = biome.ToString();
                     }
                 }
-                if (callback != null)
-                    callback(null, ++count, 1024);
             }
         }
 
@@ -484,11 +474,8 @@ namespace Minecraft
             return Color.FromArgb(255, Color.FromArgb(ret));
         }
 
-        public void Fill(RegionFile region, Bitmap selection, Color selectionColor, Biome biome, ProgressUpdate callback = null)
+        public void Fill(RegionFile region, Bitmap selection, Color selectionColor, Biome biome)
         {
-            int count = 0;
-            if (callback != null)
-                callback("Filling selected area", 0, 1024);
             foreach (Chunk c in region.Chunks)
             {
                 if (c.Root == null)
@@ -512,17 +499,11 @@ namespace Minecraft
                         }
                     }
                 }
-                
-                if (callback != null)
-                    callback(null, ++count, 1024);
             }
         }
 
-        public void Fill(RegionFile region, Bitmap selection, Color selectionColor, BiomeUtil util, ProgressUpdate callback = null)
+        public void Fill(RegionFile region, Bitmap selection, Color selectionColor, BiomeUtil util)
         {
-            int count = 0;
-            if (callback != null)
-                callback("Filling selected area", 0, 1024);
             foreach (Chunk c in region.Chunks)
             {
                 if (c.Root == null)
@@ -549,16 +530,11 @@ namespace Minecraft
                         }
                     }
                 }
-                if (callback != null)
-                    callback(null, ++count, 1024);
             }
         }
 
-        public void Replace(RegionFile region, Bitmap selection, Color selectionColor, Biome search, Biome replace, ProgressUpdate callback = null)
+        public void Replace(RegionFile region, Bitmap selection, Color selectionColor, Biome search, Biome replace)
         {
-            int count = 0;
-            if (callback != null)
-                callback("Replacing in selected area", 0, 1024);
             foreach (Chunk c in region.Chunks)
             {
                 if (c.Root == null)
@@ -583,16 +559,11 @@ namespace Minecraft
                             }
                     }
                 }
-                if (callback != null)
-                    callback(null, ++count, 1024);
             }
         }
 
-        public void Replace(RegionFile region, Bitmap selection, Color selectionColor, Biome search, BiomeUtil replace, ProgressUpdate callback = null)
+        public void Replace(RegionFile region, Bitmap selection, Color selectionColor, Biome search, BiomeUtil replace)
         {
-            int count = 0;
-            if (callback != null)
-                callback("Replacing in selected area", 0, 1024);
             foreach (Chunk c in region.Chunks)
             {
                 if (c.Root == null)
@@ -620,19 +591,13 @@ namespace Minecraft
                             }
                     }
                 }
-                if (callback != null)
-                    callback(null, ++count, 1024);
             }
         }
 
-        public static void SelectChunks(Bitmap b, Color selectionColor, ProgressUpdate callback = null)
+        public static void SelectChunks(Bitmap b, Color selectionColor)
         {
             using (Graphics g = Graphics.FromImage(b))
             {
-                int count = 0;
-                if (callback != null)
-                    callback("Expanding selection", 0, 1024);
-
                 Brush brush = new SolidBrush(selectionColor);
                 for (int chunkX = 0; chunkX < 32; chunkX++)
                 {
@@ -655,8 +620,6 @@ namespace Minecraft
 
                         if (shouldSelect)
                             g.FillRectangle(brush, chunkX * 16, chunkZ * 16, 16, 16);
-                        if(callback != null)
-                            callback(null, ++count, 1024);
                     }
                 }
             }
