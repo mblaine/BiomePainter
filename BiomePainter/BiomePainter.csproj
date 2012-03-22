@@ -93,6 +93,10 @@
       <Project>{5B006CEA-8025-48BD-9AD5-111AD0C1F877}</Project>
       <Name>Minecraft.F10</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Minecraft.F11\Minecraft.F11.csproj">
+      <Project>{D16E3586-17A5-4C63-AB10-625F57803524}</Project>
+      <Name>Minecraft.F11</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Minecraft\Minecraft.csproj">
       <Project>{973C46F6-1CF8-402B-BBAC-74999E3D2900}</Project>
       <Name>Minecraft</Name>

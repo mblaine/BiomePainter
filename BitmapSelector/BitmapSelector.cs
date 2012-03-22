@@ -214,7 +214,7 @@ namespace BitmapSelector
                             g.FillPolygon(b, parallelogram);
                         }
                         
-                        g.FillRectangle(b, e.X - BrushDiameter / 2, e.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
+                        g.FillRectangle(b, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
                         
                     }
 

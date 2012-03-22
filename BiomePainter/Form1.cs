@@ -49,7 +49,7 @@ namespace BiomePainter
             cmbReplace1.Items.AddRange(temp);
             cmbReplace2.Items.AddRange(temp);
 
-            String[] versions = { "Minecraft Beta 1.7.3", "Minecraft Beta 1.8.1", "Minecraft 1.0.0" };
+            String[] versions = { "Minecraft Beta 1.7.3", "Minecraft Beta 1.8.1", "Minecraft 1.0.0", "Minecraft 1.1.0" };
 
             cmbFill.Items.AddRange(versions);
             cmbReplace2.Items.AddRange(versions);
@@ -336,8 +336,11 @@ namespace BiomePainter
                         util = new Minecraft.B18.WorldChunkManager(world.Seed);
                         break;
                     case "Minecraft 1.0.0":
-                    default:
                         util = new Minecraft.F10.WorldChunkManager(world.Seed);
+                        break;
+                    case "Minecraft 1.1.0":
+                    default:
+                        util = new Minecraft.F11.WorldChunkManager(world.Seed);
                         break;
                 }
                 world.Fill(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, util);
@@ -373,8 +376,11 @@ namespace BiomePainter
                         util = new Minecraft.B18.WorldChunkManager(world.Seed);
                         break;
                     case "Minecraft 1.0.0":
-                    default:
                         util = new Minecraft.F10.WorldChunkManager(world.Seed);
+                        break;
+                    case "Minecraft 1.1.0":
+                    default:
+                        util = new Minecraft.F11.WorldChunkManager(world.Seed);
                         break;
                 }
                 world.Replace(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, (Biome)Enum.Parse(typeof(Biome), (String)cmbReplace1.SelectedItem), util);
@@ -391,6 +397,47 @@ namespace BiomePainter
         {
             lblStatus.Text = status;
             lblStatus.Refresh();
+        }
+
+        private void TrySwitchRegion(int x, int z)
+        {
+            int i = lstRegions.FindString(String.Format("Region {0}, {1} ::", x, z));
+            if (i == ListBox.NoMatches)
+            {
+                MessageBox.Show(this, "Sorry, that region does not exist yet.", "Load", MessageBoxButtons.OK);
+            }
+            else
+            {
+                lstRegions.SelectedIndex = i;
+            }
+        }
+
+        private void aboveCurrentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (world == null || region == null)
+                return;
+            TrySwitchRegion(region.Coords.x, region.Coords.z - 1);
+        }
+
+        private void belowCurrentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (world == null || region == null)
+                return;
+            TrySwitchRegion(region.Coords.x, region.Coords.z + 1);
+        }
+
+        private void leftOfCurrentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (world == null || region == null)
+                return;
+            TrySwitchRegion(region.Coords.x - 1, region.Coords.z);
+        }
+
+        private void rightOfCurrentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (world == null || region == null)
+                return;
+            TrySwitchRegion(region.Coords.x + 1, region.Coords.z);
         }
 
     }

@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minecraft.B18", "Minecraft.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minecraft.F10", "Minecraft.F10\Minecraft.F10.csproj", "{5B006CEA-8025-48BD-9AD5-111AD0C1F877}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minecraft.F11", "Minecraft.F11\Minecraft.F11.csproj", "{D16E3586-17A5-4C63-AB10-625F57803524}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,6 +92,16 @@ Global
 		{5B006CEA-8025-48BD-9AD5-111AD0C1F877}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5B006CEA-8025-48BD-9AD5-111AD0C1F877}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{5B006CEA-8025-48BD-9AD5-111AD0C1F877}.Release|x86.ActiveCfg = Release|Any CPU
+		{D16E3586-17A5-4C63-AB10-625F57803524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D16E3586-17A5-4C63-AB10-625F57803524}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D16E3586-17A5-4C63-AB10-625F57803524}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D16E3586-17A5-4C63-AB10-625F57803524}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D16E3586-17A5-4C63-AB10-625F57803524}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D16E3586-17A5-4C63-AB10-625F57803524}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D16E3586-17A5-4C63-AB10-625F57803524}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D16E3586-17A5-4C63-AB10-625F57803524}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D16E3586-17A5-4C63-AB10-625F57803524}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D16E3586-17A5-4C63-AB10-625F57803524}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
