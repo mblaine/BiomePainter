@@ -3,18 +3,18 @@ using System.Text;
 
 namespace Minecraft.B18
 {
-    public class PlayerListEntry
+    public class LongHashMapEntry
     {
         public long field_35834_a;
         public Object field_35832_b;
-        public PlayerListEntry field_35833_c;
+        public LongHashMapEntry field_35833_c;
         public int field_35831_d;
 
 
-        public PlayerListEntry(int i, long l, Object obj, PlayerListEntry playerlistentry)
+        public LongHashMapEntry(int i, long l, Object obj, LongHashMapEntry longhashmapentry)
         {
             field_35832_b = obj;
-            field_35833_c = playerlistentry;
+            field_35833_c = longhashmapentry;
             field_35834_a = l;
             field_35831_d = i;
         }
@@ -31,17 +31,17 @@ namespace Minecraft.B18
 
         public bool equals(Object obj)
         {
-            if(!(obj is PlayerListEntry))
+            if(!(obj is LongHashMapEntry))
             {
                 return false;
             }
-            PlayerListEntry playerlistentry = (PlayerListEntry)obj;
+            LongHashMapEntry longhashmapentry = (LongHashMapEntry)obj;
             Int64? long1 = func_35830_a();
-            Int64? long2 = playerlistentry.func_35830_a();
+            Int64? long2 = longhashmapentry.func_35830_a();
             if(long1 == long2 || long1 != null && long1.Equals(long2))
             {
                 Object obj1 = func_35829_b();
-                Object obj2 = playerlistentry.func_35829_b();
+                Object obj2 = longhashmapentry.func_35829_b();
                 if(obj1 == obj2 || obj1 != null && obj1.Equals(obj2))
                 {
                     return true;
@@ -52,7 +52,7 @@ namespace Minecraft.B18
 
         public int hashCode()
         {
-            return PlayerList.getHashCode(field_35834_a);
+            return LongHashMap.getHashCode(field_35834_a);
         }
 
         public override String ToString()

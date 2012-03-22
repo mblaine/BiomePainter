@@ -2,19 +2,19 @@
 
 namespace Minecraft.B18
 {
-    public class PlayerList
+    public class LongHashMap
     {
-        private PlayerListEntry[] playerListEntries;
+        private LongHashMapEntry[] hashArray;
         private int numHashElements;
         private int capacity;
         private float percent = 0.75F;
         private volatile int field_35581_e;
 
 
-        public PlayerList()
+        public LongHashMap()
         {
             capacity = 12;
-            playerListEntries = new PlayerListEntry[16];
+            hashArray = new LongHashMapEntry[16];
         }
 
         private static int getHashedKey(long l)
@@ -41,11 +41,11 @@ namespace Minecraft.B18
         public Object getValueByKey(long l)
         {
             int i = getHashedKey(l);
-            for(PlayerListEntry playerlistentry = playerListEntries[getHashIndex(i, playerListEntries.Length)]; playerlistentry != null; playerlistentry = playerlistentry.field_35833_c)
+            for(LongHashMapEntry longhashmapentry = hashArray[getHashIndex(i, hashArray.Length)]; longhashmapentry != null; longhashmapentry = longhashmapentry.field_35833_c)
             {
-                if(playerlistentry.field_35834_a == l)
+                if(longhashmapentry.field_35834_a == l)
                 {
-                    return playerlistentry.field_35832_b;
+                    return longhashmapentry.field_35832_b;
                 }
             }
 
@@ -57,14 +57,14 @@ namespace Minecraft.B18
             return func_35569_c(l) != null;
         }
 
-        PlayerListEntry func_35569_c(long l)
+        LongHashMapEntry func_35569_c(long l)
         {
             int i = getHashedKey(l);
-            for(PlayerListEntry playerlistentry = playerListEntries[getHashIndex(i, playerListEntries.Length)]; playerlistentry != null; playerlistentry = playerlistentry.field_35833_c)
+            for(LongHashMapEntry longhashmapentry = hashArray[getHashIndex(i, hashArray.Length)]; longhashmapentry != null; longhashmapentry = longhashmapentry.field_35833_c)
             {
-                if(playerlistentry.field_35834_a == l)
+                if(longhashmapentry.field_35834_a == l)
                 {
-                    return playerlistentry;
+                    return longhashmapentry;
                 }
             }
 
@@ -74,12 +74,12 @@ namespace Minecraft.B18
         public void add(long l, Object obj)
         {
             int i = getHashedKey(l);
-            int j = getHashIndex(i, playerListEntries.Length);
-            for(PlayerListEntry playerlistentry = playerListEntries[j]; playerlistentry != null; playerlistentry = playerlistentry.field_35833_c)
+            int j = getHashIndex(i, hashArray.Length);
+            for(LongHashMapEntry longhashmapentry = hashArray[j]; longhashmapentry != null; longhashmapentry = longhashmapentry.field_35833_c)
             {
-                if(playerlistentry.field_35834_a == l)
+                if(longhashmapentry.field_35834_a == l)
                 {
-                    playerlistentry.field_35832_b = obj;
+                    longhashmapentry.field_35832_b = obj;
                 }
             }
 
@@ -89,88 +89,88 @@ namespace Minecraft.B18
 
         private void resizeTable(int i)
         {
-            PlayerListEntry[] aplayerlistentry = playerListEntries;
-            int j = aplayerlistentry.Length;
+            LongHashMapEntry[] alonghashmapentry = hashArray;
+            int j = alonghashmapentry.Length;
             if(j == 0x40000000)
             {
                 capacity = 0x7fffffff;
                 return;
             } else
             {
-                PlayerListEntry[] aplayerlistentry1 = new PlayerListEntry[i];
-                copyHashTableTo(aplayerlistentry1);
-                playerListEntries = aplayerlistentry1;
+                LongHashMapEntry[] alonghashmapentry1 = new LongHashMapEntry[i];
+                copyHashTableTo(alonghashmapentry1);
+                hashArray = alonghashmapentry1;
                 capacity = (int)((float)i * percent);
                 return;
             }
         }
 
-        private void copyHashTableTo(PlayerListEntry[] aplayerlistentry)
+        private void copyHashTableTo(LongHashMapEntry[] alonghashmapentry)
         {
-            PlayerListEntry[] aplayerlistentry1 = playerListEntries;
-            int i = aplayerlistentry.Length;
-            for(int j = 0; j < aplayerlistentry1.Length; j++)
+            LongHashMapEntry[] alonghashmapentry1 = hashArray;
+            int i = alonghashmapentry.Length;
+            for(int j = 0; j < alonghashmapentry1.Length; j++)
             {
-                PlayerListEntry playerlistentry = aplayerlistentry1[j];
-                if(playerlistentry == null)
+                LongHashMapEntry longhashmapentry = alonghashmapentry1[j];
+                if(longhashmapentry == null)
                 {
                     continue;
                 }
-                aplayerlistentry1[j] = null;
+                alonghashmapentry1[j] = null;
                 do
                 {
-                    PlayerListEntry playerlistentry1 = playerlistentry.field_35833_c;
-                    int k = getHashIndex(playerlistentry.field_35831_d, i);
-                    playerlistentry.field_35833_c = aplayerlistentry[k];
-                    aplayerlistentry[k] = playerlistentry;
-                    playerlistentry = playerlistentry1;
-                } while(playerlistentry != null);
+                    LongHashMapEntry longhashmapentry1 = longhashmapentry.field_35833_c;
+                    int k = getHashIndex(longhashmapentry.field_35831_d, i);
+                    longhashmapentry.field_35833_c = alonghashmapentry[k];
+                    alonghashmapentry[k] = longhashmapentry;
+                    longhashmapentry = longhashmapentry1;
+                } while(longhashmapentry != null);
             }
 
         }
 
         public Object remove(long l)
         {
-            PlayerListEntry playerlistentry = removeKey(l);
-            return playerlistentry != null ? playerlistentry.field_35832_b : null;
+            LongHashMapEntry longhashmapentry = removeKey(l);
+            return longhashmapentry != null ? longhashmapentry.field_35832_b : null;
         }
 
-        PlayerListEntry removeKey(long l)
+        LongHashMapEntry removeKey(long l)
         {
             int i = getHashedKey(l);
-            int j = getHashIndex(i, playerListEntries.Length);
-            PlayerListEntry playerlistentry = playerListEntries[j];
-            PlayerListEntry playerlistentry1;
-            PlayerListEntry playerlistentry2;
-            for(playerlistentry1 = playerlistentry; playerlistentry1 != null; playerlistentry1 = playerlistentry2)
+            int j = getHashIndex(i, hashArray.Length);
+            LongHashMapEntry longhashmapentry = hashArray[j];
+            LongHashMapEntry longhashmapentry1;
+            LongHashMapEntry longhashmapentry2;
+            for(longhashmapentry1 = longhashmapentry; longhashmapentry1 != null; longhashmapentry1 = longhashmapentry2)
             {
-                playerlistentry2 = playerlistentry1.field_35833_c;
-                if(playerlistentry1.field_35834_a == l)
+                longhashmapentry2 = longhashmapentry1.field_35833_c;
+                if(longhashmapentry1.field_35834_a == l)
                 {
                     field_35581_e++;
                     numHashElements--;
-                    if(playerlistentry == playerlistentry1)
+                    if(longhashmapentry == longhashmapentry1)
                     {
-                        playerListEntries[j] = playerlistentry2;
+                        hashArray[j] = longhashmapentry2;
                     } else
                     {
-                        playerlistentry.field_35833_c = playerlistentry2;
+                        longhashmapentry.field_35833_c = longhashmapentry2;
                     }
-                    return playerlistentry1;
+                    return longhashmapentry1;
                 }
-                playerlistentry = playerlistentry1;
+                longhashmapentry = longhashmapentry1;
             }
 
-            return playerlistentry1;
+            return longhashmapentry1;
         }
 
         private void createKey(int i, long l, Object obj, int j)
         {
-            PlayerListEntry playerlistentry = playerListEntries[j];
-            playerListEntries[j] = new PlayerListEntry(i, l, obj, playerlistentry);
+            LongHashMapEntry longhashmapentry = hashArray[j];
+            hashArray[j] = new LongHashMapEntry(i, l, obj, longhashmapentry);
             if(numHashElements++ >= capacity)
             {
-                resizeTable(2 * playerListEntries.Length);
+                resizeTable(2 * hashArray.Length);
             }
         }
 

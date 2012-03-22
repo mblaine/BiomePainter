@@ -6,13 +6,13 @@ namespace Minecraft.B18
     public class BiomeCache
     {
         private WorldChunkManager chunkmanager;
-        private PlayerList field_35730_c;
+        private LongHashMap field_35730_c;
         private ArrayList field_35728_d;
 
         public BiomeCache(WorldChunkManager worldchunkmanager)
         {
             chunkmanager = worldchunkmanager;
-            field_35730_c = new PlayerList();
+            field_35730_c = new LongHashMap();
             field_35728_d = new ArrayList();
         }
 

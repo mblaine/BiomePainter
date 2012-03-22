@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{22BEDDF9-7578-475B-A2DF-9CA0FB60EC7A}</ProjectGuid>
+    <ProjectGuid>{5B006CEA-8025-48BD-9AD5-111AD0C1F877}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Minecraft.B18</RootNamespace>
-    <AssemblyName>Minecraft.B18</AssemblyName>
+    <RootNamespace>Minecraft.F10</RootNamespace>
+    <AssemblyName>Minecraft.F10</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,30 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BiomeCache.cs" />
-    <Compile Include="BiomeCacheBlock.cs" />
-    <Compile Include="BiomeGenBase.cs" />
-    <Compile Include="GenLayer.cs" />
-    <Compile Include="GenLayerDownfall.cs" />
-    <Compile Include="GenLayerDownfallMix.cs" />
-    <Compile Include="GenLayerIsland.cs" />
-    <Compile Include="GenLayerRiver.cs" />
-    <Compile Include="GenLayerRiverInit.cs" />
-    <Compile Include="GenLayerRiverMix.cs" />
-    <Compile Include="GenLayerSmooth.cs" />
-    <Compile Include="GenLayerSmoothZoom.cs" />
-    <Compile Include="GenLayerTemperature.cs" />
-    <Compile Include="GenLayerTemperatureMix.cs" />
-    <Compile Include="GenLayerVillageLandscape.cs" />
-    <Compile Include="GenLayerZoom.cs" />
-    <Compile Include="GenLayerZoomFuzzy.cs" />
-    <Compile Include="GenLayerZoomVoronoi.cs" />
-    <Compile Include="IntCache.cs" />
-    <Compile Include="LayerIsland.cs" />
-    <Compile Include="LongHashMap.cs" />
-    <Compile Include="LongHashMapEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WorldChunkManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Minecraft\Minecraft.csproj">
