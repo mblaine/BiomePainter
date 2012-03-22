@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Minecraft.B17
 {
     public class NoiseGeneratorPerlin : NoiseGenerator

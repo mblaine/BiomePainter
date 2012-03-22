@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Minecraft.F10
 {
     public class GenLayerRiver : GenLayer

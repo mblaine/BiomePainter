@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Minecraft.F11
 {
     public class GenLayerSwampRivers : GenLayer

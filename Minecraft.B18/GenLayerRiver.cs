@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Minecraft.B18
 {
     public class GenLayerRiver : GenLayer
