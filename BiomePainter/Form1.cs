@@ -438,6 +438,42 @@ namespace BiomePainter
             TrySwitchRegion(region.Coords.x + 1, region.Coords.z);
         }
 
+        private void loadRegionByCoordsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (world == null)
+                return;
+
+            String msg = "Type absolute x and z block coordinates (x, z) to load the region that contains the specified point.";
+            String input = "";
+            while(true)
+            {
+                input = Microsoft.VisualBasic.Interaction.InputBox(msg, "Load", input);
+                if (input.Length == 0)
+                    return;
+
+                Match m = Regex.Match(input, @"([-\+]?\d+)(?:[,\s]+)([-\+]?\d+)");
+                if (m.Groups.Count < 3)
+                {
+                    msg = "Unable to parse coordinates. Please try again or click cancel.";
+                }
+                else
+                {
+                    int x, z;
+                    if (!Int32.TryParse(m.Groups[1].Value, out x) || !Int32.TryParse(m.Groups[2].Value, out z))
+                    {
+                        msg = "Unable to parse coordinates. Please try again or click cancel.";
+                    }
+                    else
+                    {
+                        Coord c = new Coord(x, z);
+                        c.AbsolutetoRegion();
+                        TrySwitchRegion(c.x, c.z);
+                        return;
+                    }
+                }
+            }
+        }
+
     }
 
 }

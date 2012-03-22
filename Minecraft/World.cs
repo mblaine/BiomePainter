@@ -92,7 +92,7 @@ namespace Minecraft
         {
             using (Graphics g = Graphics.FromImage(b))
             {
-                g.Clear(Color.Transparent);
+                g.Clear(Color.Black);
             }
 
             foreach (Chunk c in region.Chunks)
