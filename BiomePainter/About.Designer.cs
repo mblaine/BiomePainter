@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(About));
             this.lblAbout = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
             this.txtReadMe = new System.Windows.Forms.RichTextBox();
@@ -80,6 +81,7 @@
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.lblAbout);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "About";

@@ -1,11 +1,11 @@
 Biome Painter
 
-<<< License >>>
+<< License >>
 
 Please see LICENSE.txt.
 
 
-<<< About >>>
+<< About >>
 
 This program is meant to allow editing of biome information in Minecraft save files using the Anvil file format introduced in Minecraft 1.2.
 
@@ -16,7 +16,7 @@ Once an area has been selected it can be filled with a particular biome or have 
 In addition to arbitrary biomes, the biome generation from various versions of Minecraft can be use to populate the selected area with the biomes that would have been at those particular coordinates while playing that version.
 
 
-<<< Points of Confusion >>>
+<< Points of Confusion >>
 
 * The left mouse button can be used to paint a selection over the map of the current region, and the right mouse button to erase the selection.
 
