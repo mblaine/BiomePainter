@@ -1,0 +1,18 @@
+Projects BiomePainter (BiomePainter.exe), BitmapSelector (BitmapSelector.dll), and Minecraft (Minecraft.dll) are copyright (c) 2012 Matthew Blaine and licensed under the terms of the MIT License. Please see LICENSE.TXT.
+
+Projects Minecraft.B17 (Minecraft.B17.dll), Minecraft.B18 (Minecraft.B18.dll), Minecraft.F10 (Minecraft.F10.dll), Minecraft.F11 (Minecraft.F11.dll), and Minecraft.F12 (Minecraft.F12.dll) contain code from Minecraft which is copyright (c) 2009-2012 Mojang AB. For more information please see:
+Minecraft Terms of Use: http://www.minecraft.net/terms
+
+Biome Painter uses DotNetZip (Ionic.Zlib.dll) which is licensed under the Microsoft Public License and includes code based on JZlib which is based on zlib. For more information please see:
+Microsoft Public License: http://dotnetzip.codeplex.com/SourceControl/changeset/view/85217#156553
+JZlib and zlib licensing information: http://dotnetzip.codeplex.com/SourceControl/changeset/view/85217#1579682
+
+====================================================
+
+Copyright (c) 2012 Matthew Blaine
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
