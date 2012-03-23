@@ -1,17 +1,12 @@
 Biome Painter
 
 <<< License >>>
-Projects BiomePainter (BiomePainter.exe), BitmapSelector (BitmapSelector.dll), and Minecraft (Minecraft.dll) are copyright (c) 2012 Matthew Blaine and licensed under the terms of the MIT License. Please see LICENSE.TXT.
 
-Projects Minecraft.B17 (Minecraft.B17.dll), Minecraft.B18 (Minecraft.B18.dll), Minecraft.F10 (Minecraft.F10.dll), Minecraft.F11 (Minecraft.F11.dll), and Minecraft.F12 (Minecraft.F12.dll) contain code from Minecraft which is copyright (c) 2009-2012 Mojang AB. For more information please see:
-Minecraft Terms of Use: http://www.minecraft.net/terms
-
-Biome Painter uses DotNetZip (Ionic.Zlib.dll) which is licensed under the Microsoft Public License and includes code based on JZlib which is based on zlib. For more information please see:
-Microsoft Public License: http://dotnetzip.codeplex.com/SourceControl/changeset/view/85217#156553
-JZlib and zlib licensing information: http://dotnetzip.codeplex.com/SourceControl/changeset/view/85217#1579682
+Please see LICENSE.txt.
 
 
 <<< About >>>
+
 This program is meant to allow editing of biome information in Minecraft save files using the Anvil file format introduced in Minecraft 1.2.
 
 After selecting a region, left click to paint your selection over the map of the region and right click to erase.
@@ -21,7 +16,7 @@ Once an area has been selected it can be filled with a particular biome or have 
 In addition to arbitrary biomes, the biome generation from various versions of Minecraft can be use to populate the selected area with the biomes that would have been at those particular coordinates while playing that version.
 
 
-<<< Points of confusion >>>
+<<< Points of Confusion >>>
 
 * The left mouse button can be used to paint a selection over the map of the current region, and the right mouse button to erase the selection.
 

@@ -40,6 +40,7 @@
             this.belowCurrentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.leftOfCurrentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rightOfCurrentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadRegionByCoordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstRegions = new System.Windows.Forms.ListBox();
@@ -74,7 +75,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.imgRegion = new BitmapSelector.BitmapSelector();
             this.lblStatus = new System.Windows.Forms.Label();
-            this.loadRegionByCoordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutBiomePainterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -90,7 +92,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(996, 28);
@@ -184,6 +187,13 @@
             this.rightOfCurrentToolStripMenuItem.Size = new System.Drawing.Size(181, 24);
             this.rightOfCurrentToolStripMenuItem.Text = "Right of current";
             this.rightOfCurrentToolStripMenuItem.Click += new System.EventHandler(this.rightOfCurrentToolStripMenuItem_Click);
+            // 
+            // loadRegionByCoordsToolStripMenuItem
+            // 
+            this.loadRegionByCoordsToolStripMenuItem.Name = "loadRegionByCoordsToolStripMenuItem";
+            this.loadRegionByCoordsToolStripMenuItem.Size = new System.Drawing.Size(227, 24);
+            this.loadRegionByCoordsToolStripMenuItem.Text = "Load region by coords";
+            this.loadRegionByCoordsToolStripMenuItem.Click += new System.EventHandler(this.loadRegionByCoordsToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -542,12 +552,20 @@
             this.lblStatus.TabIndex = 18;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // loadRegionByCoordsToolStripMenuItem
+            // helpToolStripMenuItem
             // 
-            this.loadRegionByCoordsToolStripMenuItem.Name = "loadRegionByCoordsToolStripMenuItem";
-            this.loadRegionByCoordsToolStripMenuItem.Size = new System.Drawing.Size(227, 24);
-            this.loadRegionByCoordsToolStripMenuItem.Text = "Load region by coords";
-            this.loadRegionByCoordsToolStripMenuItem.Click += new System.EventHandler(this.loadRegionByCoordsToolStripMenuItem_Click);
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutBiomePainterToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // aboutBiomePainterToolStripMenuItem
+            // 
+            this.aboutBiomePainterToolStripMenuItem.Name = "aboutBiomePainterToolStripMenuItem";
+            this.aboutBiomePainterToolStripMenuItem.Size = new System.Drawing.Size(216, 24);
+            this.aboutBiomePainterToolStripMenuItem.Text = "About Biome Painter";
+            this.aboutBiomePainterToolStripMenuItem.Click += new System.EventHandler(this.aboutBiomePainterToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -638,6 +656,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem loadRegionByCoordsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutBiomePainterToolStripMenuItem;
     }
 }
 

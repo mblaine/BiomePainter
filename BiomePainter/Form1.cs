@@ -474,6 +474,10 @@ namespace BiomePainter
             }
         }
 
+        private void aboutBiomePainterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new About().ShowDialog(this);
+        }
     }
 
 }
