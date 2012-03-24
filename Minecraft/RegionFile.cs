@@ -79,8 +79,8 @@ namespace Minecraft
                             Array.Reverse(temp);
                         int exactLength = BitConverter.ToInt32(temp, 0);
 
-                        int compressionType = file.ReadByte();
-                        if (compressionType == 1) //GZip
+                        c.CompressionType = file.ReadByte();
+                        if (c.CompressionType == 1) //GZip
                         {
                             c.RawData = new byte[exactLength - 1];
                             file.Read(c.RawData, 0, exactLength - 1);
@@ -91,7 +91,7 @@ namespace Minecraft
                             mem.Seek(0, SeekOrigin.Begin);
                             c.Root = new TAG_Compound(mem);
                         }
-                        else if (compressionType == 2) //Zlib
+                        else if (c.CompressionType == 2) //Zlib
                         {
                             c.RawData = new byte[exactLength - 1];
                             file.Read(c.RawData, 0, exactLength - 1);
@@ -168,6 +168,7 @@ namespace Minecraft
                         //this is the performance bottleneck when doing 1024 chunks in a row;
                         //trying to only do when necessary
                         c.RawData = ZlibStream.CompressBuffer(temp);
+                        c.CompressionType = 2;
                     }
 
                     temp = BitConverter.GetBytes(c.RawData.Length + 1);
@@ -175,7 +176,7 @@ namespace Minecraft
                         Array.Reverse(temp);
 
                     file.Write(temp, 0, 4);
-                    file.Write((byte)2);//Zlib
+                    file.Write(c.CompressionType);
                     file.Write(c.RawData, 0, c.RawData.Length);
 
                     byte[] padding = new byte[(4096 - ((c.RawData.Length + 5) % 4096))];

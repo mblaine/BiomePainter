@@ -495,7 +495,7 @@ namespace Minecraft
                         Payload[i] = (TAG)new TAG_Int_Array(data);
                         break;
                     default:
-                        throw new Exception("Holy mother of crap!");
+                        throw new Exception("Unrecognized tag type.");
                 }
             }
         }
@@ -608,7 +608,7 @@ namespace Minecraft
                         nextTag = (TAG)new TAG_Int_Array(data);
                         break;
                     default:
-                        throw new Exception("Holy mother of crap!");
+                        throw new Exception("Unrecognized tag type.");
                 }
                 nextTag.Name = name;
                 nextTag.IsNamed = true;

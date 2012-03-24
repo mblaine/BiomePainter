@@ -9,6 +9,7 @@ namespace Minecraft
         public Coord Coords = new Coord();
         public Int32 Timestamp;
         public bool Dirty = false;
+        public byte CompressionType;
         public byte[] RawData = null;
 
         public override String ToString()

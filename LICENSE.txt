@@ -5,14 +5,16 @@ under the terms of the MIT License, provided below.
 Projects Minecraft.B17 (Minecraft.B17.dll), Minecraft.B18 (Minecraft.B18.dll), 
 Minecraft.F10 (Minecraft.F10.dll), Minecraft.F11 (Minecraft.F11.dll), and 
 Minecraft.F12 (Minecraft.F12.dll) contain code from Minecraft which is copyright 
-(c) 2009-2012 Mojang AB. For more information please see: Minecraft Terms of 
-Use: http://www.minecraft.net/terms 
+(c) 2009-2012 Mojang AB. For more information please see:
+Minecraft Terms of Use:
+http://www.minecraft.net/terms 
 
 Biome Painter uses DotNetZip (Ionic.Zlib.dll) which is licensed under the 
 Microsoft Public License and includes code based on JZlib which is based on 
-zlib. For more information please see: Microsoft Public License: 
-http://dotnetzip.codeplex.com/SourceControl/changeset/view/85217#156553 JZlib 
-and zlib licensing information: 
+zlib. For more information please see:
+Microsoft Public License:
+http://dotnetzip.codeplex.com/SourceControl/changeset/view/85217#156553
+JZlib and zlib licensing information:
 http://dotnetzip.codeplex.com/SourceControl/changeset/view/85217#1579682 
 
 ==================================================== 
