@@ -5,6 +5,8 @@ using System.Text;
 
 namespace Minecraft
 {
+    //http://web.archive.org/web/20110723210920/http://www.minecraft.net/docs/NBT.txt
+
     public enum TYPE : sbyte
     {
         TAG_End = 0,
@@ -489,7 +491,7 @@ namespace Minecraft
                         Payload[i] = (TAG)new TAG_List(data);
                         break;
                     case TYPE.TAG_Compound:
-                        Payload[i] = (TAG)new TAG_Compound(data);
+                        Payload[i] = (TAG)new TAG_Compound(data, false);
                         break;
                     case TYPE.TAG_Int_Array:
                         Payload[i] = (TAG)new TAG_Int_Array(data);
@@ -535,6 +537,7 @@ namespace Minecraft
     public class TAG_Compound : TAG
     {
         public Dictionary<String, TAG> Payload;
+        public bool IsRoot = false;
 
         public TAG_Compound()
         {
@@ -542,9 +545,10 @@ namespace Minecraft
             Type = TYPE.TAG_Compound;
         }
 
-        public TAG_Compound(Stream data)
+        public TAG_Compound(Stream data, bool isRoot)
             : this()
         {
+            IsRoot = isRoot;
             Read(data);
         }
 
@@ -552,10 +556,29 @@ namespace Minecraft
         {
             get
             {
+                if (IsRoot && (!IsNamed || Name.Length.Payload == 0) && Payload.Count == 1)
+                {
+                    var temp = Payload.GetEnumerator();
+                    temp.MoveNext();
+                    if (temp.Current.Value is TAG_Compound)
+                    {
+                        return temp.Current.Value[key];
+                    }
+                }
                 return Payload[key];
             }
             set
             {
+                if (IsRoot && (!IsNamed || Name.Length.Payload == 0) && Payload.Count == 1)
+                {
+                    var temp = Payload.GetEnumerator();
+                    temp.MoveNext();
+                    if (temp.Current.Value is TAG_Compound)
+                    {
+                        temp.Current.Value[key] = value;
+                        return;
+                    }
+                }
                 Payload[key] = value;
             }
         }
@@ -602,7 +625,7 @@ namespace Minecraft
                         nextTag = (TAG)new TAG_List(data);
                         break;
                     case TYPE.TAG_Compound:
-                        nextTag = (TAG)new TAG_Compound(data);
+                        nextTag = (TAG)new TAG_Compound(data, false);
                         break;
                     case TYPE.TAG_Int_Array:
                         nextTag = (TAG)new TAG_Int_Array(data);
@@ -630,7 +653,7 @@ namespace Minecraft
 
         public override string ToString()
         {
-            if (Payload.Count == 1 && (!IsNamed || Name.Payload.Length == 0))
+            if (IsRoot && (!IsNamed || Name.Length.Payload == 0) && Payload.Count == 1)
             {
                 var temp = Payload.GetEnumerator();
                 temp.MoveNext();

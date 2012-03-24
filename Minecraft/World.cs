@@ -22,11 +22,11 @@ namespace Minecraft
                     MemoryStream mem = new MemoryStream();
                     decompress.CopyTo(mem);
                     mem.Seek(0, SeekOrigin.Begin);
-                    data = new TAG_Compound(mem);
+                    data = new TAG_Compound(mem, true);
                 }
             }
 
-            Seed = ((TAG_Long)data[""]["Data"]["RandomSeed"]).Payload;
+            Seed = ((TAG_Long)data["Data"]["RandomSeed"]).Payload;
             RegionDir = String.Format("{0}{1}region", Path.GetDirectoryName(path), Path.DirectorySeparatorChar);
         }
 
@@ -51,9 +51,9 @@ namespace Minecraft
                 chunkOffset = new Coord(c.Coords.x - chunkOffset.x, c.Coords.z - chunkOffset.z);
                 chunkOffset.ChunktoAbsolute();
 
-                int[] heightmap = ((TAG_Int_Array)c.Root[""]["Level"]["HeightMap"]).Payload;
+                int[] heightmap = ((TAG_Int_Array)c.Root["Level"]["HeightMap"]).Payload;
                 Dictionary<int, TAG_Compound> sections = new Dictionary<int, TAG_Compound>();
-                foreach (TAG t in ((TAG_List)c.Root[""]["Level"]["Sections"]).Payload)
+                foreach (TAG t in ((TAG_List)c.Root["Level"]["Sections"]).Payload)
                 {
                     sections.Add(((TAG_Byte)t["Y"]).Payload, (TAG_Compound)t);
                 }
@@ -104,7 +104,7 @@ namespace Minecraft
                 chunkOffset = new Coord(c.Coords.x - chunkOffset.x, c.Coords.z - chunkOffset.z);
                 chunkOffset.ChunktoAbsolute();
 
-                byte[] biomes = ((TAG_Byte_Array)c.Root[""]["Level"]["Biomes"]).Payload;
+                byte[] biomes = ((TAG_Byte_Array)c.Root["Level"]["Biomes"]).Payload;
 
                 for (int z = 0; z < 16; z++)
                 {
@@ -492,7 +492,7 @@ namespace Minecraft
                 chunkOffset = new Coord(c.Coords.x - chunkOffset.x, c.Coords.z - chunkOffset.z);
                 chunkOffset.ChunktoAbsolute();
 
-                byte[] biomes = ((TAG_Byte_Array)c.Root[""]["Level"]["Biomes"]).Payload;
+                byte[] biomes = ((TAG_Byte_Array)c.Root["Level"]["Biomes"]).Payload;
 
                 for (int z = 0; z < 16; z++)
                 {
@@ -523,7 +523,7 @@ namespace Minecraft
                 Coord chunkAbs = new Coord(c.Coords);
                 chunkAbs.ChunktoAbsolute();
 
-                byte[] biomes = ((TAG_Byte_Array)c.Root[""]["Level"]["Biomes"]).Payload;
+                byte[] biomes = ((TAG_Byte_Array)c.Root["Level"]["Biomes"]).Payload;
 
                 for (int z = 0; z < 16; z++)
                 {
@@ -551,7 +551,7 @@ namespace Minecraft
                 chunkOffset = new Coord(c.Coords.x - chunkOffset.x, c.Coords.z - chunkOffset.z);
                 chunkOffset.ChunktoAbsolute();
 
-                byte[] biomes = ((TAG_Byte_Array)c.Root[""]["Level"]["Biomes"]).Payload;
+                byte[] biomes = ((TAG_Byte_Array)c.Root["Level"]["Biomes"]).Payload;
 
                 for (int z = 0; z < 16; z++)
                 {
@@ -585,7 +585,7 @@ namespace Minecraft
                 Coord chunkAbs = new Coord(c.Coords);
                 chunkAbs.ChunktoAbsolute();
 
-                byte[] biomes = ((TAG_Byte_Array)c.Root[""]["Level"]["Biomes"]).Payload;
+                byte[] biomes = ((TAG_Byte_Array)c.Root["Level"]["Biomes"]).Payload;
 
                 for (int z = 0; z < 16; z++)
                 {
