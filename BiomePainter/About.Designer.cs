@@ -61,6 +61,7 @@
             this.txtReadMe.Size = new System.Drawing.Size(539, 378);
             this.txtReadMe.TabIndex = 3;
             this.txtReadMe.Text = "";
+            this.txtReadMe.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.txtReadMe_LinkClicked);
             // 
             // btnViewLicense
             // 

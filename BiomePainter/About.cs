@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -43,7 +43,10 @@ namespace BiomePainter
                         }
                         else
                         {
-                            lines.Add(l);
+                            if (!prevLineBlank)
+                                lines[lines.Count - 1] = String.Format("{0} {1}", Regex.Replace(lines[lines.Count - 1], "[\r\n]+", "", RegexOptions.Multiline), l);
+                            else
+                                lines.Add(l);
                             prevLineBlank = false;
                         }
                     }
@@ -85,6 +88,11 @@ namespace BiomePainter
         {
             if(File.Exists("LICENSE.txt"))
                 Process.Start("LICENSE.txt");
+        }
+
+        private void txtReadMe_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            Process.Start(e.LinkText);
         }
     }
 }
