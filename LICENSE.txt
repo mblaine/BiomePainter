@@ -13,7 +13,7 @@ Biome Painter uses DotNetZip (Ionic.Zlib.dll) which is licensed under the
 Microsoft Public License and includes code based on JZlib which is based on 
 zlib. For more information please see:
 Microsoft Public License:
-http://dotnetzip.codeplex.com/SourceControl/changeset/view/85217#156553
+http://dotnetzip.codeplex.com/SourceControl/changeset/view/85217#156553 
 JZlib and zlib licensing information:
 http://dotnetzip.codeplex.com/SourceControl/changeset/view/85217#1579682 
 
