@@ -82,7 +82,7 @@
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.lblAbout);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = Properties.Resources.icon;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "About";
