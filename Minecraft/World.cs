@@ -48,7 +48,7 @@ namespace Minecraft
                     continue;
                 Coord chunkOffset = new Coord(region.Coords);
                 chunkOffset.RegiontoChunk();
-                chunkOffset = new Coord(c.Coords.x - chunkOffset.x, c.Coords.z - chunkOffset.z);
+                chunkOffset = new Coord(c.Coords.X - chunkOffset.X, c.Coords.Z - chunkOffset.Z);
                 chunkOffset.ChunktoAbsolute();
 
                 int[] heightmap = ((TAG_Int_Array)c.Root["Level"]["HeightMap"]).Payload;
@@ -82,7 +82,7 @@ namespace Minecraft
                         if(height < 256 && sections.ContainsKey((int)Math.Floor(height / 16.0)))
                             blockAbove = ((TAG_Byte_Array)sections[(int)Math.Floor(height / 16.0)]["Blocks"]).Payload[blockAboveOffset];
 
-                        b.SetPixel(chunkOffset.x + x, chunkOffset.z + z, ColorLookup(block, damage, blockAbove));
+                        b.SetPixel(chunkOffset.X + x, chunkOffset.Z + z, ColorLookup(block, damage, blockAbove));
                     }
                 }
             }
@@ -101,7 +101,7 @@ namespace Minecraft
                     continue;
                 Coord chunkOffset = new Coord(region.Coords);
                 chunkOffset.RegiontoChunk();
-                chunkOffset = new Coord(c.Coords.x - chunkOffset.x, c.Coords.z - chunkOffset.z);
+                chunkOffset = new Coord(c.Coords.X - chunkOffset.X, c.Coords.Z - chunkOffset.Z);
                 chunkOffset.ChunktoAbsolute();
 
                 byte[] biomes = ((TAG_Byte_Array)c.Root["Level"]["Biomes"]).Payload;
@@ -175,8 +175,8 @@ namespace Minecraft
                                 color = Color.Black;
                                 break;
                         }
-                        b.SetPixel(chunkOffset.x + x, chunkOffset.z + z, color);
-                        toolTips[chunkOffset.x + x, chunkOffset.z + z] = biome.ToString();
+                        b.SetPixel(chunkOffset.X + x, chunkOffset.Z + z, color);
+                        toolTips[chunkOffset.X + x, chunkOffset.Z + z] = biome.ToString();
                     }
                 }
             }
@@ -489,7 +489,7 @@ namespace Minecraft
                     continue;
                 Coord chunkOffset = new Coord(region.Coords);
                 chunkOffset.RegiontoChunk();
-                chunkOffset = new Coord(c.Coords.x - chunkOffset.x, c.Coords.z - chunkOffset.z);
+                chunkOffset = new Coord(c.Coords.X - chunkOffset.X, c.Coords.Z - chunkOffset.Z);
                 chunkOffset.ChunktoAbsolute();
 
                 byte[] biomes = ((TAG_Byte_Array)c.Root["Level"]["Biomes"]).Payload;
@@ -498,7 +498,7 @@ namespace Minecraft
                 {
                     for (int x = 0; x < 16; x++)
                     {
-                        if (selection.GetPixel(chunkOffset.x + x, chunkOffset.z + z).ToArgb() == selectionColor.ToArgb())
+                        if (selection.GetPixel(chunkOffset.X + x, chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
                         {
                             biomes[x + z * 16] = (byte)biome;
                             c.Dirty = true;
@@ -517,7 +517,7 @@ namespace Minecraft
                     continue;
                 Coord chunkOffset = new Coord(region.Coords);
                 chunkOffset.RegiontoChunk();
-                chunkOffset = new Coord(c.Coords.x - chunkOffset.x, c.Coords.z - chunkOffset.z);
+                chunkOffset = new Coord(c.Coords.X - chunkOffset.X, c.Coords.Z - chunkOffset.Z);
                 chunkOffset.ChunktoAbsolute();
 
                 Coord chunkAbs = new Coord(c.Coords);
@@ -529,9 +529,9 @@ namespace Minecraft
                 {
                     for (int x = 0; x < 16; x++)
                     {
-                        if (selection.GetPixel(chunkOffset.x + x, chunkOffset.z + z).ToArgb() == selectionColor.ToArgb())
+                        if (selection.GetPixel(chunkOffset.X + x, chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
                         {
-                            biomes[x + z * 16] = (byte)util.GetBiome(chunkAbs.x + x, chunkAbs.z + z);
+                            biomes[x + z * 16] = (byte)util.GetBiome(chunkAbs.X + x, chunkAbs.Z + z);
                             c.Dirty = true;
                             region.Dirty = true;
                         }
@@ -548,7 +548,7 @@ namespace Minecraft
                     continue;
                 Coord chunkOffset = new Coord(region.Coords);
                 chunkOffset.RegiontoChunk();
-                chunkOffset = new Coord(c.Coords.x - chunkOffset.x, c.Coords.z - chunkOffset.z);
+                chunkOffset = new Coord(c.Coords.X - chunkOffset.X, c.Coords.Z - chunkOffset.Z);
                 chunkOffset.ChunktoAbsolute();
 
                 byte[] biomes = ((TAG_Byte_Array)c.Root["Level"]["Biomes"]).Payload;
@@ -557,7 +557,7 @@ namespace Minecraft
                 {
                     for (int x = 0; x < 16; x++)
                     {
-                        if (selection.GetPixel(chunkOffset.x + x, chunkOffset.z + z).ToArgb() == selectionColor.ToArgb())
+                        if (selection.GetPixel(chunkOffset.X + x, chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
                         {
                             if (biomes[x + z * 16] == (byte)search)
                             {
@@ -579,7 +579,7 @@ namespace Minecraft
                     continue;
                 Coord chunkOffset = new Coord(region.Coords);
                 chunkOffset.RegiontoChunk();
-                chunkOffset = new Coord(c.Coords.x - chunkOffset.x, c.Coords.z - chunkOffset.z);
+                chunkOffset = new Coord(c.Coords.X - chunkOffset.X, c.Coords.Z - chunkOffset.Z);
                 chunkOffset.ChunktoAbsolute();
 
                 Coord chunkAbs = new Coord(c.Coords);
@@ -591,11 +591,11 @@ namespace Minecraft
                 {
                     for (int x = 0; x < 16; x++)
                     {
-                        if (selection.GetPixel(chunkOffset.x + x, chunkOffset.z + z).ToArgb() == selectionColor.ToArgb())
+                        if (selection.GetPixel(chunkOffset.X + x, chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
                         {
                             if (biomes[x + z * 16] == (byte)search)
                             {
-                                biomes[x + z * 16] = (byte)replace.GetBiome(chunkAbs.x + x, chunkAbs.z + z);
+                                biomes[x + z * 16] = (byte)replace.GetBiome(chunkAbs.X + x, chunkAbs.Z + z);
                                 c.Dirty = true;
                                 region.Dirty = true;
                             }

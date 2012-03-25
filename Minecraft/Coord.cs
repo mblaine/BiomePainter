@@ -4,61 +4,61 @@ namespace Minecraft
 {
     public struct Coord
     {
-        public int x;
-        public int z;
+        public int X;
+        public int Z;
 
         public Coord(int x, int z)
         {
-            this.x = x;
-            this.z = z;
+            this.X = x;
+            this.Z = z;
         }
 
         public Coord(Coord c)
         {
-            this.x = c.x;
-            this.z = c.z;
+            this.X = c.X;
+            this.Z = c.Z;
         }
 
         public void Add(int dx, int dz)
         {
-            x += dx;
-            z += dz;
+            X += dx;
+            Z += dz;
         }
 
         public void ChunktoAbsolute()
         {
-            x *= 16;
-            z *= 16;
+            X *= 16;
+            Z *= 16;
         }
 
         public void AbsolutetoChunk()
         {
-            x = (int)Math.Floor(((double)x) / 16.0);
-            z = (int)Math.Floor(((double)z) / 16.0);
+            X = (int)Math.Floor(((double)X) / 16.0);
+            Z = (int)Math.Floor(((double)Z) / 16.0);
         }
 
         public void RegiontoAbsolute()
         {
-            x = x * 16 * 32;
-            z = z * 16 * 32;
+            X = X * 16 * 32;
+            Z = Z * 16 * 32;
         }
 
         public void AbsolutetoRegion()
         {
-            x = (int)Math.Floor(((double)x) / 32.0 / 16.0);
-            z = (int)Math.Floor(((double)z) / 32.0 / 16.0);
+            X = (int)Math.Floor(((double)X) / 32.0 / 16.0);
+            Z = (int)Math.Floor(((double)Z) / 32.0 / 16.0);
         }
 
         public void RegiontoChunk()
         {
-            x = x * 32;
-            z = z * 32;
+            X = X * 32;
+            Z = Z * 32;
         }
 
         public void ChunktoRegion()
         {
-            x = (int)Math.Floor(((double)x) / 32.0);
-            z = (int)Math.Floor(((double)z) / 32.0);
+            X = (int)Math.Floor(((double)X) / 32.0);
+            Z = (int)Math.Floor(((double)Z) / 32.0);
         }
     }
 }

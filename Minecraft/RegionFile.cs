@@ -10,7 +10,7 @@ namespace Minecraft
     public class RegionFile
     {
         public List<Chunk> Chunks;
-        public Coord Coords = new Coord();
+        public Coord Coords;
         public String Path;
         public bool Dirty = false;
 
@@ -30,8 +30,8 @@ namespace Minecraft
         {
             Chunks = new List<Chunk>();
             Match m = Regex.Match(path, @"r\.(-?\d+)\.(-?\d+)\.mca");
-            Coords.x = int.Parse(m.Groups[1].Value);
-            Coords.z = int.Parse(m.Groups[2].Value);
+            Coords.X = int.Parse(m.Groups[1].Value);
+            Coords.Z = int.Parse(m.Groups[2].Value);
 
             byte[] header = new byte[8192];
 
@@ -44,8 +44,8 @@ namespace Minecraft
                     for (int chunkX = 0; chunkX < 32; chunkX++)
                     {
                         Chunk c = new Chunk();
-                        c.Coords.x = Coords.x;
-                        c.Coords.z = Coords.z;
+                        c.Coords.X = Coords.X;
+                        c.Coords.Z = Coords.Z;
                         c.Coords.RegiontoChunk();
                         c.Coords.Add(chunkX, chunkZ);
 
@@ -134,10 +134,10 @@ namespace Minecraft
 
                 foreach (Chunk c in Chunks)
                 {
-                    int chunkX = c.Coords.x % 32;
+                    int chunkX = c.Coords.X % 32;
                     if (chunkX < 0)
                         chunkX += 32;
-                    int chunkZ = c.Coords.z % 32;
+                    int chunkZ = c.Coords.Z % 32;
                     if (chunkZ < 0)
                         chunkZ += 32;
 
@@ -200,7 +200,7 @@ namespace Minecraft
         public override String ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("Region [{0}, {1}]\r\n{{\r\n", Coords.x, Coords.z);
+            sb.AppendFormat("Region [{0}, {1}]\r\n{{\r\n", Coords.X, Coords.Z);
             foreach (Chunk c in Chunks)
                 sb.Append(c.ToString());
             sb.Append("}\r\n");
@@ -214,7 +214,7 @@ namespace Minecraft
             Coord c2 = new Coord(int.Parse(m.Groups[1].Value) + 1, int.Parse(m.Groups[2].Value) + 1);
             c.RegiontoAbsolute();
             c2.RegiontoAbsolute();
-            return String.Format("Region {0}, {1} :: ({2}, {3}) to ({4}, {5})", m.Groups[1].Value, m.Groups[2].Value, c.x, c.z, c2.x - 1, c2.z - 1);
+            return String.Format("Region {0}, {1} :: ({2}, {3}) to ({4}, {5})", m.Groups[1].Value, m.Groups[2].Value, c.X, c.Z, c2.X - 1, c2.Z - 1);
         }
     }
 }

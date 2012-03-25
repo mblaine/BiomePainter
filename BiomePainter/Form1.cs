@@ -420,28 +420,28 @@ namespace BiomePainter
         {
             if (world == null || region == null)
                 return;
-            TrySwitchRegion(region.Coords.x, region.Coords.z - 1);
+            TrySwitchRegion(region.Coords.X, region.Coords.Z - 1);
         }
 
         private void belowCurrentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (world == null || region == null)
                 return;
-            TrySwitchRegion(region.Coords.x, region.Coords.z + 1);
+            TrySwitchRegion(region.Coords.X, region.Coords.Z + 1);
         }
 
         private void leftOfCurrentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (world == null || region == null)
                 return;
-            TrySwitchRegion(region.Coords.x - 1, region.Coords.z);
+            TrySwitchRegion(region.Coords.X - 1, region.Coords.Z);
         }
 
         private void rightOfCurrentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (world == null || region == null)
                 return;
-            TrySwitchRegion(region.Coords.x + 1, region.Coords.z);
+            TrySwitchRegion(region.Coords.X + 1, region.Coords.Z);
         }
 
         private void loadRegionByCoordsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -473,7 +473,7 @@ namespace BiomePainter
                     {
                         Coord c = new Coord(x, z);
                         c.AbsolutetoRegion();
-                        TrySwitchRegion(c.x, c.z);
+                        TrySwitchRegion(c.X, c.Z);
                         return;
                     }
                 }
