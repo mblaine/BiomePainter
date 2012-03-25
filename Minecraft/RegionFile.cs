@@ -89,7 +89,7 @@ namespace Minecraft
                             MemoryStream mem = new MemoryStream();
                             decompress.CopyTo(mem);
                             mem.Seek(0, SeekOrigin.Begin);
-                            c.Root = new TAG_Compound(mem, true);
+                            c.Root = new TAG_Compound(mem);
                         }
                         else if (c.CompressionType == 2) //Zlib
                         {
@@ -100,7 +100,7 @@ namespace Minecraft
                             MemoryStream mem = new MemoryStream();
                             decompress.CopyTo(mem);
                             mem.Seek(0, SeekOrigin.Begin);
-                            c.Root = new TAG_Compound(mem, true);
+                            c.Root = new TAG_Compound(mem);
                         }
                         else
                         {

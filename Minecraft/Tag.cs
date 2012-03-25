@@ -579,7 +579,7 @@ namespace Minecraft
                         Payload[i] = (TAG)new TAG_List(data);
                         break;
                     case TYPE.TAG_Compound:
-                        Payload[i] = (TAG)new TAG_Compound(data, false);
+                        Payload[i] = (TAG)new TAG_Compound(data, this);
                         break;
                     case TYPE.TAG_Int_Array:
                         Payload[i] = (TAG)new TAG_Int_Array(data);
@@ -625,18 +625,28 @@ namespace Minecraft
     public class TAG_Compound : TAG
     {
         public Dictionary<String, TAG> Payload;
-        public bool IsRoot = false;
+        private bool IsRoot;
+        private TAG Parent;
 
         public TAG_Compound()
         {
+            IsRoot = false;
+            Parent = null;
             Payload = null;
             Type = TYPE.TAG_Compound;
         }
 
-        public TAG_Compound(Stream data, bool isRoot)
+        public TAG_Compound(Stream data)
             : this()
         {
-            IsRoot = isRoot;
+            IsRoot = true;
+            Read(data);
+        }
+
+        internal TAG_Compound(Stream data, TAG parent)
+            : this()
+        {
+            Parent = parent;
             Read(data);
         }
 
@@ -713,7 +723,7 @@ namespace Minecraft
                         nextTag = (TAG)new TAG_List(data);
                         break;
                     case TYPE.TAG_Compound:
-                        nextTag = (TAG)new TAG_Compound(data, false);
+                        nextTag = (TAG)new TAG_Compound(data, this);
                         break;
                     case TYPE.TAG_Int_Array:
                         nextTag = (TAG)new TAG_Int_Array(data);
@@ -741,7 +751,7 @@ namespace Minecraft
 
         public override string ToString()
         {
-            if (IsRoot && (!IsNamed || Name.Length.Payload == 0) && Payload.Count == 1)
+            if ((IsRoot || (this.Parent != null && this.Parent is TAG_Compound && ((TAG_Compound)this.Parent).IsRoot)) && (!IsNamed || Name.Length.Payload == 0) && Payload.Count == 1)
             {
                 var temp = Payload.GetEnumerator();
                 temp.MoveNext();

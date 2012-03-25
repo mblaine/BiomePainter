@@ -22,7 +22,7 @@ namespace Minecraft
                     MemoryStream mem = new MemoryStream();
                     decompress.CopyTo(mem);
                     mem.Seek(0, SeekOrigin.Begin);
-                    data = new TAG_Compound(mem, true);
+                    data = new TAG_Compound(mem);
                 }
             }
 
