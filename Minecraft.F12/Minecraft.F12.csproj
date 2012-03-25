@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{81119EC7-5966-43C0-98DF-F3AB25BA90E6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Minecraft.F12</RootNamespace>
+    <AssemblyName>Minecraft.F12</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BiomeCache.cs" />
+    <Compile Include="BiomeCacheBlock.cs" />
+    <Compile Include="BiomeGenBase.cs" />
+    <Compile Include="GenLayer.cs" />
+    <Compile Include="GenLayerAddIsland.cs" />
+    <Compile Include="GenLayerAddMushroomIsland.cs" />
+    <Compile Include="GenLayerAddSnow.cs" />
+    <Compile Include="GenLayerBiome.cs" />
+    <Compile Include="GenLayerFuzzyZoom.cs" />
+    <Compile Include="GenLayerHills.cs" />
+    <Compile Include="GenLayerIsland.cs" />
+    <Compile Include="GenLayerRiver.cs" />
+    <Compile Include="GenLayerRiverInit.cs" />
+    <Compile Include="GenLayerRiverMix.cs" />
+    <Compile Include="GenLayerShore.cs" />
+    <Compile Include="GenLayerSmooth.cs" />
+    <Compile Include="GenLayerSwampRivers.cs" />
+    <Compile Include="GenLayerVoronoiZoom.cs" />
+    <Compile Include="GenLayerZoom.cs" />
+    <Compile Include="IntCache.cs" />
+    <Compile Include="LongHashMap.cs" />
+    <Compile Include="LongHashMapEntry.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorldChunkManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Minecraft\Minecraft.csproj">
+      <Project>{973C46F6-1CF8-402B-BBAC-74999E3D2900}</Project>
+      <Name>Minecraft</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

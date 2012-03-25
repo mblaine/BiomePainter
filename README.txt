@@ -31,6 +31,12 @@ For example, after changing an area from taiga or ice plains to another biome
 such as forest, existing ice and snow cover will remain until removed using 
 another tool such as MCEdit or removed manually in Minecraft. 
 
+* If a world was created before Minecraft 1.2 and needed to be converted, 
+Minecraft will have populated each chunk's biome information based on the biome 
+generation from version 1.1. Minecraft will still use the latest biome 
+generation code for newly generated chunks in any world whether it was orignally 
+converted or not. 
+
 * When filling a selection with biomes based on Minecraft Beta 1.7 please 
 remember that not all biomes in that version exist in the current version of 
 Minecraft. As such, areas that would have been shrubland or seasonal forest are 
@@ -43,4 +49,3 @@ Minecraft 1.2 biome jungle.
 
 The source for Biome Painter is available at 
 https://github.com/mblaine/BiomePainter. 
-

@@ -47,7 +47,7 @@ namespace BiomePainter
             cmbReplace1.Items.AddRange(temp);
             cmbReplace2.Items.AddRange(temp);
 
-            String[] versions = { "Minecraft Beta 1.7.3", "Minecraft Beta 1.8.1", "Minecraft 1.0.0", "Minecraft 1.1.0" };
+            String[] versions = { "Minecraft Beta 1.7.3", "Minecraft Beta 1.8.1", "Minecraft 1.0.0", "Minecraft 1.1.0", "Minecraft 1.2.4" };
 
             cmbFill.Items.AddRange(versions);
             cmbReplace2.Items.AddRange(versions);
@@ -337,8 +337,11 @@ namespace BiomePainter
                         util = new Minecraft.F10.WorldChunkManager(world.Seed);
                         break;
                     case "Minecraft 1.1.0":
-                    default:
                         util = new Minecraft.F11.WorldChunkManager(world.Seed);
+                        break;
+                    case "Minecraft 1.2.4":
+                    default:
+                        util = new Minecraft.F12.WorldChunkManager(world.Seed);
                         break;
                 }
                 world.Fill(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, util);
@@ -377,8 +380,11 @@ namespace BiomePainter
                         util = new Minecraft.F10.WorldChunkManager(world.Seed);
                         break;
                     case "Minecraft 1.1.0":
-                    default:
                         util = new Minecraft.F11.WorldChunkManager(world.Seed);
+                        break;
+                    case "Minecraft 1.2.4":
+                    default:
+                        util = new Minecraft.F12.WorldChunkManager(world.Seed);
                         break;
                 }
                 world.Replace(region, imgRegion.Layers[0].Image, imgRegion.SelectionColor, (Biome)Enum.Parse(typeof(Biome), (String)cmbReplace1.SelectedItem), util);
