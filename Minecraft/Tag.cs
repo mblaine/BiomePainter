@@ -7,7 +7,7 @@ namespace Minecraft
 {
     //http://web.archive.org/web/20110723210920/http://www.minecraft.net/docs/NBT.txt
 
-    public enum TYPE : sbyte
+    public enum TYPE : byte
     {
         TAG_End = 0,
         TAG_Byte = 1,
@@ -42,11 +42,99 @@ namespace Minecraft
                 throw new NotImplementedException("Indexing only possible with TAG_Compound");
             }
         }
+
+        public static explicit operator byte(TAG tag)
+        {
+            if (tag is TAG_Byte)
+                return ((TAG_Byte)tag).Payload;
+            else
+                throw new InvalidCastException(String.Format("Unable to cast {0} to byte.", tag.GetType()));
+        }
+
+        public static explicit operator short(TAG tag)
+        {
+            if (tag is TAG_Short)
+                return ((TAG_Short)tag).Payload;
+            else
+                throw new InvalidCastException(String.Format("Unable to cast {0} to short.", tag.GetType()));
+        }
+
+        public static explicit operator int(TAG tag)
+        {
+            if (tag is TAG_Int)
+                return ((TAG_Int)tag).Payload;
+            else
+                throw new InvalidCastException(String.Format("Unable to cast {0} to int.", tag.GetType()));
+        }
+
+        public static explicit operator long(TAG tag)
+        {
+            if (tag is TAG_Long)
+                return ((TAG_Long)tag).Payload;
+            else
+                throw new InvalidCastException(String.Format("Unable to cast {0} to long.", tag.GetType()));
+        }
+
+        public static explicit operator float(TAG tag)
+        {
+            if (tag is TAG_Float)
+                return ((TAG_Float)tag).Payload;
+            else
+                throw new InvalidCastException(String.Format("Unable to cast {0} to float.", tag.GetType()));
+        }
+
+        public static explicit operator double(TAG tag)
+        {
+            if (tag is TAG_Double)
+                return ((TAG_Double)tag).Payload;
+            else
+                throw new InvalidCastException(String.Format("Unable to cast {0} to double.", tag.GetType()));
+        }
+
+        public static explicit operator byte[](TAG tag)
+        {
+            if (tag is TAG_Byte_Array)
+                return ((TAG_Byte_Array)tag).Payload;
+            else
+                throw new InvalidCastException(String.Format("Unable to cast {0} to byte[].", tag.GetType()));
+        }
+
+        public static explicit operator int[](TAG tag)
+        {
+            if (tag is TAG_Int_Array)
+                return ((TAG_Int_Array)tag).Payload;
+            else
+                throw new InvalidCastException(String.Format("Unable to cast {0} to int[].", tag.GetType()));
+        }
+
+        public static explicit operator String(TAG tag)
+        {
+            if (tag is TAG_String)
+                return ((TAG_String)tag).PayloadString;
+            else
+                throw new InvalidCastException(String.Format("Unable to cast {0} to String.", tag.GetType()));
+        }
+
+        public static explicit operator TAG[](TAG tag)
+        {
+            if (tag is TAG_List)
+                return ((TAG_List)tag).Payload;
+            else
+                throw new InvalidCastException(String.Format("Unable to cast {0} to TAG[].", tag.GetType()));
+        }
+
+        public static explicit operator Dictionary<String, TAG>(TAG tag)
+        {
+            if (tag is TAG_Compound)
+                return ((TAG_Compound)tag).Payload;
+            else
+                throw new InvalidCastException(String.Format("Unable to cast {0} to Dictionary<String, TAG>.", tag.GetType()));
+        }
     }
 
     public class TAG_Byte : TAG
     {
-        public SByte Payload;
+        public Byte Payload;
 
         public TAG_Byte()
         {
@@ -62,12 +150,12 @@ namespace Minecraft
 
         public override void Read(Stream data)
         {
-            Payload = (SByte)data.ReadByte();
+            Payload = (Byte)data.ReadByte();
         }
 
         public override void Write(Stream data)
         {
-            data.WriteByte((byte)Payload);
+            data.WriteByte(Payload);
         }
 
         public override string ToString()

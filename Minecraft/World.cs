@@ -26,7 +26,7 @@ namespace Minecraft
                 }
             }
 
-            Seed = ((TAG_Long)data["Data"]["RandomSeed"]).Payload;
+            Seed = (long)data["Data"]["RandomSeed"];
             RegionDir = String.Format("{0}{1}region", Path.GetDirectoryName(path), Path.DirectorySeparatorChar);
         }
 
@@ -51,11 +51,11 @@ namespace Minecraft
                 chunkOffset = new Coord(c.Coords.X - chunkOffset.X, c.Coords.Z - chunkOffset.Z);
                 chunkOffset.ChunktoAbsolute();
 
-                int[] heightmap = ((TAG_Int_Array)c.Root["Level"]["HeightMap"]).Payload;
+                int[] heightmap = (int[])c.Root["Level"]["HeightMap"];
                 Dictionary<int, TAG_Compound> sections = new Dictionary<int, TAG_Compound>();
-                foreach (TAG t in ((TAG_List)c.Root["Level"]["Sections"]).Payload)
+                foreach (TAG t in (TAG[])c.Root["Level"]["Sections"])
                 {
-                    sections.Add(((TAG_Byte)t["Y"]).Payload, (TAG_Compound)t);
+                    sections.Add((byte)t["Y"], (TAG_Compound)t);
                 }
 
                 for (int z = 0; z < 16; z++)
@@ -70,17 +70,24 @@ namespace Minecraft
                         {
                             height = 128;
                         }
+                        
+                        byte[] blocks = (byte[])sections[(int)Math.Floor((height - 1) / 16.0)]["Blocks"];
+                        byte[] data = (byte[])sections[(int)Math.Floor((height - 1) / 16.0)]["Data"];
                         int blockOffset = ((((height - 1) % 16) * 16 + z) * 16 + x);
-                        int blockAboveOffset = (((height % 16) * 16 + z) * 16 + x);
-                        int block = ((TAG_Byte_Array)sections[(int)Math.Floor((height - 1) / 16.0)]["Blocks"]).Payload[blockOffset];
-                        int damage = ((TAG_Byte_Array)sections[(int)Math.Floor((height - 1) / 16.0)]["Data"]).Payload[(int)Math.Floor(blockOffset / 2.0)];
+                        int block = blocks[blockOffset];
+                        int damage = data[(int)Math.Floor(blockOffset / 2.0)];
                         if (blockOffset % 2 == 0)
                             damage = (damage >> 4) & 0x0F;
                         else
                             damage = damage & 0x0F;
+
+                        int blockAboveOffset = (((height % 16) * 16 + z) * 16 + x);
                         int blockAbove = block;
-                        if(height < 256 && sections.ContainsKey((int)Math.Floor(height / 16.0)))
-                            blockAbove = ((TAG_Byte_Array)sections[(int)Math.Floor(height / 16.0)]["Blocks"]).Payload[blockAboveOffset];
+                        if (height < 256 && sections.ContainsKey((int)Math.Floor(height / 16.0)))
+                        {
+                            byte[] blocksAbove = (byte[])sections[(int)Math.Floor(height / 16.0)]["Blocks"];
+                            blockAbove = blocksAbove[blockAboveOffset];
+                        }
 
                         b.SetPixel(chunkOffset.X + x, chunkOffset.Z + z, ColorLookup(block, damage, blockAbove));
                     }
@@ -104,7 +111,7 @@ namespace Minecraft
                 chunkOffset = new Coord(c.Coords.X - chunkOffset.X, c.Coords.Z - chunkOffset.Z);
                 chunkOffset.ChunktoAbsolute();
 
-                byte[] biomes = ((TAG_Byte_Array)c.Root["Level"]["Biomes"]).Payload;
+                byte[] biomes = (byte[])c.Root["Level"]["Biomes"];
 
                 for (int z = 0; z < 16; z++)
                 {
@@ -492,7 +499,7 @@ namespace Minecraft
                 chunkOffset = new Coord(c.Coords.X - chunkOffset.X, c.Coords.Z - chunkOffset.Z);
                 chunkOffset.ChunktoAbsolute();
 
-                byte[] biomes = ((TAG_Byte_Array)c.Root["Level"]["Biomes"]).Payload;
+                byte[] biomes = (byte[])c.Root["Level"]["Biomes"];
 
                 for (int z = 0; z < 16; z++)
                 {
@@ -523,7 +530,7 @@ namespace Minecraft
                 Coord chunkAbs = new Coord(c.Coords);
                 chunkAbs.ChunktoAbsolute();
 
-                byte[] biomes = ((TAG_Byte_Array)c.Root["Level"]["Biomes"]).Payload;
+                byte[] biomes = (byte[])c.Root["Level"]["Biomes"];
 
                 for (int z = 0; z < 16; z++)
                 {
@@ -551,7 +558,7 @@ namespace Minecraft
                 chunkOffset = new Coord(c.Coords.X - chunkOffset.X, c.Coords.Z - chunkOffset.Z);
                 chunkOffset.ChunktoAbsolute();
 
-                byte[] biomes = ((TAG_Byte_Array)c.Root["Level"]["Biomes"]).Payload;
+                byte[] biomes = (byte[])c.Root["Level"]["Biomes"];
 
                 for (int z = 0; z < 16; z++)
                 {
@@ -585,7 +592,7 @@ namespace Minecraft
                 Coord chunkAbs = new Coord(c.Coords);
                 chunkAbs.ChunktoAbsolute();
 
-                byte[] biomes = ((TAG_Byte_Array)c.Root["Level"]["Biomes"]).Payload;
+                byte[] biomes = (byte[])c.Root["Level"]["Biomes"];
 
                 for (int z = 0; z < 16; z++)
                 {
