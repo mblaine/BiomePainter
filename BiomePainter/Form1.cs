@@ -107,7 +107,7 @@ namespace BiomePainter
 
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.InitialDirectory = lastPath;
-            dialog.Filter = "(*.dat)|*.dat";
+            dialog.Filter = "Minecraft level (*.dat)|*.dat";
             dialog.RestoreDirectory = false;
 
             if (dialog.ShowDialog() != DialogResult.OK)
@@ -115,8 +115,8 @@ namespace BiomePainter
 
             ResetControls();
 
-            lastPath = dialog.FileName;
-            world = new World(lastPath);
+            lastPath = Path.GetDirectoryName(dialog.FileName);
+            world = new World(dialog.FileName);
 
             String[] regions = world.GetRegionPaths();
             if (regions.Length == 0)
