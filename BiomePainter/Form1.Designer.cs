@@ -505,7 +505,7 @@
             // 
             this.btnReplace.Location = new System.Drawing.Point(634, 20);
             this.btnReplace.Name = "btnReplace";
-            this.btnReplace.Size = new System.Drawing.Size(75, 24);
+            this.btnReplace.Size = new System.Drawing.Size(75, 25);
             this.btnReplace.TabIndex = 5;
             this.btnReplace.Text = "Replace";
             this.btnReplace.UseVisualStyleBackColor = true;
@@ -531,9 +531,9 @@
             // 
             // btnFill
             // 
-            this.btnFill.Location = new System.Drawing.Point(186, 21);
+            this.btnFill.Location = new System.Drawing.Point(186, 20);
             this.btnFill.Name = "btnFill";
-            this.btnFill.Size = new System.Drawing.Size(75, 24);
+            this.btnFill.Size = new System.Drawing.Size(75, 25);
             this.btnFill.TabIndex = 2;
             this.btnFill.Text = "Fill";
             this.btnFill.UseVisualStyleBackColor = true;
