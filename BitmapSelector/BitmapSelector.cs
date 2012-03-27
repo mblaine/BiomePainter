@@ -98,7 +98,7 @@ namespace BitmapSelector
             ColorMatrix cm = new ColorMatrix();
             ImageAttributes ia = new ImageAttributes();
             Rectangle dest = new Rectangle(0, 0, this.Width, this.Height);
-            Rectangle source = new Rectangle(OffsetX, OffsetY, this.Width / Magnification, this.Height / Magnification);
+            Rectangle source = new Rectangle(OffsetX, OffsetY, (int)Math.Round(((double)this.Width) / ((double)Magnification)), (int)Math.Round(((double)this.Height) / ((double)Magnification)));
             for (int i = Layers.Count - 1; i >= 0; i--)
             {
                 if (!Layers[i].Visable)
@@ -283,16 +283,25 @@ namespace BitmapSelector
             OffsetX = offsetX;
             OffsetY = offsetY;
 
+            int scaledWidth = (int)Math.Round(((double)Width) / ((double)Magnification));
+            int scaledHeight = (int)Math.Round(((double)Height) / ((double)Magnification));
+
             //prevent scrolling past the end of the image
-            if (Width - OffsetX < (Width / Magnification))
-                OffsetX = Width - (Width / Magnification);
-            if(Height - OffsetY < (Height / Magnification))
-                OffsetY = Height - (Height / Magnification);
+            if (Width - OffsetX < scaledWidth)
+                OffsetX = Width - scaledWidth;
+            if(Height - OffsetY < scaledHeight)
+                OffsetY = Height - scaledHeight;
         }
 
         private Point Translate(Point e)
         {
-            return new Point(OffsetX + (e.X / Magnification), OffsetY + (e.Y / Magnification));
+            Matrix m = new Matrix(1, 0, 0, 1, 0, 0);
+            m.Scale(Magnification, Magnification);
+            m.Invert();
+            Point[] p = new Point[] { e };
+            m.TransformPoints(p);
+            p[0].Offset(OffsetX, OffsetY);
+            return p[0];
         }
     }
 }
