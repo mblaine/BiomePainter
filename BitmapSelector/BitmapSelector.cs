@@ -47,6 +47,9 @@ namespace BitmapSelector
             Layers.Add(new Layer(this.Width, this.Height, 0.6f));
 
             ToolTips = new String[Width, Height];
+
+            scrollHorizontal.Maximum = Width;
+            scrollVertical.Maximum = Height;
         }
 
         protected override void Dispose(bool disposing)
@@ -116,6 +119,15 @@ namespace BitmapSelector
                 g.DrawImage(Layers[i].Image, dest, source.X, source.Y, source.Width, source.Height, GraphicsUnit.Pixel, ia);
             }
 
+            if (scrollHorizontal.Visible && scrollVertical.Visible)
+            {
+                //draw over the corner between the scrollbars
+                dest = new Rectangle(scrollVertical.Location.X, scrollHorizontal.Location.Y, scrollVertical.Width, scrollHorizontal.Height);
+                Brush b = new SolidBrush(SystemColors.Control);
+                g.FillRectangle(b, dest);
+                b.Dispose();
+            }
+
             this.Refresh();
         }
 
@@ -124,6 +136,7 @@ namespace BitmapSelector
         {
             if (backbufferGraphics != null)
                 backbufferGraphics.Render(e.Graphics);
+            base.OnPaint(e);
         }
 
 
@@ -163,7 +176,7 @@ namespace BitmapSelector
                 }
             }
             else if (p.X >= 0 && p.X < Width && p.Y >= 0 && p.Y < Height)
-                Layers[0].Image.SetPixel(p.X, p.Y, SelectionColor);
+                Layers[0].Image.SetPixel(p.X, p.Y, mouse1Down ? SelectionColor : Color.Transparent);
 
             Redraw();
         }
@@ -256,6 +269,10 @@ namespace BitmapSelector
             Magnification = 1;
             OffsetX = 0;
             OffsetY = 0;
+            scrollHorizontal.Visible = false;
+            scrollVertical.Visible = false;
+            scrollHorizontal.Value = 0;
+            scrollVertical.Value = 0;
             foreach (Layer l in Layers)
             {
                 using (Graphics g = Graphics.FromImage(l.Image))
@@ -332,9 +349,11 @@ namespace BitmapSelector
             else
             {
                 scrollHorizontal.Visible = true;
-                scrollVertical.Visible = true;
                 scrollHorizontal.Value = OffsetX;
+                scrollHorizontal.Maximum = Width - scaledWidth + scrollWidth + scrollHorizontal.LargeChange - 1;
+                scrollVertical.Visible = true;
                 scrollVertical.Value = OffsetY;
+                scrollVertical.Maximum = Height - scaledHeight + scrollHeight + scrollVertical.LargeChange - 1;
             }
 
             Redraw();

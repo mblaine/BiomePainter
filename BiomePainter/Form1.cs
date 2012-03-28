@@ -28,9 +28,6 @@ namespace BiomePainter
             imgRegion.Layers.Add(new BitmapSelector.Layer(512, 512, 0.5f));
             imgRegion.Layers.Add(new BitmapSelector.Layer(512, 512, 1.0f));
 
-            trackPanHorizontal.Maximum = 512 / imgRegion.OffsetStep;
-            trackPanVertical.Maximum = 512 / imgRegion.OffsetStep;
-
             List<String> names = new List<String>();
             foreach (Biome b in Enum.GetValues(typeof(Biome)))
             {
@@ -82,13 +79,32 @@ namespace BiomePainter
             lstRegions.Items.Clear();
             lastSelectedRegionIndex = -1;
             trackMagnification.Value = 1;
-            trackPanHorizontal.Value = 0;
-            trackPanVertical.Value = 0;
             lblMagnification.Text = "Magnification: 1x";
             imgRegion.Reset();
             region = null;
             world = null;
         }
+
+        private void UpdateStatus(String status)
+        {
+            lblStatus.Text = status;
+            lblStatus.Refresh();
+        }
+
+        private void TrySwitchRegion(int x, int z)
+        {
+            int i = lstRegions.FindString(String.Format("Region {0}, {1} ::", x, z));
+            if (i == ListBox.NoMatches)
+            {
+                MessageBox.Show(this, "Sorry, that region does not exist yet.", "Load", MessageBoxButtons.OK);
+            }
+            else
+            {
+                lstRegions.SelectedIndex = i;
+            }
+        }
+
+        #region Menus
 
         private void openWorldToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -184,46 +200,123 @@ namespace BiomePainter
             imgRegion.Redraw();
         }
 
+        private void aboveCurrentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (world == null || region == null)
+                return;
+            TrySwitchRegion(region.Coords.X, region.Coords.Z - 1);
+        }
+
+        private void belowCurrentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (world == null || region == null)
+                return;
+            TrySwitchRegion(region.Coords.X, region.Coords.Z + 1);
+        }
+
+        private void leftOfCurrentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (world == null || region == null)
+                return;
+            TrySwitchRegion(region.Coords.X - 1, region.Coords.Z);
+        }
+
+        private void rightOfCurrentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (world == null || region == null)
+                return;
+            TrySwitchRegion(region.Coords.X + 1, region.Coords.Z);
+        }
+
+        private void loadRegionByCoordsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (world == null)
+                return;
+
+            String msg = "Type absolute x and z block coordinates (x, z) to load the region that contains the specified point.";
+            String input = "";
+            while (true)
+            {
+                input = Microsoft.VisualBasic.Interaction.InputBox(msg, "Load", input);
+                if (input.Length == 0)
+                    return;
+
+                Match m = Regex.Match(input, @"([-\+]?\d+)(?:[,\s]+)([-\+]?\d+)");
+                if (m.Groups.Count < 3)
+                {
+                    msg = "Unable to parse coordinates. Please try again or click cancel.";
+                }
+                else
+                {
+                    int x, z;
+                    if (!Int32.TryParse(m.Groups[1].Value, out x) || !Int32.TryParse(m.Groups[2].Value, out z))
+                    {
+                        msg = "Unable to parse coordinates. Please try again or click cancel.";
+                    }
+                    else
+                    {
+                        Coord c = new Coord(x, z);
+                        c.AbsolutetoRegion();
+                        TrySwitchRegion(c.X, c.Z);
+                        return;
+                    }
+                }
+            }
+        }
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void lstRegions_SelectedIndexChanged(object sender, EventArgs e)
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (world == null || lstRegions.SelectedIndex == lastSelectedRegionIndex)
-                return;
-
-            if (region != null && region.Dirty)
-            {
-                DialogResult res = MessageBox.Show(this, NEEDTOSAVEMSG, "Save", MessageBoxButtons.YesNoCancel);
-                if (res == DialogResult.Yes)
-                {
-                    UpdateStatus("Writing region file");
-                    region.Write();
-                    UpdateStatus("");
-                }
-                else if (res == DialogResult.Cancel)
-                {
-                    lstRegions.SelectedIndex = lastSelectedRegionIndex;
-                    return;
-                }
-            }
-
-            Match m = Regex.Match(lstRegions.SelectedItem.ToString(), @"Region (-?\d+), (-?\d+)");
-            String path = String.Format("{0}{1}r.{2}.{3}.mca", world.RegionDir, Path.DirectorySeparatorChar, m.Groups[1].Value, m.Groups[2].Value);
-
-            UpdateStatus("Reading region file");
-            region = new RegionFile(path);
-            imgRegion.Reset();
-            UpdateStatus("Generating terrain map");
-            world.RenderRegion(region, imgRegion.Layers[2].Image);
-            UpdateStatus("Generating biome map");
-            world.RenderRegionBiomes(region, imgRegion.Layers[1].Image, imgRegion.ToolTips);
-            UpdateStatus("");
-            imgRegion.Redraw();
-            lastSelectedRegionIndex = lstRegions.SelectedIndex;
+            btnUndo_Click(this, null);
         }
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnRedo_Click(this, null);
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnCopy_Click(this, null);
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnPaste_Click(this, null);
+        }
+
+        private void allToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnSelectAll_Click(this, null);
+        }
+
+        private void noneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnSelectNone_Click(this, null);
+        }
+
+        private void invertToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnInvertSelection_Click(this, null);
+        }
+
+        private void chunksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnSelectChunks_Click(this, null);
+        }
+
+        private void aboutBiomePainterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new About().ShowDialog(this);
+        }
+
+        #endregion
+
+        #region Checkboxes
 
         private void chkShowMap_CheckedChanged(object sender, EventArgs e)
         {
@@ -242,11 +335,30 @@ namespace BiomePainter
             imgRegion.ShowToolTips = chkShowToolTips.Checked;
         }
 
+        private void chkShowChunkBoundaries_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
         private void chkShowSelection_CheckedChanged(object sender, EventArgs e)
         {
             imgRegion.Layers[0].Visable = chkShowSelection.Checked;
             imgRegion.Redraw();
         }
+
+        private void radRoundBrush_CheckedChanged(object sender, EventArgs e)
+        {
+            imgRegion.Brush = BrushType.Round;
+        }
+
+        private void radSquareBrush_CheckedChanged(object sender, EventArgs e)
+        {
+            imgRegion.Brush = BrushType.Square;
+        }
+
+        #endregion
+
+        #region Buttons
 
         private void btnSelectAll_Click(object sender, EventArgs e)
         {
@@ -262,7 +374,9 @@ namespace BiomePainter
 
         private void btnInvertSelection_Click(object sender, EventArgs e)
         {
+            UpdateStatus("Inverting selection");
             imgRegion.InvertSelection();
+            UpdateStatus("");
             imgRegion.Redraw();
         }
 
@@ -274,35 +388,24 @@ namespace BiomePainter
             imgRegion.Redraw();
         }
 
-        private void radRoundBrush_CheckedChanged(object sender, EventArgs e)
+        private void btnUndo_Click(object sender, EventArgs e)
         {
-            imgRegion.Brush = BrushType.Round;
+
         }
 
-        private void radSquareBrush_CheckedChanged(object sender, EventArgs e)
+        private void btnRedo_Click(object sender, EventArgs e)
         {
-            imgRegion.Brush = BrushType.Square;
+
         }
 
-        private void trackBrushDiameter_Scroll(object sender, EventArgs e)
+        private void btnCopy_Click(object sender, EventArgs e)
         {
-            lblBrushDiameter.Text = String.Format("Brush Diameter: {0}", trackBrushDiameter.Value);
-            imgRegion.BrushDiameter = trackBrushDiameter.Value;
+
         }
 
-        private void trackMagnification_Scroll(object sender, EventArgs e)
+        private void btnPaste_Click(object sender, EventArgs e)
         {
-            imgRegion.Zoom(trackMagnification.Value, imgRegion.OffsetX, imgRegion.OffsetY);
-        }
 
-        private void trackPanHorizontal_Scroll(object sender, EventArgs e)
-        {
-            imgRegion.Zoom(imgRegion.Magnification, imgRegion.OffsetStep * trackPanHorizontal.Value, imgRegion.OffsetY);
-        }
- 
-        private void trackPanVertical_Scroll(object sender, EventArgs e)
-        {
-            imgRegion.Zoom(imgRegion.Magnification, imgRegion.OffsetX, imgRegion.OffsetStep * trackPanVertical.Value);
         }
 
         private void btnFill_Click(object sender, EventArgs e)
@@ -391,102 +494,64 @@ namespace BiomePainter
             imgRegion.Redraw();
         }
 
-        private void UpdateStatus(String status)
-        {
-            lblStatus.Text = status;
-            lblStatus.Refresh();
-        }
+        #endregion
 
-        private void TrySwitchRegion(int x, int z)
+        #region Other event handlers
+
+        private void lstRegions_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int i = lstRegions.FindString(String.Format("Region {0}, {1} ::", x, z));
-            if (i == ListBox.NoMatches)
+            if (world == null || lstRegions.SelectedIndex == lastSelectedRegionIndex)
+                return;
+
+            if (region != null && region.Dirty)
             {
-                MessageBox.Show(this, "Sorry, that region does not exist yet.", "Load", MessageBoxButtons.OK);
-            }
-            else
-            {
-                lstRegions.SelectedIndex = i;
-            }
-        }
-
-        private void aboveCurrentToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (world == null || region == null)
-                return;
-            TrySwitchRegion(region.Coords.X, region.Coords.Z - 1);
-        }
-
-        private void belowCurrentToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (world == null || region == null)
-                return;
-            TrySwitchRegion(region.Coords.X, region.Coords.Z + 1);
-        }
-
-        private void leftOfCurrentToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (world == null || region == null)
-                return;
-            TrySwitchRegion(region.Coords.X - 1, region.Coords.Z);
-        }
-
-        private void rightOfCurrentToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (world == null || region == null)
-                return;
-            TrySwitchRegion(region.Coords.X + 1, region.Coords.Z);
-        }
-
-        private void loadRegionByCoordsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (world == null)
-                return;
-
-            String msg = "Type absolute x and z block coordinates (x, z) to load the region that contains the specified point.";
-            String input = "";
-            while(true)
-            {
-                input = Microsoft.VisualBasic.Interaction.InputBox(msg, "Load", input);
-                if (input.Length == 0)
+                DialogResult res = MessageBox.Show(this, NEEDTOSAVEMSG, "Save", MessageBoxButtons.YesNoCancel);
+                if (res == DialogResult.Yes)
+                {
+                    UpdateStatus("Writing region file");
+                    region.Write();
+                    UpdateStatus("");
+                }
+                else if (res == DialogResult.Cancel)
+                {
+                    lstRegions.SelectedIndex = lastSelectedRegionIndex;
                     return;
-
-                Match m = Regex.Match(input, @"([-\+]?\d+)(?:[,\s]+)([-\+]?\d+)");
-                if (m.Groups.Count < 3)
-                {
-                    msg = "Unable to parse coordinates. Please try again or click cancel.";
-                }
-                else
-                {
-                    int x, z;
-                    if (!Int32.TryParse(m.Groups[1].Value, out x) || !Int32.TryParse(m.Groups[2].Value, out z))
-                    {
-                        msg = "Unable to parse coordinates. Please try again or click cancel.";
-                    }
-                    else
-                    {
-                        Coord c = new Coord(x, z);
-                        c.AbsolutetoRegion();
-                        TrySwitchRegion(c.X, c.Z);
-                        return;
-                    }
                 }
             }
+
+            Match m = Regex.Match(lstRegions.SelectedItem.ToString(), @"Region (-?\d+), (-?\d+)");
+            String path = String.Format("{0}{1}r.{2}.{3}.mca", world.RegionDir, Path.DirectorySeparatorChar, m.Groups[1].Value, m.Groups[2].Value);
+
+            UpdateStatus("Reading region file");
+            region = new RegionFile(path);
+            imgRegion.Reset();
+            UpdateStatus("Generating terrain map");
+            world.RenderRegion(region, imgRegion.Layers[2].Image);
+            UpdateStatus("Generating biome map");
+            world.RenderRegionBiomes(region, imgRegion.Layers[1].Image, imgRegion.ToolTips);
+            UpdateStatus("");
+            imgRegion.Redraw();
+            lastSelectedRegionIndex = lstRegions.SelectedIndex;
         }
 
-        private void aboutBiomePainterToolStripMenuItem_Click(object sender, EventArgs e)
+        private void trackBrushDiameter_Scroll(object sender, EventArgs e)
         {
-            new About().ShowDialog(this);
+            lblBrushDiameter.Text = String.Format("Brush Diameter: {0}", trackBrushDiameter.Value);
+            imgRegion.BrushDiameter = trackBrushDiameter.Value;
+        }
+
+        private void trackMagnification_Scroll(object sender, EventArgs e)
+        {
+            imgRegion.Zoom(trackMagnification.Value, imgRegion.OffsetX, imgRegion.OffsetY);
         }
 
         private void imgRegion_ZoomEvent(object sender, ZoomEventArgs e)
         {
             lblMagnification.Text = String.Format("Magnification: {0}x", e.NewMagnification);
             trackMagnification.Value = e.NewMagnification;
-            trackPanHorizontal.Value = e.NewOffsetX/ imgRegion.OffsetStep;
-            trackPanVertical.Value = e.NewOffsetY/ imgRegion.OffsetStep;
-
         }
+
+        #endregion
     }
 
 }
