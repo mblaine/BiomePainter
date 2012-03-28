@@ -9,6 +9,9 @@ namespace BitmapSelector
 {
     public partial class BitmapSelector : UserControl
     {
+        public delegate void ZoomEventHandler(Object sender, ZoomEventArgs e);
+        public event ZoomEventHandler ZoomEvent;
+
         private BufferedGraphicsContext backbufferContext;
         private BufferedGraphics backbufferGraphics;
         private Graphics g;
@@ -23,6 +26,8 @@ namespace BitmapSelector
         public int OffsetX = 0;
         public int OffsetY = 0;
         public int OffsetStep = 16;
+
+        public int MagnificationMax = 10;
 
         private bool mouse1Down = false;
         private bool mouse2Down = false;
@@ -70,6 +75,9 @@ namespace BitmapSelector
             ToolTips = new String[Width, Height];
             foreach (Layer l in Layers)
                 l.Resize(Width, Height);
+
+            scrollHorizontal.Maximum = Width;
+            scrollVertical.Maximum = Height;
             Redraw();
         }
 
@@ -231,6 +239,17 @@ namespace BitmapSelector
             toolTip.Hide(this);
         }
 
+        private void BitmapSelector_MouseWheel(object sender, MouseEventArgs e)
+        {
+            int newMagnification = Magnification + e.Delta / 120;
+            if (newMagnification <= 0)
+                newMagnification = 1;
+            else if (newMagnification > MagnificationMax)
+                newMagnification = MagnificationMax;
+
+            Zoom(newMagnification, OffsetX, OffsetY);
+        }
+
         public void Reset()
         {
             ToolTips = new String[Width, Height];
@@ -277,6 +296,16 @@ namespace BitmapSelector
             }
         }
 
+        private void scrollVertical_Scroll(object sender, ScrollEventArgs e)
+        {
+            Zoom(Magnification, OffsetX, e.NewValue);
+        }
+
+        private void scrollHorizontal_Scroll(object sender, ScrollEventArgs e)
+        {
+            Zoom(Magnification, e.NewValue, OffsetY);
+        }
+
         public void Zoom(int magnififcation, int offsetX, int offsetY)
         {
             Magnification = magnififcation;
@@ -286,11 +315,30 @@ namespace BitmapSelector
             int scaledWidth = (int)Math.Round(((double)Width) / ((double)Magnification));
             int scaledHeight = (int)Math.Round(((double)Height) / ((double)Magnification));
 
+            int scrollWidth = Magnification <= 1 ? 0 : (int)Math.Round(((double)scrollVertical.Width) / ((double)Magnification)); ;
+            int scrollHeight = Magnification <= 1 ? 0 : (int)Math.Round(((double)scrollHorizontal.Height) / ((double)Magnification));
+
             //prevent scrolling past the end of the image
-            if (Width - OffsetX < scaledWidth)
-                OffsetX = Width - scaledWidth;
-            if(Height - OffsetY < scaledHeight)
-                OffsetY = Height - scaledHeight;
+            if (Width - OffsetX < scaledWidth + scrollWidth)
+                OffsetX = Width - scaledWidth + scrollWidth;
+            if (Height - OffsetY < scaledHeight + scrollHeight)
+                OffsetY = Height - scaledHeight + scrollHeight;
+
+            if (Magnification <= 1)
+            {
+                scrollHorizontal.Visible = false;
+                scrollVertical.Visible = false;
+            }
+            else
+            {
+                scrollHorizontal.Visible = true;
+                scrollVertical.Visible = true;
+                scrollHorizontal.Value = OffsetX;
+                scrollVertical.Value = OffsetY;
+            }
+
+            Redraw();
+            OnZoom(new ZoomEventArgs(Magnification, OffsetX, OffsetY));
         }
 
         private Point Translate(Point e)
@@ -302,6 +350,12 @@ namespace BitmapSelector
             m.TransformPoints(p);
             p[0].Offset(OffsetX, OffsetY);
             return p[0];
+        }
+
+        protected virtual void OnZoom(ZoomEventArgs e)
+        {
+            if (ZoomEvent != null)
+                ZoomEvent(this, e);
         }
     }
 }

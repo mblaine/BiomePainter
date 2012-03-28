@@ -293,22 +293,16 @@ namespace BiomePainter
         private void trackMagnification_Scroll(object sender, EventArgs e)
         {
             imgRegion.Zoom(trackMagnification.Value, imgRegion.OffsetX, imgRegion.OffsetY);
-            imgRegion.Redraw();
-            lblMagnification.Text = String.Format("Magnification: {0}x", trackMagnification.Value);
-            trackPanHorizontal.Value = imgRegion.OffsetX / imgRegion.OffsetStep;
-            trackPanVertical.Value = imgRegion.OffsetY / imgRegion.OffsetStep;
         }
 
         private void trackPanHorizontal_Scroll(object sender, EventArgs e)
         {
             imgRegion.Zoom(imgRegion.Magnification, imgRegion.OffsetStep * trackPanHorizontal.Value, imgRegion.OffsetY);
-            imgRegion.Redraw();
         }
  
         private void trackPanVertical_Scroll(object sender, EventArgs e)
         {
             imgRegion.Zoom(imgRegion.Magnification, imgRegion.OffsetX, imgRegion.OffsetStep * trackPanVertical.Value);
-            imgRegion.Redraw();
         }
 
         private void btnFill_Click(object sender, EventArgs e)
@@ -483,6 +477,15 @@ namespace BiomePainter
         private void aboutBiomePainterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new About().ShowDialog(this);
+        }
+
+        private void imgRegion_ZoomEvent(object sender, ZoomEventArgs e)
+        {
+            lblMagnification.Text = String.Format("Magnification: {0}x", e.NewMagnification);
+            trackMagnification.Value = e.NewMagnification;
+            trackPanHorizontal.Value = e.NewOffsetX/ imgRegion.OffsetStep;
+            trackPanVertical.Value = e.NewOffsetY/ imgRegion.OffsetStep;
+
         }
     }
 

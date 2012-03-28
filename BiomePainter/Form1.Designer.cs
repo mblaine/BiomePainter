@@ -570,6 +570,7 @@
             this.imgRegion.Name = "imgRegion";
             this.imgRegion.Size = new System.Drawing.Size(512, 512);
             this.imgRegion.TabIndex = 2;
+            this.imgRegion.ZoomEvent += new BitmapSelector.BitmapSelector.ZoomEventHandler(this.imgRegion_ZoomEvent);
             // 
             // Form1
             // 
