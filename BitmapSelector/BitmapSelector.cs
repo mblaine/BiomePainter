@@ -12,6 +12,9 @@ namespace BitmapSelector
         public delegate void ZoomEventHandler(Object sender, ZoomEventArgs e);
         public event ZoomEventHandler ZoomEvent;
 
+        public delegate void SelectionChangedEventHandler(Object sender, EventArgs e);
+        public event SelectionChangedEventHandler SelectionChanged;
+
         private BufferedGraphicsContext backbufferContext;
         private BufferedGraphics backbufferGraphics;
         private Graphics g;
@@ -168,10 +171,14 @@ namespace BitmapSelector
                 mouse1Down = false;
             else if (e.Button == MouseButtons.Right)
                 mouse2Down = false;
+
+            OnSelectionChanged();
         }
 
         private void BitmapSelector_MouseCaptureChanged(object sender, EventArgs e)
         {
+            if(mouse1Down || mouse2Down)
+                OnSelectionChanged();
             mouse1Down = false;
             mouse2Down = false;
         }
@@ -326,6 +333,9 @@ namespace BitmapSelector
                 }
             }
             Redraw();
+
+            if (!Layers[0].SaveContentsOnReset)
+                OnSelectionChanged();
         }
 
         public void SelectAll()
@@ -334,6 +344,8 @@ namespace BitmapSelector
             {
                 g.Clear(SelectionColor);
             }
+
+            OnSelectionChanged();
         }
 
         public void SelectNone()
@@ -342,6 +354,8 @@ namespace BitmapSelector
             {
                 g.Clear(Color.Transparent);
             }
+
+            OnSelectionChanged();
         }
 
         public void InvertSelection()
@@ -356,6 +370,8 @@ namespace BitmapSelector
                         Layers[0].Image.SetPixel(x, y, SelectionColor);
                 }
             }
+
+            OnSelectionChanged();
         }
 
         private void scrollVertical_Scroll(object sender, ScrollEventArgs e)
@@ -425,6 +441,12 @@ namespace BitmapSelector
         {
             if (ZoomEvent != null)
                 ZoomEvent(this, e);
+        }
+
+        protected virtual void OnSelectionChanged()
+        {
+            if (SelectionChanged != null)
+                SelectionChanged(this, new EventArgs());
         }
     }
 }

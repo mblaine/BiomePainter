@@ -43,6 +43,17 @@
             this.loadRegionByCoordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.allToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.invertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chunksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutBiomePainterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstRegions = new System.Windows.Forms.ListBox();
@@ -56,6 +67,7 @@
             this.radRoundBrush = new System.Windows.Forms.RadioButton();
             this.radSquareBrush = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkShowChunkBoundaries = new System.Windows.Forms.CheckBox();
             this.btnSelectChunks = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -74,22 +86,10 @@
             this.lblStatus = new System.Windows.Forms.Label();
             this.imgRegion = new BitmapSelector.BitmapSelector();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.btnUndo = new System.Windows.Forms.Button();
-            this.btnRedo = new System.Windows.Forms.Button();
-            this.btnCopy = new System.Windows.Forms.Button();
             this.btnPaste = new System.Windows.Forms.Button();
-            this.chkShowChunkBoundaries = new System.Windows.Forms.CheckBox();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.selectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.allToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.invertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.chunksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnCopy = new System.Windows.Forms.Button();
+            this.btnRedo = new System.Windows.Forms.Button();
+            this.btnUndo = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -224,6 +224,98 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(273, 24);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.undoToolStripMenuItem,
+            this.redoToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.copyToolStripMenuItem,
+            this.pasteToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
+            this.editToolStripMenuItem.Text = "&Edit";
+            // 
+            // undoToolStripMenuItem
+            // 
+            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+            this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
+            this.undoToolStripMenuItem.Text = "&Undo";
+            this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
+            // 
+            // redoToolStripMenuItem
+            // 
+            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
+            this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
+            this.redoToolStripMenuItem.Text = "&Redo";
+            this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(162, 6);
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
+            this.copyToolStripMenuItem.Text = "&Copy";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            // 
+            // pasteToolStripMenuItem
+            // 
+            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+            this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
+            this.pasteToolStripMenuItem.Text = "&Paste";
+            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            // 
+            // selectToolStripMenuItem
+            // 
+            this.selectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.allToolStripMenuItem,
+            this.noneToolStripMenuItem,
+            this.invertToolStripMenuItem,
+            this.chunksToolStripMenuItem});
+            this.selectToolStripMenuItem.Name = "selectToolStripMenuItem";
+            this.selectToolStripMenuItem.Size = new System.Drawing.Size(61, 24);
+            this.selectToolStripMenuItem.Text = "&Select";
+            // 
+            // allToolStripMenuItem
+            // 
+            this.allToolStripMenuItem.Name = "allToolStripMenuItem";
+            this.allToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.allToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.allToolStripMenuItem.Text = "&All";
+            this.allToolStripMenuItem.Click += new System.EventHandler(this.allToolStripMenuItem_Click);
+            // 
+            // noneToolStripMenuItem
+            // 
+            this.noneToolStripMenuItem.Name = "noneToolStripMenuItem";
+            this.noneToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.A)));
+            this.noneToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.noneToolStripMenuItem.Text = "&None";
+            this.noneToolStripMenuItem.Click += new System.EventHandler(this.noneToolStripMenuItem_Click);
+            // 
+            // invertToolStripMenuItem
+            // 
+            this.invertToolStripMenuItem.Name = "invertToolStripMenuItem";
+            this.invertToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.invertToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.invertToolStripMenuItem.Text = "&Invert";
+            this.invertToolStripMenuItem.Click += new System.EventHandler(this.invertToolStripMenuItem_Click);
+            // 
+            // chunksToolStripMenuItem
+            // 
+            this.chunksToolStripMenuItem.Name = "chunksToolStripMenuItem";
+            this.chunksToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.chunksToolStripMenuItem.Text = "&Chunks";
+            this.chunksToolStripMenuItem.Click += new System.EventHandler(this.chunksToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -369,6 +461,17 @@
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Layers";
+            // 
+            // chkShowChunkBoundaries
+            // 
+            this.chkShowChunkBoundaries.AutoSize = true;
+            this.chkShowChunkBoundaries.Location = new System.Drawing.Point(8, 98);
+            this.chkShowChunkBoundaries.Name = "chkShowChunkBoundaries";
+            this.chkShowChunkBoundaries.Size = new System.Drawing.Size(184, 21);
+            this.chkShowChunkBoundaries.TabIndex = 7;
+            this.chkShowChunkBoundaries.Text = "Show Chunk Boundaries";
+            this.chkShowChunkBoundaries.UseVisualStyleBackColor = true;
+            this.chkShowChunkBoundaries.CheckedChanged += new System.EventHandler(this.chkShowChunkBoundaries_CheckedChanged);
             // 
             // btnSelectChunks
             // 
@@ -545,6 +648,7 @@
             this.imgRegion.Size = new System.Drawing.Size(512, 512);
             this.imgRegion.TabIndex = 2;
             this.imgRegion.ZoomEvent += new BitmapSelector.BitmapSelector.ZoomEventHandler(this.imgRegion_ZoomEvent);
+            this.imgRegion.SelectionChanged += new BitmapSelector.BitmapSelector.SelectionChangedEventHandler(this.imgRegion_SelectionChanged);
             // 
             // groupBox6
             // 
@@ -559,25 +663,15 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Edit";
             // 
-            // btnUndo
+            // btnPaste
             // 
-            this.btnUndo.Location = new System.Drawing.Point(6, 21);
-            this.btnUndo.Name = "btnUndo";
-            this.btnUndo.Size = new System.Drawing.Size(89, 23);
-            this.btnUndo.TabIndex = 0;
-            this.btnUndo.Text = "Undo";
-            this.btnUndo.UseVisualStyleBackColor = true;
-            this.btnUndo.Click += new System.EventHandler(this.btnUndo_Click);
-            // 
-            // btnRedo
-            // 
-            this.btnRedo.Location = new System.Drawing.Point(101, 21);
-            this.btnRedo.Name = "btnRedo";
-            this.btnRedo.Size = new System.Drawing.Size(89, 23);
-            this.btnRedo.TabIndex = 1;
-            this.btnRedo.Text = "Redo";
-            this.btnRedo.UseVisualStyleBackColor = true;
-            this.btnRedo.Click += new System.EventHandler(this.btnRedo_Click);
+            this.btnPaste.Location = new System.Drawing.Point(101, 50);
+            this.btnPaste.Name = "btnPaste";
+            this.btnPaste.Size = new System.Drawing.Size(89, 23);
+            this.btnPaste.TabIndex = 3;
+            this.btnPaste.Text = "Paste";
+            this.btnPaste.UseVisualStyleBackColor = true;
+            this.btnPaste.Click += new System.EventHandler(this.btnPaste_Click);
             // 
             // btnCopy
             // 
@@ -589,118 +683,25 @@
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
-            // btnPaste
+            // btnRedo
             // 
-            this.btnPaste.Location = new System.Drawing.Point(101, 50);
-            this.btnPaste.Name = "btnPaste";
-            this.btnPaste.Size = new System.Drawing.Size(89, 23);
-            this.btnPaste.TabIndex = 3;
-            this.btnPaste.Text = "Paste";
-            this.btnPaste.UseVisualStyleBackColor = true;
-            this.btnPaste.Click += new System.EventHandler(this.btnPaste_Click);
+            this.btnRedo.Location = new System.Drawing.Point(101, 21);
+            this.btnRedo.Name = "btnRedo";
+            this.btnRedo.Size = new System.Drawing.Size(89, 23);
+            this.btnRedo.TabIndex = 1;
+            this.btnRedo.Text = "Redo";
+            this.btnRedo.UseVisualStyleBackColor = true;
+            this.btnRedo.Click += new System.EventHandler(this.btnRedo_Click);
             // 
-            // chkShowChunkBoundaries
+            // btnUndo
             // 
-            this.chkShowChunkBoundaries.AutoSize = true;
-            this.chkShowChunkBoundaries.Location = new System.Drawing.Point(8, 98);
-            this.chkShowChunkBoundaries.Name = "chkShowChunkBoundaries";
-            this.chkShowChunkBoundaries.Size = new System.Drawing.Size(184, 21);
-            this.chkShowChunkBoundaries.TabIndex = 7;
-            this.chkShowChunkBoundaries.Text = "Show Chunk Boundaries";
-            this.chkShowChunkBoundaries.UseVisualStyleBackColor = true;
-            this.chkShowChunkBoundaries.CheckedChanged += new System.EventHandler(this.chkShowChunkBoundaries_CheckedChanged);
-            // 
-            // editToolStripMenuItem
-            // 
-            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.undoToolStripMenuItem,
-            this.redoToolStripMenuItem,
-            this.toolStripSeparator3,
-            this.copyToolStripMenuItem,
-            this.pasteToolStripMenuItem});
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
-            this.editToolStripMenuItem.Text = "&Edit";
-            // 
-            // selectToolStripMenuItem
-            // 
-            this.selectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.allToolStripMenuItem,
-            this.noneToolStripMenuItem,
-            this.invertToolStripMenuItem,
-            this.chunksToolStripMenuItem});
-            this.selectToolStripMenuItem.Name = "selectToolStripMenuItem";
-            this.selectToolStripMenuItem.Size = new System.Drawing.Size(61, 24);
-            this.selectToolStripMenuItem.Text = "&Select";
-            // 
-            // allToolStripMenuItem
-            // 
-            this.allToolStripMenuItem.Name = "allToolStripMenuItem";
-            this.allToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.allToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
-            this.allToolStripMenuItem.Text = "&All";
-            this.allToolStripMenuItem.Click += new System.EventHandler(this.allToolStripMenuItem_Click);
-            // 
-            // noneToolStripMenuItem
-            // 
-            this.noneToolStripMenuItem.Name = "noneToolStripMenuItem";
-            this.noneToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.A)));
-            this.noneToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
-            this.noneToolStripMenuItem.Text = "&None";
-            this.noneToolStripMenuItem.Click += new System.EventHandler(this.noneToolStripMenuItem_Click);
-            // 
-            // invertToolStripMenuItem
-            // 
-            this.invertToolStripMenuItem.Name = "invertToolStripMenuItem";
-            this.invertToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.invertToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
-            this.invertToolStripMenuItem.Text = "&Invert";
-            this.invertToolStripMenuItem.Click += new System.EventHandler(this.invertToolStripMenuItem_Click);
-            // 
-            // chunksToolStripMenuItem
-            // 
-            this.chunksToolStripMenuItem.Name = "chunksToolStripMenuItem";
-            this.chunksToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
-            this.chunksToolStripMenuItem.Text = "&Chunks";
-            this.chunksToolStripMenuItem.Click += new System.EventHandler(this.chunksToolStripMenuItem_Click);
-            // 
-            // undoToolStripMenuItem
-            // 
-            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
-            this.undoToolStripMenuItem.Text = "&Undo";
-            this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
-            // 
-            // redoToolStripMenuItem
-            // 
-            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-            this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
-            this.redoToolStripMenuItem.Text = "&Redo";
-            this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(162, 6);
-            // 
-            // copyToolStripMenuItem
-            // 
-            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
-            this.copyToolStripMenuItem.Text = "&Copy";
-            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
-            // 
-            // pasteToolStripMenuItem
-            // 
-            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
-            this.pasteToolStripMenuItem.Text = "&Paste";
-            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            this.btnUndo.Location = new System.Drawing.Point(6, 21);
+            this.btnUndo.Name = "btnUndo";
+            this.btnUndo.Size = new System.Drawing.Size(89, 23);
+            this.btnUndo.TabIndex = 0;
+            this.btnUndo.Text = "Undo";
+            this.btnUndo.UseVisualStyleBackColor = true;
+            this.btnUndo.Click += new System.EventHandler(this.btnUndo_Click);
             // 
             // Form1
             // 

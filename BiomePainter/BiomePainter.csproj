@@ -55,6 +55,10 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="History\BiomeAction.cs" />
+    <Compile Include="History\HistoryManager.cs" />
+    <Compile Include="History\IAction.cs" />
+    <Compile Include="History\SelectionAction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="About.resx">

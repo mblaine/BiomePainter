@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using BiomePainter.History;
 using BitmapSelector;
 using Minecraft;
 
@@ -12,6 +15,7 @@ namespace BiomePainter
     {
         private World world = null;
         private RegionFile region = null;
+        private HistoryManager history = null;
         private String lastPath = String.Format("{0}{1}.minecraft{1}saves", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Path.DirectorySeparatorChar);
 
         private int lastSelectedRegionIndex = -1;
@@ -29,7 +33,7 @@ namespace BiomePainter
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            imgRegion.Layers.Add(new BitmapSelector.Layer(512, 512, 0.5f, true, false)); //chunk boundaries
+            imgRegion.Layers.Add(new BitmapSelector.Layer(512, 512, 0.3f, true, false)); //chunk boundaries
             imgRegion.Layers.Add(new BitmapSelector.Layer(512, 512, 0.5f)); //biome
             imgRegion.Layers.Add(new BitmapSelector.Layer(512, 512, 1.0f)); //map
 
@@ -59,6 +63,9 @@ namespace BiomePainter
             cmbFill.SelectedIndex = 0;
             cmbReplace1.SelectedIndex = 0;
             cmbReplace2.SelectedIndex = 0;
+
+            history = new HistoryManager();
+            history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
         }
 
 
@@ -90,6 +97,10 @@ namespace BiomePainter
             imgRegion.Reset();
             region = null;
             world = null;
+            if (history != null)
+                history.Dispose();
+            history = new HistoryManager();
+            history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
         }
 
         private void UpdateStatus(String status)
@@ -199,10 +210,11 @@ namespace BiomePainter
 
             UpdateStatus("Reading region file");
             region = new RegionFile(region.Path);
+            history.RecordBiomeState(region);
             UpdateStatus("Generating terrain map");
-            world.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);
+            World.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);
             UpdateStatus("Generating biome map");
-            world.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
+            World.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
             UpdateStatus("");
             imgRegion.Redraw();
         }
@@ -394,16 +406,23 @@ namespace BiomePainter
             World.SelectChunks(imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor);
             UpdateStatus("");
             imgRegion.Redraw();
+            history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
         }
 
         private void btnUndo_Click(object sender, EventArgs e)
         {
-
+            String[,] tooltips = imgRegion.ToolTips;
+            history.Undo(imgRegion.Layers[SELECTIONLAYER].Image, region, imgRegion.Layers[BIOMELAYER].Image, ref tooltips, UpdateStatus);
+            imgRegion.ToolTips = tooltips;
+            imgRegion.Redraw();
         }
 
         private void btnRedo_Click(object sender, EventArgs e)
         {
-
+            String[,] tooltips = imgRegion.ToolTips;
+            history.Redo(imgRegion.Layers[SELECTIONLAYER].Image, region, imgRegion.Layers[BIOMELAYER].Image, ref tooltips, UpdateStatus);
+            imgRegion.ToolTips = tooltips;
+            imgRegion.Redraw();
         }
 
         private void btnCopy_Click(object sender, EventArgs e)
@@ -454,9 +473,10 @@ namespace BiomePainter
 
             imgRegion.ToolTips = new String[imgRegion.Width, imgRegion.Height];
             UpdateStatus("Generating biome map");
-            world.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
+            World.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
             UpdateStatus("");
             imgRegion.Redraw();
+            history.RecordBiomeState(region);
         }
 
         private void btnReplace_Click(object sender, EventArgs e)
@@ -497,9 +517,10 @@ namespace BiomePainter
 
             imgRegion.ToolTips = new String[imgRegion.Width, imgRegion.Height];
             UpdateStatus("Generating biome map");
-            world.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
+            World.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
             UpdateStatus("");
             imgRegion.Redraw();
+            history.RecordBiomeState(region);
         }
 
         #endregion
@@ -527,16 +548,20 @@ namespace BiomePainter
                 }
             }
 
+            history.FilterOutType(typeof(BiomeAction));
+
             Match m = Regex.Match(lstRegions.SelectedItem.ToString(), @"Region (-?\d+), (-?\d+)");
             String path = String.Format("{0}{1}r.{2}.{3}.mca", world.RegionDir, Path.DirectorySeparatorChar, m.Groups[1].Value, m.Groups[2].Value);
 
             UpdateStatus("Reading region file");
             region = new RegionFile(path);
+            history.RecordBiomeState(region);
+
             imgRegion.Reset();
             UpdateStatus("Generating terrain map");
-            world.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);
+            World.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);
             UpdateStatus("Generating biome map");
-            world.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
+            World.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
             UpdateStatus("");
             imgRegion.Redraw();
             lastSelectedRegionIndex = lstRegions.SelectedIndex;
@@ -559,7 +584,12 @@ namespace BiomePainter
             trackMagnification.Value = e.NewMagnification;
         }
 
+        private void imgRegion_SelectionChanged(object sender, EventArgs e)
+        {
+            history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
+        }
         #endregion
+
     }
 
 }
