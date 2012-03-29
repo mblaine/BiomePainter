@@ -37,7 +37,6 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -88,6 +87,10 @@
     <ProjectReference Include="..\BitmapSelector\BitmapSelector.csproj">
       <Project>{CEEE1FCF-DCC6-49C7-AFF1-25C7D8E9A619}</Project>
       <Name>BitmapSelector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InputBox\InputBox.csproj">
+      <Project>{0A258E8E-63BF-480C-A78B-F7371FBA68B2}</Project>
+      <Name>InputBox</Name>
     </ProjectReference>
     <ProjectReference Include="..\Minecraft.B17\Minecraft.B17.csproj">
       <Project>{E9C6575E-CAFA-482F-87CE-FC9DB81B34B9}</Project>

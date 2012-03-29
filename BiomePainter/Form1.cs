@@ -244,7 +244,7 @@ namespace BiomePainter
             String input = "";
             while (true)
             {
-                input = Microsoft.VisualBasic.Interaction.InputBox(msg, "Load", input);
+                input = InputBox.InputBox.Show(msg, "Load", input);
                 if (input.Length == 0)
                     return;
 

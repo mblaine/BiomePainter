@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("BitmapSelector")]
+[assembly: AssemblyTitle("InputBox")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c92ea493-c952-4602-b975-0075ced674ba")]
+[assembly: Guid("5ce920fa-bebc-4a2b-8ef6-a1cbae21e587")]
 
 // Version information for an assembly consists of the following four values:
 //
