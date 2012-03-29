@@ -44,7 +44,7 @@ namespace BitmapSelector
             backbufferContext = BufferedGraphicsManager.Current;
 
             Layers = new List<Layer>();
-            Layers.Add(new Layer(this.Width, this.Height, 0.6f));
+            Layers.Add(new Layer(this.Width, this.Height, 0.6f, true));
 
             ToolTips = new String[Width, Height];
 
@@ -112,7 +112,7 @@ namespace BitmapSelector
             Rectangle source = new Rectangle(OffsetX, OffsetY, (int)Math.Round(((double)this.Width) / ((double)Magnification)), (int)Math.Round(((double)this.Height) / ((double)Magnification)));
             for (int i = Layers.Count - 1; i >= 0; i--)
             {
-                if (!Layers[i].Visable)
+                if (!Layers[i].Visible)
                     continue;
                 cm.Matrix33 = Layers[i].Opacity;
                 ia.SetColorMatrix(cm);
@@ -178,7 +178,7 @@ namespace BitmapSelector
 
         private void BitmapSelector_MouseDown(object sender, MouseEventArgs e)
         {
-            Point p = TranslateToAbsolute(e.Location);
+            Point p = Translate(e.Location);
             if (e.Button == MouseButtons.Left)
                 mouse1Down = true;
             else if (e.Button == MouseButtons.Right)
@@ -209,7 +209,7 @@ namespace BitmapSelector
             if (!Focused)
                 this.Focus();
 
-            Point p = TranslateToAbsolute(e.Location);
+            Point p = Translate(e.Location);
 
             if (p == mouseLast)
                 return;
@@ -235,7 +235,7 @@ namespace BitmapSelector
                     }
                     else //Square
                     {
-                        if (mouseLast.X == p.X || mouseLast.Y == p.Y)
+                        if (BrushDiameter == 1)
                         {
                             g.DrawLine(pen, mouseLast, p);
                         }
@@ -290,7 +290,7 @@ namespace BitmapSelector
             if (p.Y > Height)
                 p.Y = Height;
 
-            p = TranslateToAbsolute(p);
+            p = Translate(p);
 
             double percentOffsetX = ((double)(p.X - OffsetX)) / (((double)Width) / (double)Magnification);
             double percentOffsetY = ((double)(p.Y - OffsetY)) / (((double)Width) / (double)Magnification);
@@ -317,9 +317,12 @@ namespace BitmapSelector
             scrollVertical.Value = 0;
             foreach (Layer l in Layers)
             {
-                using (Graphics g = Graphics.FromImage(l.Image))
+                if (!l.SaveContentsOnReset)
                 {
-                    g.Clear(Color.Transparent);
+                    using (Graphics g = Graphics.FromImage(l.Image))
+                    {
+                        g.Clear(Color.Transparent);
+                    }
                 }
             }
             Redraw();
@@ -407,7 +410,7 @@ namespace BitmapSelector
             OnZoom(new ZoomEventArgs(Magnification, OffsetX, OffsetY));
         }
 
-        private Point TranslateToAbsolute(Point e)
+        private Point Translate(Point e)
         {
             Matrix m = new Matrix(1, 0, 0, 1, 0, 0);
             m.Scale(Magnification, Magnification);
@@ -415,16 +418,6 @@ namespace BitmapSelector
             Point[] p = new Point[] { e };
             m.TransformPoints(p);
             p[0].Offset(OffsetX, OffsetY);
-            return p[0];
-        }
-
-        private Point TranslateFromAbsolute(Point e)
-        {
-            Point[] p = new Point[] { e };
-            p[0].Offset(-OffsetX, -OffsetY);
-            Matrix m = new Matrix(1, 0, 0, 1, 0, 0);
-            m.Scale(Magnification, Magnification);
-            m.TransformPoints(p);
             return p[0];
         }
 

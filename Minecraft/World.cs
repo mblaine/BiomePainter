@@ -642,5 +642,23 @@ namespace Minecraft
                 }
             }
         }
+
+        public static void RenderChunkBoundaries(Bitmap b)
+        {
+            using (Graphics g = Graphics.FromImage(b))
+            {
+                g.Clear(Color.Transparent);
+                Brush brush = new SolidBrush(Color.SlateGray);
+                for (int chunkX = 0; chunkX < 32; chunkX++)
+                {
+                    for (int chunkZ = 0; chunkZ < 32; chunkZ++)
+                    {
+                        if ((chunkZ % 2 == 0 && chunkX % 2 == 1) || (chunkZ % 2 == 1 && chunkX % 2 == 0))
+                        g.FillRectangle(brush, chunkX * 16, chunkZ * 16, 16, 16);
+                    }
+                }
+                brush.Dispose();
+            }
+        }
     }
 }
