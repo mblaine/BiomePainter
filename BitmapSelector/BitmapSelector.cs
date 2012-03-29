@@ -131,7 +131,6 @@ namespace BitmapSelector
             this.Refresh();
         }
 
-
         protected override void OnPaint(PaintEventArgs e)
         {
             if (backbufferGraphics != null)
@@ -139,6 +138,29 @@ namespace BitmapSelector
             base.OnPaint(e);
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch(keyData)
+            {
+                case Keys.Left:
+                    scrollHorizontal.Value = Math.Max(scrollHorizontal.Value - 5, 0);
+                    Zoom(Magnification, scrollHorizontal.Value, OffsetY);
+                    return true;
+                case Keys.Right:
+                    scrollHorizontal.Value = Math.Min(scrollHorizontal.Value + 5, scrollHorizontal.Maximum);
+                    Zoom(Magnification, scrollHorizontal.Value, OffsetY);
+                    return true;
+                case Keys.Up:
+                    scrollVertical.Value = Math.Max(scrollVertical.Value - 5, 0);
+                    Zoom(Magnification, OffsetX, scrollVertical.Value);
+                    return true;
+                case Keys.Down:
+                    scrollVertical.Value = Math.Min(scrollVertical.Value + 5, scrollVertical.Maximum);
+                    Zoom(Magnification, OffsetX, scrollVertical.Value);
+                    return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
 
         private void BitmapSelector_MouseUp(object sender, MouseEventArgs e)
         {
@@ -156,7 +178,7 @@ namespace BitmapSelector
 
         private void BitmapSelector_MouseDown(object sender, MouseEventArgs e)
         {
-            Point p = Translate(e.Location);
+            Point p = TranslateToAbsolute(e.Location);
             if (e.Button == MouseButtons.Left)
                 mouse1Down = true;
             else if (e.Button == MouseButtons.Right)
@@ -183,7 +205,11 @@ namespace BitmapSelector
 
         private void BitmapSelector_MouseMove(object sender, MouseEventArgs e)
         {
-            Point p = Translate(e.Location);
+            //so we can capture the mouse wheel event
+            if (!Focused)
+                this.Focus();
+
+            Point p = TranslateToAbsolute(e.Location);
 
             if (p == mouseLast)
                 return;
@@ -254,13 +280,29 @@ namespace BitmapSelector
 
         private void BitmapSelector_MouseWheel(object sender, MouseEventArgs e)
         {
+            Point p = new Point(e.Location.X, e.Location.Y);
+            if (p.X < 0)
+                p.X = 0;
+            if (p.X > Width)
+                p.X = Width;
+            if (p.Y < 0)
+                p.Y = 0;
+            if (p.Y > Height)
+                p.Y = Height;
+
+            p = TranslateToAbsolute(p);
+
+            double percentOffsetX = ((double)(p.X - OffsetX)) / (((double)Width) / (double)Magnification);
+            double percentOffsetY = ((double)(p.Y - OffsetY)) / (((double)Width) / (double)Magnification);
+
             int newMagnification = Magnification + e.Delta / 120;
             if (newMagnification <= 0)
                 newMagnification = 1;
             else if (newMagnification > MagnificationMax)
                 newMagnification = MagnificationMax;
 
-            Zoom(newMagnification, OffsetX, OffsetY);
+            Zoom(newMagnification, OffsetX, OffsetY, false);
+            Zoom(Magnification, p.X - (int)Math.Round(percentOffsetX * (((double)Width) / (double)Magnification)), p.Y - (int)Math.Round(percentOffsetY * (((double)Width) / (double)Magnification)));
         }
 
         public void Reset()
@@ -323,7 +365,7 @@ namespace BitmapSelector
             Zoom(Magnification, e.NewValue, OffsetY);
         }
 
-        public void Zoom(int magnififcation, int offsetX, int offsetY)
+        public void Zoom(int magnififcation, int offsetX, int offsetY, bool redraw = true)
         {
             Magnification = magnififcation;
             OffsetX = offsetX;
@@ -336,8 +378,12 @@ namespace BitmapSelector
             int scrollHeight = Magnification <= 1 ? 0 : (int)Math.Round(((double)scrollHorizontal.Height) / ((double)Magnification));
 
             //prevent scrolling past the end of the image
+            if (OffsetX < 0)
+                OffsetX = 0;
             if (Width - OffsetX < scaledWidth + scrollWidth)
                 OffsetX = Width - scaledWidth + scrollWidth;
+            if (OffsetY < 0)
+                OffsetY = 0;
             if (Height - OffsetY < scaledHeight + scrollHeight)
                 OffsetY = Height - scaledHeight + scrollHeight;
 
@@ -356,11 +402,12 @@ namespace BitmapSelector
                 scrollVertical.Maximum = Height - scaledHeight + scrollHeight + scrollVertical.LargeChange - 1;
             }
 
-            Redraw();
+            if(redraw)
+                Redraw();
             OnZoom(new ZoomEventArgs(Magnification, OffsetX, OffsetY));
         }
 
-        private Point Translate(Point e)
+        private Point TranslateToAbsolute(Point e)
         {
             Matrix m = new Matrix(1, 0, 0, 1, 0, 0);
             m.Scale(Magnification, Magnification);
@@ -368,6 +415,16 @@ namespace BitmapSelector
             Point[] p = new Point[] { e };
             m.TransformPoints(p);
             p[0].Offset(OffsetX, OffsetY);
+            return p[0];
+        }
+
+        private Point TranslateFromAbsolute(Point e)
+        {
+            Point[] p = new Point[] { e };
+            p[0].Offset(-OffsetX, -OffsetY);
+            Matrix m = new Matrix(1, 0, 0, 1, 0, 0);
+            m.Scale(Magnification, Magnification);
+            m.TransformPoints(p);
             return p[0];
         }
 
