@@ -35,7 +35,7 @@ namespace Minecraft
             return Directory.GetFiles(RegionDir, "*.mca", SearchOption.TopDirectoryOnly);
         }
 
-        public void RenderRegion(RegionFile region, Bitmap b)
+        public static void RenderRegion(RegionFile region, Bitmap b)
         {
             using (Graphics g = Graphics.FromImage(b))
             {
@@ -95,7 +95,7 @@ namespace Minecraft
             }
         }
 
-        public void RenderRegionBiomes(RegionFile region, Bitmap b, String[,] toolTips)
+        public static void RenderRegionBiomes(RegionFile region, Bitmap b, String[,] toolTips)
         {
             using (Graphics g = Graphics.FromImage(b))
             {
@@ -189,7 +189,7 @@ namespace Minecraft
             }
         }
 
-        private Color ColorLookup(int block, int damage, int blockAbove)
+        private static Color ColorLookup(int block, int damage, int blockAbove)
         {
             int ret = 0;
 
@@ -500,7 +500,6 @@ namespace Minecraft
                 chunkOffset.ChunktoAbsolute();
 
                 byte[] biomes = (byte[])c.Root["Level"]["Biomes"];
-
                 for (int z = 0; z < 16; z++)
                 {
                     for (int x = 0; x < 16; x++)

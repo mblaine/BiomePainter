@@ -9,14 +9,14 @@ namespace Minecraft
 {
     public class RegionFile
     {
-        public List<Chunk> Chunks;
+        public Chunk[,] Chunks;
         public Coord Coords;
         public String Path;
         public bool Dirty = false;
 
         public RegionFile()
         {
-            Chunks = new List<Chunk>();
+            Chunks = new Chunk[32, 32];
         }
 
         public RegionFile(String path)
@@ -28,7 +28,7 @@ namespace Minecraft
         //http://www.minecraftwiki.net/wiki/Region_file_format
         public void Read(String path)
         {
-            Chunks = new List<Chunk>();
+            Chunks = new Chunk[32, 32];
             Match m = Regex.Match(path, @"r\.(-?\d+)\.(-?\d+)\.mca");
             Coords.X = int.Parse(m.Groups[1].Value);
             Coords.Z = int.Parse(m.Groups[2].Value);
@@ -49,6 +49,7 @@ namespace Minecraft
                         c.Coords.RegiontoChunk();
                         c.Coords.Add(chunkX, chunkZ);
 
+
                         int i = 4 * (chunkX + chunkZ * 32);
 
                         byte[] temp = new byte[4];
@@ -67,7 +68,7 @@ namespace Minecraft
 
                         if (offset == 0 && length == 0)
                         {
-                            Chunks.Add(c);
+                            Chunks[chunkX, chunkZ] = c;
                             continue;
                         }
 
@@ -107,7 +108,7 @@ namespace Minecraft
                             throw new Exception("Unrecognized compression type");
                         }
 
-                        Chunks.Add(c);
+                        Chunks[chunkX, chunkZ] = c;
                     }
                 }
 
@@ -132,60 +133,60 @@ namespace Minecraft
             {
                 file.Write(header, 0, 8192);
 
-                foreach (Chunk c in Chunks)
+                for (int chunkX = 0; chunkX < 32; chunkX++)
                 {
-                    int chunkX = c.Coords.X % 32;
-                    if (chunkX < 0)
-                        chunkX += 32;
-                    int chunkZ = c.Coords.Z % 32;
-                    if (chunkZ < 0)
-                        chunkZ += 32;
-
-                    int i = 4 * (chunkX + chunkZ * 32);
-
-                    byte[] temp = BitConverter.GetBytes(c.Timestamp);
-                    if (BitConverter.IsLittleEndian)
-                        Array.Reverse(temp);
-                    Array.Copy(temp, 0, header, i + 4096, 4);
-
-                    if (c.Root == null)
+                    for (int chunkZ = 0; chunkZ < 32; chunkZ++)
                     {
-                        Array.Clear(temp, 0, 4);
-                        Array.Copy(temp, 0, header, i, 4);
-                        continue;
+                        Chunk c = Chunks[chunkX, chunkZ];
+                        if (c == null)
+                            continue;
+                    
+                        int i = 4 * (chunkX + chunkZ * 32);
+
+                        byte[] temp = BitConverter.GetBytes(c.Timestamp);
+                        if (BitConverter.IsLittleEndian)
+                            Array.Reverse(temp);
+                        Array.Copy(temp, 0, header, i + 4096, 4);
+
+                        if (c.Root == null)
+                        {
+                            Array.Clear(temp, 0, 4);
+                            Array.Copy(temp, 0, header, i, 4);
+                            continue;
+                        }
+
+                        temp = BitConverter.GetBytes(sectorOffset);
+                        if (BitConverter.IsLittleEndian)
+                            Array.Reverse(temp);
+                        Array.Copy(temp, 1, header, i, 3);
+
+                        if (c.RawData == null || c.Dirty)
+                        {
+                            MemoryStream mem = new MemoryStream();
+                            c.Root.Write(mem);
+                            temp = mem.ToArray();
+                            //this is the performance bottleneck when doing 1024 chunks in a row;
+                            //trying to only do when necessary
+                            c.RawData = ZlibStream.CompressBuffer(temp);
+                            c.CompressionType = 2;
+                        }
+
+                        temp = BitConverter.GetBytes(c.RawData.Length + 1);
+                        if (BitConverter.IsLittleEndian)
+                            Array.Reverse(temp);
+
+                        file.Write(temp, 0, 4);
+                        file.Write(c.CompressionType);
+                        file.Write(c.RawData, 0, c.RawData.Length);
+
+                        byte[] padding = new byte[(4096 - ((c.RawData.Length + 5) % 4096))];
+                        Array.Clear(padding, 0, padding.Length);
+                        file.Write(padding);
+
+                        header[i + 3] = (byte)((c.RawData.Length + 5) / 4096 + 1);
+                        sectorOffset += (c.RawData.Length + 5) / 4096 + 1;
+                        c.Dirty = false;
                     }
-
-                    temp = BitConverter.GetBytes(sectorOffset);
-                    if (BitConverter.IsLittleEndian)
-                        Array.Reverse(temp);
-                    Array.Copy(temp, 1, header, i, 3);
-
-                    if (c.RawData == null || c.Dirty)
-                    {
-                        MemoryStream mem = new MemoryStream();
-                        c.Root.Write(mem);
-                        temp = mem.ToArray();
-                        //this is the performance bottleneck when doing 1024 chunks in a row;
-                        //trying to only do when necessary
-                        c.RawData = ZlibStream.CompressBuffer(temp);
-                        c.CompressionType = 2;
-                    }
-
-                    temp = BitConverter.GetBytes(c.RawData.Length + 1);
-                    if (BitConverter.IsLittleEndian)
-                        Array.Reverse(temp);
-
-                    file.Write(temp, 0, 4);
-                    file.Write(c.CompressionType);
-                    file.Write(c.RawData, 0, c.RawData.Length);
-
-                    byte[] padding = new byte[(4096 - ((c.RawData.Length + 5) % 4096))];
-                    Array.Clear(padding, 0, padding.Length);
-                    file.Write(padding);
-
-                    header[i + 3] = (byte)((c.RawData.Length + 5) / 4096 + 1);
-                    sectorOffset += (c.RawData.Length + 5) / 4096 + 1;
-                    c.Dirty = false;
                 }
 
                 file.Seek(0, SeekOrigin.Begin);

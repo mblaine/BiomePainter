@@ -60,5 +60,16 @@ namespace Minecraft
             X = (int)Math.Floor(((double)X) / 32.0);
             Z = (int)Math.Floor(((double)Z) / 32.0);
         }
+
+        //chunk coordinates within region, between (0, 0) and (31, 31)
+        public void ChunktoRegionRelative()
+        {
+            X = X % 32;
+            if (X< 0)
+                X += 32;
+            Z = Z % 32;
+            if (Z < 0)
+                Z += 32;
+        }
     }
 }
