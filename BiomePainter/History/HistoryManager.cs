@@ -135,7 +135,7 @@ namespace BiomePainter.History
             }
             tooltips = new String[biomeOverlay.Width, biomeOverlay.Height];
             updateStatus("Generating biome map");
-            World.RenderRegionBiomes(region, biomeOverlay, tooltips);
+            RegionUtil.RenderRegionBiomes(region, biomeOverlay, tooltips);
             updateStatus("");
         }
 
