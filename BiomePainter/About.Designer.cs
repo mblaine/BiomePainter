@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(About));
             this.lblAbout = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
             this.txtReadMe = new System.Windows.Forms.RichTextBox();
             this.btnViewLicense = new System.Windows.Forms.Button();
+            this.btnViewChangelog = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblAbout
@@ -73,16 +73,27 @@
             this.btnViewLicense.UseVisualStyleBackColor = true;
             this.btnViewLicense.Click += new System.EventHandler(this.btnViewLicense_Click);
             // 
+            // btnViewChangelog
+            // 
+            this.btnViewChangelog.Location = new System.Drawing.Point(124, 413);
+            this.btnViewChangelog.Name = "btnViewChangelog";
+            this.btnViewChangelog.Size = new System.Drawing.Size(119, 23);
+            this.btnViewChangelog.TabIndex = 5;
+            this.btnViewChangelog.Text = "View Changelog";
+            this.btnViewChangelog.UseVisualStyleBackColor = true;
+            this.btnViewChangelog.Click += new System.EventHandler(this.btnViewChangelog_Click);
+            // 
             // About
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(563, 444);
+            this.Controls.Add(this.btnViewChangelog);
             this.Controls.Add(this.btnViewLicense);
             this.Controls.Add(this.txtReadMe);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.lblAbout);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = Properties.Resources.icon;
+            this.Icon = global::BiomePainter.Properties.Resources.icon;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "About";
@@ -100,5 +111,6 @@
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.RichTextBox txtReadMe;
         private System.Windows.Forms.Button btnViewLicense;
+        private System.Windows.Forms.Button btnViewChangelog;
     }
 }

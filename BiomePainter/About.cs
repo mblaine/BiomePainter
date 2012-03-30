@@ -90,6 +90,12 @@ namespace BiomePainter
                 Process.Start("LICENSE.txt");
         }
 
+        private void btnViewChangelog_Click(object sender, EventArgs e)
+        {
+            if (File.Exists("CHANGELOG.txt"))
+                Process.Start("CHANGELOG.txt");
+        }
+
         private void txtReadMe_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             Process.Start(e.LinkText);

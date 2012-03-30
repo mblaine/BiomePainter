@@ -1,6 +1,6 @@
 Projects BiomePainter (BiomePainter.exe), BitmapSelector (BitmapSelector.dll), 
-and Minecraft (Minecraft.dll) are copyright (c) 2012 Matthew Blaine and licensed 
-under the terms of the MIT License, provided below. 
+Minecraft (Minecraft.dll), and InputBox (InputBox.dll) are copyright (c) 2012 
+Matthew Blaine and licensed under the terms of the MIT License, provided below. 
 
 Projects Minecraft.B17 (Minecraft.B17.dll), Minecraft.B18 (Minecraft.B18.dll), 
 Minecraft.F10 (Minecraft.F10.dll), Minecraft.F11 (Minecraft.F11.dll), and 

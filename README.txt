@@ -4,6 +4,10 @@ Biome Painter
 
 Please see LICENSE.txt. 
 
+<< Changelog >>
+
+Please see CHANGELOG.txt.
+
 << About >> 
 
 This program is meant to allow editing of biome information in Minecraft save 
