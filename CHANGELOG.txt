@@ -19,7 +19,7 @@
     * New overlay: chunk boundaries, hidden by default.
     * Fixed mouse movements and clicks registering in wrong location when
       zoomed in.
-	* Fixed single right clicking with a brush size of 1 not erasing.
+    * Fixed single right clicking with a brush size of 1 not erasing.
     * Removed dependencies not available under Mono.
         - Biome Painter should run without problems on platforms other than
           Windows using Mono (http://www.mono-project.com), though I have no
