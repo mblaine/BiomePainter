@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using BiomePainter.Clipboard;
 using BiomePainter.History;
 using BitmapSelector;
 using Minecraft;
@@ -186,9 +187,6 @@ namespace BiomePainter
 
         private void reloadCurrentRegionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!SaveIfNecessary())
-                return;
-
             UpdateStatus("Reading region file");
             region = new RegionFile(region.Path);
             history.RecordBiomeState(region);
@@ -409,12 +407,25 @@ namespace BiomePainter
 
         private void btnCopy_Click(object sender, EventArgs e)
         {
-
+            if (world == null || region == null)
+                return;
+            ClipboardManager.Copy(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor);
         }
 
         private void btnPaste_Click(object sender, EventArgs e)
         {
+            if (world == null || region == null)
+                return;
 
+            if (ClipboardManager.Paste(region))
+            {
+                imgRegion.ToolTips = new String[imgRegion.Width, imgRegion.Height];
+                UpdateStatus("Generating biome map");
+                RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
+                UpdateStatus("");
+                imgRegion.Redraw();
+                history.RecordBiomeState(region);
+            }
         }
 
         private void btnFill_Click(object sender, EventArgs e)
