@@ -134,7 +134,7 @@
             // 
             this.openWorldToolStripMenuItem.Name = "openWorldToolStripMenuItem";
             this.openWorldToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openWorldToolStripMenuItem.Size = new System.Drawing.Size(273, 24);
+            this.openWorldToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
             this.openWorldToolStripMenuItem.Text = "&Open world";
             this.openWorldToolStripMenuItem.Click += new System.EventHandler(this.openWorldToolStripMenuItem_Click);
             // 
@@ -142,20 +142,20 @@
             // 
             this.closeWorldToolStripMenuItem.Name = "closeWorldToolStripMenuItem";
             this.closeWorldToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.closeWorldToolStripMenuItem.Size = new System.Drawing.Size(273, 24);
+            this.closeWorldToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
             this.closeWorldToolStripMenuItem.Text = "&Close world";
             this.closeWorldToolStripMenuItem.Click += new System.EventHandler(this.closeWorldToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(270, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(276, 6);
             // 
             // saveCurrentRegionToolStripMenuItem
             // 
             this.saveCurrentRegionToolStripMenuItem.Name = "saveCurrentRegionToolStripMenuItem";
             this.saveCurrentRegionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveCurrentRegionToolStripMenuItem.Size = new System.Drawing.Size(273, 24);
+            this.saveCurrentRegionToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
             this.saveCurrentRegionToolStripMenuItem.Text = "&Save current region";
             this.saveCurrentRegionToolStripMenuItem.Click += new System.EventHandler(this.saveCurrentRegionToolStripMenuItem_Click);
             // 
@@ -163,7 +163,7 @@
             // 
             this.reloadCurrentRegionToolStripMenuItem.Name = "reloadCurrentRegionToolStripMenuItem";
             this.reloadCurrentRegionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.reloadCurrentRegionToolStripMenuItem.Size = new System.Drawing.Size(273, 24);
+            this.reloadCurrentRegionToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
             this.reloadCurrentRegionToolStripMenuItem.Text = "&Reload current region";
             this.reloadCurrentRegionToolStripMenuItem.Click += new System.EventHandler(this.reloadCurrentRegionToolStripMenuItem_Click);
             // 
@@ -175,53 +175,58 @@
             this.leftOfCurrentToolStripMenuItem,
             this.rightOfCurrentToolStripMenuItem});
             this.loadRegionToolStripMenuItem.Name = "loadRegionToolStripMenuItem";
-            this.loadRegionToolStripMenuItem.Size = new System.Drawing.Size(273, 24);
+            this.loadRegionToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
             this.loadRegionToolStripMenuItem.Text = "Load &next region";
             // 
             // aboveCurrentToolStripMenuItem
             // 
             this.aboveCurrentToolStripMenuItem.Name = "aboveCurrentToolStripMenuItem";
-            this.aboveCurrentToolStripMenuItem.Size = new System.Drawing.Size(181, 24);
+            this.aboveCurrentToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Up)));
+            this.aboveCurrentToolStripMenuItem.Size = new System.Drawing.Size(258, 24);
             this.aboveCurrentToolStripMenuItem.Text = "&Above current";
             this.aboveCurrentToolStripMenuItem.Click += new System.EventHandler(this.aboveCurrentToolStripMenuItem_Click);
             // 
             // belowCurrentToolStripMenuItem
             // 
             this.belowCurrentToolStripMenuItem.Name = "belowCurrentToolStripMenuItem";
-            this.belowCurrentToolStripMenuItem.Size = new System.Drawing.Size(181, 24);
+            this.belowCurrentToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Down)));
+            this.belowCurrentToolStripMenuItem.Size = new System.Drawing.Size(258, 24);
             this.belowCurrentToolStripMenuItem.Text = "&Below current";
             this.belowCurrentToolStripMenuItem.Click += new System.EventHandler(this.belowCurrentToolStripMenuItem_Click);
             // 
             // leftOfCurrentToolStripMenuItem
             // 
             this.leftOfCurrentToolStripMenuItem.Name = "leftOfCurrentToolStripMenuItem";
-            this.leftOfCurrentToolStripMenuItem.Size = new System.Drawing.Size(181, 24);
+            this.leftOfCurrentToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Left)));
+            this.leftOfCurrentToolStripMenuItem.Size = new System.Drawing.Size(258, 24);
             this.leftOfCurrentToolStripMenuItem.Text = "&Left of current";
             this.leftOfCurrentToolStripMenuItem.Click += new System.EventHandler(this.leftOfCurrentToolStripMenuItem_Click);
             // 
             // rightOfCurrentToolStripMenuItem
             // 
             this.rightOfCurrentToolStripMenuItem.Name = "rightOfCurrentToolStripMenuItem";
-            this.rightOfCurrentToolStripMenuItem.Size = new System.Drawing.Size(181, 24);
+            this.rightOfCurrentToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Right)));
+            this.rightOfCurrentToolStripMenuItem.Size = new System.Drawing.Size(258, 24);
             this.rightOfCurrentToolStripMenuItem.Text = "&Right of current";
             this.rightOfCurrentToolStripMenuItem.Click += new System.EventHandler(this.rightOfCurrentToolStripMenuItem_Click);
             // 
             // loadRegionByCoordsToolStripMenuItem
             // 
             this.loadRegionByCoordsToolStripMenuItem.Name = "loadRegionByCoordsToolStripMenuItem";
-            this.loadRegionByCoordsToolStripMenuItem.Size = new System.Drawing.Size(273, 24);
+            this.loadRegionByCoordsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
+            this.loadRegionByCoordsToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
             this.loadRegionByCoordsToolStripMenuItem.Text = "Load region by &coords";
             this.loadRegionByCoordsToolStripMenuItem.Click += new System.EventHandler(this.loadRegionByCoordsToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(270, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(276, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(273, 24);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
