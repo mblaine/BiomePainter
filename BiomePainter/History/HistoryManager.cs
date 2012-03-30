@@ -109,7 +109,21 @@ namespace BiomePainter.History
                     Chunk c = region.Chunks[chunkX, chunkZ];
                     if (c == null || c.Root == null)
                         continue;
-                    action.Chunks.Add(new ChunkState(chunkX, chunkZ, (byte[])((byte[])c.Root["Level"]["Biomes"]).Clone()));
+
+                    //first point of accessing chunk's biomes, make sure it exists
+                    TAG_Compound level = (TAG_Compound)c.Root["Level"];
+                    byte[] biomes;
+                    if (level.Payload.ContainsKey("Biomes"))
+                        biomes = (byte[])level["Biomes"];
+                    else
+                    {
+                        biomes = new byte[256];
+                        for (int i = 0; i < biomes.Length; i++)
+                            biomes[i] = (byte)Biome.Unspecified;
+                        level.Payload.Add("Biomes", new TAG_Byte_Array(biomes, "Biomes"));
+                    }
+
+                    action.Chunks.Add(new ChunkState(chunkX, chunkZ, (byte[])biomes.Clone()));
                 }
             }
             Add(action);
