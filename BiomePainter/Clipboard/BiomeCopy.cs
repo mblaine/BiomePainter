@@ -1,5 +1,4 @@
-﻿using System;
-using Minecraft;
+﻿using Minecraft;
 
 namespace BiomePainter.Clipboard
 {
