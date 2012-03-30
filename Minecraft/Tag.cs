@@ -26,7 +26,7 @@ namespace Minecraft
     public abstract class TAG
     {
         public TYPE Type;
-        public TAG_String Name;
+        public TAG_String Name = null;
         public bool IsNamed = false;
         public abstract void Read(Stream data);
         public abstract void Write(Stream data);
@@ -142,6 +142,22 @@ namespace Minecraft
             Type = TYPE.TAG_Byte;
         }
 
+        public TAG_Byte(Byte payload)
+            : this()
+        {
+            Payload = payload;
+        }
+
+        public TAG_Byte(Byte payload, String name)
+            : this(payload)
+        {
+            if (name != null && name.Length > 0)
+            {
+                Name = new TAG_String(name);
+                IsNamed = true;
+            }
+        }
+
         public TAG_Byte(Stream data)
             : this()
         {
@@ -175,6 +191,22 @@ namespace Minecraft
         {
             Payload = 0;
             Type = TYPE.TAG_Short;
+        }
+
+        public TAG_Short(Int16 payload)
+            : this()
+        {
+            Payload = payload;
+        }
+
+        public TAG_Short(Int16 payload, String name)
+            : this(payload)
+        {
+            if (name != null && name.Length > 0)
+            {
+                Name = new TAG_String(name);
+                IsNamed = true;
+            }
         }
 
         public TAG_Short(Stream data)
@@ -219,6 +251,22 @@ namespace Minecraft
             Type = TYPE.TAG_Int;
         }
 
+        public TAG_Int(Int32 payload)
+            : this()
+        {
+            Payload = payload;
+        }
+
+        public TAG_Int(Int32 payload, String name)
+            : this(payload)
+        {
+            if (name != null && name.Length > 0)
+            {
+                Name = new TAG_String(name);
+                IsNamed = true;
+            }
+        }
+
         public TAG_Int(Stream data)
             : this()
         {
@@ -259,6 +307,22 @@ namespace Minecraft
         {
             Payload = 0;
             Type = TYPE.TAG_Long;
+        }
+
+        public TAG_Long(Int64 payload)
+            : this()
+        {
+            Payload = payload;
+        }
+
+        public TAG_Long(Int64 payload, String name)
+            : this(payload)
+        {
+            if (name != null && name.Length > 0)
+            {
+                Name = new TAG_String(name);
+                IsNamed = true;
+            }
         }
 
         public TAG_Long(Stream data)
@@ -303,6 +367,22 @@ namespace Minecraft
             Type = TYPE.TAG_Float;
         }
 
+        public TAG_Float(Single payload)
+            : this()
+        {
+            Payload = payload;
+        }
+
+        public TAG_Float(Single payload, String name)
+            : this(payload)
+        {
+            if (name != null && name.Length > 0)
+            {
+                Name = new TAG_String(name);
+                IsNamed = true;
+            }
+        }
+
         public TAG_Float(Stream data)
             : this()
         {
@@ -343,6 +423,22 @@ namespace Minecraft
         {
             Payload = 0.0d;
             Type = TYPE.TAG_Double;
+        }
+
+        public TAG_Double(Double payload)
+            : this()
+        {
+            Payload = payload;
+        }
+
+        public TAG_Double(Double payload, String name)
+            : this(payload)
+        {
+            if (name != null && name.Length > 0)
+            {
+                Name = new TAG_String(name);
+                IsNamed = true;
+            }
         }
 
         public TAG_Double(Stream data)
@@ -389,6 +485,23 @@ namespace Minecraft
             Type = TYPE.TAG_Byte_Array;
         }
 
+        public TAG_Byte_Array(Byte[] payload)
+            : this()
+        {
+            Length = new TAG_Int(payload.Length);
+            Payload = payload;
+        }
+
+        public TAG_Byte_Array(Byte[] payload, String name)
+            : this(payload)
+        {
+            if (name != null && name.Length > 0)
+            {
+                Name = new TAG_String(name);
+                IsNamed = true;
+            }
+        }
+
         public TAG_Byte_Array(Stream data)
             : this()
         {
@@ -429,6 +542,23 @@ namespace Minecraft
             Length = null;
             Payload = null;
             Type = TYPE.TAG_Int_Array;
+        }
+
+        public TAG_Int_Array(Int32[] payload)
+            : this()
+        {
+            Length = new TAG_Int(payload.Length);
+            Payload = payload;
+        }
+
+        public TAG_Int_Array(Int32[] payload, String name)
+            : this(payload)
+        {
+            if (name != null && name.Length > 0)
+            {
+                Name = new TAG_String(name);
+                IsNamed = true;
+            }
         }
 
         public TAG_Int_Array(Stream data)
@@ -487,6 +617,24 @@ namespace Minecraft
             Type = TYPE.TAG_String;
         }
 
+        public TAG_String(String payloadString)
+            : this()
+        {
+            Payload = UTF8Encoding.UTF8.GetBytes(payloadString);
+            Length = new TAG_Short((Int16)Payload.Length);
+            PayloadString = payloadString;
+        }
+
+        public TAG_String(String payloadString, String name)
+            : this(payloadString)
+        {
+            if (name != null && name.Length > 0)
+            {
+                Name = new TAG_String(name);
+                IsNamed = true;
+            }
+        }
+
         public TAG_String(Stream data)
             : this()
         {
@@ -530,6 +678,24 @@ namespace Minecraft
             Length = null;
             Payload = null;
             Type = TYPE.TAG_List;
+        }
+
+        public TAG_List(TAG[] payload, Byte tagId)
+            : this()
+        {
+            TagId = new TAG_Byte(tagId);
+            Length = new TAG_Int(payload.Length);
+            Payload = payload;
+        }
+
+        public TAG_List(TAG[] payload, Byte tagId, String name)
+            : this(payload, tagId)
+        {
+            if (name != null && name.Length > 0)
+            {
+                Name = new TAG_String(name);
+                IsNamed = true;
+            }
         }
 
         public TAG_List(Stream data)
@@ -634,6 +800,23 @@ namespace Minecraft
             Parent = null;
             Payload = null;
             Type = TYPE.TAG_Compound;
+        }
+
+        public TAG_Compound(Dictionary<String, TAG> payload)
+            : this()
+        {
+            IsRoot = true;
+            Payload = payload;
+        }
+
+        public TAG_Compound(Dictionary<String, TAG> payload, String name)
+            : this(payload)
+        {
+            if (name != null && name.Length > 0)
+            {
+                Name = new TAG_String(name);
+                IsNamed = true;
+            }
         }
 
         public TAG_Compound(Stream data)
