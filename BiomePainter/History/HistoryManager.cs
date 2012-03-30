@@ -13,6 +13,8 @@ namespace BiomePainter.History
         private LinkedList<IAction> UndoStack = new LinkedList<IAction>();
         private LinkedList<IAction> RedoStack = new LinkedList<IAction>();
 
+        private BiomeAction lastBiomeAction;
+
         ~HistoryManager()
         {
             if (UndoStack != null)
@@ -194,6 +196,54 @@ namespace BiomePainter.History
             }
 
             return null;
+        }
+
+        public void SetLastBiomeAction()
+        {
+            lastBiomeAction = (BiomeAction)GetPreviousAction(UndoStack.Last, typeof(BiomeAction));
+        }
+
+        public void SetDirtyFlags(RegionFile region)
+        {
+            if (lastBiomeAction == null)
+                throw new Exception("No record of last region save state.");
+
+            region.Dirty = false;
+            foreach (ChunkState state in lastBiomeAction.Chunks)
+            {
+                Chunk c = region.Chunks[state.Coords.X, state.Coords.Z];
+                if (c == null)
+                    continue;
+                else if (c.Root == null)
+                {
+                    c.Dirty = false;
+                    continue;
+                }
+
+                if (ByteArraysEqual((byte[])c.Root["Level"]["Biomes"], state.Biomes))
+                {
+                    c.Dirty = false;
+                }
+                else
+                {
+                    c.Dirty = true;
+                    region.Dirty = true;
+                }
+            }
+        }
+
+        private bool ByteArraysEqual(byte[] b1, byte[] b2)
+        {
+            if (b1 == null || b2 == null)
+                return false;
+            if (b1.Length != b2.Length)
+                return false;
+            for (int i = 0; i < b1.Length; i++)
+            {
+                if (b1[i] != b2[i])
+                    return false;
+            }
+            return true;
         }
     }
 }

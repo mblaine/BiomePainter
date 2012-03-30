@@ -71,21 +71,8 @@ namespace BiomePainter
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (region != null && region.Dirty)
-            {
-                DialogResult res = MessageBox.Show(this, NEEDTOSAVEMSG, "Save", MessageBoxButtons.YesNoCancel);
-                if (res == DialogResult.Yes)
-                {
-                    lblStatus.Text = "Writing region file";
-
-                    UpdateStatus("Writing region file");
-                    region.Write();
-                    UpdateStatus("");
-                    
-                }
-                else if (res == DialogResult.Cancel)
-                    e.Cancel = true;
-            }
+            if (!SaveIfNecessary())
+                e.Cancel = true;
         }
 
         private void ResetControls()
@@ -122,11 +109,15 @@ namespace BiomePainter
             }
         }
 
-        #region Menus
-
-        private void openWorldToolStripMenuItem_Click(object sender, EventArgs e)
+        //return false if stop, go back, don't do whatever
+        private bool SaveIfNecessary()
         {
-            if (region != null && region.Dirty)
+            if (region == null)
+                return true;
+
+            history.SetDirtyFlags(region);
+
+            if (region.Dirty)
             {
                 DialogResult res = MessageBox.Show(this, NEEDTOSAVEMSG, "Save", MessageBoxButtons.YesNoCancel);
                 if (res == DialogResult.Yes)
@@ -134,10 +125,22 @@ namespace BiomePainter
                     UpdateStatus("Writing region file");
                     region.Write();
                     UpdateStatus("");
+                    history.SetLastBiomeAction();
+                    return true;
                 }
                 else if (res == DialogResult.Cancel)
-                    return;
+                    return false;
             }
+
+            return true;
+        }
+
+        #region Menus
+
+        private void openWorldToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!SaveIfNecessary())
+                return;
 
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.InitialDirectory = lastPath;
@@ -165,18 +168,8 @@ namespace BiomePainter
 
         private void closeWorldToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (region != null && region.Dirty)
-            {
-                DialogResult res = MessageBox.Show(this, NEEDTOSAVEMSG, "Save", MessageBoxButtons.YesNoCancel);
-                if (res == DialogResult.Yes)
-                {
-                    UpdateStatus("Writing region file");
-                    region.Write();
-                    UpdateStatus("");
-                }
-                else if (res == DialogResult.Cancel)
-                    return;
-            }
+            if (!SaveIfNecessary())
+                return;
 
             ResetControls();
         }
@@ -186,31 +179,22 @@ namespace BiomePainter
             if (region == null)
                 return;
 
+            history.SetDirtyFlags(region);
             UpdateStatus("Writing region file");
             region.Write();
             UpdateStatus("");
+            history.SetLastBiomeAction();
         }
 
         private void reloadCurrentRegionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(region == null)
+            if (!SaveIfNecessary())
                 return;
-            else if(region.Dirty)
-            {
-                DialogResult res = MessageBox.Show(this, NEEDTOSAVEMSG, "Save", MessageBoxButtons.YesNoCancel);
-                if (res == DialogResult.Yes)
-                {
-                    UpdateStatus("Writing region file");
-                    region.Write();
-                    UpdateStatus("");
-                }
-                else if (res == DialogResult.Cancel)
-                    return;
-            }
 
             UpdateStatus("Reading region file");
             region = new RegionFile(region.Path);
             history.RecordBiomeState(region);
+            history.SetLastBiomeAction();
             UpdateStatus("Generating terrain map");
             World.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);
             UpdateStatus("Generating biome map");
@@ -532,20 +516,10 @@ namespace BiomePainter
             if (world == null || lstRegions.SelectedIndex == lastSelectedRegionIndex)
                 return;
 
-            if (region != null && region.Dirty)
+            if (!SaveIfNecessary())
             {
-                DialogResult res = MessageBox.Show(this, NEEDTOSAVEMSG, "Save", MessageBoxButtons.YesNoCancel);
-                if (res == DialogResult.Yes)
-                {
-                    UpdateStatus("Writing region file");
-                    region.Write();
-                    UpdateStatus("");
-                }
-                else if (res == DialogResult.Cancel)
-                {
-                    lstRegions.SelectedIndex = lastSelectedRegionIndex;
-                    return;
-                }
+                lstRegions.SelectedIndex = lastSelectedRegionIndex;
+                return;
             }
 
             history.FilterOutType(typeof(BiomeAction));
@@ -556,7 +530,7 @@ namespace BiomePainter
             UpdateStatus("Reading region file");
             region = new RegionFile(path);
             history.RecordBiomeState(region);
-
+            history.SetLastBiomeAction();
             imgRegion.Reset();
             UpdateStatus("Generating terrain map");
             World.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);

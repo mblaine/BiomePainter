@@ -507,8 +507,6 @@ namespace Minecraft
                         if (selection.GetPixel(chunkOffset.X + x, chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
                         {
                             biomes[x + z * 16] = (byte)biome;
-                            c.Dirty = true;
-                            region.Dirty = true;
                         }
                     }
                 }
@@ -538,8 +536,6 @@ namespace Minecraft
                         if (selection.GetPixel(chunkOffset.X + x, chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
                         {
                             biomes[x + z * 16] = (byte)util.GetBiome(chunkAbs.X + x, chunkAbs.Z + z);
-                            c.Dirty = true;
-                            region.Dirty = true;
                         }
                     }
                 }
@@ -568,8 +564,6 @@ namespace Minecraft
                             if (biomes[x + z * 16] == (byte)search)
                             {
                                 biomes[x + z * 16] = (byte)replace;
-                                c.Dirty = true;
-                                region.Dirty = true;
                             }
                         }
                     }
@@ -602,8 +596,6 @@ namespace Minecraft
                             if (biomes[x + z * 16] == (byte)search)
                             {
                                 biomes[x + z * 16] = (byte)replace.GetBiome(chunkAbs.X + x, chunkAbs.Z + z);
-                                c.Dirty = true;
-                                region.Dirty = true;
                             }
                         }
                     }
