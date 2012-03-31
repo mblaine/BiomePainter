@@ -34,6 +34,10 @@ namespace BiomePainter
                     sections.Add((byte)t["Y"], (TAG_Compound)t);
                 }
 
+                //chunk exists but all blocks are air
+                if (sections.Count == 0)
+                    continue;
+
                 for (int z = 0; z < 16; z++)
                 {
                     for (int x = 0; x < 16; x++)
