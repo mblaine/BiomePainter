@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using BiomePainter.Clipboard;
@@ -306,6 +310,86 @@ namespace BiomePainter
         private void chunksToolStripMenuItem_Click(object sender, EventArgs e)
         {
             btnSelectChunks_Click(this, null);
+        }
+
+        private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.github.com/repos/mblaine/BiomePainter/tags");
+                request.Method = "GET";
+                request.Headers["Accept-Encoding"] = "gzip,deflate";
+                request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                StreamReader responseStream = new StreamReader(response.GetResponseStream());
+                String json = responseStream.ReadToEnd();
+                response.Close();
+                responseStream.Close();
+
+                int latestMajor = -1;
+                int latestMinor = -1;
+                int latestSubminor = -1;
+
+                MatchCollection matches = new Regex("[\"']name[\"']:\\s*[\"'](\\d+)\\.(\\d+)\\.(\\d+)[\"']", RegexOptions.Multiline).Matches(json);
+                foreach (Match m in matches)
+                {
+                    int tagMajor = Int32.Parse(m.Groups[1].Value);
+                    int tagMinor = Int32.Parse(m.Groups[2].Value);
+                    int tagSubminor = Int32.Parse(m.Groups[3].Value);
+
+                    if (tagMajor > latestMajor)
+                    {
+                        latestMajor = tagMajor;
+                        latestMinor = tagMinor;
+                        latestSubminor = tagSubminor;
+                    }
+                    else if (tagMajor == latestMajor && tagMinor > latestMinor)
+                    {
+                        latestMinor = tagMinor;
+                        latestSubminor = tagSubminor;
+                    }
+                    else if (tagMajor == latestMajor && tagMinor == latestMinor && tagSubminor > latestSubminor)
+                    {
+                        latestSubminor = tagSubminor;
+                    }
+                }
+
+                if (latestMajor == -1)
+                {
+                    MessageBox.Show(this, "Unable to determine latest version. Click \"Help\" to open the list of downloads for Biome Painter at GitHub.com.", "Check for Update", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0, "https://github.com/mblaine/BiomePainter/downloads");
+                    return;
+                }
+
+                Match match = new Regex("^(\\d+)\\.(\\d+)\\.(\\d+)").Match(FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion);
+
+                int major, minor, subminor;
+                if (match.Groups.Count == 4 && Int32.TryParse(match.Groups[1].Value, out major) && Int32.TryParse(match.Groups[2].Value, out minor) && Int32.TryParse(match.Groups[3].Value, out subminor))
+                {
+                    if (latestMajor > major || (latestMajor == major && latestMinor > minor) || (latestMajor == major && latestMinor == minor && latestSubminor > subminor))
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        sb.AppendFormat("Biome Painter {0}.{1}", latestMajor, latestMinor);
+                        if (latestSubminor != 0)
+                            sb.AppendFormat(".{0}", latestSubminor);
+                        sb.Append(" now available! Click \"Help\" to open the list of downloads for Biome Painter at GitHub.com.");
+                        MessageBox.Show(this, sb.ToString(), "Check for Update", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0, "https://github.com/mblaine/BiomePainter/downloads");
+                    }
+                    else
+                    {
+                        MessageBox.Show(this, "You are running the latest version of Biome Painter.", "Check for Update", MessageBoxButtons.OK);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(this, "Unable to determine version number. Click \"Help\" to open the list of downloads for Biome Painter at GitHub.com.", "Check for Update", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0, "https://github.com/mblaine/BiomePainter/downloads");
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(this, "Unable to determine latest version. Click \"Help\" to open the list of downloads for Biome Painter at GitHub.com.", "Check for Update", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0, "https://github.com/mblaine/BiomePainter/downloads");
+                return;
+            }
         }
 
         private void aboutBiomePainterToolStripMenuItem_Click(object sender, EventArgs e)
