@@ -45,27 +45,32 @@ namespace BiomePainter
                         int height = heightmap[z * 16 + x];
 
                         //trees runnning into the old height limit in converted worlds
-                        //seem to cause the heightmap entries for its columns to be -128
+                        //seem to cause the heightmap entries for its columns to be -128;
                         if (height < 0)
-                        {
                             height = 128;
-                        }
 
-                        byte[] blocks = (byte[])sections[(int)Math.Floor((height - 1) / 16.0)]["Blocks"];
-                        byte[] data = (byte[])sections[(int)Math.Floor((height - 1) / 16.0)]["Data"];
-                        int blockOffset = ((((height - 1) % 16) * 16 + z) * 16 + x);
-                        int block = blocks[blockOffset];
-                        int damage = data[(int)Math.Floor(blockOffset / 2.0)];
-                        if (blockOffset % 2 == 0)
-                            damage = (damage >> 4) & 0x0F;
-                        else
-                            damage = damage & 0x0F;
+                        int sectionIndex = (int)Math.Floor((height - 1) / 16.0);
+                        int sectionAboveIndex = (int)Math.Floor(height / 16.0);
 
-                        int blockAboveOffset = (((height % 16) * 16 + z) * 16 + x);
-                        int blockAbove = block;
-                        if (height < 256 && sections.ContainsKey((int)Math.Floor(height / 16.0)))
+                        int block = -1, damage = -1;
+                        if (sections.ContainsKey(sectionIndex))
                         {
-                            byte[] blocksAbove = (byte[])sections[(int)Math.Floor(height / 16.0)]["Blocks"];
+                            byte[] blocks = (byte[])sections[sectionIndex]["Blocks"];
+                            byte[] data = (byte[])sections[sectionIndex]["Data"];
+                            int blockOffset = ((((height - 1) % 16) * 16 + z) * 16 + x);
+                            block = blocks[blockOffset];
+                            damage = data[(int)Math.Floor(blockOffset / 2.0)];
+                            if (blockOffset % 2 == 0)
+                                damage = (damage >> 4) & 0x0F;
+                            else
+                                damage = damage & 0x0F;
+                        }
+                        
+                        int blockAbove = block;
+                        if (sections.ContainsKey(sectionAboveIndex))
+                        {
+                            int blockAboveOffset = (((height % 16) * 16 + z) * 16 + x);
+                            byte[] blocksAbove = (byte[])sections[sectionAboveIndex]["Blocks"];
                             blockAbove = blocksAbove[blockAboveOffset];
                         }
 
