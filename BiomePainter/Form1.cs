@@ -58,7 +58,7 @@ namespace BiomePainter
             cmbReplace1.Items.AddRange(temp);
             cmbReplace2.Items.AddRange(temp);
 
-            String[] versions = { "Minecraft Beta 1.7.3", "Minecraft Beta 1.8.1", "Minecraft 1.0.0", "Minecraft 1.1.0", "Minecraft 1.2.4" };
+            String[] versions = { "Minecraft Beta 1.7.3", "Minecraft Beta 1.8.1", "Minecraft 1.0.0", "Minecraft 1.1.0", "Minecraft 1.2.5" };
 
             cmbFill.Items.AddRange(versions);
             cmbReplace2.Items.AddRange(versions);
@@ -540,7 +540,7 @@ namespace BiomePainter
                     case "Minecraft 1.1.0":
                         util = new Minecraft.F11.WorldChunkManager(world.Seed);
                         break;
-                    case "Minecraft 1.2.4":
+                    case "Minecraft 1.2.5":
                     default:
                         util = new Minecraft.F12.WorldChunkManager(world.Seed);
                         break;
@@ -584,7 +584,7 @@ namespace BiomePainter
                     case "Minecraft 1.1.0":
                         util = new Minecraft.F11.WorldChunkManager(world.Seed);
                         break;
-                    case "Minecraft 1.2.4":
+                    case "Minecraft 1.2.5":
                     default:
                         util = new Minecraft.F12.WorldChunkManager(world.Seed);
                         break;
