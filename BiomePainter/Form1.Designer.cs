@@ -55,6 +55,8 @@
             this.invertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chunksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutBiomePainterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstRegions = new System.Windows.Forms.ListBox();
             this.chkShowMap = new System.Windows.Forms.CheckBox();
@@ -67,6 +69,7 @@
             this.radRoundBrush = new System.Windows.Forms.RadioButton();
             this.radSquareBrush = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkShowBrush = new System.Windows.Forms.CheckBox();
             this.chkShowChunkBoundaries = new System.Windows.Forms.CheckBox();
             this.btnSelectChunks = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -84,14 +87,12 @@
             this.cmbFill = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
-            this.imgRegion = new BitmapSelector.BitmapSelector();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.btnPaste = new System.Windows.Forms.Button();
             this.btnCopy = new System.Windows.Forms.Button();
             this.btnRedo = new System.Windows.Forms.Button();
             this.btnUndo = new System.Windows.Forms.Button();
-            this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.imgRegion = new BitmapSelector.BitmapSelector();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -334,6 +335,18 @@
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
+            // checkForUpdatesToolStripMenuItem
+            // 
+            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
+            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(216, 24);
+            this.checkForUpdatesToolStripMenuItem.Text = "Check for &Updates";
+            this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(213, 6);
+            // 
             // aboutBiomePainterToolStripMenuItem
             // 
             this.aboutBiomePainterToolStripMenuItem.Name = "aboutBiomePainterToolStripMenuItem";
@@ -358,9 +371,9 @@
             this.chkShowMap.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkShowMap.Location = new System.Drawing.Point(8, 21);
             this.chkShowMap.Name = "chkShowMap";
-            this.chkShowMap.Size = new System.Drawing.Size(95, 21);
+            this.chkShowMap.Size = new System.Drawing.Size(57, 21);
             this.chkShowMap.TabIndex = 3;
-            this.chkShowMap.Text = "Show Map";
+            this.chkShowMap.Text = "Map";
             this.chkShowMap.UseVisualStyleBackColor = true;
             this.chkShowMap.CheckedChanged += new System.EventHandler(this.chkShowMap_CheckedChanged);
             // 
@@ -371,9 +384,9 @@
             this.chkShowBiomes.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkShowBiomes.Location = new System.Drawing.Point(8, 48);
             this.chkShowBiomes.Name = "chkShowBiomes";
-            this.chkShowBiomes.Size = new System.Drawing.Size(114, 21);
+            this.chkShowBiomes.Size = new System.Drawing.Size(76, 21);
             this.chkShowBiomes.TabIndex = 4;
-            this.chkShowBiomes.Text = "Show Biomes";
+            this.chkShowBiomes.Text = "Biomes";
             this.chkShowBiomes.UseVisualStyleBackColor = true;
             this.chkShowBiomes.CheckedChanged += new System.EventHandler(this.chkShowBiomes_CheckedChanged);
             // 
@@ -382,11 +395,11 @@
             this.chkShowSelection.AutoSize = true;
             this.chkShowSelection.Checked = true;
             this.chkShowSelection.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkShowSelection.Location = new System.Drawing.Point(8, 123);
+            this.chkShowSelection.Location = new System.Drawing.Point(8, 148);
             this.chkShowSelection.Name = "chkShowSelection";
-            this.chkShowSelection.Size = new System.Drawing.Size(126, 21);
+            this.chkShowSelection.Size = new System.Drawing.Size(88, 21);
             this.chkShowSelection.TabIndex = 5;
-            this.chkShowSelection.Text = "Show Selection";
+            this.chkShowSelection.Text = "Selection";
             this.chkShowSelection.UseVisualStyleBackColor = true;
             this.chkShowSelection.CheckedChanged += new System.EventHandler(this.chkShowSelection_CheckedChanged);
             // 
@@ -397,9 +410,9 @@
             this.chkShowToolTips.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkShowToolTips.Location = new System.Drawing.Point(8, 73);
             this.chkShowToolTips.Name = "chkShowToolTips";
-            this.chkShowToolTips.Size = new System.Drawing.Size(127, 21);
+            this.chkShowToolTips.Size = new System.Drawing.Size(89, 21);
             this.chkShowToolTips.TabIndex = 6;
-            this.chkShowToolTips.Text = "Show Tool Tips";
+            this.chkShowToolTips.Text = "Tool Tips";
             this.chkShowToolTips.UseVisualStyleBackColor = true;
             this.chkShowToolTips.CheckedChanged += new System.EventHandler(this.chkShowToolTips_CheckedChanged);
             // 
@@ -459,6 +472,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chkShowBrush);
             this.groupBox1.Controls.Add(this.chkShowChunkBoundaries);
             this.groupBox1.Controls.Add(this.chkShowMap);
             this.groupBox1.Controls.Add(this.chkShowBiomes);
@@ -466,19 +480,32 @@
             this.groupBox1.Controls.Add(this.chkShowSelection);
             this.groupBox1.Location = new System.Drawing.Point(791, 31);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(198, 148);
+            this.groupBox1.Size = new System.Drawing.Size(198, 174);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Layers";
+            // 
+            // chkShowBrush
+            // 
+            this.chkShowBrush.AutoSize = true;
+            this.chkShowBrush.Checked = true;
+            this.chkShowBrush.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkShowBrush.Location = new System.Drawing.Point(8, 123);
+            this.chkShowBrush.Name = "chkShowBrush";
+            this.chkShowBrush.Size = new System.Drawing.Size(67, 21);
+            this.chkShowBrush.TabIndex = 8;
+            this.chkShowBrush.Text = "Brush";
+            this.chkShowBrush.UseVisualStyleBackColor = true;
+            this.chkShowBrush.CheckedChanged += new System.EventHandler(this.chkShowBrush_CheckedChanged);
             // 
             // chkShowChunkBoundaries
             // 
             this.chkShowChunkBoundaries.AutoSize = true;
             this.chkShowChunkBoundaries.Location = new System.Drawing.Point(8, 98);
             this.chkShowChunkBoundaries.Name = "chkShowChunkBoundaries";
-            this.chkShowChunkBoundaries.Size = new System.Drawing.Size(184, 21);
+            this.chkShowChunkBoundaries.Size = new System.Drawing.Size(146, 21);
             this.chkShowChunkBoundaries.TabIndex = 7;
-            this.chkShowChunkBoundaries.Text = "Show Chunk Boundaries";
+            this.chkShowChunkBoundaries.Text = "Chunk Boundaries";
             this.chkShowChunkBoundaries.UseVisualStyleBackColor = true;
             this.chkShowChunkBoundaries.CheckedChanged += new System.EventHandler(this.chkShowChunkBoundaries_CheckedChanged);
             // 
@@ -498,7 +525,7 @@
             this.groupBox2.Controls.Add(this.btnSelectChunks);
             this.groupBox2.Controls.Add(this.btnSelectNone);
             this.groupBox2.Controls.Add(this.btnInvertSelection);
-            this.groupBox2.Location = new System.Drawing.Point(791, 373);
+            this.groupBox2.Location = new System.Drawing.Point(791, 392);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(198, 83);
             this.groupBox2.TabIndex = 14;
@@ -511,7 +538,7 @@
             this.groupBox3.Controls.Add(this.trackBrushDiameter);
             this.groupBox3.Controls.Add(this.radRoundBrush);
             this.groupBox3.Controls.Add(this.radSquareBrush);
-            this.groupBox3.Location = new System.Drawing.Point(791, 262);
+            this.groupBox3.Location = new System.Drawing.Point(791, 287);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(198, 105);
             this.groupBox3.TabIndex = 15;
@@ -544,7 +571,7 @@
             // 
             this.groupBox4.Controls.Add(this.lblMagnification);
             this.groupBox4.Controls.Add(this.trackMagnification);
-            this.groupBox4.Location = new System.Drawing.Point(791, 181);
+            this.groupBox4.Location = new System.Drawing.Point(790, 206);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(198, 79);
             this.groupBox4.TabIndex = 16;
@@ -650,22 +677,13 @@
             this.lblStatus.TabIndex = 18;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // imgRegion
-            // 
-            this.imgRegion.Location = new System.Drawing.Point(272, 31);
-            this.imgRegion.Name = "imgRegion";
-            this.imgRegion.Size = new System.Drawing.Size(512, 512);
-            this.imgRegion.TabIndex = 2;
-            this.imgRegion.ZoomEvent += new BitmapSelector.BitmapSelector.ZoomEventHandler(this.imgRegion_ZoomEvent);
-            this.imgRegion.SelectionChanged += new BitmapSelector.BitmapSelector.SelectionChangedEventHandler(this.imgRegion_SelectionChanged);
-            // 
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.btnPaste);
             this.groupBox6.Controls.Add(this.btnCopy);
             this.groupBox6.Controls.Add(this.btnRedo);
             this.groupBox6.Controls.Add(this.btnUndo);
-            this.groupBox6.Location = new System.Drawing.Point(791, 460);
+            this.groupBox6.Location = new System.Drawing.Point(790, 481);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(198, 83);
             this.groupBox6.TabIndex = 19;
@@ -712,17 +730,15 @@
             this.btnUndo.UseVisualStyleBackColor = true;
             this.btnUndo.Click += new System.EventHandler(this.btnUndo_Click);
             // 
-            // checkForUpdatesToolStripMenuItem
+            // imgRegion
             // 
-            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
-            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(216, 24);
-            this.checkForUpdatesToolStripMenuItem.Text = "Check for &Updates";
-            this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(213, 6);
+            this.imgRegion.Location = new System.Drawing.Point(272, 31);
+            this.imgRegion.Name = "imgRegion";
+            this.imgRegion.Size = new System.Drawing.Size(512, 512);
+            this.imgRegion.TabIndex = 2;
+            this.imgRegion.ZoomEvent += new BitmapSelector.BitmapSelector.ZoomEventHandler(this.imgRegion_ZoomEvent);
+            this.imgRegion.BrushDiameterChanged += new BitmapSelector.BitmapSelector.BrushDiameterEventHandler(this.imgRegion_BrushDiameterChanged);
+            this.imgRegion.SelectionChanged += new System.EventHandler(this.imgRegion_SelectionChanged);
             // 
             // Form1
             // 
@@ -830,6 +846,7 @@
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.CheckBox chkShowBrush;
     }
 }
 

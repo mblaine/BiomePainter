@@ -16,4 +16,15 @@ namespace BitmapSelector
             NewOffsetY = offsetY;
         }
     }
+
+    public class BrushDiameterEventArgs : EventArgs
+    {
+        public int NewBrushDiameter;
+
+        public BrushDiameterEventArgs(int newBrushDiameter)
+            : base()
+        {
+            NewBrushDiameter = newBrushDiameter;
+        }
+    }
 }

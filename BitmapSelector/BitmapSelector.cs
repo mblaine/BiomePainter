@@ -12,8 +12,10 @@ namespace BitmapSelector
         public delegate void ZoomEventHandler(Object sender, ZoomEventArgs e);
         public event ZoomEventHandler ZoomEvent;
 
-        public delegate void SelectionChangedEventHandler(Object sender, EventArgs e);
-        public event SelectionChangedEventHandler SelectionChanged;
+        public delegate void BrushDiameterEventHandler(Object sender, BrushDiameterEventArgs e);
+        public event BrushDiameterEventHandler BrushDiameterChanged;
+
+        public event EventHandler SelectionChanged;
 
         private BufferedGraphicsContext backbufferContext;
         private BufferedGraphics backbufferGraphics;
@@ -24,6 +26,7 @@ namespace BitmapSelector
         public Color SelectionColor = Color.Red;
         public BrushType Brush = BrushType.Round;
         public int BrushDiameter = 1;
+        public int BrushDiameterMax = 50;
 
         public int Magnification = 1;
         public int OffsetX = 0;
@@ -48,6 +51,7 @@ namespace BitmapSelector
 
             Layers = new List<Layer>();
             Layers.Add(new Layer(this.Width, this.Height, 0.6f, true));
+            Layers.Add(new Layer(this.Width, this.Height, 0.7f));
 
             ToolTips = new String[Width, Height];
 
@@ -72,6 +76,13 @@ namespace BitmapSelector
                     backbufferContext.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        //returns the index of the newly added layer
+        public int AddLayer(Layer l)
+        {
+            Layers.Add(l);
+            return Layers.Count - 1;
         }
 
         protected override void OnResize(EventArgs e)
@@ -132,6 +143,36 @@ namespace BitmapSelector
             }
 
             this.Refresh();
+        }
+
+        private void RedrawBrushLayer(Point p, bool justClear = false)
+        {
+            using (Graphics g = Graphics.FromImage(Layers[1].Image))
+            {
+                g.Clear(Color.Transparent);
+
+                if (!justClear)
+                {
+                    if (BrushDiameter == 1)
+                    {
+
+                        Layers[1].Image.SetPixel(p.X, p.Y, Color.Black);
+                    }
+                    else
+                    {
+                        Pen pen = new Pen(Color.Black);
+                        if (Brush == BrushType.Round)
+                        {
+                            g.DrawEllipse(pen, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
+                        }
+                        else
+                        {
+                            g.DrawRectangle(pen, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
+                        }
+                        pen.Dispose();
+                    }
+                }
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -227,6 +268,7 @@ namespace BitmapSelector
             else
                 toolTip.Hide(this);
 
+            bool needToRedraw = false;
             if (mouse1Down || mouse2Down)
             {
                 using (Graphics g = Graphics.FromImage(Layers[0].Image))
@@ -274,42 +316,76 @@ namespace BitmapSelector
                     pen.Dispose();
                     b.Dispose();
                 }
-                Redraw();
+
+                needToRedraw = true;
             }
 
+            if (Layers[1].Visible)
+            {
+                RedrawBrushLayer(p);
+                needToRedraw = true;
+            }
+
+            if (needToRedraw)
+                Redraw();
+            
             mouseLast = p;
         }
 
         private void BitmapSelector_MouseLeave(object sender, EventArgs e)
         {
             toolTip.Hide(this);
+
+            if (Layers[1].Visible)
+            {
+                RedrawBrushLayer(new Point(), true);
+                Redraw();
+            }
         }
 
         private void BitmapSelector_MouseWheel(object sender, MouseEventArgs e)
         {
-            Point p = new Point(e.Location.X, e.Location.Y);
-            if (p.X < 0)
-                p.X = 0;
-            if (p.X > Width)
-                p.X = Width;
-            if (p.Y < 0)
-                p.Y = 0;
-            if (p.Y > Height)
-                p.Y = Height;
+            if (Control.ModifierKeys == Keys.Control)
+            {
+                BrushDiameter = BrushDiameter + e.Delta / 120;
+                if (BrushDiameter > BrushDiameterMax)
+                    BrushDiameter = BrushDiameterMax;
+                else if (BrushDiameter < 1)
+                    BrushDiameter = 1;
 
-            p = Translate(p);
+                if (Layers[1].Visible && this.ClientRectangle.Contains(e.Location))
+                {
+                    RedrawBrushLayer(Translate(e.Location));
+                    Redraw();
+                }
+                OnBrushDiameterChanged(new BrushDiameterEventArgs(BrushDiameter));
+            }
+            else
+            {
+                Point p = new Point(e.Location.X, e.Location.Y);
+                if (p.X < 0)
+                    p.X = 0;
+                if (p.X > Width)
+                    p.X = Width;
+                if (p.Y < 0)
+                    p.Y = 0;
+                if (p.Y > Height)
+                    p.Y = Height;
 
-            double percentOffsetX = ((double)(p.X - OffsetX)) / (((double)Width) / (double)Magnification);
-            double percentOffsetY = ((double)(p.Y - OffsetY)) / (((double)Width) / (double)Magnification);
+                p = Translate(p);
 
-            int newMagnification = Magnification + e.Delta / 120;
-            if (newMagnification <= 0)
-                newMagnification = 1;
-            else if (newMagnification > MagnificationMax)
-                newMagnification = MagnificationMax;
+                double percentOffsetX = ((double)(p.X - OffsetX)) / (((double)Width) / (double)Magnification);
+                double percentOffsetY = ((double)(p.Y - OffsetY)) / (((double)Width) / (double)Magnification);
 
-            Zoom(newMagnification, OffsetX, OffsetY, false);
-            Zoom(Magnification, p.X - (int)Math.Round(percentOffsetX * (((double)Width) / (double)Magnification)), p.Y - (int)Math.Round(percentOffsetY * (((double)Width) / (double)Magnification)));
+                int newMagnification = Magnification + e.Delta / 120;
+                if (newMagnification <= 0)
+                    newMagnification = 1;
+                else if (newMagnification > MagnificationMax)
+                    newMagnification = MagnificationMax;
+
+                Zoom(newMagnification, OffsetX, OffsetY, false);
+                Zoom(Magnification, p.X - (int)Math.Round(percentOffsetX * (((double)Width) / (double)Magnification)), p.Y - (int)Math.Round(percentOffsetY * (((double)Width) / (double)Magnification)));
+            }
         }
 
         public void Reset()
@@ -441,6 +517,12 @@ namespace BitmapSelector
         {
             if (ZoomEvent != null)
                 ZoomEvent(this, e);
+        }
+
+        protected virtual void OnBrushDiameterChanged(BrushDiameterEventArgs e)
+        {
+            if (BrushDiameterChanged != null)
+                BrushDiameterChanged(this, e);
         }
 
         protected virtual void OnSelectionChanged()

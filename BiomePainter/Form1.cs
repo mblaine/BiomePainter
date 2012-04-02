@@ -25,21 +25,21 @@ namespace BiomePainter
 
         private const String NEEDTOSAVEMSG = "Biomes for the current region have been modified. Do you want to save your changes?";
         private const int SELECTIONLAYER = 0;
-        private const int CHUNKLAYER = 1;
-        private const int BIOMELAYER = 2;
-        private const int MAPLAYER = 3;
+        private const int BRUSHLAYER = 1;
+        private readonly int CHUNKLAYER;
+        private readonly int BIOMELAYER;
+        private readonly int MAPLAYER;
 
         public Form1()
         {
             InitializeComponent();
+            CHUNKLAYER = imgRegion.AddLayer(new BitmapSelector.Layer(512, 512, 0.3f, true, false)); //chunk boundaries
+            BIOMELAYER = imgRegion.AddLayer(new BitmapSelector.Layer(512, 512, 0.5f)); //biome
+            MAPLAYER = imgRegion.AddLayer(new BitmapSelector.Layer(512, 512, 1.0f)); //map
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            imgRegion.Layers.Add(new BitmapSelector.Layer(512, 512, 0.3f, true, false)); //chunk boundaries
-            imgRegion.Layers.Add(new BitmapSelector.Layer(512, 512, 0.5f)); //biome
-            imgRegion.Layers.Add(new BitmapSelector.Layer(512, 512, 1.0f)); //map
-
             RegionUtil.RenderChunkBoundaries(imgRegion.Layers[CHUNKLAYER].Image);
 
             List<String> names = new List<String>();
@@ -424,6 +424,12 @@ namespace BiomePainter
             imgRegion.Redraw();
         }
 
+        private void chkShowBrush_CheckedChanged(object sender, EventArgs e)
+        {
+            imgRegion.Layers[BRUSHLAYER].Visible = chkShowBrush.Checked;
+            imgRegion.Redraw();
+        }
+
         private void chkShowSelection_CheckedChanged(object sender, EventArgs e)
         {
             imgRegion.Layers[SELECTIONLAYER].Visible = chkShowSelection.Checked;
@@ -651,12 +657,17 @@ namespace BiomePainter
             trackMagnification.Value = e.NewMagnification;
         }
 
+        private void imgRegion_BrushDiameterChanged(object sender, BrushDiameterEventArgs e)
+        {
+            lblBrushDiameter.Text = String.Format("Brush Diameter: {0}", e.NewBrushDiameter);
+            trackBrushDiameter.Value = e.NewBrushDiameter;
+        }
+
         private void imgRegion_SelectionChanged(object sender, EventArgs e)
         {
             history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
         }
         #endregion
-
     }
 
 }
