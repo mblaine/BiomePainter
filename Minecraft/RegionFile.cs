@@ -161,13 +161,14 @@ namespace Minecraft
 
                         if (c.RawData == null || c.Dirty)
                         {
-                            MemoryStream mem = new MemoryStream();
-                            c.Root.Write(mem);
-                            temp = mem.ToArray();
                             //this is the performance bottleneck when doing 1024 chunks in a row;
                             //trying to only do when necessary
-                            c.RawData = ZlibStream.CompressBuffer(temp);
+                            MemoryStream mem = new MemoryStream();
+                            ZlibStream zlib = new ZlibStream(mem, CompressionMode.Compress);
+                            c.Root.Write(zlib);
+                            c.RawData = mem.ToArray();
                             c.CompressionType = 2;
+                            zlib.Close();
                         }
 
                         temp = BitConverter.GetBytes(c.RawData.Length + 1);
