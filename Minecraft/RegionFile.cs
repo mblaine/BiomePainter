@@ -166,9 +166,9 @@ namespace Minecraft
                             MemoryStream mem = new MemoryStream();
                             ZlibStream zlib = new ZlibStream(mem, CompressionMode.Compress);
                             c.Root.Write(zlib);
+                            zlib.Close();
                             c.RawData = mem.ToArray();
                             c.CompressionType = 2;
-                            zlib.Close();
                         }
 
                         temp = BitConverter.GetBytes(c.RawData.Length + 1);
