@@ -74,7 +74,12 @@ namespace BiomePainter
                             blockAbove = blocksAbove[blockAboveOffset];
                         }
 
-                        b.SetPixel(chunkOffset.X + x, chunkOffset.Z + z, ColorLookup(block, damage, blockAbove));
+                        Color color = ColorLookup(block, damage, blockAbove);
+
+                        //brighten/darken by height; arbitrary value, but /seems/ to look okay
+                        color = AddtoColor(color, (int)(height / 1.7 - 42));
+
+                        b.SetPixel(chunkOffset.X + x, chunkOffset.Z + z, color);
                     }
                 }
             }
@@ -471,6 +476,26 @@ namespace BiomePainter
                     break;
             }
             return Color.FromArgb(255, Color.FromArgb(ret));
+        }
+
+        private static Color AddtoColor(Color c, int diff)
+        {
+            int red = c.R + diff;
+            if (red > 255)
+                red = 255;
+            else if (red < 0)
+                red = 0;
+            int green = c.G + diff;
+            if (green > 255)
+                green = 255;
+            else if (green < 0)
+                green = 0;
+            int blue = c.B + diff;
+            if (blue > 255)
+                blue = 255;
+            else if (blue < 0)
+                blue = 0;
+            return Color.FromArgb(c.A, red, green, blue);
         }
 
         public static void Fill(RegionFile region, Bitmap selection, Color selectionColor, Biome biome)
