@@ -160,16 +160,16 @@ namespace BitmapSelector
                     }
                     else
                     {
-                        Pen pen = new Pen(Color.Black);
+                        Brush b = new SolidBrush(Color.Black);
                         if (Brush == BrushType.Round)
                         {
-                            g.DrawEllipse(pen, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
+                            g.FillEllipse(b, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
                         }
                         else
                         {
-                            g.DrawRectangle(pen, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
+                            g.FillRectangle(b, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
                         }
-                        pen.Dispose();
+                        b.Dispose();
                     }
                 }
             }
