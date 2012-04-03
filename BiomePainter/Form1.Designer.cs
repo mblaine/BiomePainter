@@ -50,6 +50,9 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.setChunksInSelectionToBePopulatedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.unsetChunksInSelectionToBePopulatedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.allToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,6 +73,7 @@
             this.radRoundBrush = new System.Windows.Forms.RadioButton();
             this.radSquareBrush = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkShowPopulate = new System.Windows.Forms.CheckBox();
             this.chkShowBrush = new System.Windows.Forms.CheckBox();
             this.chkShowChunkBoundaries = new System.Windows.Forms.CheckBox();
             this.btnSelectChunks = new System.Windows.Forms.Button();
@@ -242,7 +246,10 @@
             this.redoToolStripMenuItem,
             this.toolStripSeparator3,
             this.copyToolStripMenuItem,
-            this.pasteToolStripMenuItem});
+            this.pasteToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.setChunksInSelectionToBePopulatedToolStripMenuItem,
+            this.unsetChunksInSelectionToBePopulatedToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
             this.editToolStripMenuItem.Text = "&Edit";
@@ -251,7 +258,7 @@
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(357, 24);
             this.undoToolStripMenuItem.Text = "&Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
@@ -259,20 +266,20 @@
             // 
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(357, 24);
             this.redoToolStripMenuItem.Text = "&Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(162, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(354, 6);
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(357, 24);
             this.copyToolStripMenuItem.Text = "&Copy";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
@@ -280,9 +287,28 @@
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(357, 24);
             this.pasteToolStripMenuItem.Text = "&Paste";
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(354, 6);
+            // 
+            // setChunksInSelectionToBePopulatedToolStripMenuItem
+            // 
+            this.setChunksInSelectionToBePopulatedToolStripMenuItem.Name = "setChunksInSelectionToBePopulatedToolStripMenuItem";
+            this.setChunksInSelectionToBePopulatedToolStripMenuItem.Size = new System.Drawing.Size(357, 24);
+            this.setChunksInSelectionToBePopulatedToolStripMenuItem.Text = "Set Chunks in Selection to be Populated";
+            this.setChunksInSelectionToBePopulatedToolStripMenuItem.Click += new System.EventHandler(this.setChunksInSelectionToBePopulatedToolStripMenuItem_Click);
+            // 
+            // unsetChunksInSelectionToBePopulatedToolStripMenuItem
+            // 
+            this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Name = "unsetChunksInSelectionToBePopulatedToolStripMenuItem";
+            this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Size = new System.Drawing.Size(357, 24);
+            this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Text = "Unset Chunks in Selection to be Populated";
+            this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Click += new System.EventHandler(this.unsetChunksInSelectionToBePopulatedToolStripMenuItem_Click);
             // 
             // selectToolStripMenuItem
             // 
@@ -397,7 +423,7 @@
             this.chkShowSelection.AutoSize = true;
             this.chkShowSelection.Checked = true;
             this.chkShowSelection.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkShowSelection.Location = new System.Drawing.Point(8, 148);
+            this.chkShowSelection.Location = new System.Drawing.Point(8, 173);
             this.chkShowSelection.Name = "chkShowSelection";
             this.chkShowSelection.Size = new System.Drawing.Size(88, 21);
             this.chkShowSelection.TabIndex = 5;
@@ -477,6 +503,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chkShowPopulate);
             this.groupBox1.Controls.Add(this.chkShowBrush);
             this.groupBox1.Controls.Add(this.chkShowChunkBoundaries);
             this.groupBox1.Controls.Add(this.chkShowMap);
@@ -485,17 +512,30 @@
             this.groupBox1.Controls.Add(this.chkShowSelection);
             this.groupBox1.Location = new System.Drawing.Point(791, 31);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(198, 174);
+            this.groupBox1.Size = new System.Drawing.Size(198, 196);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Layers";
+            // 
+            // chkShowPopulate
+            // 
+            this.chkShowPopulate.AutoSize = true;
+            this.chkShowPopulate.Location = new System.Drawing.Point(8, 98);
+            this.chkShowPopulate.Name = "chkShowPopulate";
+            this.chkShowPopulate.Size = new System.Drawing.Size(181, 21);
+            this.chkShowPopulate.TabIndex = 9;
+            this.chkShowPopulate.Text = "Chunks to be Populated";
+            this.toolTip.SetToolTip(this.chkShowPopulate, "Chunks that will be filled with trees and ores the next time they are loaded in M" +
+        "inecraft. Alter from the Edit menu.");
+            this.chkShowPopulate.UseVisualStyleBackColor = true;
+            this.chkShowPopulate.CheckedChanged += new System.EventHandler(this.chkShowPopulate_CheckedChanged);
             // 
             // chkShowBrush
             // 
             this.chkShowBrush.AutoSize = true;
             this.chkShowBrush.Checked = true;
             this.chkShowBrush.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkShowBrush.Location = new System.Drawing.Point(8, 123);
+            this.chkShowBrush.Location = new System.Drawing.Point(8, 148);
             this.chkShowBrush.Name = "chkShowBrush";
             this.chkShowBrush.Size = new System.Drawing.Size(67, 21);
             this.chkShowBrush.TabIndex = 8;
@@ -506,7 +546,7 @@
             // chkShowChunkBoundaries
             // 
             this.chkShowChunkBoundaries.AutoSize = true;
-            this.chkShowChunkBoundaries.Location = new System.Drawing.Point(8, 98);
+            this.chkShowChunkBoundaries.Location = new System.Drawing.Point(8, 123);
             this.chkShowChunkBoundaries.Name = "chkShowChunkBoundaries";
             this.chkShowChunkBoundaries.Size = new System.Drawing.Size(146, 21);
             this.chkShowChunkBoundaries.TabIndex = 7;
@@ -531,7 +571,7 @@
             this.groupBox2.Controls.Add(this.btnSelectChunks);
             this.groupBox2.Controls.Add(this.btnSelectNone);
             this.groupBox2.Controls.Add(this.btnInvertSelection);
-            this.groupBox2.Location = new System.Drawing.Point(791, 392);
+            this.groupBox2.Location = new System.Drawing.Point(791, 424);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(198, 72);
             this.groupBox2.TabIndex = 14;
@@ -544,7 +584,7 @@
             this.groupBox3.Controls.Add(this.trackBrushDiameter);
             this.groupBox3.Controls.Add(this.radRoundBrush);
             this.groupBox3.Controls.Add(this.radSquareBrush);
-            this.groupBox3.Location = new System.Drawing.Point(791, 287);
+            this.groupBox3.Location = new System.Drawing.Point(791, 316);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(198, 105);
             this.groupBox3.TabIndex = 15;
@@ -577,7 +617,7 @@
             // 
             this.groupBox4.Controls.Add(this.lblMagnification);
             this.groupBox4.Controls.Add(this.trackMagnification);
-            this.groupBox4.Location = new System.Drawing.Point(790, 206);
+            this.groupBox4.Location = new System.Drawing.Point(791, 231);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(198, 79);
             this.groupBox4.TabIndex = 16;
@@ -627,6 +667,7 @@
             this.btnReplace.Size = new System.Drawing.Size(75, 25);
             this.btnReplace.TabIndex = 5;
             this.btnReplace.Text = "Replace";
+            this.toolTip.SetToolTip(this.btnReplace, "Replace instances of the first biome with the second within the selected area.");
             this.btnReplace.UseVisualStyleBackColor = true;
             this.btnReplace.Click += new System.EventHandler(this.btnReplace_Click);
             // 
@@ -655,6 +696,8 @@
             this.btnFill.Size = new System.Drawing.Size(75, 25);
             this.btnFill.TabIndex = 2;
             this.btnFill.Text = "Fill";
+            this.toolTip.SetToolTip(this.btnFill, "Fill the selected area with the selected biome or biomes from the selected versio" +
+        "n of Minecraft.");
             this.btnFill.UseVisualStyleBackColor = true;
             this.btnFill.Click += new System.EventHandler(this.btnFill_Click);
             // 
@@ -689,7 +732,7 @@
             this.groupBox6.Controls.Add(this.btnCopy);
             this.groupBox6.Controls.Add(this.btnRedo);
             this.groupBox6.Controls.Add(this.btnUndo);
-            this.groupBox6.Location = new System.Drawing.Point(790, 470);
+            this.groupBox6.Location = new System.Drawing.Point(791, 502);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(198, 72);
             this.groupBox6.TabIndex = 19;
@@ -714,7 +757,7 @@
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(40, 40);
             this.btnCopy.TabIndex = 2;
-            this.toolTip.SetToolTip(this.btnCopy, "Copy Biomes Under Selection (Ctrl+C)");
+            this.toolTip.SetToolTip(this.btnCopy, "Copy Biomes in Selection (Ctrl+C)");
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
@@ -753,6 +796,9 @@
             // toolTip
             // 
             this.toolTip.AutomaticDelay = 400;
+            this.toolTip.AutoPopDelay = 8000;
+            this.toolTip.InitialDelay = 400;
+            this.toolTip.ReshowDelay = 80;
             // 
             // Form1
             // 
@@ -862,6 +908,10 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.CheckBox chkShowBrush;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.CheckBox chkShowPopulate;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem setChunksInSelectionToBePopulatedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem unsetChunksInSelectionToBePopulatedToolStripMenuItem;
     }
 }
 

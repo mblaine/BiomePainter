@@ -14,6 +14,7 @@ namespace BiomePainter.History
         private LinkedList<IAction> RedoStack = new LinkedList<IAction>();
 
         private BiomeAction lastBiomeAction;
+        private PopulateAction lastPopulateAction;
 
         ~HistoryManager()
         {
@@ -129,6 +130,23 @@ namespace BiomePainter.History
             Add(action);
         }
 
+        public void RecordPopulateState(RegionFile region)
+        {
+            PopulateAction action = new PopulateAction();
+            for (int chunkX = 0; chunkX < 32; chunkX++)
+            {
+                for (int chunkZ = 0; chunkZ < 32; chunkZ++)
+                {
+                    Chunk c = region.Chunks[chunkX, chunkZ];
+                    if (c == null || c.Root == null)
+                        continue;
+
+                    action.PopulatedFlags[chunkX, chunkZ] = (byte)c.Root["Level"]["TerrainPopulated"];
+                }
+            }
+            Add(action);
+        }
+
         private void ApplySelectionState(SelectionAction action, Bitmap selection)
         {
             using (Graphics g = Graphics.FromImage(selection))
@@ -140,7 +158,7 @@ namespace BiomePainter.History
 
         private void ApplyBiomeState(BiomeAction action, RegionFile region, Bitmap biomeOverlay, ref String[,] tooltips, UpdateStatus updateStatus)
         {
-            foreach (ChunkState state in ((BiomeAction)action).Chunks)
+            foreach (ChunkState state in action.Chunks)
             {
                 Chunk c = region.Chunks[state.Coords.X, state.Coords.Z];
                 if (c == null || c.Root == null)
@@ -153,7 +171,23 @@ namespace BiomePainter.History
             updateStatus("");
         }
 
-        public void Undo(Bitmap selection, RegionFile region, Bitmap biomeOverlay, ref String[,] tooltips, UpdateStatus updateStatus)
+        private void ApplyPopulateState(PopulateAction action, RegionFile region, Bitmap populateOverlay)
+        {
+            for (int chunkX = 0; chunkX < 32; chunkX++)
+            {
+                for (int chunkZ = 0; chunkZ < 32; chunkZ++)
+                {
+                    Chunk c = region.Chunks[chunkX, chunkZ];
+                    if (c == null || c.Root == null)
+                        continue;
+
+                    ((TAG_Byte)c.Root["Level"]["TerrainPopulated"]).Payload = action.PopulatedFlags[chunkX, chunkZ];
+                }
+            }
+            RegionUtil.RenderRegionChunkstobePopulated(region, populateOverlay);
+        }
+
+        public void Undo(Bitmap selection, RegionFile region, Bitmap biomeOverlay, ref String[,] tooltips, Bitmap populateOverlay, UpdateStatus updateStatus)
         {
             IAction previous = GetPreviousAction();
             if (previous == null)
@@ -170,11 +204,15 @@ namespace BiomePainter.History
             {
                 ApplyBiomeState((BiomeAction)previous, region, biomeOverlay, ref tooltips, updateStatus);
             }
+            else if (previous is PopulateAction)
+            {
+                ApplyPopulateState((PopulateAction)previous, region, populateOverlay); 
+            }
 
             MovePrevious();
         }
 
-        public void Redo(Bitmap selection, RegionFile region, Bitmap biomeOverlay, ref String[,] tooltips, UpdateStatus updateStatus)
+        public void Redo(Bitmap selection, RegionFile region, Bitmap biomeOverlay, ref String[,] tooltips, Bitmap populateOverlay, UpdateStatus updateStatus)
         {
             if (!MoveNext())
                 return;
@@ -190,6 +228,10 @@ namespace BiomePainter.History
             else if (UndoStack.Last.Value is BiomeAction)
             {
                 ApplyBiomeState((BiomeAction)UndoStack.Last.Value, region, biomeOverlay, ref tooltips, updateStatus);
+            }
+            else if (UndoStack.Last.Value is PopulateAction)
+            {
+                ApplyPopulateState((PopulateAction)UndoStack.Last.Value, region, populateOverlay);
             }
         }
 
@@ -212,14 +254,15 @@ namespace BiomePainter.History
             return null;
         }
 
-        public void SetLastBiomeAction()
+        public void SetLastSaveActions()
         {
             lastBiomeAction = (BiomeAction)GetPreviousAction(UndoStack.Last, typeof(BiomeAction));
+            lastPopulateAction = (PopulateAction)GetPreviousAction(UndoStack.Last, typeof(PopulateAction));
         }
 
         public void SetDirtyFlags(RegionFile region)
         {
-            if (lastBiomeAction == null)
+            if (lastBiomeAction == null || lastPopulateAction == null)
                 throw new Exception("No record of last region save state.");
 
             region.Dirty = false;
@@ -244,6 +287,28 @@ namespace BiomePainter.History
                     region.Dirty = true;
                 }
             }
+
+            for (int chunkX = 0; chunkX < 32; chunkX++)
+            {
+                for (int chunkZ = 0; chunkZ < 32; chunkZ++)
+                {
+                    Chunk c = region.Chunks[chunkX, chunkZ];
+                    if (c == null)
+                        continue;
+                    else if (c.Root == null)
+                    {
+                        c.Dirty = false;
+                        continue;
+                    }
+
+                    if (((byte)c.Root["Level"]["TerrainPopulated"]) != lastPopulateAction.PopulatedFlags[chunkX, chunkZ])
+                    {
+                        c.Dirty = true;
+                        region.Dirty = true;
+                    }
+                }
+            }
+
         }
 
         private bool ByteArraysEqual(byte[] b1, byte[] b2)

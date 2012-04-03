@@ -22,10 +22,11 @@ namespace BiomePainter
         private String lastPath = String.Format("{0}{1}.minecraft{1}saves", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Path.DirectorySeparatorChar);
 
         private int lastSelectedRegionIndex = -1;
+        private bool warnedAboutPopulating = false;
 
-        private const String NEEDTOSAVEMSG = "Biomes for the current region have been modified. Do you want to save your changes?";
         private const int SELECTIONLAYER = 0;
         private const int BRUSHLAYER = 1;
+        private readonly int POPULATELAYER;
         private readonly int CHUNKLAYER;
         private readonly int BIOMELAYER;
         private readonly int MAPLAYER;
@@ -33,6 +34,7 @@ namespace BiomePainter
         public Form1()
         {
             InitializeComponent();
+            POPULATELAYER = imgRegion.AddLayer(new BitmapSelector.Layer(512, 512, 0.6f, false, false)); //chunks to be populated
             CHUNKLAYER = imgRegion.AddLayer(new BitmapSelector.Layer(512, 512, 0.3f, true, false)); //chunk boundaries
             BIOMELAYER = imgRegion.AddLayer(new BitmapSelector.Layer(512, 512, 0.5f)); //biome
             MAPLAYER = imgRegion.AddLayer(new BitmapSelector.Layer(512, 512, 1.0f)); //map
@@ -122,13 +124,13 @@ namespace BiomePainter
 
             if (region.Dirty)
             {
-                DialogResult res = MessageBox.Show(this, NEEDTOSAVEMSG, "Save", MessageBoxButtons.YesNoCancel);
+                DialogResult res = MessageBox.Show(this, "The current region has been modified. Do you want to save your changes?", "Save", MessageBoxButtons.YesNoCancel);
                 if (res == DialogResult.Yes)
                 {
                     UpdateStatus("Writing region file");
                     region.Write();
                     UpdateStatus("");
-                    history.SetLastBiomeAction();
+                    history.SetLastSaveActions();
                     return true;
                 }
                 else if (res == DialogResult.Cancel)
@@ -186,7 +188,7 @@ namespace BiomePainter
             UpdateStatus("Writing region file");
             region.Write();
             UpdateStatus("");
-            history.SetLastBiomeAction();
+            history.SetLastSaveActions();
         }
 
         private void reloadCurrentRegionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -194,12 +196,14 @@ namespace BiomePainter
             UpdateStatus("Reading region file");
             region = new RegionFile(region.Path);
             history.RecordBiomeState(region);
-            history.SetLastBiomeAction();
+            history.RecordPopulateState(region);
+            history.SetLastSaveActions();
             UpdateStatus("Generating terrain map");
             RegionUtil.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);
             UpdateStatus("Generating biome map");
             RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
             UpdateStatus("");
+            RegionUtil.RenderRegionChunkstobePopulated(region, imgRegion.Layers[POPULATELAYER].Image);
             imgRegion.Redraw();
         }
 
@@ -290,6 +294,42 @@ namespace BiomePainter
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             btnPaste_Click(this, null);
+        }
+
+        private void setChunksInSelectionToBePopulatedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (world == null || region == null)
+                return;
+
+            if (!warnedAboutPopulating)
+            {
+                DialogResult res = MessageBox.Show(this, String.Format("Setting a chunk to be popluated by Minecraft means the next time that chunk is loaded in Minecraft it will be filled with trees, snow cover, water, lava, and ores depending on the biome(s) the chunk is in.{0}{0}If that chunk has already been populated or already has player-made structures in it, you may find it clogged with more foliage than you wanted. Also smooth stone in your structures may be replaced with ores, dirt, or gravel. I strongly suggest you test this on a copy of your world first.{0}{0}Are you sure you want to proceed? As always, changes can be undone and won't take effect until you save the region.", Environment.NewLine), "DANGER", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                if (res == DialogResult.Cancel)
+                    return;
+                warnedAboutPopulating = true;
+            }
+
+            if (!chkShowPopulate.Checked)
+                chkShowPopulate.Checked = true;
+
+            RegionUtil.SetChunkstobePopulated(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, 0);
+            RegionUtil.RenderRegionChunkstobePopulated(region, imgRegion.Layers[POPULATELAYER].Image);
+            imgRegion.Redraw();
+            history.RecordPopulateState(region);
+        }
+
+        private void unsetChunksInSelectionToBePopulatedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (world == null || region == null)
+                return;
+
+            if (!chkShowPopulate.Checked)
+                chkShowPopulate.Checked = true;
+
+            RegionUtil.SetChunkstobePopulated(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, 1);
+            RegionUtil.RenderRegionChunkstobePopulated(region, imgRegion.Layers[POPULATELAYER].Image);
+            imgRegion.Redraw();
+            history.RecordPopulateState(region);
         }
 
         private void allToolStripMenuItem_Click(object sender, EventArgs e)
@@ -418,6 +458,12 @@ namespace BiomePainter
             imgRegion.ShowToolTips = chkShowToolTips.Checked;
         }
 
+        private void chkShowPopulate_CheckedChanged(object sender, EventArgs e)
+        {
+            imgRegion.Layers[POPULATELAYER].Visible = chkShowPopulate.Checked;
+            imgRegion.Redraw();
+        }
+
         private void chkShowChunkBoundaries_CheckedChanged(object sender, EventArgs e)
         {
             imgRegion.Layers[CHUNKLAYER].Visible = chkShowChunkBoundaries.Checked;
@@ -482,7 +528,7 @@ namespace BiomePainter
         private void btnUndo_Click(object sender, EventArgs e)
         {
             String[,] tooltips = imgRegion.ToolTips;
-            history.Undo(imgRegion.Layers[SELECTIONLAYER].Image, region, imgRegion.Layers[BIOMELAYER].Image, ref tooltips, UpdateStatus);
+            history.Undo(imgRegion.Layers[SELECTIONLAYER].Image, region, imgRegion.Layers[BIOMELAYER].Image, ref tooltips, imgRegion.Layers[POPULATELAYER].Image, UpdateStatus);
             imgRegion.ToolTips = tooltips;
             imgRegion.Redraw();
         }
@@ -490,7 +536,7 @@ namespace BiomePainter
         private void btnRedo_Click(object sender, EventArgs e)
         {
             String[,] tooltips = imgRegion.ToolTips;
-            history.Redo(imgRegion.Layers[SELECTIONLAYER].Image, region, imgRegion.Layers[BIOMELAYER].Image, ref tooltips, UpdateStatus);
+            history.Redo(imgRegion.Layers[SELECTIONLAYER].Image, region, imgRegion.Layers[BIOMELAYER].Image, ref tooltips, imgRegion.Layers[POPULATELAYER].Image, UpdateStatus);
             imgRegion.ToolTips = tooltips;
             imgRegion.Redraw();
         }
@@ -622,6 +668,7 @@ namespace BiomePainter
             }
 
             history.FilterOutType(typeof(BiomeAction));
+            history.FilterOutType(typeof(PopulateAction));
 
             Match m = Regex.Match(lstRegions.SelectedItem.ToString(), @"Region (-?\d+), (-?\d+)");
             String path = String.Format("{0}{1}r.{2}.{3}.mca", world.RegionDir, Path.DirectorySeparatorChar, m.Groups[1].Value, m.Groups[2].Value);
@@ -629,13 +676,15 @@ namespace BiomePainter
             UpdateStatus("Reading region file");
             region = new RegionFile(path);
             history.RecordBiomeState(region);
-            history.SetLastBiomeAction();
+            history.RecordPopulateState(region);
+            history.SetLastSaveActions();
             imgRegion.Reset();
             UpdateStatus("Generating terrain map");
             RegionUtil.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);
             UpdateStatus("Generating biome map");
             RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
             UpdateStatus("");
+            RegionUtil.RenderRegionChunkstobePopulated(region, imgRegion.Layers[POPULATELAYER].Image);
             imgRegion.Redraw();
             lastSelectedRegionIndex = lstRegions.SelectedIndex;
         }

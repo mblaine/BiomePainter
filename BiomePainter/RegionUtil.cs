@@ -179,6 +179,31 @@ namespace BiomePainter
             }
         }
 
+        public static void RenderRegionChunkstobePopulated(RegionFile region, Bitmap b)
+        {
+            using (Graphics g = Graphics.FromImage(b))
+            {
+                g.Clear(Color.Transparent);
+
+                Brush brush = new SolidBrush(Color.Yellow);
+                for (int chunkX = 0; chunkX < 32; chunkX++)
+                {
+                    for (int chunkZ = 0; chunkZ < 32; chunkZ++)
+                    {
+                        Chunk c = region.Chunks[chunkX, chunkZ];
+                        if (c == null || c.Root == null)
+                            continue;
+
+                        if (((byte)c.Root["Level"]["TerrainPopulated"]) == 0)
+                        {
+                            g.FillRectangle(brush, chunkX * 16, chunkZ * 16, 16, 16);
+                        }
+                    }
+                }
+                brush.Dispose();
+            }
+        }
+       
         private static Color ColorLookup(int block, int damage, int blockAbove)
         {
             int ret = 0;
@@ -608,6 +633,35 @@ namespace BiomePainter
                                 biomes[x + z * 16] = (byte)replace.GetBiome(chunkAbs.X + x, chunkAbs.Z + z);
                             }
                         }
+                    }
+                }
+            }
+        }
+
+        public static void SetChunkstobePopulated(RegionFile region, Bitmap selection, Color selectionColor, byte value)
+        {
+            for (int chunkX = 0; chunkX < 32; chunkX++)
+            {
+                for (int chunkZ = 0; chunkZ < 32; chunkZ++)
+                {
+                    Chunk c = region.Chunks[chunkX, chunkZ];
+                    if (c == null || c.Root == null)
+                        continue;
+
+                    bool done = false;
+                    for (int z = 0; z < 16; z++)
+                    {
+                        for (int x = 0; x < 16; x++)
+                        {
+                            if (selection.GetPixel(chunkX * 16 + x, chunkZ * 16 + z).ToArgb() == selectionColor.ToArgb())
+                            {
+                                ((TAG_Byte)c.Root["Level"]["TerrainPopulated"]).Payload = value;
+                                done = true;
+                                break;
+                            }
+                        }
+                        if (done)
+                            break;
                     }
                 }
             }
