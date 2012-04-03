@@ -138,6 +138,14 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\icon.ico" />
+    <None Include="Images\undo.png" />
+    <None Include="Images\select-none.png" />
+    <None Include="Images\select-invert.png" />
+    <None Include="Images\select-chunks.png" />
+    <None Include="Images\select-all.png" />
+    <None Include="Images\redo.png" />
+    <None Include="Images\paste.png" />
+    <None Include="Images\copy.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -418,31 +418,31 @@
             // 
             // btnSelectAll
             // 
-            this.btnSelectAll.Location = new System.Drawing.Point(6, 22);
+            this.btnSelectAll.Image = global::BiomePainter.Properties.Resources.select_all;
+            this.btnSelectAll.Location = new System.Drawing.Point(6, 21);
             this.btnSelectAll.Name = "btnSelectAll";
-            this.btnSelectAll.Size = new System.Drawing.Size(89, 23);
+            this.btnSelectAll.Size = new System.Drawing.Size(40, 40);
             this.btnSelectAll.TabIndex = 7;
-            this.btnSelectAll.Text = "All";
             this.btnSelectAll.UseVisualStyleBackColor = true;
             this.btnSelectAll.Click += new System.EventHandler(this.btnSelectAll_Click);
             // 
             // btnSelectNone
             // 
-            this.btnSelectNone.Location = new System.Drawing.Point(101, 21);
+            this.btnSelectNone.Image = global::BiomePainter.Properties.Resources.select_none;
+            this.btnSelectNone.Location = new System.Drawing.Point(52, 21);
             this.btnSelectNone.Name = "btnSelectNone";
-            this.btnSelectNone.Size = new System.Drawing.Size(89, 23);
+            this.btnSelectNone.Size = new System.Drawing.Size(40, 40);
             this.btnSelectNone.TabIndex = 8;
-            this.btnSelectNone.Text = "None";
             this.btnSelectNone.UseVisualStyleBackColor = true;
             this.btnSelectNone.Click += new System.EventHandler(this.btnSelectNone_Click);
             // 
             // btnInvertSelection
             // 
-            this.btnInvertSelection.Location = new System.Drawing.Point(6, 51);
+            this.btnInvertSelection.Image = global::BiomePainter.Properties.Resources.select_invert;
+            this.btnInvertSelection.Location = new System.Drawing.Point(98, 21);
             this.btnInvertSelection.Name = "btnInvertSelection";
-            this.btnInvertSelection.Size = new System.Drawing.Size(89, 23);
+            this.btnInvertSelection.Size = new System.Drawing.Size(40, 40);
             this.btnInvertSelection.TabIndex = 9;
-            this.btnInvertSelection.Text = "Invert";
             this.btnInvertSelection.UseVisualStyleBackColor = true;
             this.btnInvertSelection.Click += new System.EventHandler(this.btnInvertSelection_Click);
             // 
@@ -511,11 +511,11 @@
             // 
             // btnSelectChunks
             // 
-            this.btnSelectChunks.Location = new System.Drawing.Point(101, 51);
+            this.btnSelectChunks.Image = global::BiomePainter.Properties.Resources.select_chunks;
+            this.btnSelectChunks.Location = new System.Drawing.Point(144, 21);
             this.btnSelectChunks.Name = "btnSelectChunks";
-            this.btnSelectChunks.Size = new System.Drawing.Size(89, 23);
+            this.btnSelectChunks.Size = new System.Drawing.Size(40, 40);
             this.btnSelectChunks.TabIndex = 13;
-            this.btnSelectChunks.Text = "Chunks";
             this.btnSelectChunks.UseVisualStyleBackColor = true;
             this.btnSelectChunks.Click += new System.EventHandler(this.btnSelectChunks_Click);
             // 
@@ -527,7 +527,7 @@
             this.groupBox2.Controls.Add(this.btnInvertSelection);
             this.groupBox2.Location = new System.Drawing.Point(791, 392);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(198, 83);
+            this.groupBox2.Size = new System.Drawing.Size(198, 72);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Select";
@@ -683,50 +683,50 @@
             this.groupBox6.Controls.Add(this.btnCopy);
             this.groupBox6.Controls.Add(this.btnRedo);
             this.groupBox6.Controls.Add(this.btnUndo);
-            this.groupBox6.Location = new System.Drawing.Point(790, 481);
+            this.groupBox6.Location = new System.Drawing.Point(790, 470);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(198, 83);
+            this.groupBox6.Size = new System.Drawing.Size(198, 72);
             this.groupBox6.TabIndex = 19;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Edit";
             // 
             // btnPaste
             // 
-            this.btnPaste.Location = new System.Drawing.Point(101, 50);
+            this.btnPaste.Image = global::BiomePainter.Properties.Resources.paste;
+            this.btnPaste.Location = new System.Drawing.Point(52, 21);
             this.btnPaste.Name = "btnPaste";
-            this.btnPaste.Size = new System.Drawing.Size(89, 23);
+            this.btnPaste.Size = new System.Drawing.Size(40, 40);
             this.btnPaste.TabIndex = 3;
-            this.btnPaste.Text = "Paste";
             this.btnPaste.UseVisualStyleBackColor = true;
             this.btnPaste.Click += new System.EventHandler(this.btnPaste_Click);
             // 
             // btnCopy
             // 
-            this.btnCopy.Location = new System.Drawing.Point(6, 50);
+            this.btnCopy.Image = global::BiomePainter.Properties.Resources.copy;
+            this.btnCopy.Location = new System.Drawing.Point(6, 21);
             this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(89, 23);
+            this.btnCopy.Size = new System.Drawing.Size(40, 40);
             this.btnCopy.TabIndex = 2;
-            this.btnCopy.Text = "Copy";
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
             // btnRedo
             // 
-            this.btnRedo.Location = new System.Drawing.Point(101, 21);
+            this.btnRedo.Image = global::BiomePainter.Properties.Resources.redo;
+            this.btnRedo.Location = new System.Drawing.Point(144, 21);
             this.btnRedo.Name = "btnRedo";
-            this.btnRedo.Size = new System.Drawing.Size(89, 23);
+            this.btnRedo.Size = new System.Drawing.Size(40, 40);
             this.btnRedo.TabIndex = 1;
-            this.btnRedo.Text = "Redo";
             this.btnRedo.UseVisualStyleBackColor = true;
             this.btnRedo.Click += new System.EventHandler(this.btnRedo_Click);
             // 
             // btnUndo
             // 
-            this.btnUndo.Location = new System.Drawing.Point(6, 21);
+            this.btnUndo.Image = global::BiomePainter.Properties.Resources.undo;
+            this.btnUndo.Location = new System.Drawing.Point(98, 21);
             this.btnUndo.Name = "btnUndo";
-            this.btnUndo.Size = new System.Drawing.Size(89, 23);
+            this.btnUndo.Size = new System.Drawing.Size(40, 40);
             this.btnUndo.TabIndex = 0;
-            this.btnUndo.Text = "Undo";
             this.btnUndo.UseVisualStyleBackColor = true;
             this.btnUndo.Click += new System.EventHandler(this.btnUndo_Click);
             // 
