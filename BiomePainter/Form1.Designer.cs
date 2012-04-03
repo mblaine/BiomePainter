@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,6 +94,7 @@
             this.btnRedo = new System.Windows.Forms.Button();
             this.btnUndo = new System.Windows.Forms.Button();
             this.imgRegion = new BitmapSelector.BitmapSelector();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -423,6 +425,7 @@
             this.btnSelectAll.Name = "btnSelectAll";
             this.btnSelectAll.Size = new System.Drawing.Size(40, 40);
             this.btnSelectAll.TabIndex = 7;
+            this.toolTip.SetToolTip(this.btnSelectAll, "Select All (Ctrl+A)");
             this.btnSelectAll.UseVisualStyleBackColor = true;
             this.btnSelectAll.Click += new System.EventHandler(this.btnSelectAll_Click);
             // 
@@ -433,6 +436,7 @@
             this.btnSelectNone.Name = "btnSelectNone";
             this.btnSelectNone.Size = new System.Drawing.Size(40, 40);
             this.btnSelectNone.TabIndex = 8;
+            this.toolTip.SetToolTip(this.btnSelectNone, "Select None (Ctrl+Shift+A)");
             this.btnSelectNone.UseVisualStyleBackColor = true;
             this.btnSelectNone.Click += new System.EventHandler(this.btnSelectNone_Click);
             // 
@@ -443,6 +447,7 @@
             this.btnInvertSelection.Name = "btnInvertSelection";
             this.btnInvertSelection.Size = new System.Drawing.Size(40, 40);
             this.btnInvertSelection.TabIndex = 9;
+            this.toolTip.SetToolTip(this.btnInvertSelection, "Invert Selection (Ctrl+I)");
             this.btnInvertSelection.UseVisualStyleBackColor = true;
             this.btnInvertSelection.Click += new System.EventHandler(this.btnInvertSelection_Click);
             // 
@@ -516,6 +521,7 @@
             this.btnSelectChunks.Name = "btnSelectChunks";
             this.btnSelectChunks.Size = new System.Drawing.Size(40, 40);
             this.btnSelectChunks.TabIndex = 13;
+            this.toolTip.SetToolTip(this.btnSelectChunks, "Expand Selection to Chunks");
             this.btnSelectChunks.UseVisualStyleBackColor = true;
             this.btnSelectChunks.Click += new System.EventHandler(this.btnSelectChunks_Click);
             // 
@@ -697,6 +703,7 @@
             this.btnPaste.Name = "btnPaste";
             this.btnPaste.Size = new System.Drawing.Size(40, 40);
             this.btnPaste.TabIndex = 3;
+            this.toolTip.SetToolTip(this.btnPaste, "Paste Biomes (Ctrl+V)");
             this.btnPaste.UseVisualStyleBackColor = true;
             this.btnPaste.Click += new System.EventHandler(this.btnPaste_Click);
             // 
@@ -707,6 +714,7 @@
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(40, 40);
             this.btnCopy.TabIndex = 2;
+            this.toolTip.SetToolTip(this.btnCopy, "Copy Biomes Under Selection (Ctrl+C)");
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
@@ -717,6 +725,7 @@
             this.btnRedo.Name = "btnRedo";
             this.btnRedo.Size = new System.Drawing.Size(40, 40);
             this.btnRedo.TabIndex = 1;
+            this.toolTip.SetToolTip(this.btnRedo, "Redo (Ctrl+Y)");
             this.btnRedo.UseVisualStyleBackColor = true;
             this.btnRedo.Click += new System.EventHandler(this.btnRedo_Click);
             // 
@@ -727,6 +736,7 @@
             this.btnUndo.Name = "btnUndo";
             this.btnUndo.Size = new System.Drawing.Size(40, 40);
             this.btnUndo.TabIndex = 0;
+            this.toolTip.SetToolTip(this.btnUndo, "Undo (Ctrl+Z)");
             this.btnUndo.UseVisualStyleBackColor = true;
             this.btnUndo.Click += new System.EventHandler(this.btnUndo_Click);
             // 
@@ -739,6 +749,10 @@
             this.imgRegion.ZoomEvent += new BitmapSelector.BitmapSelector.ZoomEventHandler(this.imgRegion_ZoomEvent);
             this.imgRegion.BrushDiameterChanged += new BitmapSelector.BitmapSelector.BrushDiameterEventHandler(this.imgRegion_BrushDiameterChanged);
             this.imgRegion.SelectionChanged += new System.EventHandler(this.imgRegion_SelectionChanged);
+            // 
+            // toolTip
+            // 
+            this.toolTip.AutomaticDelay = 400;
             // 
             // Form1
             // 
@@ -847,6 +861,7 @@
         private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.CheckBox chkShowBrush;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
 
