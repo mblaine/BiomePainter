@@ -35,6 +35,16 @@ For example, after changing an area from taiga or ice plains to another biome
 such as forest, existing ice and snow cover will remain until removed using 
 another tool such as MCEdit or removed manually in Minecraft. 
 
+* If, however, you use the "Set Chunks in Selection to be Populated" option
+under the Edit menu, the next time the specified chunks are loaded in Minecraft
+it will fill them with trees, snow cover, water, lava, and ores depending on
+the biome(s) the chunk is in. If that chunk has already been populated or
+already has player-made structures in it, you may find it clogged with more
+foliage than you wanted. Also smooth stone in your structures may be replaced
+with ores, dirt, or gravel. I strongly suggest that if you decide to use this
+feature you make sure you have a current backup copy of your world before
+proceeding.
+
 * If a world was created before Minecraft 1.2 and needed to be converted, 
 Minecraft will have populated each chunk's biome information based on the biome 
 generation from version 1.1. Minecraft will still use the latest biome 
