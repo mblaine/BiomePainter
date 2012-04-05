@@ -394,6 +394,7 @@ namespace BitmapSelector
             Magnification = 1;
             OffsetX = 0;
             OffsetY = 0;
+            OnZoom(new ZoomEventArgs(1, 0, 0));
             scrollHorizontal.Visible = false;
             scrollVertical.Visible = false;
             scrollHorizontal.Value = 0;
