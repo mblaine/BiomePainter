@@ -394,53 +394,57 @@
             // 
             // chkShowMap
             // 
-            this.chkShowMap.AutoSize = true;
+            this.chkShowMap.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkShowMap.Checked = true;
             this.chkShowMap.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkShowMap.Location = new System.Drawing.Point(8, 21);
+            this.chkShowMap.Image = global::BiomePainter.Properties.Resources.map;
+            this.chkShowMap.Location = new System.Drawing.Point(6, 21);
             this.chkShowMap.Name = "chkShowMap";
-            this.chkShowMap.Size = new System.Drawing.Size(57, 21);
+            this.chkShowMap.Size = new System.Drawing.Size(40, 40);
             this.chkShowMap.TabIndex = 3;
-            this.chkShowMap.Text = "Map";
+            this.toolTip.SetToolTip(this.chkShowMap, "Map");
             this.chkShowMap.UseVisualStyleBackColor = true;
             this.chkShowMap.CheckedChanged += new System.EventHandler(this.chkShowMap_CheckedChanged);
             // 
             // chkShowBiomes
             // 
-            this.chkShowBiomes.AutoSize = true;
+            this.chkShowBiomes.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkShowBiomes.Checked = true;
             this.chkShowBiomes.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkShowBiomes.Location = new System.Drawing.Point(8, 48);
+            this.chkShowBiomes.Image = global::BiomePainter.Properties.Resources.biomes;
+            this.chkShowBiomes.Location = new System.Drawing.Point(52, 21);
             this.chkShowBiomes.Name = "chkShowBiomes";
-            this.chkShowBiomes.Size = new System.Drawing.Size(76, 21);
+            this.chkShowBiomes.Size = new System.Drawing.Size(40, 40);
             this.chkShowBiomes.TabIndex = 4;
-            this.chkShowBiomes.Text = "Biomes";
+            this.toolTip.SetToolTip(this.chkShowBiomes, "Biomes");
             this.chkShowBiomes.UseVisualStyleBackColor = true;
             this.chkShowBiomes.CheckedChanged += new System.EventHandler(this.chkShowBiomes_CheckedChanged);
             // 
             // chkShowSelection
             // 
-            this.chkShowSelection.AutoSize = true;
+            this.chkShowSelection.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkShowSelection.Checked = true;
             this.chkShowSelection.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkShowSelection.Location = new System.Drawing.Point(8, 173);
+            this.chkShowSelection.Image = global::BiomePainter.Properties.Resources.selection;
+            this.chkShowSelection.Location = new System.Drawing.Point(6, 67);
             this.chkShowSelection.Name = "chkShowSelection";
-            this.chkShowSelection.Size = new System.Drawing.Size(88, 21);
+            this.chkShowSelection.Size = new System.Drawing.Size(40, 40);
             this.chkShowSelection.TabIndex = 5;
-            this.chkShowSelection.Text = "Selection";
+            this.toolTip.SetToolTip(this.chkShowSelection, "Selection");
             this.chkShowSelection.UseVisualStyleBackColor = true;
             this.chkShowSelection.CheckedChanged += new System.EventHandler(this.chkShowSelection_CheckedChanged);
             // 
             // chkShowToolTips
             // 
-            this.chkShowToolTips.AutoSize = true;
+            this.chkShowToolTips.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkShowToolTips.Checked = true;
             this.chkShowToolTips.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkShowToolTips.Location = new System.Drawing.Point(8, 73);
+            this.chkShowToolTips.Image = global::BiomePainter.Properties.Resources.tooltips;
+            this.chkShowToolTips.Location = new System.Drawing.Point(98, 21);
             this.chkShowToolTips.Name = "chkShowToolTips";
-            this.chkShowToolTips.Size = new System.Drawing.Size(89, 21);
+            this.chkShowToolTips.Size = new System.Drawing.Size(40, 40);
             this.chkShowToolTips.TabIndex = 6;
-            this.chkShowToolTips.Text = "Tool Tips";
+            this.toolTip.SetToolTip(this.chkShowToolTips, "Tool Tips");
             this.chkShowToolTips.UseVisualStyleBackColor = true;
             this.chkShowToolTips.CheckedChanged += new System.EventHandler(this.chkShowToolTips_CheckedChanged);
             // 
@@ -512,45 +516,47 @@
             this.groupBox1.Controls.Add(this.chkShowSelection);
             this.groupBox1.Location = new System.Drawing.Point(791, 31);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(198, 196);
+            this.groupBox1.Size = new System.Drawing.Size(198, 116);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Layers";
             // 
             // chkShowPopulate
             // 
-            this.chkShowPopulate.AutoSize = true;
-            this.chkShowPopulate.Location = new System.Drawing.Point(8, 98);
+            this.chkShowPopulate.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkShowPopulate.Image = global::BiomePainter.Properties.Resources.chunks_populated;
+            this.chkShowPopulate.Location = new System.Drawing.Point(144, 21);
             this.chkShowPopulate.Name = "chkShowPopulate";
-            this.chkShowPopulate.Size = new System.Drawing.Size(181, 21);
+            this.chkShowPopulate.Size = new System.Drawing.Size(40, 40);
             this.chkShowPopulate.TabIndex = 9;
-            this.chkShowPopulate.Text = "Chunks to be Populated";
-            this.toolTip.SetToolTip(this.chkShowPopulate, "Chunks that will be filled with trees and ores the next time they are loaded in M" +
-        "inecraft. Alter from the Edit menu.");
+            this.toolTip.SetToolTip(this.chkShowPopulate, "Chunks that will be populated with trees and ores the next time they are loaded i" +
+        "n Minecraft. Alter from the Edit menu.");
             this.chkShowPopulate.UseVisualStyleBackColor = true;
             this.chkShowPopulate.CheckedChanged += new System.EventHandler(this.chkShowPopulate_CheckedChanged);
             // 
             // chkShowBrush
             // 
-            this.chkShowBrush.AutoSize = true;
+            this.chkShowBrush.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkShowBrush.Checked = true;
             this.chkShowBrush.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkShowBrush.Location = new System.Drawing.Point(8, 148);
+            this.chkShowBrush.Image = global::BiomePainter.Properties.Resources.brush;
+            this.chkShowBrush.Location = new System.Drawing.Point(52, 67);
             this.chkShowBrush.Name = "chkShowBrush";
-            this.chkShowBrush.Size = new System.Drawing.Size(67, 21);
+            this.chkShowBrush.Size = new System.Drawing.Size(40, 40);
             this.chkShowBrush.TabIndex = 8;
-            this.chkShowBrush.Text = "Brush";
+            this.toolTip.SetToolTip(this.chkShowBrush, "Brush");
             this.chkShowBrush.UseVisualStyleBackColor = true;
             this.chkShowBrush.CheckedChanged += new System.EventHandler(this.chkShowBrush_CheckedChanged);
             // 
             // chkShowChunkBoundaries
             // 
-            this.chkShowChunkBoundaries.AutoSize = true;
-            this.chkShowChunkBoundaries.Location = new System.Drawing.Point(8, 123);
+            this.chkShowChunkBoundaries.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkShowChunkBoundaries.Image = global::BiomePainter.Properties.Resources.chunk_boundaries;
+            this.chkShowChunkBoundaries.Location = new System.Drawing.Point(98, 67);
             this.chkShowChunkBoundaries.Name = "chkShowChunkBoundaries";
-            this.chkShowChunkBoundaries.Size = new System.Drawing.Size(146, 21);
+            this.chkShowChunkBoundaries.Size = new System.Drawing.Size(40, 40);
             this.chkShowChunkBoundaries.TabIndex = 7;
-            this.chkShowChunkBoundaries.Text = "Chunk Boundaries";
+            this.toolTip.SetToolTip(this.chkShowChunkBoundaries, "Chunk Boundaries");
             this.chkShowChunkBoundaries.UseVisualStyleBackColor = true;
             this.chkShowChunkBoundaries.CheckedChanged += new System.EventHandler(this.chkShowChunkBoundaries_CheckedChanged);
             // 
@@ -571,7 +577,7 @@
             this.groupBox2.Controls.Add(this.btnSelectChunks);
             this.groupBox2.Controls.Add(this.btnSelectNone);
             this.groupBox2.Controls.Add(this.btnInvertSelection);
-            this.groupBox2.Location = new System.Drawing.Point(791, 424);
+            this.groupBox2.Location = new System.Drawing.Point(791, 345);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(198, 72);
             this.groupBox2.TabIndex = 14;
@@ -584,7 +590,7 @@
             this.groupBox3.Controls.Add(this.trackBrushDiameter);
             this.groupBox3.Controls.Add(this.radRoundBrush);
             this.groupBox3.Controls.Add(this.radSquareBrush);
-            this.groupBox3.Location = new System.Drawing.Point(791, 316);
+            this.groupBox3.Location = new System.Drawing.Point(791, 234);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(198, 105);
             this.groupBox3.TabIndex = 15;
@@ -617,7 +623,7 @@
             // 
             this.groupBox4.Controls.Add(this.lblMagnification);
             this.groupBox4.Controls.Add(this.trackMagnification);
-            this.groupBox4.Location = new System.Drawing.Point(791, 231);
+            this.groupBox4.Location = new System.Drawing.Point(791, 153);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(198, 79);
             this.groupBox4.TabIndex = 16;
@@ -732,7 +738,7 @@
             this.groupBox6.Controls.Add(this.btnCopy);
             this.groupBox6.Controls.Add(this.btnRedo);
             this.groupBox6.Controls.Add(this.btnUndo);
-            this.groupBox6.Location = new System.Drawing.Point(791, 502);
+            this.groupBox6.Location = new System.Drawing.Point(791, 423);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(198, 72);
             this.groupBox6.TabIndex = 19;
@@ -825,7 +831,6 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();

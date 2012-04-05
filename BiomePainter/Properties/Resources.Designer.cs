@@ -60,6 +60,34 @@ namespace BiomePainter.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap biomes {
+            get {
+                object obj = ResourceManager.GetObject("biomes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap brush {
+            get {
+                object obj = ResourceManager.GetObject("brush", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap chunk_boundaries {
+            get {
+                object obj = ResourceManager.GetObject("chunk_boundaries", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap chunks_populated {
+            get {
+                object obj = ResourceManager.GetObject("chunks_populated", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap copy {
             get {
                 object obj = ResourceManager.GetObject("copy", resourceCulture);
@@ -71,6 +99,13 @@ namespace BiomePainter.Properties {
             get {
                 object obj = ResourceManager.GetObject("icon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap map {
+            get {
+                object obj = ResourceManager.GetObject("map", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -112,6 +147,20 @@ namespace BiomePainter.Properties {
         internal static System.Drawing.Bitmap select_none {
             get {
                 object obj = ResourceManager.GetObject("select_none", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap selection {
+            get {
+                object obj = ResourceManager.GetObject("selection", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooltips {
+            get {
+                object obj = ResourceManager.GetObject("tooltips", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
