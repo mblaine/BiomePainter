@@ -209,30 +209,22 @@ namespace BiomePainter
 
         private void aboveCurrentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (world == null || region == null)
-                return;
-            TrySwitchRegion(region.Coords.X, region.Coords.Z - 1);
+            btnRegionUp_Click(this, null);
         }
 
         private void belowCurrentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (world == null || region == null)
-                return;
-            TrySwitchRegion(region.Coords.X, region.Coords.Z + 1);
+            btnRegionDown_Click(this, null);
         }
 
         private void leftOfCurrentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (world == null || region == null)
-                return;
-            TrySwitchRegion(region.Coords.X - 1, region.Coords.Z);
+            btnRegionLeft_Click(this, null);
         }
 
         private void rightOfCurrentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (world == null || region == null)
-                return;
-            TrySwitchRegion(region.Coords.X + 1, region.Coords.Z);
+            btnRegionRight_Click(this, null);
         }
 
         private void loadRegionByCoordsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -496,6 +488,35 @@ namespace BiomePainter
 
         #region Buttons
 
+        private void btnRegionLeft_Click(object sender, EventArgs e)
+        {
+            if (world == null || region == null)
+                return;
+            TrySwitchRegion(region.Coords.X - 1, region.Coords.Z);
+        }
+
+        private void btnRegionUp_Click(object sender, EventArgs e)
+        {
+            if (world == null || region == null)
+                return;
+            TrySwitchRegion(region.Coords.X, region.Coords.Z - 1);
+
+        }
+
+        private void btnRegionRight_Click(object sender, EventArgs e)
+        {
+            if (world == null || region == null)
+                return;
+            TrySwitchRegion(region.Coords.X + 1, region.Coords.Z);
+        }
+
+        private void btnRegionDown_Click(object sender, EventArgs e)
+        {
+            if (world == null || region == null)
+                return;
+            TrySwitchRegion(region.Coords.X, region.Coords.Z + 1);
+        }
+
         private void btnSelectAll_Click(object sender, EventArgs e)
         {
             imgRegion.SelectAll();
@@ -717,6 +738,7 @@ namespace BiomePainter
             history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
         }
         #endregion
+
     }
 
 }

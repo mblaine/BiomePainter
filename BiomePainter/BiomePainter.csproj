@@ -139,6 +139,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\icon.ico" />
+    <None Include="Images\up.png" />
+    <None Include="Images\right.png" />
+    <None Include="Images\left.png" />
+    <None Include="Images\down.png" />
     <None Include="Images\tooltips.png" />
     <None Include="Images\selection.png" />
     <None Include="Images\map.png" />
@@ -155,9 +159,7 @@
     <None Include="Images\paste.png" />
     <None Include="Images\copy.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

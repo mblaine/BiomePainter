@@ -99,6 +99,11 @@
             this.btnUndo = new System.Windows.Forms.Button();
             this.imgRegion = new BitmapSelector.BitmapSelector();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.btnRegionLeft = new System.Windows.Forms.Button();
+            this.btnRegionUp = new System.Windows.Forms.Button();
+            this.btnRegionRight = new System.Windows.Forms.Button();
+            this.btnRegionDown = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -108,6 +113,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackMagnification)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -388,7 +394,7 @@
             this.lstRegions.ItemHeight = 16;
             this.lstRegions.Location = new System.Drawing.Point(12, 31);
             this.lstRegions.Name = "lstRegions";
-            this.lstRegions.Size = new System.Drawing.Size(254, 596);
+            this.lstRegions.Size = new System.Drawing.Size(254, 516);
             this.lstRegions.TabIndex = 1;
             this.lstRegions.SelectedIndexChanged += new System.EventHandler(this.lstRegions_SelectedIndexChanged);
             // 
@@ -806,10 +812,68 @@
             this.toolTip.InitialDelay = 400;
             this.toolTip.ReshowDelay = 80;
             // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.btnRegionDown);
+            this.groupBox7.Controls.Add(this.btnRegionRight);
+            this.groupBox7.Controls.Add(this.btnRegionUp);
+            this.groupBox7.Controls.Add(this.btnRegionLeft);
+            this.groupBox7.Location = new System.Drawing.Point(12, 559);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(254, 72);
+            this.groupBox7.TabIndex = 20;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Switch Regions";
+            // 
+            // btnRegionLeft
+            // 
+            this.btnRegionLeft.Image = global::BiomePainter.Properties.Resources.left;
+            this.btnRegionLeft.Location = new System.Drawing.Point(6, 21);
+            this.btnRegionLeft.Name = "btnRegionLeft";
+            this.btnRegionLeft.Size = new System.Drawing.Size(40, 40);
+            this.btnRegionLeft.TabIndex = 0;
+            this.toolTip.SetToolTip(this.btnRegionLeft, "Load the region left of the current one. (Ctrl + Left)");
+            this.btnRegionLeft.UseVisualStyleBackColor = true;
+            this.btnRegionLeft.Click += new System.EventHandler(this.btnRegionLeft_Click);
+            // 
+            // btnRegionUp
+            // 
+            this.btnRegionUp.Image = global::BiomePainter.Properties.Resources.up;
+            this.btnRegionUp.Location = new System.Drawing.Point(52, 21);
+            this.btnRegionUp.Name = "btnRegionUp";
+            this.btnRegionUp.Size = new System.Drawing.Size(40, 40);
+            this.btnRegionUp.TabIndex = 1;
+            this.toolTip.SetToolTip(this.btnRegionUp, "Load the region above the current one. (Ctrl + Up)");
+            this.btnRegionUp.UseVisualStyleBackColor = true;
+            this.btnRegionUp.Click += new System.EventHandler(this.btnRegionUp_Click);
+            // 
+            // btnRegionRight
+            // 
+            this.btnRegionRight.Image = global::BiomePainter.Properties.Resources.right;
+            this.btnRegionRight.Location = new System.Drawing.Point(98, 21);
+            this.btnRegionRight.Name = "btnRegionRight";
+            this.btnRegionRight.Size = new System.Drawing.Size(40, 40);
+            this.btnRegionRight.TabIndex = 2;
+            this.toolTip.SetToolTip(this.btnRegionRight, "Load the region right of the current one. (Ctrl + Right)");
+            this.btnRegionRight.UseVisualStyleBackColor = true;
+            this.btnRegionRight.Click += new System.EventHandler(this.btnRegionRight_Click);
+            // 
+            // btnRegionDown
+            // 
+            this.btnRegionDown.Image = global::BiomePainter.Properties.Resources.down;
+            this.btnRegionDown.Location = new System.Drawing.Point(144, 21);
+            this.btnRegionDown.Name = "btnRegionDown";
+            this.btnRegionDown.Size = new System.Drawing.Size(40, 40);
+            this.btnRegionDown.TabIndex = 3;
+            this.toolTip.SetToolTip(this.btnRegionDown, "Load the region below the current one. (Ctrl + Down)");
+            this.btnRegionDown.UseVisualStyleBackColor = true;
+            this.btnRegionDown.Click += new System.EventHandler(this.btnRegionDown_Click);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(996, 640);
+            this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.groupBox5);
@@ -840,6 +904,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackMagnification)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -917,6 +982,11 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem setChunksInSelectionToBePopulatedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem unsetChunksInSelectionToBePopulatedToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Button btnRegionLeft;
+        private System.Windows.Forms.Button btnRegionDown;
+        private System.Windows.Forms.Button btnRegionRight;
+        private System.Windows.Forms.Button btnRegionUp;
     }
 }
 
