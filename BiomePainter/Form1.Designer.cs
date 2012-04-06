@@ -99,11 +99,12 @@
             this.btnUndo = new System.Windows.Forms.Button();
             this.imgRegion = new BitmapSelector.BitmapSelector();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.btnRegionLeft = new System.Windows.Forms.Button();
             this.btnRegionUp = new System.Windows.Forms.Button();
             this.btnRegionRight = new System.Windows.Forms.Button();
             this.btnRegionDown = new System.Windows.Forms.Button();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.btnRegionJump = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -812,19 +813,6 @@
             this.toolTip.InitialDelay = 400;
             this.toolTip.ReshowDelay = 80;
             // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.btnRegionDown);
-            this.groupBox7.Controls.Add(this.btnRegionRight);
-            this.groupBox7.Controls.Add(this.btnRegionUp);
-            this.groupBox7.Controls.Add(this.btnRegionLeft);
-            this.groupBox7.Location = new System.Drawing.Point(12, 559);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(254, 72);
-            this.groupBox7.TabIndex = 20;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Switch Regions";
-            // 
             // btnRegionLeft
             // 
             this.btnRegionLeft.Image = global::BiomePainter.Properties.Resources.left;
@@ -868,6 +856,32 @@
             this.toolTip.SetToolTip(this.btnRegionDown, "Load the region below the current one. (Ctrl + Down)");
             this.btnRegionDown.UseVisualStyleBackColor = true;
             this.btnRegionDown.Click += new System.EventHandler(this.btnRegionDown_Click);
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.btnRegionJump);
+            this.groupBox7.Controls.Add(this.btnRegionDown);
+            this.groupBox7.Controls.Add(this.btnRegionRight);
+            this.groupBox7.Controls.Add(this.btnRegionUp);
+            this.groupBox7.Controls.Add(this.btnRegionLeft);
+            this.groupBox7.Location = new System.Drawing.Point(12, 559);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(254, 72);
+            this.groupBox7.TabIndex = 20;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Switch Regions";
+            // 
+            // btnRegionJump
+            // 
+            this.btnRegionJump.Image = global::BiomePainter.Properties.Resources.jump;
+            this.btnRegionJump.Location = new System.Drawing.Point(208, 21);
+            this.btnRegionJump.Name = "btnRegionJump";
+            this.btnRegionJump.Size = new System.Drawing.Size(40, 40);
+            this.btnRegionJump.TabIndex = 4;
+            this.toolTip.SetToolTip(this.btnRegionJump, "Jump to the region that contains certain absolute x, z block coordinates. (Ctrl +" +
+        " G)");
+            this.btnRegionJump.UseVisualStyleBackColor = true;
+            this.btnRegionJump.Click += new System.EventHandler(this.btnRegionJump_Click);
             // 
             // Form1
             // 
@@ -987,6 +1001,7 @@
         private System.Windows.Forms.Button btnRegionDown;
         private System.Windows.Forms.Button btnRegionRight;
         private System.Windows.Forms.Button btnRegionUp;
+        private System.Windows.Forms.Button btnRegionJump;
     }
 }
 

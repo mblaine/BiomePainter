@@ -229,38 +229,7 @@ namespace BiomePainter
 
         private void loadRegionByCoordsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (world == null)
-                return;
-
-            String msg = "Type absolute x and z block coordinates (x, z) to load the region that contains the specified point.";
-            String input = "";
-            while (true)
-            {
-                input = InputBox.InputBox.Show(msg, "Load", input);
-                if (input.Length == 0)
-                    return;
-
-                Match m = Regex.Match(input, @"([-\+]?\d+)(?:[,\s]+)([-\+]?\d+)");
-                if (m.Groups.Count < 3)
-                {
-                    msg = "Unable to parse coordinates. Please try again or click cancel.";
-                }
-                else
-                {
-                    int x, z;
-                    if (!Int32.TryParse(m.Groups[1].Value, out x) || !Int32.TryParse(m.Groups[2].Value, out z))
-                    {
-                        msg = "Unable to parse coordinates. Please try again or click cancel.";
-                    }
-                    else
-                    {
-                        Coord c = new Coord(x, z);
-                        c.AbsolutetoRegion();
-                        TrySwitchRegion(c.X, c.Z);
-                        return;
-                    }
-                }
-            }
+            btnRegionJump_Click(this, null);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -515,6 +484,42 @@ namespace BiomePainter
             if (world == null || region == null)
                 return;
             TrySwitchRegion(region.Coords.X, region.Coords.Z + 1);
+        }
+
+        private void btnRegionJump_Click(object sender, EventArgs e)
+        {
+            if (world == null)
+                return;
+
+            String msg = "Type absolute x and z block coordinates (x, z) to load the region that contains the specified point.";
+            String input = "";
+            while (true)
+            {
+                input = InputBox.InputBox.Show(msg, "Load", input);
+                if (input.Length == 0)
+                    return;
+
+                Match m = Regex.Match(input, @"([-\+]?\d+)(?:[,\s]+)([-\+]?\d+)");
+                if (m.Groups.Count < 3)
+                {
+                    msg = "Unable to parse coordinates. Please try again or click cancel.";
+                }
+                else
+                {
+                    int x, z;
+                    if (!Int32.TryParse(m.Groups[1].Value, out x) || !Int32.TryParse(m.Groups[2].Value, out z))
+                    {
+                        msg = "Unable to parse coordinates. Please try again or click cancel.";
+                    }
+                    else
+                    {
+                        Coord c = new Coord(x, z);
+                        c.AbsolutetoRegion();
+                        TrySwitchRegion(c.X, c.Z);
+                        return;
+                    }
+                }
+            }
         }
 
         private void btnSelectAll_Click(object sender, EventArgs e)
