@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Images\icon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -138,26 +138,26 @@
       <Link>README.txt</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\icon.ico" />
-    <None Include="Images\up.png" />
-    <None Include="Images\right.png" />
-    <None Include="Images\left.png" />
-    <None Include="Images\down.png" />
-    <None Include="Images\tooltips.png" />
-    <None Include="Images\selection.png" />
-    <None Include="Images\map.png" />
-    <None Include="Images\chunks-populated.png" />
-    <None Include="Images\chunk-boundaries.png" />
-    <None Include="Images\brush.png" />
-    <None Include="Images\biomes.png" />
-    <None Include="Images\undo.png" />
-    <None Include="Images\select-none.png" />
-    <None Include="Images\select-invert.png" />
-    <None Include="Images\select-chunks.png" />
-    <None Include="Images\select-all.png" />
-    <None Include="Images\redo.png" />
-    <None Include="Images\paste.png" />
-    <None Include="Images\copy.png" />
+    <Content Include="Resources\icon.ico" />
+    <None Include="Resources\up.png" />
+    <None Include="Resources\right.png" />
+    <None Include="Resources\left.png" />
+    <None Include="Resources\down.png" />
+    <None Include="Resources\tooltips.png" />
+    <None Include="Resources\selection.png" />
+    <None Include="Resources\map.png" />
+    <None Include="Resources\chunks-populated.png" />
+    <None Include="Resources\chunk-boundaries.png" />
+    <None Include="Resources\brush.png" />
+    <None Include="Resources\biomes.png" />
+    <None Include="Resources\undo.png" />
+    <None Include="Resources\select-none.png" />
+    <None Include="Resources\select-invert.png" />
+    <None Include="Resources\select-chunks.png" />
+    <None Include="Resources\select-all.png" />
+    <None Include="Resources\redo.png" />
+    <None Include="Resources\paste.png" />
+    <None Include="Resources\copy.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
