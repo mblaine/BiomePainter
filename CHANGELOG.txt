@@ -1,3 +1,15 @@
+0.4 - 4/6/2012
+    * Replaced layer visibility checkboxes with toggle buttons with icons
+      instead of text labels.
+    * New option to add to or remove from the current selection based on blocks
+      on the surface of the region. For instance, the ability to add the area
+      over all grass blocks to the current selection.
+    * Added buttons beneath the list of regions for switching to adjacent
+      regions or jumping to a region that contains a set of coordinates.
+    * Fixed dead shrubs not being displayed on the map layer.
+    * Fixed magnification slider and label not updating when switching regions
+      while zoomed in.
+
 0.3 - 4/3/2012
     * "TerrainGenerated" flag on chunks can be reset from the Edit menu,
       causing the selected chunks to be filled with trees and ores the next
