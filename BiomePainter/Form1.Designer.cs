@@ -97,14 +97,18 @@
             this.btnCopy = new System.Windows.Forms.Button();
             this.btnRedo = new System.Windows.Forms.Button();
             this.btnUndo = new System.Windows.Forms.Button();
-            this.imgRegion = new BitmapSelector.BitmapSelector();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnRegionLeft = new System.Windows.Forms.Button();
             this.btnRegionUp = new System.Windows.Forms.Button();
             this.btnRegionRight = new System.Windows.Forms.Button();
             this.btnRegionDown = new System.Windows.Forms.Button();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.btnRegionJump = new System.Windows.Forms.Button();
+            this.btnAddtoSelection = new System.Windows.Forms.Button();
+            this.btnRemovefromSelection = new System.Windows.Forms.Button();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.cmbBlockType = new System.Windows.Forms.ComboBox();
+            this.imgRegion = new BitmapSelector.BitmapSelector();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -115,6 +119,7 @@
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -395,7 +400,7 @@
             this.lstRegions.ItemHeight = 16;
             this.lstRegions.Location = new System.Drawing.Point(12, 31);
             this.lstRegions.Name = "lstRegions";
-            this.lstRegions.Size = new System.Drawing.Size(254, 516);
+            this.lstRegions.Size = new System.Drawing.Size(254, 532);
             this.lstRegions.TabIndex = 1;
             this.lstRegions.SelectedIndexChanged += new System.EventHandler(this.lstRegions_SelectedIndexChanged);
             // 
@@ -523,7 +528,7 @@
             this.groupBox1.Controls.Add(this.chkShowSelection);
             this.groupBox1.Location = new System.Drawing.Point(791, 31);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(198, 116);
+            this.groupBox1.Size = new System.Drawing.Size(196, 115);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Layers";
@@ -584,9 +589,9 @@
             this.groupBox2.Controls.Add(this.btnSelectChunks);
             this.groupBox2.Controls.Add(this.btnSelectNone);
             this.groupBox2.Controls.Add(this.btnInvertSelection);
-            this.groupBox2.Location = new System.Drawing.Point(791, 345);
+            this.groupBox2.Location = new System.Drawing.Point(791, 342);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(198, 72);
+            this.groupBox2.Size = new System.Drawing.Size(198, 71);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Select";
@@ -597,9 +602,9 @@
             this.groupBox3.Controls.Add(this.trackBrushDiameter);
             this.groupBox3.Controls.Add(this.radRoundBrush);
             this.groupBox3.Controls.Add(this.radSquareBrush);
-            this.groupBox3.Location = new System.Drawing.Point(791, 234);
+            this.groupBox3.Location = new System.Drawing.Point(791, 232);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(198, 105);
+            this.groupBox3.Size = new System.Drawing.Size(198, 104);
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Selection Brush";
@@ -630,9 +635,9 @@
             // 
             this.groupBox4.Controls.Add(this.lblMagnification);
             this.groupBox4.Controls.Add(this.trackMagnification);
-            this.groupBox4.Location = new System.Drawing.Point(791, 153);
+            this.groupBox4.Location = new System.Drawing.Point(791, 152);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(198, 79);
+            this.groupBox4.Size = new System.Drawing.Size(198, 78);
             this.groupBox4.TabIndex = 16;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Zoom";
@@ -666,7 +671,7 @@
             this.groupBox5.Controls.Add(this.btnFill);
             this.groupBox5.Controls.Add(this.cmbFill);
             this.groupBox5.Controls.Add(this.label3);
-            this.groupBox5.Location = new System.Drawing.Point(272, 570);
+            this.groupBox5.Location = new System.Drawing.Point(272, 576);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(717, 61);
             this.groupBox5.TabIndex = 17;
@@ -735,7 +740,7 @@
             // 
             this.lblStatus.Location = new System.Drawing.Point(272, 546);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(512, 23);
+            this.lblStatus.Size = new System.Drawing.Size(512, 27);
             this.lblStatus.TabIndex = 18;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -745,9 +750,9 @@
             this.groupBox6.Controls.Add(this.btnCopy);
             this.groupBox6.Controls.Add(this.btnRedo);
             this.groupBox6.Controls.Add(this.btnUndo);
-            this.groupBox6.Location = new System.Drawing.Point(791, 423);
+            this.groupBox6.Location = new System.Drawing.Point(791, 508);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(198, 72);
+            this.groupBox6.Size = new System.Drawing.Size(198, 71);
             this.groupBox6.TabIndex = 19;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Edit";
@@ -795,16 +800,6 @@
             this.toolTip.SetToolTip(this.btnUndo, "Undo (Ctrl+Z)");
             this.btnUndo.UseVisualStyleBackColor = true;
             this.btnUndo.Click += new System.EventHandler(this.btnUndo_Click);
-            // 
-            // imgRegion
-            // 
-            this.imgRegion.Location = new System.Drawing.Point(272, 31);
-            this.imgRegion.Name = "imgRegion";
-            this.imgRegion.Size = new System.Drawing.Size(512, 512);
-            this.imgRegion.TabIndex = 2;
-            this.imgRegion.ZoomEvent += new BitmapSelector.BitmapSelector.ZoomEventHandler(this.imgRegion_ZoomEvent);
-            this.imgRegion.BrushDiameterChanged += new BitmapSelector.BitmapSelector.BrushDiameterEventHandler(this.imgRegion_BrushDiameterChanged);
-            this.imgRegion.SelectionChanged += new System.EventHandler(this.imgRegion_SelectionChanged);
             // 
             // toolTip
             // 
@@ -857,20 +852,6 @@
             this.btnRegionDown.UseVisualStyleBackColor = true;
             this.btnRegionDown.Click += new System.EventHandler(this.btnRegionDown_Click);
             // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.btnRegionJump);
-            this.groupBox7.Controls.Add(this.btnRegionDown);
-            this.groupBox7.Controls.Add(this.btnRegionRight);
-            this.groupBox7.Controls.Add(this.btnRegionUp);
-            this.groupBox7.Controls.Add(this.btnRegionLeft);
-            this.groupBox7.Location = new System.Drawing.Point(12, 559);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(254, 72);
-            this.groupBox7.TabIndex = 20;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Switch Regions";
-            // 
             // btnRegionJump
             // 
             this.btnRegionJump.Image = global::BiomePainter.Properties.Resources.jump;
@@ -883,10 +864,78 @@
             this.btnRegionJump.UseVisualStyleBackColor = true;
             this.btnRegionJump.Click += new System.EventHandler(this.btnRegionJump_Click);
             // 
+            // btnAddtoSelection
+            // 
+            this.btnAddtoSelection.Location = new System.Drawing.Point(17, 52);
+            this.btnAddtoSelection.Name = "btnAddtoSelection";
+            this.btnAddtoSelection.Size = new System.Drawing.Size(75, 25);
+            this.btnAddtoSelection.TabIndex = 1;
+            this.btnAddtoSelection.Text = "Add";
+            this.toolTip.SetToolTip(this.btnAddtoSelection, "Add areas covered by the selected block to the selection.");
+            this.btnAddtoSelection.UseVisualStyleBackColor = true;
+            this.btnAddtoSelection.Click += new System.EventHandler(this.btnAddorRemoveSelection_Click);
+            // 
+            // btnRemovefromSelection
+            // 
+            this.btnRemovefromSelection.Location = new System.Drawing.Point(98, 52);
+            this.btnRemovefromSelection.Name = "btnRemovefromSelection";
+            this.btnRemovefromSelection.Size = new System.Drawing.Size(75, 25);
+            this.btnRemovefromSelection.TabIndex = 2;
+            this.btnRemovefromSelection.Text = "Remove";
+            this.toolTip.SetToolTip(this.btnRemovefromSelection, "Remove areas covered by the selected block from the selection.");
+            this.btnRemovefromSelection.UseVisualStyleBackColor = true;
+            this.btnRemovefromSelection.Click += new System.EventHandler(this.btnAddorRemoveSelection_Click);
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.btnRegionJump);
+            this.groupBox7.Controls.Add(this.btnRegionDown);
+            this.groupBox7.Controls.Add(this.btnRegionRight);
+            this.groupBox7.Controls.Add(this.btnRegionUp);
+            this.groupBox7.Controls.Add(this.btnRegionLeft);
+            this.groupBox7.Location = new System.Drawing.Point(12, 565);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(254, 72);
+            this.groupBox7.TabIndex = 20;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Switch Regions";
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.btnRemovefromSelection);
+            this.groupBox8.Controls.Add(this.btnAddtoSelection);
+            this.groupBox8.Controls.Add(this.cmbBlockType);
+            this.groupBox8.Location = new System.Drawing.Point(791, 419);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(198, 83);
+            this.groupBox8.TabIndex = 21;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Select by Block";
+            // 
+            // cmbBlockType
+            // 
+            this.cmbBlockType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBlockType.FormattingEnabled = true;
+            this.cmbBlockType.Location = new System.Drawing.Point(6, 22);
+            this.cmbBlockType.Name = "cmbBlockType";
+            this.cmbBlockType.Size = new System.Drawing.Size(178, 24);
+            this.cmbBlockType.TabIndex = 0;
+            // 
+            // imgRegion
+            // 
+            this.imgRegion.Location = new System.Drawing.Point(272, 31);
+            this.imgRegion.Name = "imgRegion";
+            this.imgRegion.Size = new System.Drawing.Size(512, 512);
+            this.imgRegion.TabIndex = 2;
+            this.imgRegion.ZoomEvent += new BitmapSelector.BitmapSelector.ZoomEventHandler(this.imgRegion_ZoomEvent);
+            this.imgRegion.BrushDiameterChanged += new BitmapSelector.BitmapSelector.BrushDiameterEventHandler(this.imgRegion_BrushDiameterChanged);
+            this.imgRegion.SelectionChanged += new System.EventHandler(this.imgRegion_SelectionChanged);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(996, 640);
+            this.ClientSize = new System.Drawing.Size(996, 643);
+            this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.lblStatus);
@@ -919,6 +968,7 @@
             this.groupBox5.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1002,6 +1052,10 @@
         private System.Windows.Forms.Button btnRegionRight;
         private System.Windows.Forms.Button btnRegionUp;
         private System.Windows.Forms.Button btnRegionJump;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.Button btnRemovefromSelection;
+        private System.Windows.Forms.Button btnAddtoSelection;
+        private System.Windows.Forms.ComboBox cmbBlockType;
     }
 }
 

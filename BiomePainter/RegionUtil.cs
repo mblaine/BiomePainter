@@ -210,6 +210,9 @@ namespace BiomePainter
 
             switch (blockAbove)
             {
+                case 32: //dead bush
+                    ret = 0x946428;
+                    break;
                 case 37: //yellow flower
                     ret = 0xf1f902;
                     break;
@@ -693,6 +696,78 @@ namespace BiomePainter
 
                         if (shouldSelect)
                             g.FillRectangle(brush, chunkX * 16, chunkZ * 16, 16, 16);
+                    }
+                }
+            }
+        }
+
+        public static void AddorRemoveBlocksSelection(RegionFile region, Bitmap b, Color selectionColor, int[] blockIds, bool add)
+        {
+            if (blockIds == null || blockIds.Length == 0)
+                return;
+
+            List<int> ids = new List<int>(blockIds);
+
+            foreach (Chunk c in region.Chunks)
+            {
+                if (c.Root == null)
+                    continue;
+                Coord chunkOffset = new Coord(region.Coords);
+                chunkOffset.RegiontoChunk();
+                chunkOffset = new Coord(c.Coords.X - chunkOffset.X, c.Coords.Z - chunkOffset.Z);
+                chunkOffset.ChunktoAbsolute();
+
+                int[] heightmap = (int[])c.Root["Level"]["HeightMap"];
+                Dictionary<int, TAG_Compound> sections = new Dictionary<int, TAG_Compound>();
+                foreach (TAG t in (TAG[])c.Root["Level"]["Sections"])
+                {
+                    sections.Add((byte)t["Y"], (TAG_Compound)t);
+                }
+
+                //chunk exists but all blocks are air
+                if (sections.Count == 0)
+                    continue;
+
+                for (int z = 0; z < 16; z++)
+                {
+                    for (int x = 0; x < 16; x++)
+                    {
+                        int height = heightmap[z * 16 + x];
+
+                        //trees runnning into the old height limit in converted worlds
+                        //seem to cause the heightmap entries for its columns to be -128;
+                        if (height < 0)
+                            height = 128;
+
+                        int sectionIndex = (int)Math.Floor((height - 1) / 16.0);
+                        int sectionAboveIndex = (int)Math.Floor(height / 16.0);
+
+                        int block = -1, damage = -1;
+                        if (sections.ContainsKey(sectionIndex))
+                        {
+                            byte[] blocks = (byte[])sections[sectionIndex]["Blocks"];
+                            byte[] data = (byte[])sections[sectionIndex]["Data"];
+                            int blockOffset = ((((height - 1) % 16) * 16 + z) * 16 + x);
+                            block = blocks[blockOffset];
+                            damage = data[(int)Math.Floor(blockOffset / 2.0)];
+                            if (blockOffset % 2 == 0)
+                                damage = (damage >> 4) & 0x0F;
+                            else
+                                damage = damage & 0x0F;
+                        }
+
+                        int blockAbove = block;
+                        if (sections.ContainsKey(sectionAboveIndex))
+                        {
+                            int blockAboveOffset = (((height % 16) * 16 + z) * 16 + x);
+                            byte[] blocksAbove = (byte[])sections[sectionAboveIndex]["Blocks"];
+                            blockAbove = blocksAbove[blockAboveOffset];
+                        }
+
+                        if(ids.Contains(blockAbove) || (blockAbove == 0 && ids.Contains(block)))
+                        {
+                            b.SetPixel(chunkOffset.X + x, chunkOffset.Z + z, add ? selectionColor : Color.Transparent);
+                        }
                     }
                 }
             }

@@ -69,6 +69,9 @@ namespace BiomePainter
             cmbReplace1.SelectedIndex = 0;
             cmbReplace2.SelectedIndex = 0;
 
+            cmbBlockType.Items.AddRange(new String[] { "Cacti & Dead Bushes", "Dirt & Grass", "Flowers & Tall Grass", "Gravel", "Lily Pads & Vines", "Leaves & Logs", "Ice", "Sand", "Snow", "Stone", "Water", "Input Block ID" });
+            cmbBlockType.SelectedIndex = 0;
+
             history = new HistoryManager();
             history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
         }
@@ -492,7 +495,7 @@ namespace BiomePainter
                 return;
 
             String msg = "Type absolute x and z block coordinates (x, z) to load the region that contains the specified point.";
-            String input = "";
+            String input = "0 0";
             while (true)
             {
                 input = InputBox.InputBox.Show(msg, "Load", input);
@@ -549,6 +552,89 @@ namespace BiomePainter
             UpdateStatus("");
             imgRegion.Redraw();
             history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
+        }
+
+        private void btnAddorRemoveSelection_Click(object sender, EventArgs e)
+        {
+            if (world == null || region == null)
+                return;
+            int[] blockIds = null;
+            bool add = sender == btnAddtoSelection ? true : false;
+            switch ((String)cmbBlockType.SelectedItem)
+            {
+                case "Cacti & Dead Bushes":
+                    blockIds = new int[] { 81, 32 };
+                    break;
+                case "Dirt & Grass":
+                    blockIds = new int[] { 2, 3 };
+                    break;
+                case "Flowers & Tall Grass":
+                    blockIds = new int[] { 31, 37, 38 };
+                    break;
+                case "Gravel":
+                    blockIds = new int[] { 13 };
+                    break;
+                case "Lily Pads & Vines":
+                    blockIds = new int[] { 111, 106 };
+                    break;
+                case "Leaves & Logs":
+                    blockIds = new int[] { 17, 18 };
+                    break;
+                case "Ice":
+                    blockIds = new int[] { 79 };
+                    break;
+                case "Sand":
+                    blockIds = new int[] { 12 };
+                    break;
+                case "Snow":
+                    blockIds = new int[] { 78, 80 };
+                    break;
+                case "Stone":
+                    blockIds = new int[] { 1 };
+                    break;
+                case "Water":
+                    blockIds = new int[] { 8, 9 };
+                    break;
+                case "Input Block ID":
+                    {
+                        String msg = String.Format("Type the ID number of the block type you want to {0}.{1}See http://www.minecraftwiki.net/wiki/Data_values for more info.", add ? "add to the selection" : "remove from the selection", Environment.NewLine);
+                        String input = "";
+                        while (true)
+                        {
+                            input = InputBox.InputBox.Show(msg, add ? "Add to Selection" : "Remove From Selection", input);
+                            if (input.Length == 0)
+                                break;
+
+                            Match m = Regex.Match(input, @"^(\d+)$");
+                            if (m.Groups.Count < 2)
+                            {
+                                msg = "Unable to parse block ID. Please try again or click cancel.";
+                            }
+                            else
+                            {
+                                int id;
+                                if (!Int32.TryParse(m.Groups[1].Value, out id))
+                                {
+                                    msg = "Unable to parse block ID. Please try again or click cancel.";
+                                }
+                                else
+                                {
+                                    blockIds = new int[] { id };
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+            }
+            if (blockIds != null)
+            {
+                UpdateStatus(add ? "Adding to selection" : "Removing from selection");
+                RegionUtil.AddorRemoveBlocksSelection(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, blockIds, add);
+                UpdateStatus("");
+                imgRegion.Redraw();
+                history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
+            }
         }
 
         private void btnUndo_Click(object sender, EventArgs e)
