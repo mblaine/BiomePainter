@@ -143,6 +143,36 @@ namespace BiomePainter
             return true;
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.D1:
+                    chkShowMap.Checked = !chkShowMap.Checked;
+                    return true;
+                case Keys.D2:
+                    chkShowBiomes.Checked = !chkShowBiomes.Checked;
+                    return true;
+                case Keys.D3:
+                    chkShowToolTips.Checked = !chkShowToolTips.Checked;
+                    return true;
+                case Keys.D4:
+                    chkShowPopulate.Checked = !chkShowPopulate.Checked;
+                    return true;
+                case Keys.D5:
+                    chkShowSelection.Checked = !chkShowSelection.Checked;
+                    return true;
+                case Keys.D6:
+                    chkShowBrush.Checked = !chkShowBrush.Checked;
+                    return true;
+                case Keys.D7:
+                    chkShowChunkBoundaries.Checked = !chkShowChunkBoundaries.Checked;
+                    return true;
+                default:
+                    return base.ProcessCmdKey(ref msg, keyData);
+            }
+        }
+
         #region Menus
 
         private void openWorldToolStripMenuItem_Click(object sender, EventArgs e)

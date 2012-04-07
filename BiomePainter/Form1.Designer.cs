@@ -414,7 +414,7 @@
             this.chkShowMap.Name = "chkShowMap";
             this.chkShowMap.Size = new System.Drawing.Size(40, 40);
             this.chkShowMap.TabIndex = 3;
-            this.toolTip.SetToolTip(this.chkShowMap, "Map");
+            this.toolTip.SetToolTip(this.chkShowMap, "Map (1)");
             this.chkShowMap.UseVisualStyleBackColor = true;
             this.chkShowMap.CheckedChanged += new System.EventHandler(this.chkShowMap_CheckedChanged);
             // 
@@ -428,7 +428,7 @@
             this.chkShowBiomes.Name = "chkShowBiomes";
             this.chkShowBiomes.Size = new System.Drawing.Size(40, 40);
             this.chkShowBiomes.TabIndex = 4;
-            this.toolTip.SetToolTip(this.chkShowBiomes, "Biomes");
+            this.toolTip.SetToolTip(this.chkShowBiomes, "Biomes (2)");
             this.chkShowBiomes.UseVisualStyleBackColor = true;
             this.chkShowBiomes.CheckedChanged += new System.EventHandler(this.chkShowBiomes_CheckedChanged);
             // 
@@ -442,7 +442,7 @@
             this.chkShowSelection.Name = "chkShowSelection";
             this.chkShowSelection.Size = new System.Drawing.Size(40, 40);
             this.chkShowSelection.TabIndex = 5;
-            this.toolTip.SetToolTip(this.chkShowSelection, "Selection");
+            this.toolTip.SetToolTip(this.chkShowSelection, "Selection (5)");
             this.chkShowSelection.UseVisualStyleBackColor = true;
             this.chkShowSelection.CheckedChanged += new System.EventHandler(this.chkShowSelection_CheckedChanged);
             // 
@@ -456,7 +456,7 @@
             this.chkShowToolTips.Name = "chkShowToolTips";
             this.chkShowToolTips.Size = new System.Drawing.Size(40, 40);
             this.chkShowToolTips.TabIndex = 6;
-            this.toolTip.SetToolTip(this.chkShowToolTips, "Tool Tips");
+            this.toolTip.SetToolTip(this.chkShowToolTips, "Tool Tips (3)");
             this.chkShowToolTips.UseVisualStyleBackColor = true;
             this.chkShowToolTips.CheckedChanged += new System.EventHandler(this.chkShowToolTips_CheckedChanged);
             // 
@@ -542,7 +542,7 @@
             this.chkShowPopulate.Size = new System.Drawing.Size(40, 40);
             this.chkShowPopulate.TabIndex = 9;
             this.toolTip.SetToolTip(this.chkShowPopulate, "Chunks that will be populated with trees and ores the next time they are loaded i" +
-        "n Minecraft. Alter from the Edit menu.");
+        "n Minecraft. Alter from the Edit menu. (4)");
             this.chkShowPopulate.UseVisualStyleBackColor = true;
             this.chkShowPopulate.CheckedChanged += new System.EventHandler(this.chkShowPopulate_CheckedChanged);
             // 
@@ -556,7 +556,7 @@
             this.chkShowBrush.Name = "chkShowBrush";
             this.chkShowBrush.Size = new System.Drawing.Size(40, 40);
             this.chkShowBrush.TabIndex = 8;
-            this.toolTip.SetToolTip(this.chkShowBrush, "Brush");
+            this.toolTip.SetToolTip(this.chkShowBrush, "Brush (6)");
             this.chkShowBrush.UseVisualStyleBackColor = true;
             this.chkShowBrush.CheckedChanged += new System.EventHandler(this.chkShowBrush_CheckedChanged);
             // 
@@ -568,7 +568,7 @@
             this.chkShowChunkBoundaries.Name = "chkShowChunkBoundaries";
             this.chkShowChunkBoundaries.Size = new System.Drawing.Size(40, 40);
             this.chkShowChunkBoundaries.TabIndex = 7;
-            this.toolTip.SetToolTip(this.chkShowChunkBoundaries, "Chunk Boundaries");
+            this.toolTip.SetToolTip(this.chkShowChunkBoundaries, "Chunk Boundaries (7)");
             this.chkShowChunkBoundaries.UseVisualStyleBackColor = true;
             this.chkShowChunkBoundaries.CheckedChanged += new System.EventHandler(this.chkShowChunkBoundaries_CheckedChanged);
             // 
