@@ -187,23 +187,43 @@ namespace BitmapSelector
             switch(keyData)
             {
                 case Keys.Left:
-                    scrollHorizontal.Value = Math.Max(scrollHorizontal.Value - 5, 0);
-                    Zoom(Magnification, scrollHorizontal.Value, OffsetY);
+                    PanLeft();
                     return true;
                 case Keys.Right:
-                    scrollHorizontal.Value = Math.Min(scrollHorizontal.Value + 5, scrollHorizontal.Maximum);
-                    Zoom(Magnification, scrollHorizontal.Value, OffsetY);
+                    PanRight();
                     return true;
                 case Keys.Up:
-                    scrollVertical.Value = Math.Max(scrollVertical.Value - 5, 0);
-                    Zoom(Magnification, OffsetX, scrollVertical.Value);
+                    PanUp();
                     return true;
                 case Keys.Down:
-                    scrollVertical.Value = Math.Min(scrollVertical.Value + 5, scrollVertical.Maximum);
-                    Zoom(Magnification, OffsetX, scrollVertical.Value);
+                    PanDown();
                     return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void PanLeft()
+        {
+            scrollHorizontal.Value = Math.Max(scrollHorizontal.Value - 5, 0);
+            Zoom(Magnification, scrollHorizontal.Value, OffsetY);
+        }
+
+        private void PanRight()
+        {
+            scrollHorizontal.Value = Math.Min(scrollHorizontal.Value + 5, scrollHorizontal.Maximum);
+            Zoom(Magnification, scrollHorizontal.Value, OffsetY);
+        }
+
+        private void PanUp()
+        {
+            scrollVertical.Value = Math.Max(scrollVertical.Value - 5, 0);
+            Zoom(Magnification, OffsetX, scrollVertical.Value);
+        }
+
+        private void PanDown()
+        {
+            scrollVertical.Value = Math.Min(scrollVertical.Value + 5, scrollVertical.Maximum);
+            Zoom(Magnification, OffsetX, scrollVertical.Value);
         }
 
         private void BitmapSelector_MouseUp(object sender, MouseEventArgs e)
@@ -359,6 +379,32 @@ namespace BitmapSelector
                     Redraw();
                 }
                 OnBrushDiameterChanged(new BrushDiameterEventArgs(BrushDiameter));
+            }
+            else if (Control.ModifierKeys == Keys.Alt)
+            {
+                if (e.Delta > 0)
+                {
+                    for (int i = 0; i < e.Delta / 120; i++)
+                        PanUp();
+                }
+                else
+                {
+                    for (int i = 0; i < -e.Delta / 120; i++)
+                        PanDown();
+                }
+            }
+            else if (Control.ModifierKeys == Keys.Shift)
+            {
+                if (e.Delta > 0)
+                {
+                    for (int i = 0; i < e.Delta / 120; i++)
+                        PanLeft();
+                }
+                else
+                {
+                    for (int i = 0; i < -e.Delta / 120; i++)
+                        PanRight();
+                }
             }
             else
             {
