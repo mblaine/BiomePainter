@@ -201,10 +201,10 @@ namespace Minecraft
         public override String ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("Region [{0}, {1}]\r\n{{\r\n", Coords.X, Coords.Z);
+            sb.AppendFormat("Region [{0}, {1}]{2}{{{2}", Coords.X, Coords.Z, Environment.NewLine);
             foreach (Chunk c in Chunks)
                 sb.Append(c.ToString());
-            sb.Append("}\r\n");
+            sb.AppendLine("}");
             return sb.ToString();
         }
 

@@ -75,7 +75,7 @@ namespace BiomePainter
                 }
             }
             
-            String s = String.Format(@"{{\rtf1{0}}}", String.Join("\r\n", lines));
+            String s = String.Format(@"{{\rtf1{0}}}", String.Join(Environment.NewLine, lines));
             txtReadMe.Rtf = s;
         }
 

@@ -17,10 +17,10 @@ namespace Minecraft
             StringBuilder sb = new StringBuilder();
             DateTime time = new DateTime(1970, 1, 1).AddSeconds(Timestamp);
 
-            sb.AppendFormat("Chunk [{0}, {1}] {2:M/d/yyyy h:mm:ss tt}\r\n{{\r\n", Coords.X, Coords.Z, time);
+            sb.AppendFormat("Chunk [{0}, {1}] {2:M/d/yyyy h:mm:ss tt}{3}{{{3}", Coords.X, Coords.Z, time, Environment.NewLine);
             if (Root != null)
                 sb.Append(Root.ToString());
-            sb.Append("}\r\n");
+            sb.AppendLine("}");
             return sb.ToString();
         }
     }

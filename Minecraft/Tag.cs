@@ -177,9 +177,9 @@ namespace Minecraft
         public override string ToString()
         {
             if (IsNamed)
-                return String.Format("TAG_Byte(\"{0}\"): {1}\r\n", Name.PayloadString, Payload);
+                return String.Format("TAG_Byte(\"{0}\"): {1}{2}", Name.PayloadString, Payload, Environment.NewLine);
             else
-                return String.Format("TAG_Byte: {0}\r\n", Payload);
+                return String.Format("TAG_Byte: {0}{1}", Payload, Environment.NewLine);
         }
     }
 
@@ -235,9 +235,9 @@ namespace Minecraft
         public override string ToString()
         {
             if (IsNamed)
-                return String.Format("TAG_Short(\"{0}\"): {1}\r\n", Name.PayloadString, Payload);
+                return String.Format("TAG_Short(\"{0}\"): {1}{2}", Name.PayloadString, Payload, Environment.NewLine);
             else
-                return String.Format("TAG_Short: {0}\r\n", Payload);
+                return String.Format("TAG_Short: {0}{1}", Payload, Environment.NewLine);
         }
     }
 
@@ -293,9 +293,9 @@ namespace Minecraft
         public override string ToString()
         {
             if (IsNamed)
-                return String.Format("TAG_Int(\"{0}\"): {1}\r\n", Name.PayloadString, Payload);
+                return String.Format("TAG_Int(\"{0}\"): {1}{2}", Name.PayloadString, Payload, Environment.NewLine);
             else
-                return String.Format("TAG_Int: {0}\r\n", Payload);
+                return String.Format("TAG_Int: {0}{1}", Payload, Environment.NewLine);
         }
     }
 
@@ -351,9 +351,9 @@ namespace Minecraft
         public override string ToString()
         {
             if (IsNamed)
-                return String.Format("TAG_Long(\"{0}\"): {1}\r\n", Name.PayloadString, Payload);
+                return String.Format("TAG_Long(\"{0}\"): {1}{2}", Name.PayloadString, Payload, Environment.NewLine);
             else
-                return String.Format("TAG_Long: {0}\r\n", Payload);
+                return String.Format("TAG_Long: {0}{1}", Payload, Environment.NewLine);
         }
     }
 
@@ -409,9 +409,9 @@ namespace Minecraft
         public override string ToString()
         {
             if (IsNamed)
-                return String.Format("TAG_Float(\"{0}\"): {1}\r\n", Name.PayloadString, Payload);
+                return String.Format("TAG_Float(\"{0}\"): {1}{2}", Name.PayloadString, Payload, Environment.NewLine);
             else
-                return String.Format("TAG_Float: {0}\r\n", Payload);
+                return String.Format("TAG_Float: {0}{1}", Payload, Environment.NewLine);
         }
     }
 
@@ -467,9 +467,9 @@ namespace Minecraft
         public override string ToString()
         {
             if (IsNamed)
-                return String.Format("TAG_Double(\"{0}\"): {1}\r\n", Name.PayloadString, Payload);
+                return String.Format("TAG_Double(\"{0}\"): {1}{2}", Name.PayloadString, Payload, Environment.NewLine);
             else
-                return String.Format("TAG_Double: {0}\r\n", Payload);
+                return String.Format("TAG_Double: {0}{1}", Payload, Environment.NewLine);
         }
     }
 
@@ -526,9 +526,9 @@ namespace Minecraft
         public override string ToString()
         {
             if (IsNamed)
-                return String.Format("TAG_Byte_Array(\"{0}\"): [{1} bytes]\r\n", Name.PayloadString, Length.Payload);
+                return String.Format("TAG_Byte_Array(\"{0}\"): [{1} bytes]{2}", Name.PayloadString, Length.Payload, Environment.NewLine);
             else
-                return String.Format("TAG_Byte_Array: [{0} bytes]", Length.Payload);
+                return String.Format("TAG_Byte_Array: [{0} bytes]{1}", Length.Payload, Environment.NewLine);
         }
     }
 
@@ -597,9 +597,9 @@ namespace Minecraft
         public override string ToString()
         {
             if (IsNamed)
-                return String.Format("TAG_Int_Array(\"{0}\"): [{1} integers]\r\n", Name.PayloadString, Length.Payload);
+                return String.Format("TAG_Int_Array(\"{0}\"): [{1} integers]{2}", Name.PayloadString, Length.Payload, Environment.NewLine);
             else
-                return String.Format("TAG_Int_Array: [{0} integers]", Length.Payload);
+                return String.Format("TAG_Int_Array: [{0} integers]{1}", Length.Payload, Environment.NewLine);
         }
     }
 
@@ -660,9 +660,9 @@ namespace Minecraft
         public override string ToString()
         {
             if (IsNamed)
-                return String.Format("TAG_String(\"{0}\"): {1}\r\n", Name.PayloadString, PayloadString);
+                return String.Format("TAG_String(\"{0}\"): {1}{2}", Name.PayloadString, PayloadString, Environment.NewLine);
             else
-                return String.Format("TAG_String: {0}\r\n", PayloadString);
+                return String.Format("TAG_String: {0}{1}", PayloadString, Environment.NewLine);
         }
     }
 
@@ -771,18 +771,18 @@ namespace Minecraft
         {
             StringBuilder sb = new StringBuilder();
             if (IsNamed)
-                sb.AppendFormat("TAG_List(\"{0}\"): {1} entries of type {2}\r\n", Name.PayloadString, Length.Payload, ((TYPE)TagId.Payload));
+                sb.AppendFormat("TAG_List(\"{0}\"): {1} entries of type {2}{3}", Name.PayloadString, Length.Payload, ((TYPE)TagId.Payload), Environment.NewLine);
             else
-                sb.AppendFormat("TAG_List: {0} entries of type {1}\r\n", Length.Payload, ((TYPE)TagId.Payload));
+                sb.AppendFormat("TAG_List: {0} entries of type {1}{2}", Length.Payload, ((TYPE)TagId.Payload), Environment.NewLine);
 
-            sb.Append("{\r\n");
+            sb.AppendLine("{");
 
             for (Int32 i = 0; i < Length.Payload; i++)
             {
                 sb.Append(Payload[i].ToString());
             }
 
-            sb.Append("}\r\n");
+            sb.AppendLine("}");
 
             return sb.ToString();
         }
@@ -942,18 +942,18 @@ namespace Minecraft
             }
             StringBuilder sb = new StringBuilder();
             if (IsNamed)
-                sb.AppendFormat("TAG_Compound(\"{0}\"): {1} entries\r\n", Name.PayloadString, Payload.Count);
+                sb.AppendFormat("TAG_Compound(\"{0}\"): {1} entries{2}", Name.PayloadString, Payload.Count, Environment.NewLine);
             else
-                sb.AppendFormat("TAG_Compound: {0} entries\r\n", Payload.Count);
+                sb.AppendFormat("TAG_Compound: {0} entries{1}", Payload.Count, Environment.NewLine);
 
-            sb.Append("{\r\n");
+            sb.AppendLine("{");
 
             foreach (TAG t in Payload.Values)
             {
                 sb.Append(t.ToString());
             }
 
-            sb.Append("}\r\n");
+            sb.AppendLine("}");
 
             return sb.ToString();
         }
