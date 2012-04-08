@@ -59,7 +59,7 @@ namespace BiomePainter.Clipboard
             String input = String.Format("{0}, {1}", biomeData.Left, biomeData.Top);
             while (true)
             {
-                input = InputBox.InputBox.Show(msg, "Paste", input);
+                input = InputBox.Show(msg, "Paste", input);
                 if (input.Length == 0)
                     return false;
 

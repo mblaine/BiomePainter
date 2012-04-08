@@ -523,7 +523,7 @@ namespace BiomePainter
             String input = "0 0";
             while (true)
             {
-                input = InputBox.InputBox.Show(msg, "Load", input);
+                input = InputBox.Show(msg, "Load", input);
                 if (input.Length == 0)
                     return;
 
@@ -626,7 +626,7 @@ namespace BiomePainter
                         String input = "";
                         while (true)
                         {
-                            input = InputBox.InputBox.Show(msg, add ? "Add to Selection" : "Remove From Selection", input);
+                            input = InputBox.Show(msg, add ? "Add to Selection" : "Remove From Selection", input);
                             if (input.Length == 0)
                                 break;
 
