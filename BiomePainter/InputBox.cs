@@ -1,4 +1,20 @@
-﻿using System;
+﻿/*
+ * InputBox: An implementation functionally similar to Microsoft.VisualBasic.Interaction.Inputbox. Created by Matthew Blaine, Mar 28, 2012.
+ * 
+ * LICENSE:
+ * 
+ * The following code is placed in the public domain. For more information, please see: http://creativecommons.org/publicdomain/zero/1.0/
+ * 
+ * SOURCE:
+ * 
+ * This file may be found at: https://github.com/mblaine/public/blob/master/InputBox.cs
+ * 
+ * USAGE:
+ * 
+ * String result = InputBox.Show(String Prompt, [String Title = "",] [String DefaultResponse = "",] [int XPos = -1,] [int YPos = -1]);
+ */
+
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
