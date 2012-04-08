@@ -59,6 +59,7 @@ namespace BiomePainter
             cmbFill.Items.AddRange(temp);
             cmbReplace1.Items.AddRange(temp);
             cmbReplace2.Items.AddRange(temp);
+            cmbBiomeType.Items.AddRange(temp);
 
             String[] versions = { "Minecraft Beta 1.7.3", "Minecraft Beta 1.8.1", "Minecraft 1.0.0", "Minecraft 1.1.0", "Minecraft 1.2.5" };
 
@@ -68,6 +69,7 @@ namespace BiomePainter
             cmbFill.SelectedIndex = 0;
             cmbReplace1.SelectedIndex = 0;
             cmbReplace2.SelectedIndex = 0;
+            cmbBiomeType.SelectedIndex = 0;
 
             cmbBlockType.Items.AddRange(new String[] { "Cacti & Dead Bushes", "Dirt & Grass", "Flowers & Tall Grass", "Gravel", "Lily Pads & Vines", "Leaves & Logs", "Ice", "Sand", "Snow", "Stone", "Water", "Input Block ID" });
             cmbBlockType.SelectedIndex = 0;
@@ -214,14 +216,7 @@ namespace BiomePainter
 
         private void saveCurrentRegionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (region == null)
-                return;
-
-            history.SetDirtyFlags(region);
-            UpdateStatus("Writing region file");
-            region.Write();
-            UpdateStatus("");
-            history.SetLastSaveActions();
+            btnSaveRegion_Click(this, null);
         }
 
         private void reloadCurrentRegionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -584,12 +579,12 @@ namespace BiomePainter
             history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
         }
 
-        private void btnAddorRemoveSelection_Click(object sender, EventArgs e)
+        private void btnAddorRemovebyBlocks_Click(object sender, EventArgs e)
         {
             if (world == null || region == null)
                 return;
             int[] blockIds = null;
-            bool add = sender == btnAddtoSelection ? true : false;
+            bool add = sender == btnAddbyBlocks ? true : false;
             switch ((String)cmbBlockType.SelectedItem)
             {
                 case "Cacti & Dead Bushes":
@@ -667,6 +662,10 @@ namespace BiomePainter
             }
         }
 
+        private void btnAddorRemovebyBiomes_Click(object sender, EventArgs e)
+        {
+        }
+
         private void btnUndo_Click(object sender, EventArgs e)
         {
             String[,] tooltips = imgRegion.ToolTips;
@@ -681,6 +680,18 @@ namespace BiomePainter
             history.Redo(imgRegion.Layers[SELECTIONLAYER].Image, region, imgRegion.Layers[BIOMELAYER].Image, ref tooltips, imgRegion.Layers[POPULATELAYER].Image, UpdateStatus);
             imgRegion.ToolTips = tooltips;
             imgRegion.Redraw();
+        }
+
+        private void btnSaveRegion_Click(object sender, EventArgs e)
+        {
+            if (region == null)
+                return;
+
+            history.SetDirtyFlags(region);
+            UpdateStatus("Writing region file");
+            region.Write();
+            UpdateStatus("");
+            history.SetLastSaveActions();
         }
 
         private void btnCopy_Click(object sender, EventArgs e)
@@ -859,7 +870,6 @@ namespace BiomePainter
             history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
         }
         #endregion
-
     }
 
 }

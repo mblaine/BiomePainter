@@ -92,7 +92,7 @@
             this.cmbFill = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnSaveRegion = new System.Windows.Forms.Button();
             this.btnPaste = new System.Windows.Forms.Button();
             this.btnCopy = new System.Windows.Forms.Button();
             this.btnRedo = new System.Windows.Forms.Button();
@@ -103,12 +103,16 @@
             this.btnRegionRight = new System.Windows.Forms.Button();
             this.btnRegionDown = new System.Windows.Forms.Button();
             this.btnRegionJump = new System.Windows.Forms.Button();
-            this.btnAddtoSelection = new System.Windows.Forms.Button();
-            this.btnRemovefromSelection = new System.Windows.Forms.Button();
+            this.btnAddbyBlocks = new System.Windows.Forms.Button();
+            this.btnRemovebyBlocks = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.cmbBlockType = new System.Windows.Forms.ComboBox();
             this.imgRegion = new BitmapSelector.BitmapSelector();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.btnRemovebyBiomes = new System.Windows.Forms.Button();
+            this.btnAddbyBiomes = new System.Windows.Forms.Button();
+            this.cmbBiomeType = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -117,9 +121,9 @@
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackMagnification)).BeginInit();
             this.groupBox5.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox8.SuspendLayout();
+            this.groupBox9.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -131,7 +135,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(996, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(982, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -398,9 +402,9 @@
             // 
             this.lstRegions.FormattingEnabled = true;
             this.lstRegions.ItemHeight = 16;
-            this.lstRegions.Location = new System.Drawing.Point(12, 31);
+            this.lstRegions.Location = new System.Drawing.Point(12, 77);
             this.lstRegions.Name = "lstRegions";
-            this.lstRegions.Size = new System.Drawing.Size(254, 532);
+            this.lstRegions.Size = new System.Drawing.Size(240, 468);
             this.lstRegions.TabIndex = 1;
             this.lstRegions.SelectedIndexChanged += new System.EventHandler(this.lstRegions_SelectedIndexChanged);
             // 
@@ -467,7 +471,7 @@
             this.btnSelectAll.Name = "btnSelectAll";
             this.btnSelectAll.Size = new System.Drawing.Size(40, 40);
             this.btnSelectAll.TabIndex = 7;
-            this.toolTip.SetToolTip(this.btnSelectAll, "Select All (Ctrl+A)");
+            this.toolTip.SetToolTip(this.btnSelectAll, "Select all (Ctrl+A)");
             this.btnSelectAll.UseVisualStyleBackColor = true;
             this.btnSelectAll.Click += new System.EventHandler(this.btnSelectAll_Click);
             // 
@@ -478,7 +482,7 @@
             this.btnSelectNone.Name = "btnSelectNone";
             this.btnSelectNone.Size = new System.Drawing.Size(40, 40);
             this.btnSelectNone.TabIndex = 8;
-            this.toolTip.SetToolTip(this.btnSelectNone, "Select None (Ctrl+Shift+A)");
+            this.toolTip.SetToolTip(this.btnSelectNone, "Select none (Ctrl+Shift+A)");
             this.btnSelectNone.UseVisualStyleBackColor = true;
             this.btnSelectNone.Click += new System.EventHandler(this.btnSelectNone_Click);
             // 
@@ -489,7 +493,7 @@
             this.btnInvertSelection.Name = "btnInvertSelection";
             this.btnInvertSelection.Size = new System.Drawing.Size(40, 40);
             this.btnInvertSelection.TabIndex = 9;
-            this.toolTip.SetToolTip(this.btnInvertSelection, "Invert Selection (Ctrl+I)");
+            this.toolTip.SetToolTip(this.btnInvertSelection, "Invert selection (Ctrl+I)");
             this.btnInvertSelection.UseVisualStyleBackColor = true;
             this.btnInvertSelection.Click += new System.EventHandler(this.btnInvertSelection_Click);
             // 
@@ -526,7 +530,7 @@
             this.groupBox1.Controls.Add(this.chkShowBiomes);
             this.groupBox1.Controls.Add(this.chkShowToolTips);
             this.groupBox1.Controls.Add(this.chkShowSelection);
-            this.groupBox1.Location = new System.Drawing.Point(791, 31);
+            this.groupBox1.Location = new System.Drawing.Point(777, 31);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(196, 115);
             this.groupBox1.TabIndex = 12;
@@ -579,7 +583,7 @@
             this.btnSelectChunks.Name = "btnSelectChunks";
             this.btnSelectChunks.Size = new System.Drawing.Size(40, 40);
             this.btnSelectChunks.TabIndex = 13;
-            this.toolTip.SetToolTip(this.btnSelectChunks, "Expand Selection to Chunks");
+            this.toolTip.SetToolTip(this.btnSelectChunks, "Expand selection to chunks");
             this.btnSelectChunks.UseVisualStyleBackColor = true;
             this.btnSelectChunks.Click += new System.EventHandler(this.btnSelectChunks_Click);
             // 
@@ -589,7 +593,7 @@
             this.groupBox2.Controls.Add(this.btnSelectChunks);
             this.groupBox2.Controls.Add(this.btnSelectNone);
             this.groupBox2.Controls.Add(this.btnInvertSelection);
-            this.groupBox2.Location = new System.Drawing.Point(791, 342);
+            this.groupBox2.Location = new System.Drawing.Point(777, 334);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(198, 71);
             this.groupBox2.TabIndex = 14;
@@ -602,7 +606,7 @@
             this.groupBox3.Controls.Add(this.trackBrushDiameter);
             this.groupBox3.Controls.Add(this.radRoundBrush);
             this.groupBox3.Controls.Add(this.radSquareBrush);
-            this.groupBox3.Location = new System.Drawing.Point(791, 232);
+            this.groupBox3.Location = new System.Drawing.Point(777, 228);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(198, 104);
             this.groupBox3.TabIndex = 15;
@@ -635,7 +639,7 @@
             // 
             this.groupBox4.Controls.Add(this.lblMagnification);
             this.groupBox4.Controls.Add(this.trackMagnification);
-            this.groupBox4.Location = new System.Drawing.Point(791, 152);
+            this.groupBox4.Location = new System.Drawing.Point(777, 148);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(198, 78);
             this.groupBox4.TabIndex = 16;
@@ -671,7 +675,7 @@
             this.groupBox5.Controls.Add(this.btnFill);
             this.groupBox5.Controls.Add(this.cmbFill);
             this.groupBox5.Controls.Add(this.label3);
-            this.groupBox5.Location = new System.Drawing.Point(272, 576);
+            this.groupBox5.Location = new System.Drawing.Point(258, 576);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(717, 61);
             this.groupBox5.TabIndex = 17;
@@ -738,51 +742,48 @@
             // 
             // lblStatus
             // 
-            this.lblStatus.Location = new System.Drawing.Point(272, 546);
+            this.lblStatus.Location = new System.Drawing.Point(258, 546);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(512, 27);
             this.lblStatus.TabIndex = 18;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // groupBox6
+            // btnSaveRegion
             // 
-            this.groupBox6.Controls.Add(this.btnPaste);
-            this.groupBox6.Controls.Add(this.btnCopy);
-            this.groupBox6.Controls.Add(this.btnRedo);
-            this.groupBox6.Controls.Add(this.btnUndo);
-            this.groupBox6.Location = new System.Drawing.Point(791, 508);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(198, 71);
-            this.groupBox6.TabIndex = 19;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Edit";
+            this.btnSaveRegion.Location = new System.Drawing.Point(18, 31);
+            this.btnSaveRegion.Name = "btnSaveRegion";
+            this.btnSaveRegion.Size = new System.Drawing.Size(40, 40);
+            this.btnSaveRegion.TabIndex = 4;
+            this.toolTip.SetToolTip(this.btnSaveRegion, "Save the current region (Ctrl + S)");
+            this.btnSaveRegion.UseVisualStyleBackColor = true;
+            this.btnSaveRegion.Click += new System.EventHandler(this.btnSaveRegion_Click);
             // 
             // btnPaste
             // 
             this.btnPaste.Image = global::BiomePainter.Properties.Resources.paste;
-            this.btnPaste.Location = new System.Drawing.Point(52, 21);
+            this.btnPaste.Location = new System.Drawing.Point(110, 31);
             this.btnPaste.Name = "btnPaste";
             this.btnPaste.Size = new System.Drawing.Size(40, 40);
             this.btnPaste.TabIndex = 3;
-            this.toolTip.SetToolTip(this.btnPaste, "Paste Biomes (Ctrl+V)");
+            this.toolTip.SetToolTip(this.btnPaste, "Paste biomes (Ctrl+V)");
             this.btnPaste.UseVisualStyleBackColor = true;
             this.btnPaste.Click += new System.EventHandler(this.btnPaste_Click);
             // 
             // btnCopy
             // 
             this.btnCopy.Image = global::BiomePainter.Properties.Resources.copy;
-            this.btnCopy.Location = new System.Drawing.Point(6, 21);
+            this.btnCopy.Location = new System.Drawing.Point(64, 31);
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(40, 40);
             this.btnCopy.TabIndex = 2;
-            this.toolTip.SetToolTip(this.btnCopy, "Copy Biomes in Selection (Ctrl+C)");
+            this.toolTip.SetToolTip(this.btnCopy, "Copy biomes in selection (Ctrl+C)");
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
             // btnRedo
             // 
             this.btnRedo.Image = global::BiomePainter.Properties.Resources.redo;
-            this.btnRedo.Location = new System.Drawing.Point(144, 21);
+            this.btnRedo.Location = new System.Drawing.Point(202, 31);
             this.btnRedo.Name = "btnRedo";
             this.btnRedo.Size = new System.Drawing.Size(40, 40);
             this.btnRedo.TabIndex = 1;
@@ -793,7 +794,7 @@
             // btnUndo
             // 
             this.btnUndo.Image = global::BiomePainter.Properties.Resources.undo;
-            this.btnUndo.Location = new System.Drawing.Point(98, 21);
+            this.btnUndo.Location = new System.Drawing.Point(156, 31);
             this.btnUndo.Name = "btnUndo";
             this.btnUndo.Size = new System.Drawing.Size(40, 40);
             this.btnUndo.TabIndex = 0;
@@ -855,7 +856,7 @@
             // btnRegionJump
             // 
             this.btnRegionJump.Image = global::BiomePainter.Properties.Resources.jump;
-            this.btnRegionJump.Location = new System.Drawing.Point(208, 21);
+            this.btnRegionJump.Location = new System.Drawing.Point(190, 21);
             this.btnRegionJump.Name = "btnRegionJump";
             this.btnRegionJump.Size = new System.Drawing.Size(40, 40);
             this.btnRegionJump.TabIndex = 4;
@@ -864,27 +865,27 @@
             this.btnRegionJump.UseVisualStyleBackColor = true;
             this.btnRegionJump.Click += new System.EventHandler(this.btnRegionJump_Click);
             // 
-            // btnAddtoSelection
+            // btnAddbyBlocks
             // 
-            this.btnAddtoSelection.Location = new System.Drawing.Point(17, 52);
-            this.btnAddtoSelection.Name = "btnAddtoSelection";
-            this.btnAddtoSelection.Size = new System.Drawing.Size(75, 25);
-            this.btnAddtoSelection.TabIndex = 1;
-            this.btnAddtoSelection.Text = "Add";
-            this.toolTip.SetToolTip(this.btnAddtoSelection, "Add areas covered by the selected block to the selection.");
-            this.btnAddtoSelection.UseVisualStyleBackColor = true;
-            this.btnAddtoSelection.Click += new System.EventHandler(this.btnAddorRemoveSelection_Click);
+            this.btnAddbyBlocks.Location = new System.Drawing.Point(17, 52);
+            this.btnAddbyBlocks.Name = "btnAddbyBlocks";
+            this.btnAddbyBlocks.Size = new System.Drawing.Size(75, 25);
+            this.btnAddbyBlocks.TabIndex = 1;
+            this.btnAddbyBlocks.Text = "Add";
+            this.toolTip.SetToolTip(this.btnAddbyBlocks, "Add areas covered by the selected block to the selection.");
+            this.btnAddbyBlocks.UseVisualStyleBackColor = true;
+            this.btnAddbyBlocks.Click += new System.EventHandler(this.btnAddorRemovebyBlocks_Click);
             // 
-            // btnRemovefromSelection
+            // btnRemovebyBlocks
             // 
-            this.btnRemovefromSelection.Location = new System.Drawing.Point(98, 52);
-            this.btnRemovefromSelection.Name = "btnRemovefromSelection";
-            this.btnRemovefromSelection.Size = new System.Drawing.Size(75, 25);
-            this.btnRemovefromSelection.TabIndex = 2;
-            this.btnRemovefromSelection.Text = "Remove";
-            this.toolTip.SetToolTip(this.btnRemovefromSelection, "Remove areas covered by the selected block from the selection.");
-            this.btnRemovefromSelection.UseVisualStyleBackColor = true;
-            this.btnRemovefromSelection.Click += new System.EventHandler(this.btnAddorRemoveSelection_Click);
+            this.btnRemovebyBlocks.Location = new System.Drawing.Point(98, 52);
+            this.btnRemovebyBlocks.Name = "btnRemovebyBlocks";
+            this.btnRemovebyBlocks.Size = new System.Drawing.Size(75, 25);
+            this.btnRemovebyBlocks.TabIndex = 2;
+            this.btnRemovebyBlocks.Text = "Remove";
+            this.toolTip.SetToolTip(this.btnRemovebyBlocks, "Remove areas covered by the selected block from the selection.");
+            this.btnRemovebyBlocks.UseVisualStyleBackColor = true;
+            this.btnRemovebyBlocks.Click += new System.EventHandler(this.btnAddorRemovebyBlocks_Click);
             // 
             // groupBox7
             // 
@@ -893,19 +894,19 @@
             this.groupBox7.Controls.Add(this.btnRegionRight);
             this.groupBox7.Controls.Add(this.btnRegionUp);
             this.groupBox7.Controls.Add(this.btnRegionLeft);
-            this.groupBox7.Location = new System.Drawing.Point(12, 565);
+            this.groupBox7.Location = new System.Drawing.Point(12, 557);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(254, 72);
+            this.groupBox7.Size = new System.Drawing.Size(240, 72);
             this.groupBox7.TabIndex = 20;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Switch Regions";
             // 
             // groupBox8
             // 
-            this.groupBox8.Controls.Add(this.btnRemovefromSelection);
-            this.groupBox8.Controls.Add(this.btnAddtoSelection);
+            this.groupBox8.Controls.Add(this.btnRemovebyBlocks);
+            this.groupBox8.Controls.Add(this.btnAddbyBlocks);
             this.groupBox8.Controls.Add(this.cmbBlockType);
-            this.groupBox8.Location = new System.Drawing.Point(791, 419);
+            this.groupBox8.Location = new System.Drawing.Point(777, 407);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(198, 83);
             this.groupBox8.TabIndex = 21;
@@ -923,7 +924,7 @@
             // 
             // imgRegion
             // 
-            this.imgRegion.Location = new System.Drawing.Point(272, 31);
+            this.imgRegion.Location = new System.Drawing.Point(258, 31);
             this.imgRegion.Name = "imgRegion";
             this.imgRegion.Size = new System.Drawing.Size(512, 512);
             this.imgRegion.TabIndex = 2;
@@ -931,13 +932,61 @@
             this.imgRegion.BrushDiameterChanged += new BitmapSelector.BitmapSelector.BrushDiameterEventHandler(this.imgRegion_BrushDiameterChanged);
             this.imgRegion.SelectionChanged += new System.EventHandler(this.imgRegion_SelectionChanged);
             // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.btnRemovebyBiomes);
+            this.groupBox9.Controls.Add(this.btnAddbyBiomes);
+            this.groupBox9.Controls.Add(this.cmbBiomeType);
+            this.groupBox9.Location = new System.Drawing.Point(777, 492);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(198, 83);
+            this.groupBox9.TabIndex = 22;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Select by Biome";
+            // 
+            // btnRemovebyBiomes
+            // 
+            this.btnRemovebyBiomes.Location = new System.Drawing.Point(98, 52);
+            this.btnRemovebyBiomes.Name = "btnRemovebyBiomes";
+            this.btnRemovebyBiomes.Size = new System.Drawing.Size(75, 25);
+            this.btnRemovebyBiomes.TabIndex = 2;
+            this.btnRemovebyBiomes.Text = "Remove";
+            this.toolTip.SetToolTip(this.btnRemovebyBiomes, "Remove areas covered by the selected biome from the selection.");
+            this.btnRemovebyBiomes.UseVisualStyleBackColor = true;
+            this.btnRemovebyBiomes.Click += new System.EventHandler(this.btnAddorRemovebyBiomes_Click);
+            // 
+            // btnAddbyBiomes
+            // 
+            this.btnAddbyBiomes.Location = new System.Drawing.Point(17, 52);
+            this.btnAddbyBiomes.Name = "btnAddbyBiomes";
+            this.btnAddbyBiomes.Size = new System.Drawing.Size(75, 25);
+            this.btnAddbyBiomes.TabIndex = 1;
+            this.btnAddbyBiomes.Text = "Add";
+            this.toolTip.SetToolTip(this.btnAddbyBiomes, "Add areas covered by the selected biome to the selection.");
+            this.btnAddbyBiomes.UseVisualStyleBackColor = true;
+            this.btnAddbyBiomes.Click += new System.EventHandler(this.btnAddorRemovebyBiomes_Click);
+            // 
+            // cmbBiomeType
+            // 
+            this.cmbBiomeType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBiomeType.FormattingEnabled = true;
+            this.cmbBiomeType.Location = new System.Drawing.Point(6, 22);
+            this.cmbBiomeType.Name = "cmbBiomeType";
+            this.cmbBiomeType.Size = new System.Drawing.Size(178, 24);
+            this.cmbBiomeType.TabIndex = 0;
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(996, 643);
+            this.ClientSize = new System.Drawing.Size(982, 643);
+            this.Controls.Add(this.btnRedo);
+            this.Controls.Add(this.btnPaste);
+            this.Controls.Add(this.btnUndo);
+            this.Controls.Add(this.btnSaveRegion);
+            this.Controls.Add(this.btnCopy);
+            this.Controls.Add(this.groupBox9);
             this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox7);
-            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -966,9 +1015,9 @@
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackMagnification)).EndInit();
             this.groupBox5.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1021,7 +1070,6 @@
         private System.Windows.Forms.ToolStripMenuItem loadRegionByCoordsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutBiomePainterToolStripMenuItem;
-        private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Button btnCopy;
         private System.Windows.Forms.Button btnRedo;
         private System.Windows.Forms.Button btnUndo;
@@ -1053,9 +1101,14 @@
         private System.Windows.Forms.Button btnRegionUp;
         private System.Windows.Forms.Button btnRegionJump;
         private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.Button btnRemovefromSelection;
-        private System.Windows.Forms.Button btnAddtoSelection;
+        private System.Windows.Forms.Button btnRemovebyBlocks;
+        private System.Windows.Forms.Button btnAddbyBlocks;
         private System.Windows.Forms.ComboBox cmbBlockType;
+        private System.Windows.Forms.Button btnSaveRegion;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.Button btnRemovebyBiomes;
+        private System.Windows.Forms.Button btnAddbyBiomes;
+        private System.Windows.Forms.ComboBox cmbBiomeType;
     }
 }
 
