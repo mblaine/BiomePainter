@@ -773,6 +773,31 @@ namespace BiomePainter
             }
         }
 
+        public static void AddorRemoveBiomesSelection(RegionFile region, Bitmap b, Color selectionColor, Biome biome, bool add)
+        {
+            foreach (Chunk c in region.Chunks)
+            {
+                if (c.Root == null)
+                    continue;
+                Coord chunkOffset = new Coord(region.Coords);
+                chunkOffset.RegiontoChunk();
+                chunkOffset = new Coord(c.Coords.X - chunkOffset.X, c.Coords.Z - chunkOffset.Z);
+                chunkOffset.ChunktoAbsolute();
+
+                byte[] biomes = (byte[])c.Root["Level"]["Biomes"];
+
+                for (int z = 0; z < 16; z++)
+                {
+                    for (int x = 0; x < 16; x++)
+                    {
+                        if(biome == (Biome)biomes[x + z * 16])
+                            b.SetPixel(chunkOffset.X + x, chunkOffset.Z + z, add ? selectionColor : Color.Transparent);
+                    }
+                }
+            }
+
+        }
+
         public static void RenderChunkBoundaries(Bitmap b)
         {
             using (Graphics g = Graphics.FromImage(b))

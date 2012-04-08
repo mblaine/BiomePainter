@@ -664,6 +664,15 @@ namespace BiomePainter
 
         private void btnAddorRemovebyBiomes_Click(object sender, EventArgs e)
         {
+            if (world == null || region == null)
+                return;
+            bool add = sender == btnAddbyBiomes ? true : false;
+            Biome b = (Biome)Enum.Parse(typeof(Biome), (String)cmbBiomeType.SelectedItem);
+            UpdateStatus(add ? "Adding to selection" : "Removing from selection");
+            RegionUtil.AddorRemoveBiomesSelection(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, b, add);
+            UpdateStatus("");
+            imgRegion.Redraw();
+            history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
         }
 
         private void btnUndo_Click(object sender, EventArgs e)

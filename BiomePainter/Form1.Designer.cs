@@ -401,6 +401,7 @@
             // lstRegions
             // 
             this.lstRegions.FormattingEnabled = true;
+            this.lstRegions.HorizontalScrollbar = true;
             this.lstRegions.ItemHeight = 16;
             this.lstRegions.Location = new System.Drawing.Point(12, 77);
             this.lstRegions.Name = "lstRegions";
@@ -894,7 +895,7 @@
             this.groupBox7.Controls.Add(this.btnRegionRight);
             this.groupBox7.Controls.Add(this.btnRegionUp);
             this.groupBox7.Controls.Add(this.btnRegionLeft);
-            this.groupBox7.Location = new System.Drawing.Point(12, 557);
+            this.groupBox7.Location = new System.Drawing.Point(12, 565);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(240, 72);
             this.groupBox7.TabIndex = 20;
