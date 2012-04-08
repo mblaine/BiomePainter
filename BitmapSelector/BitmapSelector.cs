@@ -38,6 +38,7 @@ namespace BitmapSelector
         private bool mouse1Down = false;
         private bool mouse2Down = false;
         private Point mouseLast = new Point(-1, -1);
+        private bool cursorVisible = true;
 
         public BitmapSelector()
         {
@@ -234,6 +235,11 @@ namespace BitmapSelector
                 mouse2Down = false;
 
             OnSelectionChanged();
+           if(!cursorVisible)
+            {
+                Cursor.Show();
+                cursorVisible = true;
+            }
         }
 
         private void BitmapSelector_MouseCaptureChanged(object sender, EventArgs e)
@@ -242,6 +248,11 @@ namespace BitmapSelector
                 OnSelectionChanged();
             mouse1Down = false;
             mouse2Down = false;
+            if (!cursorVisible)
+            {
+                Cursor.Show();
+                cursorVisible = true;
+            }
         }
 
         private void BitmapSelector_MouseDown(object sender, MouseEventArgs e)
@@ -251,7 +262,11 @@ namespace BitmapSelector
                 mouse1Down = true;
             else if (e.Button == MouseButtons.Right)
                 mouse2Down = true;
-
+            if (cursorVisible)
+            {
+                Cursor.Hide();
+                cursorVisible = false;
+            }
             if (BrushDiameter > 1)
             {
                 using (Graphics g = Graphics.FromImage(Layers[0].Image))
