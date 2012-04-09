@@ -537,11 +537,11 @@ namespace BitmapSelector
             //prevent scrolling past the end of the image
             if (OffsetX < 0)
                 OffsetX = 0;
-            if (Width - OffsetX < scaledWidth + scrollWidth)
+            if (Width - OffsetX < scaledWidth - scrollWidth)
                 OffsetX = Width - scaledWidth + scrollWidth;
             if (OffsetY < 0)
                 OffsetY = 0;
-            if (Height - OffsetY < scaledHeight + scrollHeight)
+            if (Height - OffsetY < scaledHeight - scrollHeight)
                 OffsetY = Height - scaledHeight + scrollHeight;
 
             if (Magnification <= 1)
