@@ -105,13 +105,13 @@
             this.btnRegionJump = new System.Windows.Forms.Button();
             this.btnAddbyBlocks = new System.Windows.Forms.Button();
             this.btnRemovebyBlocks = new System.Windows.Forms.Button();
+            this.btnRemovebyBiomes = new System.Windows.Forms.Button();
+            this.btnAddbyBiomes = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.cmbBlockType = new System.Windows.Forms.ComboBox();
             this.imgRegion = new BitmapSelector.BitmapSelector();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.btnRemovebyBiomes = new System.Windows.Forms.Button();
-            this.btnAddbyBiomes = new System.Windows.Forms.Button();
             this.cmbBiomeType = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -751,6 +751,7 @@
             // 
             // btnSaveRegion
             // 
+            this.btnSaveRegion.Image = global::BiomePainter.Properties.Resources.save;
             this.btnSaveRegion.Location = new System.Drawing.Point(18, 31);
             this.btnSaveRegion.Name = "btnSaveRegion";
             this.btnSaveRegion.Size = new System.Drawing.Size(40, 40);
@@ -888,6 +889,28 @@
             this.btnRemovebyBlocks.UseVisualStyleBackColor = true;
             this.btnRemovebyBlocks.Click += new System.EventHandler(this.btnAddorRemovebyBlocks_Click);
             // 
+            // btnRemovebyBiomes
+            // 
+            this.btnRemovebyBiomes.Location = new System.Drawing.Point(98, 52);
+            this.btnRemovebyBiomes.Name = "btnRemovebyBiomes";
+            this.btnRemovebyBiomes.Size = new System.Drawing.Size(75, 25);
+            this.btnRemovebyBiomes.TabIndex = 2;
+            this.btnRemovebyBiomes.Text = "Remove";
+            this.toolTip.SetToolTip(this.btnRemovebyBiomes, "Remove areas covered by the selected biome from the selection.");
+            this.btnRemovebyBiomes.UseVisualStyleBackColor = true;
+            this.btnRemovebyBiomes.Click += new System.EventHandler(this.btnAddorRemovebyBiomes_Click);
+            // 
+            // btnAddbyBiomes
+            // 
+            this.btnAddbyBiomes.Location = new System.Drawing.Point(17, 52);
+            this.btnAddbyBiomes.Name = "btnAddbyBiomes";
+            this.btnAddbyBiomes.Size = new System.Drawing.Size(75, 25);
+            this.btnAddbyBiomes.TabIndex = 1;
+            this.btnAddbyBiomes.Text = "Add";
+            this.toolTip.SetToolTip(this.btnAddbyBiomes, "Add areas covered by the selected biome to the selection.");
+            this.btnAddbyBiomes.UseVisualStyleBackColor = true;
+            this.btnAddbyBiomes.Click += new System.EventHandler(this.btnAddorRemovebyBiomes_Click);
+            // 
             // groupBox7
             // 
             this.groupBox7.Controls.Add(this.btnRegionJump);
@@ -944,28 +967,6 @@
             this.groupBox9.TabIndex = 22;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Select by Biome";
-            // 
-            // btnRemovebyBiomes
-            // 
-            this.btnRemovebyBiomes.Location = new System.Drawing.Point(98, 52);
-            this.btnRemovebyBiomes.Name = "btnRemovebyBiomes";
-            this.btnRemovebyBiomes.Size = new System.Drawing.Size(75, 25);
-            this.btnRemovebyBiomes.TabIndex = 2;
-            this.btnRemovebyBiomes.Text = "Remove";
-            this.toolTip.SetToolTip(this.btnRemovebyBiomes, "Remove areas covered by the selected biome from the selection.");
-            this.btnRemovebyBiomes.UseVisualStyleBackColor = true;
-            this.btnRemovebyBiomes.Click += new System.EventHandler(this.btnAddorRemovebyBiomes_Click);
-            // 
-            // btnAddbyBiomes
-            // 
-            this.btnAddbyBiomes.Location = new System.Drawing.Point(17, 52);
-            this.btnAddbyBiomes.Name = "btnAddbyBiomes";
-            this.btnAddbyBiomes.Size = new System.Drawing.Size(75, 25);
-            this.btnAddbyBiomes.TabIndex = 1;
-            this.btnAddbyBiomes.Text = "Add";
-            this.toolTip.SetToolTip(this.btnAddbyBiomes, "Add areas covered by the selected biome to the selection.");
-            this.btnAddbyBiomes.UseVisualStyleBackColor = true;
-            this.btnAddbyBiomes.Click += new System.EventHandler(this.btnAddorRemovebyBiomes_Click);
             // 
             // cmbBiomeType
             // 
