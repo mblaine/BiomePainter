@@ -1,3 +1,15 @@
+0.5 - 4/9/2012
+    * New option to add to or remove from the current selection based on
+      existing biomes in the region. For instance, the ability to add every 
+      area that is currently taiga to the current selection.
+    * Number keys now toggle layers on and off.
+    * While zoomed in, use Alt + Mouse Wheel to pan up and down, and Shift +
+      Mosue Wheel to pan left and right. As before, Ctrl + Mouse Wheel
+      adjusts brush size and Mouse Wheel by itself adjusts magnification.
+    * Mouse cursor is now hidden while drawing or erasing.
+    * Fixed panning left or up not working when viewing the bottom-right corner
+      of the region.
+
 0.4 - 4/6/2012
     * Replaced layer visibility checkboxes with toggle buttons with icons
       instead of text labels.
