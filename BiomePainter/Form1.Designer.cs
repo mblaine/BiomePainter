@@ -110,9 +110,9 @@
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.cmbBlockType = new System.Windows.Forms.ComboBox();
-            this.imgRegion = new BitmapSelector.BitmapSelector();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.cmbBiomeType = new System.Windows.Forms.ComboBox();
+            this.imgRegion = new BitmapSelector.BitmapSelector();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -964,16 +964,6 @@
             this.cmbBlockType.Size = new System.Drawing.Size(178, 24);
             this.cmbBlockType.TabIndex = 0;
             // 
-            // imgRegion
-            // 
-            this.imgRegion.Location = new System.Drawing.Point(258, 31);
-            this.imgRegion.Name = "imgRegion";
-            this.imgRegion.Size = new System.Drawing.Size(576, 576);
-            this.imgRegion.TabIndex = 2;
-            this.imgRegion.ZoomEvent += new BitmapSelector.BitmapSelector.ZoomEventHandler(this.imgRegion_ZoomEvent);
-            this.imgRegion.BrushDiameterChanged += new BitmapSelector.BitmapSelector.BrushDiameterEventHandler(this.imgRegion_BrushDiameterChanged);
-            this.imgRegion.SelectionChanged += new System.EventHandler(this.imgRegion_SelectionChanged);
-            // 
             // groupBox9
             // 
             this.groupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -997,6 +987,17 @@
             this.cmbBiomeType.Name = "cmbBiomeType";
             this.cmbBiomeType.Size = new System.Drawing.Size(178, 24);
             this.cmbBiomeType.TabIndex = 0;
+            // 
+            // imgRegion
+            // 
+            this.imgRegion.Location = new System.Drawing.Point(258, 31);
+            this.imgRegion.Name = "imgRegion";
+            this.imgRegion.SelectionBounds = new System.Drawing.Rectangle(32, 32, 512, 512);
+            this.imgRegion.Size = new System.Drawing.Size(576, 576);
+            this.imgRegion.TabIndex = 2;
+            this.imgRegion.ZoomEvent += new BitmapSelector.BitmapSelector.ZoomEventHandler(this.imgRegion_ZoomEvent);
+            this.imgRegion.BrushDiameterChanged += new BitmapSelector.BitmapSelector.BrushDiameterEventHandler(this.imgRegion_BrushDiameterChanged);
+            this.imgRegion.SelectionChanged += new System.EventHandler(this.imgRegion_SelectionChanged);
             // 
             // Form1
             // 

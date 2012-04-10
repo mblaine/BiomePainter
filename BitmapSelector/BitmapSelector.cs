@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -28,6 +29,9 @@ namespace BitmapSelector
         public int BrushDiameter = 1;
         public int BrushDiameterMax = 50;
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public Rectangle SelectionBounds { get; set; }
+
         public int Magnification = 1;
         public int OffsetX = 0;
         public int OffsetY = 0;
@@ -39,6 +43,9 @@ namespace BitmapSelector
         private bool mouse2Down = false;
         private Point mouseLast = new Point(-1, -1);
         private bool cursorVisible = true;
+
+        public readonly int SelectionLayerIndex = 0;
+        public readonly int BrushLayerIndex = 1;
 
         public BitmapSelector()
         {
@@ -148,16 +155,18 @@ namespace BitmapSelector
 
         private void RedrawBrushLayer(Point p, bool justClear = false)
         {
-            using (Graphics g = Graphics.FromImage(Layers[1].Image))
+            using (Graphics g = Graphics.FromImage(Layers[BrushLayerIndex].Image))
             {
                 g.Clear(Color.Transparent);
+                if (!SelectionBounds.IsEmpty)
+                    g.SetClip(SelectionBounds);
 
                 if (!justClear)
                 {
                     if (BrushDiameter == 1)
                     {
-
-                        Layers[1].Image.SetPixel(p.X, p.Y, Color.Black);
+                        if(SelectionBounds.IsEmpty || SelectionBounds.Contains(p))
+                            Layers[BrushLayerIndex].Image.SetPixel(p.X, p.Y, Color.Black);
                     }
                     else
                     {
@@ -269,8 +278,10 @@ namespace BitmapSelector
             }
             if (BrushDiameter > 1)
             {
-                using (Graphics g = Graphics.FromImage(Layers[0].Image))
+                using (Graphics g = Graphics.FromImage(Layers[SelectionLayerIndex].Image))
                 {
+                    if (!SelectionBounds.IsEmpty)
+                        g.SetClip(SelectionBounds);
                     g.CompositingMode = CompositingMode.SourceCopy;
                     SolidBrush b = new SolidBrush(mouse1Down ? SelectionColor : Color.Transparent);
                     if(Brush == BrushType.Round)
@@ -280,8 +291,8 @@ namespace BitmapSelector
                     b.Dispose();
                 }
             }
-            else if (p.X >= 0 && p.X < Width && p.Y >= 0 && p.Y < Height)
-                Layers[0].Image.SetPixel(p.X, p.Y, mouse1Down ? SelectionColor : Color.Transparent);
+            else if (p.X >= 0 && p.X < Width && p.Y >= 0 && p.Y < Height && (SelectionBounds.IsEmpty || SelectionBounds.Contains(p)))
+                Layers[SelectionLayerIndex].Image.SetPixel(p.X, p.Y, mouse1Down ? SelectionColor : Color.Transparent);
 
             Redraw();
         }
@@ -306,8 +317,10 @@ namespace BitmapSelector
             bool needToRedraw = false;
             if (mouse1Down || mouse2Down)
             {
-                using (Graphics g = Graphics.FromImage(Layers[0].Image))
+                using (Graphics g = Graphics.FromImage(Layers[SelectionLayerIndex].Image))
                 {
+                    if (!SelectionBounds.IsEmpty)
+                        g.SetClip(SelectionBounds);
                     g.CompositingMode = CompositingMode.SourceCopy;
                     Pen pen = new Pen(mouse1Down ? SelectionColor : Color.Transparent, BrushDiameter);
                     SolidBrush b = new SolidBrush(mouse1Down ? SelectionColor : Color.Transparent);
@@ -355,7 +368,7 @@ namespace BitmapSelector
                 needToRedraw = true;
             }
 
-            if (Layers[1].Visible)
+            if (Layers[BrushLayerIndex].Visible)
             {
                 RedrawBrushLayer(p);
                 needToRedraw = true;
@@ -371,7 +384,7 @@ namespace BitmapSelector
         {
             toolTip.Hide(this);
 
-            if (Layers[1].Visible)
+            if (Layers[BrushLayerIndex].Visible)
             {
                 RedrawBrushLayer(new Point(), true);
                 Redraw();
@@ -388,7 +401,7 @@ namespace BitmapSelector
                 else if (BrushDiameter < 1)
                     BrushDiameter = 1;
 
-                if (Layers[1].Visible && this.ClientRectangle.Contains(e.Location))
+                if (Layers[BrushLayerIndex].Visible && this.ClientRectangle.Contains(e.Location))
                 {
                     RedrawBrushLayer(Translate(e.Location));
                     Redraw();
@@ -472,14 +485,16 @@ namespace BitmapSelector
             }
             Redraw();
 
-            if (!Layers[0].SaveContentsOnReset)
+            if (!Layers[SelectionLayerIndex].SaveContentsOnReset)
                 OnSelectionChanged();
         }
 
         public void SelectAll()
         {
-            using (Graphics g = Graphics.FromImage(Layers[0].Image))
+            using (Graphics g = Graphics.FromImage(Layers[SelectionLayerIndex].Image))
             {
+                if (!SelectionBounds.IsEmpty)
+                    g.SetClip(SelectionBounds);
                 g.Clear(SelectionColor);
             }
 
@@ -488,8 +503,10 @@ namespace BitmapSelector
 
         public void SelectNone()
         {
-            using (Graphics g = Graphics.FromImage(Layers[0].Image))
+            using (Graphics g = Graphics.FromImage(Layers[SelectionLayerIndex].Image))
             {
+                if (!SelectionBounds.IsEmpty)
+                    g.SetClip(SelectionBounds);
                 g.Clear(Color.Transparent);
             }
 
@@ -498,14 +515,27 @@ namespace BitmapSelector
 
         public void InvertSelection()
         {
-            for (int x = 0; x < Layers[0].Image.Width; x++)
+            int xstart = 0;
+            int xend = Layers[SelectionLayerIndex].Image.Width;
+            int ystart = 0;
+            int yend = Layers[SelectionLayerIndex].Image.Height;
+
+            if (!SelectionBounds.IsEmpty)
             {
-                for (int y = 0; y < Layers[0].Image.Height; y++)
+                xstart = SelectionBounds.X;
+                xend = SelectionBounds.X + SelectionBounds.Width;
+                ystart = SelectionBounds.Y;
+                yend = SelectionBounds.Y + SelectionBounds.Height;
+            }
+
+            for (int x = xstart; x < xend ; x++)
+            {
+                for (int y = ystart; y < yend; y++)
                 {
-                    if (Layers[0].Image.GetPixel(x, y).ToArgb() == SelectionColor.ToArgb())
-                        Layers[0].Image.SetPixel(x, y, Color.Transparent);
+                    if (Layers[SelectionLayerIndex].Image.GetPixel(x, y).ToArgb() == SelectionColor.ToArgb())
+                        Layers[SelectionLayerIndex].Image.SetPixel(x, y, Color.Transparent);
                     else
-                        Layers[0].Image.SetPixel(x, y, SelectionColor);
+                        Layers[SelectionLayerIndex].Image.SetPixel(x, y, SelectionColor);
                 }
             }
 

@@ -24,8 +24,8 @@ namespace BiomePainter
         private int lastSelectedRegionIndex = -1;
         private bool warnedAboutPopulating = false;
 
-        private const int SELECTIONLAYER = 0;
-        private const int BRUSHLAYER = 1;
+        private readonly int SELECTIONLAYER;
+        private readonly int BRUSHLAYER;
         private readonly int POPULATELAYER;
         private readonly int CHUNKLAYER;
         private readonly int BIOMELAYER;
@@ -34,6 +34,8 @@ namespace BiomePainter
         public Form1()
         {
             InitializeComponent();
+            SELECTIONLAYER = imgRegion.SelectionLayerIndex;
+            BRUSHLAYER = imgRegion.BrushLayerIndex;
             POPULATELAYER = imgRegion.AddLayer(new BitmapSelector.Layer(imgRegion.Width, imgRegion.Height, 0.6f, false, false)); //chunks to be populated
             CHUNKLAYER = imgRegion.AddLayer(new BitmapSelector.Layer(imgRegion.Width, imgRegion.Height, 0.3f, true, false)); //chunk boundaries
             BIOMELAYER = imgRegion.AddLayer(new BitmapSelector.Layer(imgRegion.Width, imgRegion.Height, 0.5f)); //biome
