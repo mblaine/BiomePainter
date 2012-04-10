@@ -7,6 +7,9 @@ namespace BiomePainter
 {
     public class RegionUtil
     {
+        internal const int OFFSETX = 32;
+        internal const int OFFSETY = 32;
+
         private RegionUtil()
         {
         }
@@ -79,7 +82,7 @@ namespace BiomePainter
                         //brighten/darken by height; arbitrary value, but /seems/ to look okay
                         color = AddtoColor(color, (int)(height / 1.7 - 42));
 
-                        b.SetPixel(chunkOffset.X + x, chunkOffset.Z + z, color);
+                        b.SetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z, color);
                     }
                 }
             }
@@ -172,8 +175,8 @@ namespace BiomePainter
                                 color = Color.Black;
                                 break;
                         }
-                        b.SetPixel(chunkOffset.X + x, chunkOffset.Z + z, color);
-                        toolTips[chunkOffset.X + x, chunkOffset.Z + z] = biome.ToString();
+                        b.SetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z, color);
+                        toolTips[OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z] = biome.ToString();
                     }
                 }
             }
@@ -196,7 +199,7 @@ namespace BiomePainter
 
                         if (((byte)c.Root["Level"]["TerrainPopulated"]) == 0)
                         {
-                            g.FillRectangle(brush, chunkX * 16, chunkZ * 16, 16, 16);
+                            g.FillRectangle(brush, OFFSETX + chunkX * 16, OFFSETY + chunkZ * 16, 16, 16);
                         }
                     }
                 }
@@ -542,7 +545,7 @@ namespace BiomePainter
                 {
                     for (int x = 0; x < 16; x++)
                     {
-                        if (selection.GetPixel(chunkOffset.X + x, chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
+                        if (selection.GetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
                         {
                             biomes[x + z * 16] = (byte)biome;
                         }
@@ -571,7 +574,7 @@ namespace BiomePainter
                 {
                     for (int x = 0; x < 16; x++)
                     {
-                        if (selection.GetPixel(chunkOffset.X + x, chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
+                        if (selection.GetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
                         {
                             biomes[x + z * 16] = (byte)util.GetBiome(chunkAbs.X + x, chunkAbs.Z + z);
                         }
@@ -597,7 +600,7 @@ namespace BiomePainter
                 {
                     for (int x = 0; x < 16; x++)
                     {
-                        if (selection.GetPixel(chunkOffset.X + x, chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
+                        if (selection.GetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
                         {
                             if (biomes[x + z * 16] == (byte)search)
                             {
@@ -629,7 +632,7 @@ namespace BiomePainter
                 {
                     for (int x = 0; x < 16; x++)
                     {
-                        if (selection.GetPixel(chunkOffset.X + x, chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
+                        if (selection.GetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
                         {
                             if (biomes[x + z * 16] == (byte)search)
                             {
@@ -656,7 +659,7 @@ namespace BiomePainter
                     {
                         for (int x = 0; x < 16; x++)
                         {
-                            if (selection.GetPixel(chunkX * 16 + x, chunkZ * 16 + z).ToArgb() == selectionColor.ToArgb())
+                            if (selection.GetPixel(OFFSETX + chunkX * 16 + x, OFFSETY + chunkZ * 16 + z).ToArgb() == selectionColor.ToArgb())
                             {
                                 ((TAG_Byte)c.Root["Level"]["TerrainPopulated"]).Payload = value;
                                 done = true;
@@ -684,7 +687,7 @@ namespace BiomePainter
                         {
                             for (int z = 0; z < 16; z++)
                             {
-                                if (b.GetPixel(chunkX * 16 + x, chunkZ * 16 + z).ToArgb() == selectionColor.ToArgb())
+                                if (b.GetPixel(OFFSETX + chunkX * 16 + x, OFFSETY + chunkZ * 16 + z).ToArgb() == selectionColor.ToArgb())
                                 {
                                     shouldSelect = true;
                                     break;
@@ -695,7 +698,7 @@ namespace BiomePainter
                         }
 
                         if (shouldSelect)
-                            g.FillRectangle(brush, chunkX * 16, chunkZ * 16, 16, 16);
+                            g.FillRectangle(brush, OFFSETX + chunkX * 16, OFFSETY + chunkZ * 16, 16, 16);
                     }
                 }
             }
@@ -766,7 +769,7 @@ namespace BiomePainter
 
                         if(ids.Contains(blockAbove) || (blockAbove == 0 && ids.Contains(block)))
                         {
-                            b.SetPixel(chunkOffset.X + x, chunkOffset.Z + z, add ? selectionColor : Color.Transparent);
+                            b.SetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z, add ? selectionColor : Color.Transparent);
                         }
                     }
                 }
@@ -791,7 +794,7 @@ namespace BiomePainter
                     for (int x = 0; x < 16; x++)
                     {
                         if(biome == (Biome)biomes[x + z * 16])
-                            b.SetPixel(chunkOffset.X + x, chunkOffset.Z + z, add ? selectionColor : Color.Transparent);
+                            b.SetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z, add ? selectionColor : Color.Transparent);
                     }
                 }
             }
@@ -809,7 +812,7 @@ namespace BiomePainter
                     for (int chunkZ = 0; chunkZ < 32; chunkZ++)
                     {
                         if ((chunkZ % 2 == 0 && chunkX % 2 == 1) || (chunkZ % 2 == 1 && chunkX % 2 == 0))
-                            g.FillRectangle(brush, chunkX * 16, chunkZ * 16, 16, 16);
+                            g.FillRectangle(brush, OFFSETX + chunkX * 16, OFFSETY + chunkZ * 16, 16, 16);
                     }
                 }
                 brush.Dispose();

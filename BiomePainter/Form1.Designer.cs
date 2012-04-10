@@ -135,7 +135,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(982, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1040, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -400,12 +400,14 @@
             // 
             // lstRegions
             // 
+            this.lstRegions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.lstRegions.FormattingEnabled = true;
             this.lstRegions.HorizontalScrollbar = true;
             this.lstRegions.ItemHeight = 16;
             this.lstRegions.Location = new System.Drawing.Point(12, 77);
             this.lstRegions.Name = "lstRegions";
-            this.lstRegions.Size = new System.Drawing.Size(240, 468);
+            this.lstRegions.Size = new System.Drawing.Size(240, 532);
             this.lstRegions.TabIndex = 1;
             this.lstRegions.SelectedIndexChanged += new System.EventHandler(this.lstRegions_SelectedIndexChanged);
             // 
@@ -514,7 +516,7 @@
             // radSquareBrush
             // 
             this.radSquareBrush.AutoSize = true;
-            this.radSquareBrush.Location = new System.Drawing.Point(86, 21);
+            this.radSquareBrush.Location = new System.Drawing.Point(84, 21);
             this.radSquareBrush.Name = "radSquareBrush";
             this.radSquareBrush.Size = new System.Drawing.Size(75, 21);
             this.radSquareBrush.TabIndex = 11;
@@ -524,6 +526,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.chkShowPopulate);
             this.groupBox1.Controls.Add(this.chkShowBrush);
             this.groupBox1.Controls.Add(this.chkShowChunkBoundaries);
@@ -531,9 +534,9 @@
             this.groupBox1.Controls.Add(this.chkShowBiomes);
             this.groupBox1.Controls.Add(this.chkShowToolTips);
             this.groupBox1.Controls.Add(this.chkShowSelection);
-            this.groupBox1.Location = new System.Drawing.Point(777, 31);
+            this.groupBox1.Location = new System.Drawing.Point(841, 31);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(196, 115);
+            this.groupBox1.Size = new System.Drawing.Size(190, 115);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Layers";
@@ -590,26 +593,28 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.btnSelectAll);
             this.groupBox2.Controls.Add(this.btnSelectChunks);
             this.groupBox2.Controls.Add(this.btnSelectNone);
             this.groupBox2.Controls.Add(this.btnInvertSelection);
-            this.groupBox2.Location = new System.Drawing.Point(777, 334);
+            this.groupBox2.Location = new System.Drawing.Point(841, 344);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(198, 71);
+            this.groupBox2.Size = new System.Drawing.Size(190, 71);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Select";
             // 
             // groupBox3
             // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.lblBrushDiameter);
             this.groupBox3.Controls.Add(this.trackBrushDiameter);
             this.groupBox3.Controls.Add(this.radRoundBrush);
             this.groupBox3.Controls.Add(this.radSquareBrush);
-            this.groupBox3.Location = new System.Drawing.Point(777, 228);
+            this.groupBox3.Location = new System.Drawing.Point(841, 236);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(198, 104);
+            this.groupBox3.Size = new System.Drawing.Size(190, 104);
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Selection Brush";
@@ -625,12 +630,14 @@
             // 
             // trackBrushDiameter
             // 
+            this.trackBrushDiameter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBrushDiameter.AutoSize = false;
             this.trackBrushDiameter.Location = new System.Drawing.Point(7, 65);
             this.trackBrushDiameter.Maximum = 50;
             this.trackBrushDiameter.Minimum = 1;
             this.trackBrushDiameter.Name = "trackBrushDiameter";
-            this.trackBrushDiameter.Size = new System.Drawing.Size(186, 37);
+            this.trackBrushDiameter.Size = new System.Drawing.Size(178, 37);
             this.trackBrushDiameter.TabIndex = 12;
             this.trackBrushDiameter.TickFrequency = 5;
             this.trackBrushDiameter.Value = 1;
@@ -638,11 +645,12 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Controls.Add(this.lblMagnification);
             this.groupBox4.Controls.Add(this.trackMagnification);
-            this.groupBox4.Location = new System.Drawing.Point(777, 148);
+            this.groupBox4.Location = new System.Drawing.Point(841, 152);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(198, 78);
+            this.groupBox4.Size = new System.Drawing.Size(190, 78);
             this.groupBox4.TabIndex = 16;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Zoom";
@@ -658,25 +666,28 @@
             // 
             // trackMagnification
             // 
+            this.trackMagnification.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.trackMagnification.AutoSize = false;
             this.trackMagnification.LargeChange = 1;
             this.trackMagnification.Location = new System.Drawing.Point(7, 38);
             this.trackMagnification.Minimum = 1;
             this.trackMagnification.Name = "trackMagnification";
-            this.trackMagnification.Size = new System.Drawing.Size(186, 37);
+            this.trackMagnification.Size = new System.Drawing.Size(178, 37);
             this.trackMagnification.TabIndex = 0;
             this.trackMagnification.Value = 1;
             this.trackMagnification.Scroll += new System.EventHandler(this.trackMagnification_Scroll);
             // 
             // groupBox5
             // 
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox5.Controls.Add(this.btnReplace);
             this.groupBox5.Controls.Add(this.cmbReplace2);
             this.groupBox5.Controls.Add(this.cmbReplace1);
             this.groupBox5.Controls.Add(this.btnFill);
             this.groupBox5.Controls.Add(this.cmbFill);
             this.groupBox5.Controls.Add(this.label3);
-            this.groupBox5.Location = new System.Drawing.Point(258, 576);
+            this.groupBox5.Location = new System.Drawing.Point(258, 640);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(717, 61);
             this.groupBox5.TabIndex = 17;
@@ -743,9 +754,10 @@
             // 
             // lblStatus
             // 
-            this.lblStatus.Location = new System.Drawing.Point(258, 546);
+            this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblStatus.Location = new System.Drawing.Point(258, 610);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(512, 27);
+            this.lblStatus.Size = new System.Drawing.Size(576, 27);
             this.lblStatus.TabIndex = 18;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -869,7 +881,7 @@
             // 
             // btnAddbyBlocks
             // 
-            this.btnAddbyBlocks.Location = new System.Drawing.Point(17, 52);
+            this.btnAddbyBlocks.Location = new System.Drawing.Point(14, 52);
             this.btnAddbyBlocks.Name = "btnAddbyBlocks";
             this.btnAddbyBlocks.Size = new System.Drawing.Size(75, 25);
             this.btnAddbyBlocks.TabIndex = 1;
@@ -880,7 +892,8 @@
             // 
             // btnRemovebyBlocks
             // 
-            this.btnRemovebyBlocks.Location = new System.Drawing.Point(98, 52);
+            this.btnRemovebyBlocks.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRemovebyBlocks.Location = new System.Drawing.Point(93, 52);
             this.btnRemovebyBlocks.Name = "btnRemovebyBlocks";
             this.btnRemovebyBlocks.Size = new System.Drawing.Size(75, 25);
             this.btnRemovebyBlocks.TabIndex = 2;
@@ -891,7 +904,8 @@
             // 
             // btnRemovebyBiomes
             // 
-            this.btnRemovebyBiomes.Location = new System.Drawing.Point(98, 52);
+            this.btnRemovebyBiomes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRemovebyBiomes.Location = new System.Drawing.Point(93, 52);
             this.btnRemovebyBiomes.Name = "btnRemovebyBiomes";
             this.btnRemovebyBiomes.Size = new System.Drawing.Size(75, 25);
             this.btnRemovebyBiomes.TabIndex = 2;
@@ -902,7 +916,7 @@
             // 
             // btnAddbyBiomes
             // 
-            this.btnAddbyBiomes.Location = new System.Drawing.Point(17, 52);
+            this.btnAddbyBiomes.Location = new System.Drawing.Point(14, 52);
             this.btnAddbyBiomes.Name = "btnAddbyBiomes";
             this.btnAddbyBiomes.Size = new System.Drawing.Size(75, 25);
             this.btnAddbyBiomes.TabIndex = 1;
@@ -913,12 +927,13 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox7.Controls.Add(this.btnRegionJump);
             this.groupBox7.Controls.Add(this.btnRegionDown);
             this.groupBox7.Controls.Add(this.btnRegionRight);
             this.groupBox7.Controls.Add(this.btnRegionUp);
             this.groupBox7.Controls.Add(this.btnRegionLeft);
-            this.groupBox7.Location = new System.Drawing.Point(12, 565);
+            this.groupBox7.Location = new System.Drawing.Point(12, 629);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(240, 72);
             this.groupBox7.TabIndex = 20;
@@ -927,18 +942,21 @@
             // 
             // groupBox8
             // 
+            this.groupBox8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox8.Controls.Add(this.btnRemovebyBlocks);
             this.groupBox8.Controls.Add(this.btnAddbyBlocks);
             this.groupBox8.Controls.Add(this.cmbBlockType);
-            this.groupBox8.Location = new System.Drawing.Point(777, 407);
+            this.groupBox8.Location = new System.Drawing.Point(841, 421);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(198, 83);
+            this.groupBox8.Size = new System.Drawing.Size(190, 83);
             this.groupBox8.TabIndex = 21;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Select by Block";
             // 
             // cmbBlockType
             // 
+            this.cmbBlockType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbBlockType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBlockType.FormattingEnabled = true;
             this.cmbBlockType.Location = new System.Drawing.Point(6, 22);
@@ -950,7 +968,7 @@
             // 
             this.imgRegion.Location = new System.Drawing.Point(258, 31);
             this.imgRegion.Name = "imgRegion";
-            this.imgRegion.Size = new System.Drawing.Size(512, 512);
+            this.imgRegion.Size = new System.Drawing.Size(576, 576);
             this.imgRegion.TabIndex = 2;
             this.imgRegion.ZoomEvent += new BitmapSelector.BitmapSelector.ZoomEventHandler(this.imgRegion_ZoomEvent);
             this.imgRegion.BrushDiameterChanged += new BitmapSelector.BitmapSelector.BrushDiameterEventHandler(this.imgRegion_BrushDiameterChanged);
@@ -958,18 +976,21 @@
             // 
             // groupBox9
             // 
+            this.groupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox9.Controls.Add(this.btnRemovebyBiomes);
             this.groupBox9.Controls.Add(this.btnAddbyBiomes);
             this.groupBox9.Controls.Add(this.cmbBiomeType);
-            this.groupBox9.Location = new System.Drawing.Point(777, 492);
+            this.groupBox9.Location = new System.Drawing.Point(841, 510);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(198, 83);
+            this.groupBox9.Size = new System.Drawing.Size(190, 83);
             this.groupBox9.TabIndex = 22;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Select by Biome";
             // 
             // cmbBiomeType
             // 
+            this.cmbBiomeType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbBiomeType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBiomeType.FormattingEnabled = true;
             this.cmbBiomeType.Location = new System.Drawing.Point(6, 22);
@@ -980,7 +1001,7 @@
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(982, 643);
+            this.ClientSize = new System.Drawing.Size(1040, 707);
             this.Controls.Add(this.btnRedo);
             this.Controls.Add(this.btnPaste);
             this.Controls.Add(this.btnUndo);

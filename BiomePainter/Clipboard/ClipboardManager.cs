@@ -29,7 +29,7 @@ namespace BiomePainter.Clipboard
                     {
                         for (int z = 0; z < 16; z++)
                         {
-                            if (selection.GetPixel(chunkX * 16 + x, chunkZ * 16 + z).ToArgb() == selectionColor.ToArgb())
+                            if (selection.GetPixel(RegionUtil.OFFSETX + chunkX * 16 + x, RegionUtil.OFFSETY + chunkZ * 16 + z).ToArgb() == selectionColor.ToArgb())
                             {
                                 biomeData.Biomes[chunkX * 16 + x, chunkZ * 16 + z] = biomes[x + z * 16];
                                 biomeData.Empty = false;
