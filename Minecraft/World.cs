@@ -7,7 +7,7 @@ namespace Minecraft
     public class World
     {
         public long Seed;
-        public String RegionDir;
+        public String WorldDir;
 
         public World(String path)
         {
@@ -25,12 +25,31 @@ namespace Minecraft
             }
 
             Seed = (long)data["Data"]["RandomSeed"];
-            RegionDir = String.Format("{0}{1}region", Path.GetDirectoryName(path), Path.DirectorySeparatorChar);
+            WorldDir = Path.GetDirectoryName(path);
         }
 
-        public String[] GetRegionPaths()
+        public String GetRegionDirectory(Dimension dim)
         {
-            return Directory.GetFiles(RegionDir, "*.mca", SearchOption.TopDirectoryOnly);
+            switch (dim)
+            {
+                case Dimension.Overworld:
+                    return String.Format("{0}{1}region", WorldDir, Path.DirectorySeparatorChar);
+                case Dimension.Nether:
+                    return String.Format("{0}{1}DIM-1{1}region", WorldDir, Path.DirectorySeparatorChar);
+                case Dimension.End:
+                    return String.Format("{0}{1}DIM-2{1}region", WorldDir, Path.DirectorySeparatorChar);
+                default:
+                    throw new Exception("Unrecognized dimension.");
+            }
+        }
+
+        public String[] GetRegionPaths(Dimension dim = Dimension.Overworld)
+        {
+            String dir = GetRegionDirectory(dim);
+            if(Directory.Exists(dir))
+                return Directory.GetFiles(dir, "*.mca", SearchOption.TopDirectoryOnly);
+            else
+                return new String[0];
         }
     }
 }

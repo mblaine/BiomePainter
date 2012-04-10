@@ -43,6 +43,7 @@
     <Compile Include="BiomeUtil.cs" />
     <Compile Include="Chunk.cs" />
     <Compile Include="Coord.cs" />
+    <Compile Include="Dimension.cs" />
     <Compile Include="JavaRandom.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegionFile.cs" />

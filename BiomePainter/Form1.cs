@@ -22,6 +22,7 @@ namespace BiomePainter
         private String lastPath = String.Format("{0}{1}.minecraft{1}saves", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Path.DirectorySeparatorChar);
 
         private int lastSelectedRegionIndex = -1;
+        private Dimension dim = Dimension.Overworld;
         private bool warnedAboutPopulating = false;
 
         private readonly int SELECTIONLAYER;
@@ -95,7 +96,10 @@ namespace BiomePainter
             lblMagnification.Text = "Magnification: 1x";
             imgRegion.Reset();
             region = null;
-            world = null;
+            dim = Dimension.Overworld;
+            overworldToolStripMenuItem.Checked = true;
+            netherToolStripMenuItem.Checked = false;
+            endToolStripMenuItem.Checked = false;
             if (history != null)
                 history.Dispose();
             history = new HistoryManager();
@@ -145,6 +149,33 @@ namespace BiomePainter
             }
 
             return true;
+        }
+
+        private void SwitchDimension(Dimension newDim)
+        {
+            overworldToolStripMenuItem.Checked = dim == Dimension.Overworld;
+            netherToolStripMenuItem.Checked = dim == Dimension.Nether;
+            endToolStripMenuItem.Checked = dim == Dimension.End;
+
+            if (world == null)
+                return;
+            if (!SaveIfNecessary())
+                return;
+            if (newDim == dim)
+                return;
+            
+            ResetControls();
+
+            dim = newDim;
+            overworldToolStripMenuItem.Checked = dim == Dimension.Overworld;
+            netherToolStripMenuItem.Checked = dim == Dimension.Nether;
+            endToolStripMenuItem.Checked = dim == Dimension.End;
+
+            String[] regions = world.GetRegionPaths(dim);
+            foreach (String r in regions)
+                lstRegions.Items.Add(RegionFile.ToString(r));
+            return;
+
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -213,6 +244,7 @@ namespace BiomePainter
             if (!SaveIfNecessary())
                 return;
 
+            world = null;
             ResetControls();
         }
 
@@ -260,6 +292,21 @@ namespace BiomePainter
         private void loadRegionByCoordsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             btnRegionJump_Click(this, null);
+        }
+
+        private void overworldToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SwitchDimension(Dimension.Overworld);
+        }
+
+        private void netherToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SwitchDimension(Dimension.Nether);
+        }
+
+        private void endToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SwitchDimension(Dimension.End);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -837,7 +884,7 @@ namespace BiomePainter
             Match m = Regex.Match(lstRegions.SelectedItem.ToString(), @"Region (-?\d+), (-?\d+)");
             int x = int.Parse(m.Groups[1].Value);
             int z = int.Parse(m.Groups[2].Value);
-            String pathFormat = String.Format("{0}{1}r.{{0}}.{{1}}.mca", world.RegionDir, Path.DirectorySeparatorChar);
+            String pathFormat = String.Format("{0}{1}r.{{0}}.{{1}}.mca", world.GetRegionDirectory(dim), Path.DirectorySeparatorChar);
 
             UpdateStatus("Reading region file");
             region = new RegionFile(String.Format(pathFormat, x, z));

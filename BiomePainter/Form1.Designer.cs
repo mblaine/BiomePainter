@@ -43,6 +43,10 @@
             this.rightOfCurrentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadRegionByCoordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.overworldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.netherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.endToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -150,6 +154,10 @@
             this.loadRegionToolStripMenuItem,
             this.loadRegionByCoordsToolStripMenuItem,
             this.toolStripSeparator2,
+            this.overworldToolStripMenuItem,
+            this.netherToolStripMenuItem,
+            this.endToolStripMenuItem,
+            this.toolStripSeparator6,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(44, 24);
@@ -247,6 +255,37 @@
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(276, 6);
+            // 
+            // overworldToolStripMenuItem
+            // 
+            this.overworldToolStripMenuItem.Checked = true;
+            this.overworldToolStripMenuItem.CheckOnClick = true;
+            this.overworldToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.overworldToolStripMenuItem.Name = "overworldToolStripMenuItem";
+            this.overworldToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
+            this.overworldToolStripMenuItem.Text = "Overworld";
+            this.overworldToolStripMenuItem.Click += new System.EventHandler(this.overworldToolStripMenuItem_Click);
+            // 
+            // netherToolStripMenuItem
+            // 
+            this.netherToolStripMenuItem.CheckOnClick = true;
+            this.netherToolStripMenuItem.Name = "netherToolStripMenuItem";
+            this.netherToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
+            this.netherToolStripMenuItem.Text = "Nether";
+            this.netherToolStripMenuItem.Click += new System.EventHandler(this.netherToolStripMenuItem_Click);
+            // 
+            // endToolStripMenuItem
+            // 
+            this.endToolStripMenuItem.CheckOnClick = true;
+            this.endToolStripMenuItem.Name = "endToolStripMenuItem";
+            this.endToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
+            this.endToolStripMenuItem.Text = "End";
+            this.endToolStripMenuItem.Click += new System.EventHandler(this.endToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(276, 6);
             // 
             // exitToolStripMenuItem
             // 
@@ -1133,6 +1172,10 @@
         private System.Windows.Forms.Button btnRemovebyBiomes;
         private System.Windows.Forms.Button btnAddbyBiomes;
         private System.Windows.Forms.ComboBox cmbBiomeType;
+        private System.Windows.Forms.ToolStripMenuItem overworldToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem netherToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem endToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
     }
 }
 
