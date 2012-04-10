@@ -24,13 +24,29 @@ namespace Minecraft
             Read(Path);
         }
 
-        //http://www.minecraftwiki.net/wiki/Region_file_format
+        public RegionFile(String path, int startX, int endX, int startZ, int endZ)
+        {
+            Path = path;
+            Read(Path, startX, endX, startZ, endZ);
+        }
+
+
+        //DO NOT write region if reading less than the entire thing
         public void Read(String path)
+        {
+            Read(path, 0, 31, 0, 31);
+        }
+
+        //http://www.minecraftwiki.net/wiki/Region_file_format
+        public void Read(String path, int startX, int endX, int startZ, int endZ)
         {
             Chunks = new Chunk[32, 32];
             Match m = Regex.Match(path, @"r\.(-?\d+)\.(-?\d+)\.mca");
             Coords.X = int.Parse(m.Groups[1].Value);
             Coords.Z = int.Parse(m.Groups[2].Value);
+
+            if (!File.Exists(path))
+                return;
 
             byte[] header = new byte[8192];
 
@@ -38,9 +54,9 @@ namespace Minecraft
             {
                 file.Read(header, 0, 8192);
 
-                for (int chunkZ = 0; chunkZ < 32; chunkZ++)
+                for (int chunkZ = startZ; chunkZ <= endZ; chunkZ++)
                 {
-                    for (int chunkX = 0; chunkX < 32; chunkX++)
+                    for (int chunkX = startX; chunkX <= endX; chunkX++)
                     {
                         Chunk c = new Chunk();
                         c.Coords.X = Coords.X;
@@ -115,6 +131,7 @@ namespace Minecraft
             }
         }
 
+        //DO NOT write region if reading less than the entire thing
         public void Write()
         {
             Write(Path);

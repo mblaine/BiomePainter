@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using Minecraft;
 
 namespace BiomePainter
@@ -9,183 +10,247 @@ namespace BiomePainter
     {
         internal const int OFFSETX = 32;
         internal const int OFFSETY = 32;
+        private const int WIDTH = 512;
+        private const int HEIGHT = 512;
+        private static readonly Rectangle CLIP = new Rectangle(OFFSETX, OFFSETY, WIDTH, HEIGHT);
 
         private RegionUtil()
         {
         }
 
-        public static void RenderRegion(RegionFile region, Bitmap b)
+        private static void RenderSurroundingRegion(RegionFile region, int chunkStartX, int chunkEndX, int chunkStartZ, int chunkEndZ, int offsetX, int offsetY, Bitmap map, Bitmap biomes, String[,] toolTips, Bitmap populate)
+        {
+            using (Graphics g = Graphics.FromImage(populate))
+            {
+                Brush brush = new SolidBrush(Color.Yellow);
+                for (int x = chunkStartX; x <= chunkEndX; x++)
+                {
+                    for (int z = chunkStartZ; z <= chunkEndZ; z++)
+                    {
+                        Chunk c = region.Chunks[x, z];
+                        if (c == null || c.Root == null)
+                            continue;
+                        Coord chunkOffset = new Coord(c.Coords);
+                        chunkOffset.ChunktoRegionRelative();
+                        chunkOffset = new Coord(chunkOffset.X - chunkStartX, chunkOffset.Z - chunkStartZ);
+                        chunkOffset.ChunktoAbsolute();
+                        chunkOffset.Add(offsetX, offsetY);
+
+                        RenderChunk(c, map, chunkOffset.X, chunkOffset.Z);
+                        RenderChunkBiomes(c, biomes, toolTips, chunkOffset.X, chunkOffset.Z);
+                        RenderChunktobePopulated(c, g, brush, chunkOffset.X, chunkOffset.Z);
+                    }
+                }
+                brush.Dispose();
+            }
+        }
+
+        public static void RenderSurroundingRegions(RegionFile[,] regions, Bitmap map, Bitmap biomes, String[,] toolTips, Bitmap populate)
+        {
+            RenderSurroundingRegion(regions[0, 0], 30, 31, 30, 31, 0, 0, map, biomes, toolTips, populate);
+            RenderSurroundingRegion(regions[1, 0], 0, 31, 30, 31, OFFSETX, 0, map, biomes, toolTips, populate);
+            RenderSurroundingRegion(regions[2, 0], 0, 1, 30, 31, OFFSETX + WIDTH, 0, map, biomes, toolTips, populate);
+            RenderSurroundingRegion(regions[0, 1], 30, 31, 0, 31, 0, OFFSETY, map, biomes, toolTips, populate);
+
+            RenderSurroundingRegion(regions[2, 1], 0, 1, 0, 31, OFFSETX + WIDTH, OFFSETY, map, biomes, toolTips, populate);
+            RenderSurroundingRegion(regions[0, 2], 30, 31, 0, 1, 0, OFFSETY + HEIGHT, map, biomes, toolTips, populate);
+            RenderSurroundingRegion(regions[1, 2], 0, 31, 0, 1, OFFSETX, OFFSETY + HEIGHT, map, biomes, toolTips, populate);
+            RenderSurroundingRegion(regions[2, 2], 0, 1, 0, 1, OFFSETX + WIDTH, OFFSETY + HEIGHT, map, biomes, toolTips, populate);
+
+        }
+
+        private static void RenderChunk(Chunk c, Bitmap b, int offsetX, int offsetY)
+        {
+            int[] heightmap = (int[])c.Root["Level"]["HeightMap"];
+            Dictionary<int, TAG_Compound> sections = new Dictionary<int, TAG_Compound>();
+            foreach (TAG t in (TAG[])c.Root["Level"]["Sections"])
+            {
+                sections.Add((byte)t["Y"], (TAG_Compound)t);
+            }
+
+            //chunk exists but all blocks are air
+            if (sections.Count == 0)
+                return;
+
+            for (int z = 0; z < 16; z++)
+            {
+                for (int x = 0; x < 16; x++)
+                {
+                    int height = heightmap[z * 16 + x];
+
+                    //trees runnning into the old height limit in converted worlds
+                    //seem to cause the heightmap entries for its columns to be -128;
+                    if (height < 0)
+                        height = 128;
+
+                    int sectionIndex = (int)Math.Floor((height - 1) / 16.0);
+                    int sectionAboveIndex = (int)Math.Floor(height / 16.0);
+
+                    int block = -1, damage = -1;
+                    if (sections.ContainsKey(sectionIndex))
+                    {
+                        byte[] blocks = (byte[])sections[sectionIndex]["Blocks"];
+                        byte[] data = (byte[])sections[sectionIndex]["Data"];
+                        int blockOffset = ((((height - 1) % 16) * 16 + z) * 16 + x);
+                        block = blocks[blockOffset];
+                        damage = data[(int)Math.Floor(blockOffset / 2.0)];
+                        if (blockOffset % 2 == 0)
+                            damage = (damage >> 4) & 0x0F;
+                        else
+                            damage = damage & 0x0F;
+                    }
+
+                    int blockAbove = block;
+                    if (sections.ContainsKey(sectionAboveIndex))
+                    {
+                        int blockAboveOffset = (((height % 16) * 16 + z) * 16 + x);
+                        byte[] blocksAbove = (byte[])sections[sectionAboveIndex]["Blocks"];
+                        blockAbove = blocksAbove[blockAboveOffset];
+                    }
+
+                    Color color = ColorLookup(block, damage, blockAbove);
+
+                    //brighten/darken by height; arbitrary value, but /seems/ to look okay
+                    color = AddtoColor(color, (int)(height / 1.7 - 42));
+
+                    b.SetPixel(offsetX + x, offsetY + z, color);
+                }
+            }
+        }
+
+        public static void RenderRegion(RegionFile region, Bitmap b, bool clip = true)
         {
             using (Graphics g = Graphics.FromImage(b))
             {
+                if(clip)
+                    g.SetClip(CLIP);
                 g.Clear(Color.Black);
             }
 
             foreach (Chunk c in region.Chunks)
             {
-                if (c.Root == null)
+                if (c == null || c.Root == null)
                     continue;
-                Coord chunkOffset = new Coord(region.Coords);
-                chunkOffset.RegiontoChunk();
-                chunkOffset = new Coord(c.Coords.X - chunkOffset.X, c.Coords.Z - chunkOffset.Z);
+                Coord chunkOffset = new Coord(c.Coords);
+                chunkOffset.ChunktoRegionRelative();
                 chunkOffset.ChunktoAbsolute();
+                RenderChunk(c, b, OFFSETX + chunkOffset.X, OFFSETY + chunkOffset.Z);
+            }
+        }
 
-                int[] heightmap = (int[])c.Root["Level"]["HeightMap"];
-                Dictionary<int, TAG_Compound> sections = new Dictionary<int, TAG_Compound>();
-                foreach (TAG t in (TAG[])c.Root["Level"]["Sections"])
+        private static void RenderChunkBiomes(Chunk c, Bitmap b, String[,] toolTips, int offsetX, int offsetY)
+        {
+            byte[] biomes = (byte[])c.Root["Level"]["Biomes"];
+
+            for (int z = 0; z < 16; z++)
+            {
+                for (int x = 0; x < 16; x++)
                 {
-                    sections.Add((byte)t["Y"], (TAG_Compound)t);
-                }
-
-                //chunk exists but all blocks are air
-                if (sections.Count == 0)
-                    continue;
-
-                for (int z = 0; z < 16; z++)
-                {
-                    for (int x = 0; x < 16; x++)
+                    Biome biome = (Biome)biomes[x + z * 16];
+                    Color color;
+                    switch (biome)
                     {
-                        int height = heightmap[z * 16 + x];
-
-                        //trees runnning into the old height limit in converted worlds
-                        //seem to cause the heightmap entries for its columns to be -128;
-                        if (height < 0)
-                            height = 128;
-
-                        int sectionIndex = (int)Math.Floor((height - 1) / 16.0);
-                        int sectionAboveIndex = (int)Math.Floor(height / 16.0);
-
-                        int block = -1, damage = -1;
-                        if (sections.ContainsKey(sectionIndex))
-                        {
-                            byte[] blocks = (byte[])sections[sectionIndex]["Blocks"];
-                            byte[] data = (byte[])sections[sectionIndex]["Data"];
-                            int blockOffset = ((((height - 1) % 16) * 16 + z) * 16 + x);
-                            block = blocks[blockOffset];
-                            damage = data[(int)Math.Floor(blockOffset / 2.0)];
-                            if (blockOffset % 2 == 0)
-                                damage = (damage >> 4) & 0x0F;
-                            else
-                                damage = damage & 0x0F;
-                        }
-                        
-                        int blockAbove = block;
-                        if (sections.ContainsKey(sectionAboveIndex))
-                        {
-                            int blockAboveOffset = (((height % 16) * 16 + z) * 16 + x);
-                            byte[] blocksAbove = (byte[])sections[sectionAboveIndex]["Blocks"];
-                            blockAbove = blocksAbove[blockAboveOffset];
-                        }
-
-                        Color color = ColorLookup(block, damage, blockAbove);
-
-                        //brighten/darken by height; arbitrary value, but /seems/ to look okay
-                        color = AddtoColor(color, (int)(height / 1.7 - 42));
-
-                        b.SetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z, color);
+                        case Biome.Ocean:
+                            color = Color.Blue;
+                            break;
+                        case Biome.Plains:
+                            color = Color.PaleGreen;
+                            break;
+                        case Biome.Desert:
+                        case Biome.DesertHills:
+                            color = Color.BurlyWood;
+                            break;
+                        case Biome.ExtremeHills:
+                        case Biome.ExtremeHillsEdge:
+                            color = Color.DarkGreen;
+                            break;
+                        case Biome.Forest:
+                        case Biome.ForestHills:
+                            color = Color.Green;
+                            break;
+                        case Biome.Taiga:
+                        case Biome.TaigaHills:
+                            color = Color.SeaGreen;
+                            break;
+                        case Biome.Swampland:
+                            color = Color.DarkCyan;
+                            break;
+                        case Biome.River:
+                            color = Color.CornflowerBlue;
+                            break;
+                        case Biome.Hell:
+                            color = Color.Firebrick;
+                            break;
+                        case Biome.Sky:
+                            color = Color.Gray;
+                            break;
+                        case Biome.FrozenOcean:
+                            color = Color.DeepSkyBlue;
+                            break;
+                        case Biome.FrozenRiver:
+                            color = Color.LightSkyBlue;
+                            break;
+                        case Biome.IcePlains:
+                            color = Color.White;
+                            break;
+                        case Biome.IceMountains:
+                            color = Color.LightGray;
+                            break;
+                        case Biome.MushroomIsland:
+                        case Biome.MushroomIslandShore:
+                            color = Color.Teal;
+                            break;
+                        case Biome.Beach:
+                            color = Color.Beige;
+                            break;
+                        case Biome.Jungle:
+                        case Biome.JungleHills:
+                            color = Color.LimeGreen;
+                            break;
+                        default:
+                            color = Color.Black;
+                            break;
                     }
+                    b.SetPixel(offsetX + x, offsetY + z, color);
+                    toolTips[offsetX + x, offsetY + z] = biome.ToString();
                 }
             }
         }
 
-        public static void RenderRegionBiomes(RegionFile region, Bitmap b, String[,] toolTips)
+        public static void RenderRegionBiomes(RegionFile region, Bitmap b, String[,] toolTips, bool clip = true)
         {
             using (Graphics g = Graphics.FromImage(b))
             {
+                if(clip)
+                    g.SetClip(CLIP);
                 g.Clear(Color.Black);
             }
 
             foreach (Chunk c in region.Chunks)
             {
-                if (c.Root == null)
+                if (c == null || c.Root == null)
                     continue;
-                Coord chunkOffset = new Coord(region.Coords);
-                chunkOffset.RegiontoChunk();
-                chunkOffset = new Coord(c.Coords.X - chunkOffset.X, c.Coords.Z - chunkOffset.Z);
+                Coord chunkOffset = new Coord(c.Coords);
+                chunkOffset.ChunktoRegionRelative();
                 chunkOffset.ChunktoAbsolute();
-
-                byte[] biomes = (byte[])c.Root["Level"]["Biomes"];
-
-                for (int z = 0; z < 16; z++)
-                {
-                    for (int x = 0; x < 16; x++)
-                    {
-                        Biome biome = (Biome)biomes[x + z * 16];
-                        Color color;
-                        switch (biome)
-                        {
-                            case Biome.Ocean:
-                                color = Color.Blue;
-                                break;
-                            case Biome.Plains:
-                                color = Color.PaleGreen;
-                                break;
-                            case Biome.Desert:
-                            case Biome.DesertHills:
-                                color = Color.BurlyWood;
-                                break;
-                            case Biome.ExtremeHills:
-                            case Biome.ExtremeHillsEdge:
-                                color = Color.DarkGreen;
-                                break;
-                            case Biome.Forest:
-                            case Biome.ForestHills:
-                                color = Color.Green;
-                                break;
-                            case Biome.Taiga:
-                            case Biome.TaigaHills:
-                                color = Color.SeaGreen;
-                                break;
-                            case Biome.Swampland:
-                                color = Color.DarkCyan;
-                                break;
-                            case Biome.River:
-                                color = Color.CornflowerBlue;
-                                break;
-                            case Biome.Hell:
-                                color = Color.Firebrick;
-                                break;
-                            case Biome.Sky:
-                                color = Color.Gray;
-                                break;
-                            case Biome.FrozenOcean:
-                                color = Color.DeepSkyBlue;
-                                break;
-                            case Biome.FrozenRiver:
-                                color = Color.LightSkyBlue;
-                                break;
-                            case Biome.IcePlains:
-                                color = Color.White;
-                                break;
-                            case Biome.IceMountains:
-                                color = Color.LightGray;
-                                break;
-                            case Biome.MushroomIsland:
-                            case Biome.MushroomIslandShore:
-                                color = Color.Teal;
-                                break;
-                            case Biome.Beach:
-                                color = Color.Beige;
-                                break;
-                            case Biome.Jungle:
-                            case Biome.JungleHills:
-                                color = Color.LimeGreen;
-                                break;
-                            default:
-                                color = Color.Black;
-                                break;
-                        }
-                        b.SetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z, color);
-                        toolTips[OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z] = biome.ToString();
-                    }
-                }
+                RenderChunkBiomes(c, b, toolTips, OFFSETX + chunkOffset.X, OFFSETY + chunkOffset.Z);
             }
         }
 
-        public static void RenderRegionChunkstobePopulated(RegionFile region, Bitmap b)
+        public static void RenderChunktobePopulated(Chunk c, Graphics g, Brush brush, int offsetX, int offsetY)
+        {
+            if (((byte)c.Root["Level"]["TerrainPopulated"]) == 0)
+            {
+                g.FillRectangle(brush, offsetX, offsetY, 16, 16);
+            }
+        }
+
+        public static void RenderRegionChunkstobePopulated(RegionFile region, Bitmap b, bool clip = true)
         {
             using (Graphics g = Graphics.FromImage(b))
             {
+                if(clip)
+                    g.SetClip(CLIP);
                 g.Clear(Color.Transparent);
 
                 Brush brush = new SolidBrush(Color.Yellow);
@@ -196,11 +261,7 @@ namespace BiomePainter
                         Chunk c = region.Chunks[chunkX, chunkZ];
                         if (c == null || c.Root == null)
                             continue;
-
-                        if (((byte)c.Root["Level"]["TerrainPopulated"]) == 0)
-                        {
-                            g.FillRectangle(brush, OFFSETX + chunkX * 16, OFFSETY + chunkZ * 16, 16, 16);
-                        }
+                        RenderChunktobePopulated(c, g, brush, OFFSETX + chunkX * 16, OFFSETY + chunkZ * 16);
                     }
                 }
                 brush.Dispose();
@@ -677,6 +738,7 @@ namespace BiomePainter
         {
             using (Graphics g = Graphics.FromImage(b))
             {
+                g.SetClip(CLIP);
                 Brush brush = new SolidBrush(selectionColor);
                 for (int chunkX = 0; chunkX < 32; chunkX++)
                 {
@@ -805,17 +867,23 @@ namespace BiomePainter
         {
             using (Graphics g = Graphics.FromImage(b))
             {
-                g.Clear(Color.Transparent);
-                Brush brush = new SolidBrush(Color.SlateGray);
+                g.Clear(Color.Black);
+                g.CompositingMode = CompositingMode.SourceCopy;
+                Brush brushFill = new SolidBrush(Color.SlateGray);
+                Brush brushClear = new SolidBrush(Color.Transparent);
                 for (int chunkX = 0; chunkX < 32; chunkX++)
                 {
                     for (int chunkZ = 0; chunkZ < 32; chunkZ++)
                     {
                         if ((chunkZ % 2 == 0 && chunkX % 2 == 1) || (chunkZ % 2 == 1 && chunkX % 2 == 0))
-                            g.FillRectangle(brush, OFFSETX + chunkX * 16, OFFSETY + chunkZ * 16, 16, 16);
+                            g.FillRectangle(brushFill, OFFSETX + chunkX * 16, OFFSETY + chunkZ * 16, 16, 16);
+                        else
+                            g.FillRectangle(brushClear, OFFSETX + chunkX * 16, OFFSETY + chunkZ * 16, 16, 16);
+
                     }
                 }
-                brush.Dispose();
+                brushFill.Dispose();
+                brushClear.Dispose();
             }
         }
     }

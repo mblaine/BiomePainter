@@ -835,21 +835,40 @@ namespace BiomePainter
             history.FilterOutType(typeof(PopulateAction));
 
             Match m = Regex.Match(lstRegions.SelectedItem.ToString(), @"Region (-?\d+), (-?\d+)");
-            String path = String.Format("{0}{1}r.{2}.{3}.mca", world.RegionDir, Path.DirectorySeparatorChar, m.Groups[1].Value, m.Groups[2].Value);
+            int x = int.Parse(m.Groups[1].Value);
+            int z = int.Parse(m.Groups[2].Value);
+            String pathFormat = String.Format("{0}{1}r.{{0}}.{{1}}.mca", world.RegionDir, Path.DirectorySeparatorChar);
 
             UpdateStatus("Reading region file");
-            region = new RegionFile(path);
+            region = new RegionFile(String.Format(pathFormat, x, z));
             history.RecordBiomeState(region);
             history.RecordPopulateState(region);
             history.SetLastSaveActions();
             imgRegion.Reset();
             UpdateStatus("Generating terrain map");
-            RegionUtil.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);
+            RegionUtil.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image, false);
             UpdateStatus("Generating biome map");
-            RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
+            RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips, false);
             UpdateStatus("");
-            RegionUtil.RenderRegionChunkstobePopulated(region, imgRegion.Layers[POPULATELAYER].Image);
+            RegionUtil.RenderRegionChunkstobePopulated(region, imgRegion.Layers[POPULATELAYER].Image, false);
             imgRegion.Redraw();
+
+            RegionFile[,] surrounding = new RegionFile[3, 3];
+            UpdateStatus("Reading surrounding chunks");
+            surrounding[0, 0] = new RegionFile(String.Format(pathFormat, x - 1, z - 1), 30, 31, 30, 31);
+            surrounding[1, 0] = new RegionFile(String.Format(pathFormat, x, z - 1), 0, 31, 30, 31);
+            surrounding[2, 0] = new RegionFile(String.Format(pathFormat, x + 1, z - 1), 0, 1, 30, 31);
+            surrounding[0, 1] = new RegionFile(String.Format(pathFormat, x - 1, z), 30, 31, 0, 31);
+            surrounding[1, 1] = null;
+            surrounding[2, 1] = new RegionFile(String.Format(pathFormat, x + 1, z, 0, 1, 0, 31));
+            surrounding[0, 2] = new RegionFile(String.Format(pathFormat, x - 1, z + 1), 30, 31, 0, 1);
+            surrounding[1, 2] = new RegionFile(String.Format(pathFormat, x, z + 1), 0, 31, 0, 1);
+            surrounding[2, 2] = new RegionFile(String.Format(pathFormat, x + 1, z + 1), 0, 1, 0, 1);
+            UpdateStatus("Generating map for surrounding chunks");
+            RegionUtil.RenderSurroundingRegions(surrounding, imgRegion.Layers[MAPLAYER].Image, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips, imgRegion.Layers[POPULATELAYER].Image);
+            UpdateStatus("");
+            imgRegion.Redraw();
+
             lastSelectedRegionIndex = lstRegions.SelectedIndex;
         }
 
