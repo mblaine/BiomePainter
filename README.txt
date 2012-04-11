@@ -35,6 +35,11 @@ For example, after changing an area from taiga or ice plains to another biome
 such as forest, existing ice and snow cover will remain until removed using 
 another tool such as MCEdit or removed manually in Minecraft. 
 
+* The outermost two chunks (32 blocks) along the edge of the image are from the
+regions adjacent to the currently loaded one and read-only. Thier purpose is to
+help with lining up changes to biomes along the border between two regions. To
+edit those blocks you need to switch to the region that contains them.
+
 * If, however, you use the "Set Chunks in Selection to be Populated" option
 under the Edit menu, the next time the specified chunks are loaded in Minecraft
 it will fill them with trees, snow cover, water, lava, and ores depending on

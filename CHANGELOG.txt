@@ -1,3 +1,17 @@
+0.6 - 4/11/2012
+    * Two chunks into the eight regions adjacent to the currently loaded one
+      are now displayed around the edge of the region map. They are read-only
+      and cannot be selected. Their purpose is to help with lining up changes
+      to biomes that straddle region borders.
+    * Regions from the Nether or End can be loaded by switching dimensions from
+      the file menu after opening a world.
+    * Biomes that can be edited with this program are now read from a text
+      file, Biomes.txt, sitting in the same directory as Biome Painter. The
+      format for each line is: [biome id (0-255)],[biome display name],
+      [6-digit hexadecimal color code for the overlay map]. The biome id is the
+      important part and what is recorded in your region files. For more
+      information, see: http://www.minecraftwiki.net/wiki/Data_values#Biome_IDs
+
 0.5 - 4/9/2012
     * New option to add to or remove from the current selection based on
       existing biomes in the region. For instance, the ability to add every 
