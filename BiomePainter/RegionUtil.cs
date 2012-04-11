@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
+using System.Text.RegularExpressions;
 using Minecraft;
 
 namespace BiomePainter
@@ -14,8 +16,33 @@ namespace BiomePainter
         private const int HEIGHT = 512;
         private static readonly Rectangle CLIP = new Rectangle(OFFSETX, OFFSETY, WIDTH, HEIGHT);
 
+        internal static BiomeType[] Biomes = new BiomeType[256];
+
         private RegionUtil()
         {
+        }
+
+        public static void LoadBiomes(String path)
+        {
+            if (File.Exists(path))
+            {
+                Regex pattern = new Regex(@"^([0-9]+),([^,]+),([0-9a-fA-F]{6})$");
+                String[] lines = File.ReadAllLines(path);
+                foreach (String line in lines)
+                {
+                    Match m = pattern.Match(line);
+                    if (m.Groups.Count == 4)
+                    {
+                        byte id = byte.Parse(m.Groups[1].Value);
+                        if (id >= 0 && id < 255)
+                        {
+                            Biomes[id] = new BiomeType(id, m.Groups[2].Value, Convert.ToInt32(m.Groups[3].Value, 16));
+                        }
+                    }
+                }
+            }
+
+            Biomes[255] = new BiomeType(255, "Unspecified", 0x000000);
         }
 
         private static void RenderSurroundingRegion(RegionFile region, int chunkStartX, int chunkEndX, int chunkStartZ, int chunkEndZ, int offsetX, int offsetY, Bitmap map, Bitmap biomes, String[,] toolTips, Bitmap populate)
@@ -146,73 +173,20 @@ namespace BiomePainter
             {
                 for (int x = 0; x < 16; x++)
                 {
-                    Biome biome = (Biome)biomes[x + z * 16];
+                    byte biome = biomes[x + z * 16];
                     Color color;
-                    switch (biome)
+                    if (Biomes[biome] != null)
                     {
-                        case Biome.Ocean:
-                            color = Color.Blue;
-                            break;
-                        case Biome.Plains:
-                            color = Color.PaleGreen;
-                            break;
-                        case Biome.Desert:
-                        case Biome.DesertHills:
-                            color = Color.BurlyWood;
-                            break;
-                        case Biome.ExtremeHills:
-                        case Biome.ExtremeHillsEdge:
-                            color = Color.DarkGreen;
-                            break;
-                        case Biome.Forest:
-                        case Biome.ForestHills:
-                            color = Color.Green;
-                            break;
-                        case Biome.Taiga:
-                        case Biome.TaigaHills:
-                            color = Color.SeaGreen;
-                            break;
-                        case Biome.Swampland:
-                            color = Color.DarkCyan;
-                            break;
-                        case Biome.River:
-                            color = Color.CornflowerBlue;
-                            break;
-                        case Biome.Hell:
-                            color = Color.Firebrick;
-                            break;
-                        case Biome.Sky:
-                            color = Color.Gray;
-                            break;
-                        case Biome.FrozenOcean:
-                            color = Color.DeepSkyBlue;
-                            break;
-                        case Biome.FrozenRiver:
-                            color = Color.LightSkyBlue;
-                            break;
-                        case Biome.IcePlains:
-                            color = Color.White;
-                            break;
-                        case Biome.IceMountains:
-                            color = Color.LightGray;
-                            break;
-                        case Biome.MushroomIsland:
-                        case Biome.MushroomIslandShore:
-                            color = Color.Teal;
-                            break;
-                        case Biome.Beach:
-                            color = Color.Beige;
-                            break;
-                        case Biome.Jungle:
-                        case Biome.JungleHills:
-                            color = Color.LimeGreen;
-                            break;
-                        default:
-                            color = Color.Black;
-                            break;
+                        color = Biomes[biome].Color;
+                        toolTips[offsetX + x, offsetY + z] = Biomes[biome].Name;
+                    }
+                    else
+                    {
+                        color = Color.Black;
+                        toolTips[offsetX + x, offsetY + z] = String.Format("Unknown biome: {0}", biome);
                     }
                     b.SetPixel(offsetX + x, offsetY + z, color);
-                    toolTips[offsetX + x, offsetY + z] = biome.ToString();
+
                 }
             }
         }
@@ -590,7 +564,7 @@ namespace BiomePainter
             return Color.FromArgb(c.A, red, green, blue);
         }
 
-        public static void Fill(RegionFile region, Bitmap selection, Color selectionColor, Biome biome)
+        public static void Fill(RegionFile region, Bitmap selection, Color selectionColor, byte biome)
         {
             foreach (Chunk c in region.Chunks)
             {
@@ -608,7 +582,7 @@ namespace BiomePainter
                     {
                         if (selection.GetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
                         {
-                            biomes[x + z * 16] = (byte)biome;
+                            biomes[x + z * 16] = biome;
                         }
                     }
                 }
@@ -644,7 +618,7 @@ namespace BiomePainter
             }
         }
 
-        public static void Replace(RegionFile region, Bitmap selection, Color selectionColor, Biome search, Biome replace)
+        public static void Replace(RegionFile region, Bitmap selection, Color selectionColor, byte search, byte replace)
         {
             foreach (Chunk c in region.Chunks)
             {
@@ -663,9 +637,9 @@ namespace BiomePainter
                     {
                         if (selection.GetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
                         {
-                            if (biomes[x + z * 16] == (byte)search)
+                            if (biomes[x + z * 16] == search)
                             {
-                                biomes[x + z * 16] = (byte)replace;
+                                biomes[x + z * 16] = replace;
                             }
                         }
                     }
@@ -673,7 +647,7 @@ namespace BiomePainter
             }
         }
 
-        public static void Replace(RegionFile region, Bitmap selection, Color selectionColor, Biome search, BiomeUtil replace)
+        public static void Replace(RegionFile region, Bitmap selection, Color selectionColor, byte search, BiomeUtil replace)
         {
             foreach (Chunk c in region.Chunks)
             {
@@ -695,7 +669,7 @@ namespace BiomePainter
                     {
                         if (selection.GetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
                         {
-                            if (biomes[x + z * 16] == (byte)search)
+                            if (biomes[x + z * 16] == search)
                             {
                                 biomes[x + z * 16] = (byte)replace.GetBiome(chunkAbs.X + x, chunkAbs.Z + z);
                             }
@@ -838,7 +812,7 @@ namespace BiomePainter
             }
         }
 
-        public static void AddorRemoveBiomesSelection(RegionFile region, Bitmap b, Color selectionColor, Biome biome, bool add)
+        public static void AddorRemoveBiomesSelection(RegionFile region, Bitmap b, Color selectionColor, byte biome, bool add)
         {
             foreach (Chunk c in region.Chunks)
             {
@@ -855,7 +829,7 @@ namespace BiomePainter
                 {
                     for (int x = 0; x < 16; x++)
                     {
-                        if(biome == (Biome)biomes[x + z * 16])
+                        if(biome == biomes[x + z * 16])
                             b.SetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z, add ? selectionColor : Color.Transparent);
                     }
                 }

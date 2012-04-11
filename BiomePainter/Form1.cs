@@ -47,17 +47,19 @@ namespace BiomePainter
         {
             RegionUtil.RenderChunkBoundaries(imgRegion.Layers[CHUNKLAYER].Image);
 
-            List<String> names = new List<String>();
-            foreach (Biome b in Enum.GetValues(typeof(Biome)))
+            RegionUtil.LoadBiomes(String.Format("{0}{1}Biomes.txt", Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), Path.DirectorySeparatorChar));
+
+            List<BiomeType> biomes = new List<BiomeType>();
+            foreach (BiomeType b in RegionUtil.Biomes)
             {
-                if (b == Biome.Unspecified)
+                if (b == null || b.ID == 255)
                     continue;
 
-                names.Add(b.ToString());
+                biomes.Add(b);
             }
 
-            names.Sort();
-            String[] temp = names.ToArray();
+            biomes.Sort();
+            BiomeType[] temp = biomes.ToArray();
             
             cmbFill.Items.AddRange(temp);
             cmbReplace1.Items.AddRange(temp);
@@ -716,9 +718,8 @@ namespace BiomePainter
             if (world == null || region == null)
                 return;
             bool add = sender == btnAddbyBiomes ? true : false;
-            Biome b = (Biome)Enum.Parse(typeof(Biome), (String)cmbBiomeType.SelectedItem);
             UpdateStatus(add ? "Adding to selection" : "Removing from selection");
-            RegionUtil.AddorRemoveBiomesSelection(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, b, add);
+            RegionUtil.AddorRemoveBiomesSelection(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, ((BiomeType)cmbBiomeType.SelectedItem).ID, add);
             UpdateStatus("");
             imgRegion.Redraw();
             history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
@@ -766,7 +767,6 @@ namespace BiomePainter
 
             if (ClipboardManager.Paste(region))
             {
-                imgRegion.ToolTips = new String[imgRegion.Width, imgRegion.Height];
                 UpdateStatus("Generating biome map");
                 RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
                 UpdateStatus("");
@@ -781,12 +781,11 @@ namespace BiomePainter
                 return;
 
             UpdateStatus("Filling selected area");
-            Biome b;
-            if (Enum.TryParse<Biome>((String)cmbFill.SelectedItem, out b))
+            if(cmbFill.SelectedItem is BiomeType)
             {
-                RegionUtil.Fill(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, b);
+                RegionUtil.Fill(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, ((BiomeType)cmbFill.SelectedItem).ID);
             }
-            else
+            else if (cmbFill.SelectedItem is String)
             {
                 BiomeUtil util = null;
                 switch ((String)cmbFill.SelectedItem)
@@ -811,7 +810,6 @@ namespace BiomePainter
                 RegionUtil.Fill(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, util);
             }
 
-            imgRegion.ToolTips = new String[imgRegion.Width, imgRegion.Height];
             UpdateStatus("Generating biome map");
             RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
             UpdateStatus("");
@@ -825,10 +823,9 @@ namespace BiomePainter
                 return;
 
             UpdateStatus("Replacing in selected area");
-            Biome b;
-            if (Enum.TryParse<Biome>((String)cmbReplace2.SelectedItem, out b))
+            if (cmbReplace2.SelectedItem is BiomeType)
             {
-                RegionUtil.Replace(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, (Biome)Enum.Parse(typeof(Biome), (String)cmbReplace1.SelectedItem), b);
+                RegionUtil.Replace(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor,  ((BiomeType)cmbReplace1.SelectedItem).ID, ((BiomeType)cmbReplace2.SelectedItem).ID);
             }
             else
             {
@@ -852,10 +849,9 @@ namespace BiomePainter
                         util = new Minecraft.F12.WorldChunkManager(world.Seed);
                         break;
                 }
-                RegionUtil.Replace(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, (Biome)Enum.Parse(typeof(Biome), (String)cmbReplace1.SelectedItem), util);
+                RegionUtil.Replace(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, ((BiomeType)cmbReplace1.SelectedItem).ID, util);
             }
 
-            imgRegion.ToolTips = new String[imgRegion.Width, imgRegion.Height];
             UpdateStatus("Generating biome map");
             RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
             UpdateStatus("");

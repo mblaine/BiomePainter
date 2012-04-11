@@ -49,6 +49,7 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="BiomeType.cs" />
     <Compile Include="Clipboard\BiomeCopy.cs" />
     <Compile Include="Clipboard\ClipboardManager.cs" />
     <Compile Include="Form1.cs">
@@ -125,6 +126,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\Biomes.txt">
+      <Link>Biomes.txt</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\CHANGELOG.txt">
       <Link>CHANGELOG.txt</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -1,0 +1,23 @@
+0,Ocean,0000FF
+1,Plains,98FB98
+2,Desert,DEB887
+3,Extreme Hills,006400
+4,Forest,008000
+5,Taiga,2E8B57
+6,Swampland,008B8B
+7,River,6495ED
+8,Hell,B22222
+9,Sky,808080
+10,Frozen Ocean,00BFFF
+11,Frozen River,87CEFA
+12,Ice Plains,FFFFFF
+13,Ice Mountains,D3D3D3
+14,Mushroom Island,008080
+15,Mushroom Island Shore,008080
+16,Beach,F5F5DC
+17,Desert Hills,DEB887
+18,Forest Hills,008000
+19,Taiga Hills,2E8B57
+20,Extreme Hills Edge,006400
+21,Jungle,32CD32
+22,Jungle Hills,32CD32
