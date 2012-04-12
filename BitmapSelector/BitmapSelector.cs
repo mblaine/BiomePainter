@@ -310,7 +310,7 @@ namespace BitmapSelector
             if (p.X < 0 || p.X >= Width || p.Y < 0 || p.Y >= Height)
                 return;
             if (ShowToolTips && ToolTips[p.X, p.Y] != null && ToolTips[p.X, p.Y].Length > 0)
-                toolTip.Show(ToolTips[p.X, p.Y], this, new Point(e.X, e.Y));
+                toolTip.Show(ToolTips[p.X, p.Y], this, new Point(e.X + 1, e.Y + 1));
             else
                 toolTip.Hide(this);
 
