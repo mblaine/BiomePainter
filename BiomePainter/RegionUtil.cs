@@ -121,7 +121,7 @@ namespace BiomePainter
                         int blockOffset = ((((height - 1) % 16) * 16 + z) * 16 + x);
                         block = blocks[blockOffset];
                         damage = data[(int)Math.Floor(blockOffset / 2.0)];
-                        if (blockOffset % 2 == 0)
+                        if (blockOffset % 2 == 1)
                             damage = (damage >> 4) & 0x0F;
                         else
                             damage = damage & 0x0F;
