@@ -248,6 +248,9 @@ namespace BiomePainter
 
             switch (blockAbove)
             {
+                case 6: //sapling
+                    ret = 0x408f2f;
+                    break;
                 case 32: //dead bush
                     ret = 0x946428;
                     break;
@@ -303,11 +306,17 @@ namespace BiomePainter
                     ret = 0x7c7c7c;
                     break;
                 case 5: //planks
-                case 53:
-                    ret = 0xa08250;
+                    if (damage == 1) //pine
+                        ret = 0x765834;
+                    else if (damage == 2) //birch
+                        ret = 0xd4c285;
+                    else if (damage == 3) //jungle
+                        ret = 0xa97b58;
+                    else
+                        ret = 0xa08250;
                     break;
                 case 7: //bedrock
-                    ret = 0x555555;
+                    ret = 0x323232;
                     break;
                 case 8: //water
                 case 9:
@@ -336,10 +345,12 @@ namespace BiomePainter
                     ret = 0xa38452;
                     break;
                 case 18: //leaves
-                    if (damage == 1) //pine
+                    if (damage == 1 || damage == 5 || damage == 9) //pine
                         ret = 0x2d472d;
-                    else if (damage == 2) //birch
+                    else if (damage == 2 || damage == 6 || damage == 10) //birch
                         ret = 0x074b36;
+                    else if (damage == 3 || damage == 7 || damage == 11) //jungle
+                        ret = 0x1c6f02;
                     else
                         ret = 0x2c5619;
                     break;
@@ -431,18 +442,23 @@ namespace BiomePainter
                     switch (damage)
                     {
                         case 1: //sandstone
+                        case 9:
                             ret = 0xdad29f;
                             break;
                         case 2: //wood
+                        case 10:
                             ret = 0xa08250;
                             break;
                         case 3: //cobble
+                        case 11:
                             ret = 0x7c7c7c;
                             break;
                         case 4: //brick
+                        case 12:
                             ret = 0x916052;
                             break;
                         case 5: //stone brick
+                        case 13:
                             ret = 0x7d7d7d;
                             break;
                         default: //stone
@@ -464,7 +480,10 @@ namespace BiomePainter
                     ret = 0x697b69;
                     break;
                 case 49: //obsidian
-                    ret = 0x15131f;
+                    ret = 0x241351;
+                    break;
+                case 53: //wood stairs
+                    ret = 0xa08250;
                     break;
                 case 54: //chest
                     ret = 0x8e6525;
@@ -536,6 +555,12 @@ namespace BiomePainter
                     break;
                 case 121: //end stone
                     ret = 0xdddfa5;
+                    break;
+                case 123: //redstone lamp off
+                    ret = 0x865536;
+                    break;
+                case  124: //redstone lamp on
+                    ret = 0xd0a26b;
                     break;
                 default:
                     ret = 0x000000;
