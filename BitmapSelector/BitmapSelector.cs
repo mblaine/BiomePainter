@@ -39,6 +39,7 @@ namespace BitmapSelector
 
         public int MagnificationMax = 10;
 
+        private Point mouseDownLast = new Point(-1, -1);
         private bool mouse1Down = false;
         private bool mouse2Down = false;
         private Point mouseLast = new Point(-1, -1);
@@ -163,24 +164,25 @@ namespace BitmapSelector
 
                 if (!justClear)
                 {
-                    if (BrushDiameter == 1)
+                    if (SelectionBounds.IsEmpty || SelectionBounds.Contains(p))
+                        Layers[BrushLayerIndex].Image.SetPixel(p.X, p.Y, Color.Black);
+                    Brush b = new SolidBrush(Color.Black);
+                    if (Brush == BrushType.Rectangle)
                     {
-                        if(SelectionBounds.IsEmpty || SelectionBounds.Contains(p))
-                            Layers[BrushLayerIndex].Image.SetPixel(p.X, p.Y, Color.Black);
+                        if ((mouse1Down || mouse2Down) && mouseDownLast.X != -1 && mouseDownLast.Y != -1)
+                        {
+                            g.FillRectangle(b, Rectangle.FromLTRB(Math.Min(mouseDownLast.X, p.X), Math.Min(mouseDownLast.Y, p.Y), Math.Max(mouseDownLast.X, p.X), Math.Max(mouseDownLast.Y, p.Y)));
+                        }
                     }
-                    else
+                    else if (Brush == BrushType.Round)
                     {
-                        Brush b = new SolidBrush(Color.Black);
-                        if (Brush == BrushType.Round)
-                        {
-                            g.FillEllipse(b, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
-                        }
-                        else
-                        {
-                            g.FillRectangle(b, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
-                        }
-                        b.Dispose();
+                        g.FillEllipse(b, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
                     }
+                    else if (Brush == BrushType.Square)
+                    {
+                        g.FillRectangle(b, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
+                    }
+                    b.Dispose();
                 }
             }
         }
@@ -243,8 +245,29 @@ namespace BitmapSelector
             else if (e.Button == MouseButtons.Right)
                 mouse2Down = false;
 
+            if (Brush == BrushType.Rectangle)
+            {
+                if (mouseDownLast.X != -1 && mouseDownLast.Y != -1)
+                {
+                    Point p = Translate(e.Location);
+                    using (Graphics g = Graphics.FromImage(Layers[SelectionLayerIndex].Image))
+                    {
+                        if (!SelectionBounds.IsEmpty)
+                            g.SetClip(SelectionBounds);
+                        g.CompositingMode = CompositingMode.SourceCopy;
+                        Brush b = new SolidBrush(e.Button == MouseButtons.Left ? SelectionColor : Color.Transparent);
+                        g.FillRectangle(b, Rectangle.FromLTRB(Math.Min(mouseDownLast.X, p.X), Math.Min(mouseDownLast.Y, p.Y), Math.Max(mouseDownLast.X, p.X), Math.Max(mouseDownLast.Y, p.Y)));
+                        b.Dispose();
+                    }
+                    RedrawBrushLayer(new Point(), true);
+                    Redraw();
+                }
+            }
+
+            mouseDownLast.X = -1;
+            mouseDownLast.Y = -1;
             OnSelectionChanged();
-           if(!cursorVisible)
+            if(!cursorVisible)
             {
                 Cursor.Show();
                 cursorVisible = true;
@@ -257,6 +280,8 @@ namespace BitmapSelector
                 OnSelectionChanged();
             mouse1Down = false;
             mouse2Down = false;
+            mouseDownLast.X = -1;
+            mouseDownLast.Y = -1;
             if (!cursorVisible)
             {
                 Cursor.Show();
@@ -276,7 +301,14 @@ namespace BitmapSelector
                 Cursor.Hide();
                 cursorVisible = false;
             }
-            if (BrushDiameter > 1)
+            if (Brush == BrushType.Rectangle)
+            {
+                mouseDownLast = p;
+            }
+            else if (Brush == BrushType.Fill)
+            {
+            }
+            else if (BrushDiameter > 1)
             {
                 using (Graphics g = Graphics.FromImage(Layers[SelectionLayerIndex].Image))
                 {
@@ -284,7 +316,7 @@ namespace BitmapSelector
                         g.SetClip(SelectionBounds);
                     g.CompositingMode = CompositingMode.SourceCopy;
                     SolidBrush b = new SolidBrush(mouse1Down ? SelectionColor : Color.Transparent);
-                    if(Brush == BrushType.Round)
+                    if (Brush == BrushType.Round)
                         g.FillEllipse(b, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
                     else
                         g.FillRectangle(b, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
@@ -315,7 +347,7 @@ namespace BitmapSelector
                 toolTip.Hide(this);
 
             bool needToRedraw = false;
-            if (mouse1Down || mouse2Down)
+            if ((mouse1Down || mouse2Down) && (Brush == BrushType.Round || Brush == BrushType.Square))
             {
                 using (Graphics g = Graphics.FromImage(Layers[SelectionLayerIndex].Image))
                 {

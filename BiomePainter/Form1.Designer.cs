@@ -117,6 +117,8 @@
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.cmbBiomeType = new System.Windows.Forms.ComboBox();
             this.imgRegion = new BitmapSelector.BitmapSelector();
+            this.radRectangleSelect = new System.Windows.Forms.RadioButton();
+            this.radFill = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -541,25 +543,25 @@
             // 
             // radRoundBrush
             // 
-            this.radRoundBrush.AutoSize = true;
+            this.radRoundBrush.Appearance = System.Windows.Forms.Appearance.Button;
             this.radRoundBrush.Checked = true;
-            this.radRoundBrush.Location = new System.Drawing.Point(9, 21);
+            this.radRoundBrush.Location = new System.Drawing.Point(6, 21);
             this.radRoundBrush.Name = "radRoundBrush";
-            this.radRoundBrush.Size = new System.Drawing.Size(71, 21);
+            this.radRoundBrush.Size = new System.Drawing.Size(40, 40);
             this.radRoundBrush.TabIndex = 10;
             this.radRoundBrush.TabStop = true;
-            this.radRoundBrush.Text = "Round";
+            this.toolTip.SetToolTip(this.radRoundBrush, "Round Brush");
             this.radRoundBrush.UseVisualStyleBackColor = true;
             this.radRoundBrush.CheckedChanged += new System.EventHandler(this.radRoundBrush_CheckedChanged);
             // 
             // radSquareBrush
             // 
-            this.radSquareBrush.AutoSize = true;
-            this.radSquareBrush.Location = new System.Drawing.Point(84, 21);
+            this.radSquareBrush.Appearance = System.Windows.Forms.Appearance.Button;
+            this.radSquareBrush.Location = new System.Drawing.Point(52, 21);
             this.radSquareBrush.Name = "radSquareBrush";
-            this.radSquareBrush.Size = new System.Drawing.Size(75, 21);
+            this.radSquareBrush.Size = new System.Drawing.Size(40, 40);
             this.radSquareBrush.TabIndex = 11;
-            this.radSquareBrush.Text = "Square";
+            this.toolTip.SetToolTip(this.radSquareBrush, "Square Brush");
             this.radSquareBrush.UseVisualStyleBackColor = true;
             this.radSquareBrush.CheckedChanged += new System.EventHandler(this.radSquareBrush_CheckedChanged);
             // 
@@ -637,7 +639,7 @@
             this.groupBox2.Controls.Add(this.btnSelectChunks);
             this.groupBox2.Controls.Add(this.btnSelectNone);
             this.groupBox2.Controls.Add(this.btnInvertSelection);
-            this.groupBox2.Location = new System.Drawing.Point(841, 344);
+            this.groupBox2.Location = new System.Drawing.Point(841, 365);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(190, 71);
             this.groupBox2.TabIndex = 14;
@@ -647,13 +649,15 @@
             // groupBox3
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.radFill);
+            this.groupBox3.Controls.Add(this.radRectangleSelect);
             this.groupBox3.Controls.Add(this.lblBrushDiameter);
             this.groupBox3.Controls.Add(this.trackBrushDiameter);
             this.groupBox3.Controls.Add(this.radRoundBrush);
             this.groupBox3.Controls.Add(this.radSquareBrush);
             this.groupBox3.Location = new System.Drawing.Point(841, 236);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(190, 104);
+            this.groupBox3.Size = new System.Drawing.Size(190, 123);
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Selection Brush";
@@ -661,7 +665,7 @@
             // lblBrushDiameter
             // 
             this.lblBrushDiameter.AutoSize = true;
-            this.lblBrushDiameter.Location = new System.Drawing.Point(6, 45);
+            this.lblBrushDiameter.Location = new System.Drawing.Point(6, 64);
             this.lblBrushDiameter.Name = "lblBrushDiameter";
             this.lblBrushDiameter.Size = new System.Drawing.Size(122, 17);
             this.lblBrushDiameter.TabIndex = 13;
@@ -672,7 +676,7 @@
             this.trackBrushDiameter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBrushDiameter.AutoSize = false;
-            this.trackBrushDiameter.Location = new System.Drawing.Point(7, 65);
+            this.trackBrushDiameter.Location = new System.Drawing.Point(7, 84);
             this.trackBrushDiameter.Maximum = 50;
             this.trackBrushDiameter.Minimum = 1;
             this.trackBrushDiameter.Name = "trackBrushDiameter";
@@ -985,7 +989,7 @@
             this.groupBox8.Controls.Add(this.btnRemovebyBlocks);
             this.groupBox8.Controls.Add(this.btnAddbyBlocks);
             this.groupBox8.Controls.Add(this.cmbBlockType);
-            this.groupBox8.Location = new System.Drawing.Point(841, 421);
+            this.groupBox8.Location = new System.Drawing.Point(841, 442);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(190, 83);
             this.groupBox8.TabIndex = 21;
@@ -1009,7 +1013,7 @@
             this.groupBox9.Controls.Add(this.btnRemovebyBiomes);
             this.groupBox9.Controls.Add(this.btnAddbyBiomes);
             this.groupBox9.Controls.Add(this.cmbBiomeType);
-            this.groupBox9.Location = new System.Drawing.Point(841, 510);
+            this.groupBox9.Location = new System.Drawing.Point(841, 531);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(190, 83);
             this.groupBox9.TabIndex = 22;
@@ -1037,6 +1041,28 @@
             this.imgRegion.ZoomEvent += new BitmapSelector.BitmapSelector.ZoomEventHandler(this.imgRegion_ZoomEvent);
             this.imgRegion.BrushDiameterChanged += new BitmapSelector.BitmapSelector.BrushDiameterEventHandler(this.imgRegion_BrushDiameterChanged);
             this.imgRegion.SelectionChanged += new System.EventHandler(this.imgRegion_SelectionChanged);
+            // 
+            // radRectangleSelect
+            // 
+            this.radRectangleSelect.Appearance = System.Windows.Forms.Appearance.Button;
+            this.radRectangleSelect.Location = new System.Drawing.Point(98, 21);
+            this.radRectangleSelect.Name = "radRectangleSelect";
+            this.radRectangleSelect.Size = new System.Drawing.Size(40, 40);
+            this.radRectangleSelect.TabIndex = 14;
+            this.toolTip.SetToolTip(this.radRectangleSelect, "Rectangle Select");
+            this.radRectangleSelect.UseVisualStyleBackColor = true;
+            this.radRectangleSelect.CheckedChanged += new System.EventHandler(this.radRectangleSelect_CheckedChanged);
+            // 
+            // radFill
+            // 
+            this.radFill.Appearance = System.Windows.Forms.Appearance.Button;
+            this.radFill.Location = new System.Drawing.Point(144, 21);
+            this.radFill.Name = "radFill";
+            this.radFill.Size = new System.Drawing.Size(40, 40);
+            this.radFill.TabIndex = 15;
+            this.toolTip.SetToolTip(this.radFill, "Fill");
+            this.radFill.UseVisualStyleBackColor = true;
+            this.radFill.CheckedChanged += new System.EventHandler(this.radFill_CheckedChanged);
             // 
             // Form1
             // 
@@ -1176,6 +1202,8 @@
         private System.Windows.Forms.ToolStripMenuItem netherToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem endToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.RadioButton radFill;
+        private System.Windows.Forms.RadioButton radRectangleSelect;
     }
 }
 

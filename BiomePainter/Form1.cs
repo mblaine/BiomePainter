@@ -524,14 +524,27 @@ namespace BiomePainter
 
         private void radRoundBrush_CheckedChanged(object sender, EventArgs e)
         {
-            imgRegion.Brush = BrushType.Round;
+            if(radRoundBrush.Checked)
+                imgRegion.Brush = BrushType.Round;
         }
 
         private void radSquareBrush_CheckedChanged(object sender, EventArgs e)
         {
-            imgRegion.Brush = BrushType.Square;
+            if(radSquareBrush.Checked)
+                imgRegion.Brush = BrushType.Square;
         }
 
+        private void radRectangleSelect_CheckedChanged(object sender, EventArgs e)
+        {
+            if(radRectangleSelect.Checked)
+                imgRegion.Brush = BrushType.Rectangle;
+        }
+
+        private void radFill_CheckedChanged(object sender, EventArgs e)
+        {
+            if(radFill.Checked)
+                imgRegion.Brush = BrushType.Fill;
+        }
         #endregion
 
         #region Buttons
