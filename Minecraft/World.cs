@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using Ionic.Zlib;
 
 namespace Minecraft
@@ -46,10 +48,40 @@ namespace Minecraft
         public String[] GetRegionPaths(Dimension dim = Dimension.Overworld)
         {
             String dir = GetRegionDirectory(dim);
-            if(Directory.Exists(dir))
-                return Directory.GetFiles(dir, "*.mca", SearchOption.TopDirectoryOnly);
+            if (Directory.Exists(dir))
+            {
+
+                List<String> regions = new List<String>(Directory.GetFiles(dir, "*.mca", SearchOption.TopDirectoryOnly));
+                regions.Sort(CompareRegionNames);
+                return regions.ToArray();
+            }
             else
                 return new String[0];
+        }
+
+        private static int CompareRegionNames(String r1, String r2)
+        {
+            Regex pattern = new Regex(@"r\.(-?\d+)\.(-?\d+)\.mca");
+            Match m = pattern.Match(r1);
+            int x1 = int.Parse(m.Groups[1].Value);
+            int z1 = int.Parse(m.Groups[2].Value);
+            m = pattern.Match(r2);
+            int x2 = int.Parse(m.Groups[1].Value);
+            int z2 = int.Parse(m.Groups[2].Value);
+
+            if (x1 < x2)
+                return -1;
+            else if (x2 < x1)
+                return 1;
+            else
+            {
+                if (z1 < z2)
+                    return -1;
+                else if (z2 < z1)
+                    return 1;
+                else
+                    return 0;
+            }
         }
     }
 }
