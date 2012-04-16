@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BiomePainter.Properties
-{
-
-
+namespace BiomePainter.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -70,6 +70,34 @@ namespace BiomePainter.Properties
         internal static System.Drawing.Bitmap brush {
             get {
                 object obj = ResourceManager.GetObject("brush", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap brush_fill {
+            get {
+                object obj = ResourceManager.GetObject("brush_fill", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap brush_rectangle {
+            get {
+                object obj = ResourceManager.GetObject("brush_rectangle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap brush_round {
+            get {
+                object obj = ResourceManager.GetObject("brush_round", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap brush_square {
+            get {
+                object obj = ResourceManager.GetObject("brush_square", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

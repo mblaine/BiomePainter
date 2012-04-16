@@ -83,6 +83,8 @@
             this.btnSelectChunks = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.radFill = new System.Windows.Forms.RadioButton();
+            this.radRectangleSelect = new System.Windows.Forms.RadioButton();
             this.lblBrushDiameter = new System.Windows.Forms.Label();
             this.trackBrushDiameter = new System.Windows.Forms.TrackBar();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -117,8 +119,6 @@
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.cmbBiomeType = new System.Windows.Forms.ComboBox();
             this.imgRegion = new BitmapSelector.BitmapSelector();
-            this.radRectangleSelect = new System.Windows.Forms.RadioButton();
-            this.radFill = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -545,6 +545,7 @@
             // 
             this.radRoundBrush.Appearance = System.Windows.Forms.Appearance.Button;
             this.radRoundBrush.Checked = true;
+            this.radRoundBrush.Image = global::BiomePainter.Properties.Resources.brush_round;
             this.radRoundBrush.Location = new System.Drawing.Point(6, 21);
             this.radRoundBrush.Name = "radRoundBrush";
             this.radRoundBrush.Size = new System.Drawing.Size(40, 40);
@@ -557,6 +558,7 @@
             // radSquareBrush
             // 
             this.radSquareBrush.Appearance = System.Windows.Forms.Appearance.Button;
+            this.radSquareBrush.Image = global::BiomePainter.Properties.Resources.brush_square;
             this.radSquareBrush.Location = new System.Drawing.Point(52, 21);
             this.radSquareBrush.Name = "radSquareBrush";
             this.radSquareBrush.Size = new System.Drawing.Size(40, 40);
@@ -661,6 +663,30 @@
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Selection Brush";
+            // 
+            // radFill
+            // 
+            this.radFill.Appearance = System.Windows.Forms.Appearance.Button;
+            this.radFill.Image = global::BiomePainter.Properties.Resources.brush_fill;
+            this.radFill.Location = new System.Drawing.Point(144, 21);
+            this.radFill.Name = "radFill";
+            this.radFill.Size = new System.Drawing.Size(40, 40);
+            this.radFill.TabIndex = 15;
+            this.toolTip.SetToolTip(this.radFill, "Fill");
+            this.radFill.UseVisualStyleBackColor = true;
+            this.radFill.CheckedChanged += new System.EventHandler(this.radFill_CheckedChanged);
+            // 
+            // radRectangleSelect
+            // 
+            this.radRectangleSelect.Appearance = System.Windows.Forms.Appearance.Button;
+            this.radRectangleSelect.Image = global::BiomePainter.Properties.Resources.brush_rectangle;
+            this.radRectangleSelect.Location = new System.Drawing.Point(98, 21);
+            this.radRectangleSelect.Name = "radRectangleSelect";
+            this.radRectangleSelect.Size = new System.Drawing.Size(40, 40);
+            this.radRectangleSelect.TabIndex = 14;
+            this.toolTip.SetToolTip(this.radRectangleSelect, "Rectangle Select");
+            this.radRectangleSelect.UseVisualStyleBackColor = true;
+            this.radRectangleSelect.CheckedChanged += new System.EventHandler(this.radRectangleSelect_CheckedChanged);
             // 
             // lblBrushDiameter
             // 
@@ -1041,28 +1067,6 @@
             this.imgRegion.ZoomEvent += new BitmapSelector.BitmapSelector.ZoomEventHandler(this.imgRegion_ZoomEvent);
             this.imgRegion.BrushDiameterChanged += new BitmapSelector.BitmapSelector.BrushDiameterEventHandler(this.imgRegion_BrushDiameterChanged);
             this.imgRegion.SelectionChanged += new System.EventHandler(this.imgRegion_SelectionChanged);
-            // 
-            // radRectangleSelect
-            // 
-            this.radRectangleSelect.Appearance = System.Windows.Forms.Appearance.Button;
-            this.radRectangleSelect.Location = new System.Drawing.Point(98, 21);
-            this.radRectangleSelect.Name = "radRectangleSelect";
-            this.radRectangleSelect.Size = new System.Drawing.Size(40, 40);
-            this.radRectangleSelect.TabIndex = 14;
-            this.toolTip.SetToolTip(this.radRectangleSelect, "Rectangle Select");
-            this.radRectangleSelect.UseVisualStyleBackColor = true;
-            this.radRectangleSelect.CheckedChanged += new System.EventHandler(this.radRectangleSelect_CheckedChanged);
-            // 
-            // radFill
-            // 
-            this.radFill.Appearance = System.Windows.Forms.Appearance.Button;
-            this.radFill.Location = new System.Drawing.Point(144, 21);
-            this.radFill.Name = "radFill";
-            this.radFill.Size = new System.Drawing.Size(40, 40);
-            this.radFill.TabIndex = 15;
-            this.toolTip.SetToolTip(this.radFill, "Fill");
-            this.radFill.UseVisualStyleBackColor = true;
-            this.radFill.CheckedChanged += new System.EventHandler(this.radFill_CheckedChanged);
             // 
             // Form1
             // 
