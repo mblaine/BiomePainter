@@ -1,3 +1,20 @@
+0.7 - 4/16/2012
+    * Two new brush types: rectangle select and fill.
+        - Fill or clear a rectangular area by clicking and dragging using the
+          left or right mouse button.
+        - Flood fill an area on the selection layer by clicking inside it.
+    * Copying and pasting now uses operating system's clipboard.
+    * List of regions now sorted: x negative to positive, z negative to
+      positive.
+    * Brush layer now displayed on top of selection layer.
+    * Max brush diameter increased from 50 pixels to 100.
+    * Tooltips now hidden when drawing, in addtion to mouse cursor.
+    * Added support for upcoming changes to world directory structure.
+    * Added colors for some additional block types for terrain map.
+    * Fixed data values for blocks on terrain map being read incorrectly.
+    * Fixed End region directory not being found.
+    * Fixed mouse clicks registering on tooltip instead of region image.
+
 0.6 - 4/11/2012
     * Two chunks into the eight regions adjacent to the currently loaded one
       are now displayed around the edge of the region map. They are read-only
