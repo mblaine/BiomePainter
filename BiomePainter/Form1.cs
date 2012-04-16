@@ -257,6 +257,9 @@ namespace BiomePainter
 
         private void reloadCurrentRegionToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (world == null || region == null)
+                return;
+
             UpdateStatus("Reading region file");
             region = new RegionFile(region.Path);
             history.RecordBiomeState(region);
