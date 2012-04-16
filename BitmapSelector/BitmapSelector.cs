@@ -310,6 +310,32 @@ namespace BitmapSelector
             }
             else if (Brush == BrushType.Fill)
             {
+                //http://en.wikipedia.org/wiki/Flood_fill#Alternative_implementations
+                Bitmap b = Layers[SelectionLayerIndex].Image;
+                Rectangle bounds = new Rectangle(0, 0, b.Width, b.Height);
+                Queue<Point> q = new Queue<Point>();
+                Color c = mouse1Down ? SelectionColor : Color.Transparent;
+                q.Enqueue(p);
+                while (q.Count > 0)
+                {
+                    Point curr = q.Dequeue();
+                    if (!SelectionBounds.IsEmpty && !SelectionBounds.Contains(curr))
+                        continue;
+                    if(!bounds.Contains(curr))
+                        continue;
+
+                    //since every pixel is either red or transparent, only compairng alpha
+                    //will work, and avoid an issue with 00000000 != 00ffffff even though
+                    //both are invisible
+                    if (b.GetPixel(curr.X, curr.Y).A != c.A)
+                    {
+                        b.SetPixel(curr.X, curr.Y, c);
+                        q.Enqueue(new Point(curr.X - 1, curr.Y));
+                        q.Enqueue(new Point(curr.X + 1, curr.Y));
+                        q.Enqueue(new Point(curr.X, curr.Y - 1));
+                        q.Enqueue(new Point(curr.X, curr.Y + 1));
+                    }
+                }
             }
             else if (BrushDiameter > 1)
             {
