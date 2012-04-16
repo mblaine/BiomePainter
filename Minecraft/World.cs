@@ -10,6 +10,7 @@ namespace Minecraft
     {
         public long Seed;
         public String WorldDir;
+        private int Version;
 
         public World(String path)
         {
@@ -27,21 +28,39 @@ namespace Minecraft
             }
 
             Seed = (long)data["Data"]["RandomSeed"];
+            Version = (int)data["Data"]["version"];
             WorldDir = Path.GetDirectoryName(path);
         }
 
         public String GetRegionDirectory(Dimension dim)
         {
-            switch (dim)
+            if (Version <= 19133)
             {
-                case Dimension.Overworld:
-                    return String.Format("{0}{1}region", WorldDir, Path.DirectorySeparatorChar);
-                case Dimension.Nether:
-                    return String.Format("{0}{1}DIM-1{1}region", WorldDir, Path.DirectorySeparatorChar);
-                case Dimension.End:
-                    return String.Format("{0}{1}DIM1{1}region", WorldDir, Path.DirectorySeparatorChar);
-                default:
-                    throw new Exception("Unrecognized dimension.");
+                switch (dim)
+                {
+                    case Dimension.Overworld:
+                        return String.Format("{0}{1}region", WorldDir, Path.DirectorySeparatorChar);
+                    case Dimension.Nether:
+                        return String.Format("{0}{1}DIM-1{1}region", WorldDir, Path.DirectorySeparatorChar);
+                    case Dimension.End:
+                        return String.Format("{0}{1}DIM1{1}region", WorldDir, Path.DirectorySeparatorChar);
+                    default:
+                        throw new Exception("Unrecognized dimension.");
+                }
+            }
+            else
+            {
+                switch (dim)
+                {
+                    case Dimension.Overworld:
+                        return String.Format("{0}{1}worlds{1}overworld{1}regions", WorldDir, Path.DirectorySeparatorChar);
+                    case Dimension.Nether:
+                        return String.Format("{0}{1}worlds{1}nether{1}regions", WorldDir, Path.DirectorySeparatorChar);
+                    case Dimension.End:
+                        return String.Format("{0}{1}worlds{1}the_end{1}regions", WorldDir, Path.DirectorySeparatorChar);
+                    default:
+                        throw new Exception("Unrecognized dimension.");
+                }
             }
         }
 
