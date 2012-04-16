@@ -45,8 +45,8 @@ namespace BitmapSelector
         private Point mouseLast = new Point(-1, -1);
         private bool cursorVisible = true;
 
-        public readonly int SelectionLayerIndex = 0;
-        public readonly int BrushLayerIndex = 1;
+        public readonly int SelectionLayerIndex;
+        public readonly int BrushLayerIndex;
 
         public BitmapSelector()
         {
@@ -59,8 +59,8 @@ namespace BitmapSelector
             backbufferContext = BufferedGraphicsManager.Current;
 
             Layers = new List<Layer>();
-            Layers.Add(new Layer(this.Width, this.Height, 0.6f, true));
-            Layers.Add(new Layer(this.Width, this.Height, 0.7f));
+            BrushLayerIndex = AddLayer(new Layer(this.Width, this.Height, 0.6f));
+            SelectionLayerIndex = AddLayer(new Layer(this.Width, this.Height, 0.6f, true));
 
             ToolTips = new String[Width, Height];
 
@@ -296,6 +296,9 @@ namespace BitmapSelector
                 mouse1Down = true;
             else if (e.Button == MouseButtons.Right)
                 mouse2Down = true;
+
+            toolTip.Hide(this);
+
             if (cursorVisible)
             {
                 Cursor.Hide();
@@ -341,7 +344,7 @@ namespace BitmapSelector
                 return;
             if (p.X < 0 || p.X >= Width || p.Y < 0 || p.Y >= Height)
                 return;
-            if (ShowToolTips && ToolTips[p.X, p.Y] != null && ToolTips[p.X, p.Y].Length > 0)
+            if (!mouse1Down && !mouse2Down && ShowToolTips && ToolTips[p.X, p.Y] != null && ToolTips[p.X, p.Y].Length > 0)
                 toolTip.Show(ToolTips[p.X, p.Y], this, new Point(e.X + 1, e.Y + 1));
             else
                 toolTip.Hide(this);
