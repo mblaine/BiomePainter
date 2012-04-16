@@ -703,12 +703,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBrushDiameter.AutoSize = false;
             this.trackBrushDiameter.Location = new System.Drawing.Point(7, 84);
-            this.trackBrushDiameter.Maximum = 50;
+            this.trackBrushDiameter.Maximum = 100;
             this.trackBrushDiameter.Minimum = 1;
             this.trackBrushDiameter.Name = "trackBrushDiameter";
             this.trackBrushDiameter.Size = new System.Drawing.Size(178, 37);
             this.trackBrushDiameter.TabIndex = 12;
-            this.trackBrushDiameter.TickFrequency = 5;
+            this.trackBrushDiameter.TickFrequency = 10;
             this.trackBrushDiameter.Value = 1;
             this.trackBrushDiameter.Scroll += new System.EventHandler(this.trackBrushDiameter_Scroll);
             // 

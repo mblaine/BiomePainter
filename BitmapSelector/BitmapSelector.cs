@@ -27,7 +27,7 @@ namespace BitmapSelector
         public Color SelectionColor = Color.Red;
         public BrushType Brush = BrushType.Round;
         public int BrushDiameter = 1;
-        public int BrushDiameterMax = 50;
+        public int BrushDiameterMax = 100;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Rectangle SelectionBounds { get; set; }
