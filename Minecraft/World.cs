@@ -50,7 +50,6 @@ namespace Minecraft
             String dir = GetRegionDirectory(dim);
             if (Directory.Exists(dir))
             {
-
                 List<String> regions = new List<String>(Directory.GetFiles(dir, "*.mca", SearchOption.TopDirectoryOnly));
                 regions.Sort(CompareRegionNames);
                 return regions.ToArray();

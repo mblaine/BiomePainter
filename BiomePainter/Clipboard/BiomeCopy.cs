@@ -1,7 +1,9 @@
-﻿using Minecraft;
+﻿using System;
+using Minecraft;
 
 namespace BiomePainter.Clipboard
 {
+    [Serializable]
     public class BiomeCopy
     {
         public byte[,] Biomes;

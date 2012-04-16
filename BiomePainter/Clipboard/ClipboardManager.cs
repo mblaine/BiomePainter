@@ -7,15 +7,13 @@ namespace BiomePainter.Clipboard
 {
     public class ClipboardManager
     {
-        private static BiomeCopy biomeData = null;
-
         private ClipboardManager()
         {
         }
 
         public static void Copy(RegionFile region, Bitmap selection, Color selectionColor)
         {
-            biomeData = new BiomeCopy();
+            BiomeCopy biomeData = new BiomeCopy();
             for (int chunkX = 0; chunkX < 32; chunkX++)
             {
                 for (int chunkZ = 0; chunkZ < 32; chunkZ++)
@@ -47,11 +45,14 @@ namespace BiomePainter.Clipboard
                 }
             }
             biomeData.Crop();
+            System.Windows.Forms.Clipboard.SetData("BiomeCopy", biomeData);
         }
 
         //return true if anything was altered and needs redrawing
         public static bool Paste(RegionFile region)
         {
+            BiomeCopy biomeData = (BiomeCopy)System.Windows.Forms.Clipboard.GetData("BiomeCopy");
+
             if (biomeData == null || biomeData.Empty)
                 return false;
 
@@ -77,14 +78,14 @@ namespace BiomePainter.Clipboard
                     }
                     else
                     {
-                        Paste(region, x, z);
+                        Paste(biomeData, region, x, z);
                         return true;
                     }
                 }
             }
         }
 
-        private static void Paste(RegionFile region, int offsetX, int offsetZ)
+        private static void Paste(BiomeCopy biomeData, RegionFile region, int offsetX, int offsetZ)
         {
             for (int x = 0; x < biomeData.Width; x++)
             {
