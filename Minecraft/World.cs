@@ -37,7 +37,7 @@ namespace Minecraft
                 case Dimension.Nether:
                     return String.Format("{0}{1}DIM-1{1}region", WorldDir, Path.DirectorySeparatorChar);
                 case Dimension.End:
-                    return String.Format("{0}{1}DIM-2{1}region", WorldDir, Path.DirectorySeparatorChar);
+                    return String.Format("{0}{1}DIM1{1}region", WorldDir, Path.DirectorySeparatorChar);
                 default:
                     throw new Exception("Unrecognized dimension.");
             }
