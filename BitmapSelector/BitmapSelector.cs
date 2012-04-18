@@ -16,6 +16,9 @@ namespace BitmapSelector
         public delegate void BrushDiameterEventHandler(Object sender, BrushDiameterEventArgs e);
         public event BrushDiameterEventHandler BrushDiameterChanged;
 
+        public delegate void CustomBrushClickEventHandler(Object sender, CustomBrushClickEventArgs e);
+        public event CustomBrushClickEventHandler CustomBrushClick;
+
         public event EventHandler SelectionChanged;
 
         private BufferedGraphicsContext backbufferContext;
@@ -28,6 +31,8 @@ namespace BitmapSelector
         public BrushType Brush = BrushType.Round;
         public int BrushDiameter = 1;
         public int BrushDiameterMax = 100;
+
+        private Bitmap customBrush = null;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Rectangle SelectionBounds { get; set; }
@@ -83,6 +88,9 @@ namespace BitmapSelector
                     backbufferGraphics.Dispose();
                 if (backbufferContext != null)
                     backbufferContext.Dispose();
+
+                if (customBrush != null)
+                    customBrush.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -164,25 +172,32 @@ namespace BitmapSelector
 
                 if (!justClear)
                 {
-                    if (SelectionBounds.IsEmpty || SelectionBounds.Contains(p))
-                        Layers[BrushLayerIndex].Image.SetPixel(p.X, p.Y, Color.Black);
-                    Brush b = new SolidBrush(Color.Black);
-                    if (Brush == BrushType.Rectangle)
+                    if (customBrush != null)
                     {
-                        if ((mouse1Down || mouse2Down) && mouseDownLast.X != -1 && mouseDownLast.Y != -1)
+                        g.DrawImage(customBrush, p);
+                    }
+                    else
+                    {
+                        if (SelectionBounds.IsEmpty || SelectionBounds.Contains(p))
+                            Layers[BrushLayerIndex].Image.SetPixel(p.X, p.Y, Color.Black);
+                        Brush b = new SolidBrush(Color.Black);
+                        if (Brush == BrushType.Rectangle)
                         {
-                            g.FillRectangle(b, Rectangle.FromLTRB(Math.Min(mouseDownLast.X, p.X), Math.Min(mouseDownLast.Y, p.Y), Math.Max(mouseDownLast.X, p.X), Math.Max(mouseDownLast.Y, p.Y)));
+                            if ((mouse1Down || mouse2Down) && mouseDownLast.X != -1 && mouseDownLast.Y != -1)
+                            {
+                                g.FillRectangle(b, Rectangle.FromLTRB(Math.Min(mouseDownLast.X, p.X), Math.Min(mouseDownLast.Y, p.Y), Math.Max(mouseDownLast.X, p.X), Math.Max(mouseDownLast.Y, p.Y)));
+                            }
                         }
+                        else if (Brush == BrushType.Round)
+                        {
+                            g.FillEllipse(b, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
+                        }
+                        else if (Brush == BrushType.Square)
+                        {
+                            g.FillRectangle(b, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
+                        }
+                        b.Dispose();
                     }
-                    else if (Brush == BrushType.Round)
-                    {
-                        g.FillEllipse(b, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
-                    }
-                    else if (Brush == BrushType.Square)
-                    {
-                        g.FillRectangle(b, p.X - BrushDiameter / 2, p.Y - BrushDiameter / 2, BrushDiameter, BrushDiameter);
-                    }
-                    b.Dispose();
                 }
             }
         }
@@ -210,6 +225,9 @@ namespace BitmapSelector
                 case Keys.Down:
                     PanDown();
                     return true;
+                case Keys.Escape:
+                    CancelCustomBrush();
+                    return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
@@ -236,6 +254,26 @@ namespace BitmapSelector
         {
             scrollVertical.Value = Math.Min(scrollVertical.Value + 5, scrollVertical.Maximum);
             Zoom(Magnification, OffsetX, scrollVertical.Value);
+        }
+
+        public void SetCustomBrush(Bitmap b)
+        {
+            if (customBrush != null)
+                customBrush.Dispose();
+            customBrush = b;
+            RedrawBrushLayer(PointToClient(Control.MousePosition));
+            Redraw();
+        }
+
+        public void CancelCustomBrush()
+        {
+            if (customBrush != null)
+            {
+                customBrush.Dispose();
+                customBrush = null;
+                RedrawBrushLayer(PointToClient(Control.MousePosition));
+                Redraw();
+            }
         }
 
         private void BitmapSelector_MouseUp(object sender, MouseEventArgs e)
@@ -304,7 +342,16 @@ namespace BitmapSelector
                 Cursor.Hide();
                 cursorVisible = false;
             }
-            if (Brush == BrushType.Rectangle)
+
+            if (customBrush != null)
+            {
+                OnCustomBrushClick(new CustomBrushClickEventArgs(p.X, p.Y));
+                customBrush.Dispose();
+                customBrush = null;
+                RedrawBrushLayer(p);
+                Redraw();
+            }
+            else if (Brush == BrushType.Rectangle)
             {
                 mouseDownLast = p;
             }
@@ -321,7 +368,7 @@ namespace BitmapSelector
                     Point curr = q.Dequeue();
                     if (!SelectionBounds.IsEmpty && !SelectionBounds.Contains(curr))
                         continue;
-                    if(!bounds.Contains(curr))
+                    if (!bounds.Contains(curr))
                         continue;
 
                     //since every pixel is either red or transparent, only compairng alpha
@@ -682,6 +729,12 @@ namespace BitmapSelector
         {
             if (SelectionChanged != null)
                 SelectionChanged(this, new EventArgs());
+        }
+
+        protected virtual void OnCustomBrushClick(CustomBrushClickEventArgs e)
+        {
+            if (CustomBrushClick != null)
+                CustomBrushClick(this, e);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Reflection;
@@ -527,26 +528,38 @@ namespace BiomePainter
 
         private void radRoundBrush_CheckedChanged(object sender, EventArgs e)
         {
-            if(radRoundBrush.Checked)
+            if (radRoundBrush.Checked)
+            {
                 imgRegion.Brush = BrushType.Round;
+                imgRegion.CancelCustomBrush();
+            }
         }
 
         private void radSquareBrush_CheckedChanged(object sender, EventArgs e)
         {
-            if(radSquareBrush.Checked)
+            if (radSquareBrush.Checked)
+            {
                 imgRegion.Brush = BrushType.Square;
+                imgRegion.CancelCustomBrush();
+            }
         }
 
         private void radRectangleSelect_CheckedChanged(object sender, EventArgs e)
         {
-            if(radRectangleSelect.Checked)
+            if (radRectangleSelect.Checked)
+            {
                 imgRegion.Brush = BrushType.Rectangle;
+                imgRegion.CancelCustomBrush();
+            }
         }
 
         private void radFill_CheckedChanged(object sender, EventArgs e)
         {
-            if(radFill.Checked)
+            if (radFill.Checked)
+            {
                 imgRegion.Brush = BrushType.Fill;
+                imgRegion.CancelCustomBrush();
+            }
         }
         #endregion
 
@@ -781,13 +794,10 @@ namespace BiomePainter
             if (world == null || region == null)
                 return;
 
-            if (ClipboardManager.Paste(region))
+            Bitmap paste = ClipboardManager.StartPaste();
+            if (paste != null)
             {
-                UpdateStatus("Generating biome map");
-                RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
-                UpdateStatus("");
-                imgRegion.Redraw();
-                history.RecordBiomeState(region);
+                imgRegion.SetCustomBrush(paste);
             }
         }
 
@@ -957,6 +967,19 @@ namespace BiomePainter
         private void imgRegion_SelectionChanged(object sender, EventArgs e)
         {
             history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
+        }
+
+
+        private void imgRegion_CustomBrushClick(object sender, CustomBrushClickEventArgs e)
+        {
+            if (ClipboardManager.Paste(region, e.MouseX - RegionUtil.OFFSETX, e.MouseY - RegionUtil.OFFSETY))
+            {
+                UpdateStatus("Generating biome map");
+                RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
+                UpdateStatus("");
+                imgRegion.Redraw();
+                history.RecordBiomeState(region);
+            }
         }
         #endregion
     }

@@ -27,4 +27,16 @@ namespace BitmapSelector
             NewBrushDiameter = newBrushDiameter;
         }
     }
+
+    public class CustomBrushClickEventArgs : EventArgs
+    {
+        public int MouseX;
+        public int MouseY;
+
+        public CustomBrushClickEventArgs(int mouseX, int mouseY)
+        {
+            MouseX = mouseX;
+            MouseY = mouseY;
+        }
+    }
 }

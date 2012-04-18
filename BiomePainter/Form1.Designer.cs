@@ -1066,6 +1066,7 @@
             this.imgRegion.TabIndex = 2;
             this.imgRegion.ZoomEvent += new BitmapSelector.BitmapSelector.ZoomEventHandler(this.imgRegion_ZoomEvent);
             this.imgRegion.BrushDiameterChanged += new BitmapSelector.BitmapSelector.BrushDiameterEventHandler(this.imgRegion_BrushDiameterChanged);
+            this.imgRegion.CustomBrushClick += new BitmapSelector.BitmapSelector.CustomBrushClickEventHandler(this.imgRegion_CustomBrushClick);
             this.imgRegion.SelectionChanged += new System.EventHandler(this.imgRegion_SelectionChanged);
             // 
             // Form1

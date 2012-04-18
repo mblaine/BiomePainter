@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Minecraft;
 
 namespace BiomePainter.Clipboard
@@ -38,6 +39,25 @@ namespace BiomePainter.Clipboard
                 }
             }
             Biomes = b;
+        }
+
+        public Bitmap ToBitmap()
+        {
+            Bitmap b = new Bitmap(Width, Height);
+            for (int x = 0; x < Width; x++)
+            {
+                for (int z = 0; z < Height; z++)
+                {
+                    Color c = Color.Black;
+                    byte biome = Biomes[x, z];
+                    if (biome == 255)
+                        c = Color.Transparent;
+                    else if (biome >= 0 && biome < 255 && RegionUtil.Biomes[biome] != null)
+                        c = RegionUtil.Biomes[biome].Color;
+                    b.SetPixel(x, z, c);
+                }
+            }
+            return b;
         }
     }
 }

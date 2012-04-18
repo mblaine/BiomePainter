@@ -7,6 +7,8 @@ namespace BiomePainter.Clipboard
 {
     public class ClipboardManager
     {
+        private static BiomeCopy currentPaste = null;
+
         private ClipboardManager()
         {
         }
@@ -48,50 +50,30 @@ namespace BiomePainter.Clipboard
             System.Windows.Forms.Clipboard.SetData("BiomeCopy", biomeData);
         }
 
-        //return true if anything was altered and needs redrawing
-        public static bool Paste(RegionFile region)
+        public static Bitmap StartPaste()
         {
-            BiomeCopy biomeData = (BiomeCopy)System.Windows.Forms.Clipboard.GetData("BiomeCopy");
-
-            if (biomeData == null || biomeData.Empty)
-                return false;
-
-            String msg = "Type the x (horizontal) and z (vertical) coordinates to paste at, between 0, 0 (top-left corner) and 511, 511 (bottom-right corner).";
-            String input = String.Format("{0}, {1}", biomeData.Left, biomeData.Top);
-            while (true)
+            currentPaste = (BiomeCopy)System.Windows.Forms.Clipboard.GetData("BiomeCopy");
+            if (currentPaste == null)
+                return null;
+            if (currentPaste.Empty)
             {
-                input = InputBox.Show(msg, "Paste", input);
-                if (input.Length == 0)
-                    return false;
-
-                Match m = Regex.Match(input, @"([-\+]?\d+)(?:[,\s]+)([-\+]?\d+)");
-                if (m.Groups.Count < 3)
-                {
-                    msg = "Unable to parse coordinates. Please try again or click cancel.";
-                }
-                else
-                {
-                    int x, z;
-                    if (!Int32.TryParse(m.Groups[1].Value, out x) || !Int32.TryParse(m.Groups[2].Value, out z))
-                    {
-                        msg = "Unable to parse coordinates. Please try again or click cancel.";
-                    }
-                    else
-                    {
-                        Paste(biomeData, region, x, z);
-                        return true;
-                    }
-                }
+                currentPaste = null;
+                return null;
             }
+
+            return currentPaste.ToBitmap();
         }
 
-        private static void Paste(BiomeCopy biomeData, RegionFile region, int offsetX, int offsetZ)
+        public static bool Paste(RegionFile region, int offsetX, int offsetZ)
         {
-            for (int x = 0; x < biomeData.Width; x++)
+            if (currentPaste == null)
+                return false;
+
+            for (int x = 0; x < currentPaste.Width; x++)
             {
-                for (int z = 0; z < biomeData.Height; z++)
+                for (int z = 0; z < currentPaste.Height; z++)
                 {
-                    if (biomeData.Biomes[x, z] == (byte)Biome.Unspecified)
+                    if (currentPaste.Biomes[x, z] == (byte)Biome.Unspecified)
                         continue;
 
                     Coord chunkOffset = new Coord(offsetX + x, offsetZ + z);
@@ -105,9 +87,11 @@ namespace BiomePainter.Clipboard
                     int pasteX = (offsetX + x) % 16;
                     int pasteZ = (offsetZ + z) % 16;
 
-                    ((TAG_Byte_Array)c.Root["Level"]["Biomes"]).Payload[pasteX + pasteZ * 16] = biomeData.Biomes[x, z];
+                    ((TAG_Byte_Array)c.Root["Level"]["Biomes"]).Payload[pasteX + pasteZ * 16] = currentPaste.Biomes[x, z];
                 }
             }
+
+            return true;
         }
     }
 }
