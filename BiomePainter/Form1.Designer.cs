@@ -119,6 +119,9 @@
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.cmbBiomeType = new System.Windows.Forms.ComboBox();
             this.imgRegion = new BitmapSelector.BitmapSelector();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -306,7 +309,10 @@
             this.pasteToolStripMenuItem,
             this.toolStripSeparator5,
             this.setChunksInSelectionToBePopulatedToolStripMenuItem,
-            this.unsetChunksInSelectionToBePopulatedToolStripMenuItem});
+            this.unsetChunksInSelectionToBePopulatedToolStripMenuItem,
+            this.toolStripSeparator7,
+            this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem,
+            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
             this.editToolStripMenuItem.Text = "&Edit";
@@ -315,7 +321,7 @@
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(357, 24);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(405, 24);
             this.undoToolStripMenuItem.Text = "&Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
@@ -323,20 +329,20 @@
             // 
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(357, 24);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(405, 24);
             this.redoToolStripMenuItem.Text = "&Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(354, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(402, 6);
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(357, 24);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(405, 24);
             this.copyToolStripMenuItem.Text = "&Copy";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
@@ -344,26 +350,26 @@
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(357, 24);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(405, 24);
             this.pasteToolStripMenuItem.Text = "&Paste";
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(354, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(402, 6);
             // 
             // setChunksInSelectionToBePopulatedToolStripMenuItem
             // 
             this.setChunksInSelectionToBePopulatedToolStripMenuItem.Name = "setChunksInSelectionToBePopulatedToolStripMenuItem";
-            this.setChunksInSelectionToBePopulatedToolStripMenuItem.Size = new System.Drawing.Size(357, 24);
+            this.setChunksInSelectionToBePopulatedToolStripMenuItem.Size = new System.Drawing.Size(405, 24);
             this.setChunksInSelectionToBePopulatedToolStripMenuItem.Text = "Set Chunks in Selection to be Populated";
             this.setChunksInSelectionToBePopulatedToolStripMenuItem.Click += new System.EventHandler(this.setChunksInSelectionToBePopulatedToolStripMenuItem_Click);
             // 
             // unsetChunksInSelectionToBePopulatedToolStripMenuItem
             // 
             this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Name = "unsetChunksInSelectionToBePopulatedToolStripMenuItem";
-            this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Size = new System.Drawing.Size(357, 24);
+            this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Size = new System.Drawing.Size(405, 24);
             this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Text = "Unset Chunks in Selection to be Populated";
             this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Click += new System.EventHandler(this.unsetChunksInSelectionToBePopulatedToolStripMenuItem_Click);
             // 
@@ -1069,6 +1075,25 @@
             this.imgRegion.CustomBrushClick += new BitmapSelector.BitmapSelector.CustomBrushClickEventHandler(this.imgRegion_CustomBrushClick);
             this.imgRegion.SelectionChanged += new System.EventHandler(this.imgRegion_SelectionChanged);
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(402, 6);
+            // 
+            // batchFillEntireWorldWithSelectedBiomeToolStripMenuItem
+            // 
+            this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem.Name = "batchFillEntireWorldWithSelectedBiomeToolStripMenuItem";
+            this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem.Size = new System.Drawing.Size(405, 24);
+            this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem.Text = "Batch Fill Entire World with Selected Biome";
+            this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem.Click += new System.EventHandler(this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem_Click);
+            // 
+            // batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem
+            // 
+            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Name = "batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem";
+            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Size = new System.Drawing.Size(405, 24);
+            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Text = "Batch Replace Entire World with Selected Biomes";
+            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Click += new System.EventHandler(this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1209,6 +1234,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.RadioButton radFill;
         private System.Windows.Forms.RadioButton radRectangleSelect;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem batchFillEntireWorldWithSelectedBiomeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem;
     }
 }
 

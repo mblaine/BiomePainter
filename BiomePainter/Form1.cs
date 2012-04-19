@@ -376,6 +376,26 @@ namespace BiomePainter
             history.RecordPopulateState(region);
         }
 
+        private void batchFillEntireWorldWithSelectedBiomeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (world == null)
+                return;
+
+            Batch form = new Batch(world.GetRegionDirectory(dim), Path.GetFileName(world.WorldDir), dim.ToString(), false, cmbFill.SelectedItem, null, world.Seed);
+            form.ShowDialog(this);
+            form.Dispose();
+        }
+
+        private void batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (world == null)
+                return;
+
+            Batch form = new Batch(world.GetRegionDirectory(dim), Path.GetFileName(world.WorldDir), dim.ToString(), true, cmbReplace1.SelectedItem, cmbReplace2.SelectedItem, world.Seed);
+            form.ShowDialog(this);
+            form.Dispose();
+        }
+
         private void allToolStripMenuItem_Click(object sender, EventArgs e)
         {
             btnSelectAll_Click(this, null);
@@ -478,7 +498,9 @@ namespace BiomePainter
 
         private void aboutBiomePainterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new About().ShowDialog(this);
+            About form = new About();
+            form.ShowDialog(this);
+            form.Dispose();
         }
 
         #endregion
@@ -807,35 +829,7 @@ namespace BiomePainter
                 return;
 
             UpdateStatus("Filling selected area");
-            if(cmbFill.SelectedItem is BiomeType)
-            {
-                RegionUtil.Fill(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, ((BiomeType)cmbFill.SelectedItem).ID);
-            }
-            else if (cmbFill.SelectedItem is String)
-            {
-                BiomeUtil util = null;
-                switch ((String)cmbFill.SelectedItem)
-                {
-                    case "Minecraft Beta 1.7.3":
-                        util = new Minecraft.B17.BiomeGenBase(world.Seed);
-                        break;
-                    case "Minecraft Beta 1.8.1":
-                        util = new Minecraft.B18.WorldChunkManager(world.Seed);
-                        break;
-                    case "Minecraft 1.0.0":
-                        util = new Minecraft.F10.WorldChunkManager(world.Seed);
-                        break;
-                    case "Minecraft 1.1.0":
-                        util = new Minecraft.F11.WorldChunkManager(world.Seed);
-                        break;
-                    case "Minecraft 1.2.5":
-                    default:
-                        util = new Minecraft.F12.WorldChunkManager(world.Seed);
-                        break;
-                }
-                RegionUtil.Fill(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, util);
-            }
-
+            RegionUtil.Fill(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, cmbFill.SelectedItem, world.Seed);
             UpdateStatus("Generating biome map");
             RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
             UpdateStatus("");
@@ -849,35 +843,7 @@ namespace BiomePainter
                 return;
 
             UpdateStatus("Replacing in selected area");
-            if (cmbReplace2.SelectedItem is BiomeType)
-            {
-                RegionUtil.Replace(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor,  ((BiomeType)cmbReplace1.SelectedItem).ID, ((BiomeType)cmbReplace2.SelectedItem).ID);
-            }
-            else
-            {
-                BiomeUtil util = null;
-                switch ((String)cmbReplace2.SelectedItem)
-                {
-                    case "Minecraft Beta 1.7.3":
-                        util = new Minecraft.B17.BiomeGenBase(world.Seed);
-                        break;
-                    case "Minecraft Beta 1.8.1":
-                        util = new Minecraft.B18.WorldChunkManager(world.Seed);
-                        break;
-                    case "Minecraft 1.0.0":
-                        util = new Minecraft.F10.WorldChunkManager(world.Seed);
-                        break;
-                    case "Minecraft 1.1.0":
-                        util = new Minecraft.F11.WorldChunkManager(world.Seed);
-                        break;
-                    case "Minecraft 1.2.5":
-                    default:
-                        util = new Minecraft.F12.WorldChunkManager(world.Seed);
-                        break;
-                }
-                RegionUtil.Replace(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, ((BiomeType)cmbReplace1.SelectedItem).ID, util);
-            }
-
+            RegionUtil.Replace(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, ((BiomeType)cmbReplace1.SelectedItem).ID, cmbReplace2.SelectedItem, world.Seed);
             UpdateStatus("Generating biome map");
             RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
             UpdateStatus("");
@@ -982,6 +948,7 @@ namespace BiomePainter
             }
         }
         #endregion
+
     }
 
 }

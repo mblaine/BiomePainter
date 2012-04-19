@@ -589,7 +589,51 @@ namespace BiomePainter
             return Color.FromArgb(c.A, red, green, blue);
         }
 
-        public static void Fill(RegionFile region, Bitmap selection, Color selectionColor, byte biome)
+        private static void GetBiome(Object input, long seed, out byte? biomeId, out BiomeUtil biomeGen)
+        {
+            biomeId = null;
+            biomeGen = null;
+
+            if (input is BiomeType)
+            {
+                biomeId = ((BiomeType)input).ID;
+            }
+            else if (input is String)
+            {
+                switch ((String)input)
+                {
+                    case "Minecraft Beta 1.7.3":
+                        biomeGen = new Minecraft.B17.BiomeGenBase(seed);
+                        break;
+                    case "Minecraft Beta 1.8.1":
+                        biomeGen = new Minecraft.B18.WorldChunkManager(seed);
+                        break;
+                    case "Minecraft 1.0.0":
+                        biomeGen = new Minecraft.F10.WorldChunkManager(seed);
+                        break;
+                    case "Minecraft 1.1.0":
+                        biomeGen = new Minecraft.F11.WorldChunkManager(seed);
+                        break;
+                    case "Minecraft 1.2.5":
+                    default:
+                        biomeGen = new Minecraft.F12.WorldChunkManager(seed);
+                        break;
+                }
+            }
+        }
+
+        public static void Fill(RegionFile region, Bitmap selection, Color selectionColor, Object biome, long worldSeed)
+        {
+            byte? biomeId;
+            BiomeUtil util;
+            GetBiome(biome, worldSeed, out biomeId, out util);
+            if (biomeId != null)
+                Fill(region, selection, selectionColor, (byte)biomeId);
+            else
+                Fill(region, selection, selectionColor, util);
+        }
+
+        private static void Fill(RegionFile region, Bitmap selection, Color selectionColor, byte biome)
         {
             foreach (Chunk c in region.Chunks)
             {
@@ -614,7 +658,7 @@ namespace BiomePainter
             }
         }
 
-        public static void Fill(RegionFile region, Bitmap selection, Color selectionColor, BiomeUtil util)
+        private static void Fill(RegionFile region, Bitmap selection, Color selectionColor, BiomeUtil util)
         {
             foreach (Chunk c in region.Chunks)
             {
@@ -643,7 +687,18 @@ namespace BiomePainter
             }
         }
 
-        public static void Replace(RegionFile region, Bitmap selection, Color selectionColor, byte search, byte replace)
+        public static void Replace(RegionFile region, Bitmap selection, Color selectionColor, byte biome1, Object biome2, long worldSeed)
+        {
+            byte? biomeId;
+            BiomeUtil util;
+            GetBiome(biome2, worldSeed, out biomeId, out util);
+            if (biomeId != null)
+                Replace(region, selection, selectionColor, biome1, (byte)biomeId);
+            else
+                Replace(region, selection, selectionColor, biome1, util);
+        }
+
+        private static void Replace(RegionFile region, Bitmap selection, Color selectionColor, byte search, byte replace)
         {
             foreach (Chunk c in region.Chunks)
             {
@@ -672,7 +727,7 @@ namespace BiomePainter
             }
         }
 
-        public static void Replace(RegionFile region, Bitmap selection, Color selectionColor, byte search, BiomeUtil replace)
+        private static void Replace(RegionFile region, Bitmap selection, Color selectionColor, byte search, BiomeUtil replace)
         {
             foreach (Chunk c in region.Chunks)
             {
