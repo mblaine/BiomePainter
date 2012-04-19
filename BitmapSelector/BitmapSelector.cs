@@ -174,7 +174,7 @@ namespace BitmapSelector
                 {
                     if (customBrush != null)
                     {
-                        g.DrawImage(customBrush, p);
+                        g.DrawImage(customBrush, p.X - (customBrush.Width >> 1), p.Y - (customBrush.Height >> 1));
                     }
                     else
                     {
@@ -345,7 +345,7 @@ namespace BitmapSelector
 
             if (customBrush != null)
             {
-                OnCustomBrushClick(new CustomBrushClickEventArgs(p.X, p.Y));
+                OnCustomBrushClick(new CustomBrushClickEventArgs(p.X - (customBrush.Width >> 1), p.Y - (customBrush.Height >> 1)));
                 customBrush.Dispose();
                 customBrush = null;
                 RedrawBrushLayer(p);
