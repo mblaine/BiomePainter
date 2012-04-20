@@ -1,3 +1,18 @@
+0.8 - 4/20/2012
+    * Batch processing of an entire dimension of an entire world can now be
+      done from the Edit menu after opening a world and selecting biomes from
+      the drop down lists at the bottom of the main window.
+        - Biomes to be used are taken from the exisitng drop down lists at the
+          bottom of the main window.
+        - When cancelling a job in progress, if a region has begun to be saved
+          it is allowed to finish before everything is stopped in order to
+          prevent corrupting save files.
+    * Pasting now allows mousing over and clicking on the region to place the
+      copied biomes instead of typing coordinates.
+        - To cancel a paste press Escape, or switch which brush type is
+          selected.
+    * Fixed reloading the current region when none is loaded.
+
 0.7 - 4/16/2012
     * Two new brush types: rectangle select and fill.
         - Fill or clear a rectangular area by clicking and dragging using the
