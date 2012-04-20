@@ -649,7 +649,7 @@ namespace BiomePainter
                 {
                     for (int x = 0; x < 16; x++)
                     {
-                        if (selection.GetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
+                        if (selection == null || (selection.GetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb()))
                         {
                             biomes[x + z * 16] = biome;
                         }
@@ -678,7 +678,7 @@ namespace BiomePainter
                 {
                     for (int x = 0; x < 16; x++)
                     {
-                        if (selection.GetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
+                        if (selection == null || (selection.GetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb()))
                         {
                             biomes[x + z * 16] = (byte)util.GetBiome(chunkAbs.X + x, chunkAbs.Z + z);
                         }
@@ -715,7 +715,7 @@ namespace BiomePainter
                 {
                     for (int x = 0; x < 16; x++)
                     {
-                        if (selection.GetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
+                        if (selection == null || (selection.GetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb()))
                         {
                             if (biomes[x + z * 16] == search)
                             {
@@ -747,7 +747,7 @@ namespace BiomePainter
                 {
                     for (int x = 0; x < 16; x++)
                     {
-                        if (selection.GetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb())
+                        if (selection == null || (selection.GetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z).ToArgb() == selectionColor.ToArgb()))
                         {
                             if (biomes[x + z * 16] == search)
                             {

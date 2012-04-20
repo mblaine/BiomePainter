@@ -132,14 +132,14 @@ namespace Minecraft
         }
 
         //DO NOT write region if reading less than the entire thing
-        public void Write()
+        public void Write(bool force = false)
         {
-            Write(Path);
+            Write(Path, force);
         }
 
-        public void Write(String path)
+        public void Write(String path, bool force = false)
         {
-            if (!Dirty)
+            if (!force && !Dirty)
                 return;
             byte[] header = new byte[8192];
             Array.Clear(header, 0, 8192);
@@ -176,7 +176,7 @@ namespace Minecraft
                             Array.Reverse(temp);
                         Array.Copy(temp, 1, header, i, 3);
 
-                        if (c.RawData == null || c.Dirty)
+                        if (c.RawData == null || force || c.Dirty)
                         {
                             //this is the performance bottleneck when doing 1024 chunks in a row;
                             //trying to only do when necessary
