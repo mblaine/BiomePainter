@@ -58,6 +58,7 @@
     <Compile Include="BiomeType.cs" />
     <Compile Include="Clipboard\BiomeCopy.cs" />
     <Compile Include="Clipboard\ClipboardManager.cs" />
+    <Compile Include="ColorPalette.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,6 +153,9 @@
     <None Include="Resources\brush-round.png" />
     <None Include="Resources\brush-square.png" />
     <Content Include="Biomes.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Blocks.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\icon.ico" />

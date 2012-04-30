@@ -1,0 +1,157 @@
+﻿0;00000000 #air
+1;7e7e7e #stone
+2,31;0,7,9;55773f #grass, tall grass (Ocean)
+2,31;1,16;688f35 #grass, tall grass (Plains)
+2,31;2,8,17;7a8f35 #grass, tall grass (Desert)
+2,31;3,20;638a61 #grass, tall grass (Mountains)
+2,31;4,18;4f8c34 #grass, tall grass (Forest)
+2,31;5,19;4d745f #grass, tall grass (Taiga)
+2,31;10,11,12,13;4c7362 #grass, tall grass (Snow)
+2,31;14,15;2b8319 #grass, tall grass (Mushroom)
+2,31;21,22;309916 #grass, tall grass (Jungle)
+2,31;6;39452e #grass, tall grass (Swamp)
+2,31;62a238 #grass, tall grass (default (Forest))
+3;866043 #dirt
+4;7c7c7c #cobble
+5,34,47,64,85,96,107;a08250 #planks, piston extension, wood door, bookshelf, fence, hatch, gate
+5:1,125:1,126:1,126:9;765834 #pine planks, slabs
+5:2,125:2,126:2,126:10;d4c285 #birch planks, slabs
+5:3,125:3,126:3,126:11;a97b58 #jungle planks, slabs
+6;408f2f #sapling
+7;323232 #bedrock
+8,9;6;665e86b4 #water (Swamp)
+8,9;665e86ff #water (default (Forest))
+10,11;f74700 #lava
+12;dbd3a0 #sand
+13;857d7d #gravel
+14;928e7d #gold ore
+15;89837f #iron ore
+16;727272 #coal ore
+17;755829 #log
+18;0,7,9;375c1e #leaves (Ocean)
+18;1,16;3a5e09 #leaves (Plains)
+18;2,8,17;615906 #leaves (Desert)
+18;3,20;345933 #leaves (Mountains)
+18;4,18;27610b #leaves (Forest)
+18;5,19;2d583a #leaves (Taiga)
+18;10,11,12,13;2b583e #leaves (Snow)
+18;14,15;769000 #leaves (Mushroom)
+18;21,22;066a00 #leaves (Jungle)
+18;6;1c2c10 #leaves (Swamp)
+18;27610b #leaves (default (Forest))
+18:1,18:5,18:9;2d472d #pine leaves
+18:2,18:6,18:10;074b36 #birch leaves
+18:3,18:7,18:11;1c6f02 #jungle leaves
+19;b5b538 #sponge
+20,102;88ffffff #glass, panes
+21;636f88 #lapis ore
+22;1d46a6 #lapis block
+23;676767 #dispenser
+24;dad29f #sandstone
+25;6c4734 #noteblock
+26:0,26:1,26:2,26:3;8F0C13 #bed lower half
+26:8,26:9,26:10,26:11;B77C87 #bed higher half
+27;c9b26b #power rail
+29;8d9462 #sticky piston
+30;DCDCDC #cobweb
+32;946428 #dead bush
+33;9b8157 #piston
+35:0;dfdfdf #white wool
+35:1;ea8037 #orange
+35:2;bf4cc9 #magenta
+35:3;688bd4 #light blue
+35:4;c2b51c #yellow
+35:5;3bbd30 #lime green
+35:6;d9849b #pink
+35:7;434343 #dark gray
+35:8;9ea6a6 #light gray
+35:9;277596 #cyan
+35:10;8136c4 #purple
+35:11;27339a #blue
+35:12;56331c #brown
+35:13;384d18 #green
+35:14;a42d29 #red
+35:15;1b1717 #black
+37;f1f902 #yellow flower
+38;f7070f #red flower
+39,99;8d6a53 #brown mushroom, huge
+40,100;b72725 #red mushroom, huge
+41;fbf152 #gold block
+42,71,101;e0e0e0 #iron block, door, bars
+43:0,44:0,44:8;a3a3a3 #stone slabs
+43:1,44:1,44:9;dad29f #sandstone slabs
+43:2,44:2,44:10,53,125:0,126:0,126:8;a08250 #wood slabs, stairs, new slabs
+43:3,44:3,44:11,67;7c7c7c #cobble slabs, stairs
+43:4,44:4,44:12,108;916052 #bricks slabs, stairs
+43:5,44:5,44:13,109;7d7d7d #stone brick slabs, stairs
+45;916052 #brick
+46;C13C17 #tnt
+48;697b69 #mossy cobble
+49;241351 #obsidian
+50;88FFF032 #torch
+51;FC7800 #fire
+52;375063 #spawner
+54;8e6525 #chest
+55:0;500000 #redstone wire, power: 0
+55:1;5A0000 #redstone wire, power: 1
+55:2;640000 #redstone wire, power: 2
+55:3;6E0000 #redstone wire, power: 3
+55:4;780000 #redstone wire, power: 4
+55:5;820000 #redstone wire, power: 5
+55:6;8C0000 #redstone wire, power: 6
+55:7;960000 #redstone wire, power: 7
+55:8;A00000 #redstone wire, power: 8
+55:9;AA0000 #redstone wire, power: 9
+55:10;B40000 #redstone wire, power: 10
+55:11;BE0000 #redstone wire, power: 11
+55:12;C80000 #redstone wire, power: 12
+55:13;D20000 #redstone wire, power: 13
+55:14;DC0000 #redstone wire, power: 14
+55:15;E60000 #redstone wire, power: 15
+56;828f92 #diamond ore
+57;6fdfda #diamond block
+58;764e2f #workbench
+59;917B0E #wheat/seeds
+60;724b2d #farmland
+61,62;676767 #furnace
+63,68;77a08250 #sign
+65;00a08250 #ladder
+66,28;877c6a #rail, detector rail
+69,77;447e7e7e #lever, button
+70;7e7e7e #stone pressure plate
+72;a08250 #wooden pressure plate
+73,74;866969 #redstone ore
+75;824839 #rstorch off
+76;DC2D14 #rstorch on
+79;d77eaeff #ice
+78,80;f1fcfc #snow cover, block
+81;0b5715 #cactus
+82;9fa4b1 #clay
+83;a0e080 #sugar cane
+84;734d39 #jukebox
+86,91;c27816 #pumpkin, jack-o-lantern
+87;983936 #netherrack
+88;543f33 #soul sand
+89;927848 #glowstone
+90;562d88 #nether portal
+92;e6b6b7 #cake
+93;996D6D #repeater off
+94;FF6363 #repeater on
+98;7d7d7d #stone brick
+103;969925 #melon
+104,105;3380b654 #pumpkin stem, melon stem
+106;003b9314 #vines
+110;6f6469 #mycelium
+111;13621c #lily pad
+112,113;2d171b #nether brick, fence
+114;2d171b #netherbrick stairs
+115;81080A #netherwart
+116;822846 #enchantment table
+117;A0A06E #brewing stand
+118;424242 #cauldron
+119;142139 #end portal
+120;647c65 #end portal frame
+121;dddfa5 #end stone
+122;281132 #dragon egg
+123;865536 #redstone lamp off
+124;d0a26b #redstone lamp on

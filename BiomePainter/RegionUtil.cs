@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Text.RegularExpressions;
 using Minecraft;
@@ -63,58 +62,48 @@ namespace BiomePainter
 
         private static void RenderChunk(Chunk c, Bitmap b, int offsetX, int offsetY)
         {
-            int[] heightmap = (int[])c.Root["Level"]["HeightMap"];
-            Dictionary<int, TAG_Compound> sections = new Dictionary<int, TAG_Compound>();
+            TAG_Compound[] sections = new TAG_Compound[16];
+            int highest = -1;
             foreach (TAG t in (TAG[])c.Root["Level"]["Sections"])
             {
-                sections.Add((byte)t["Y"], (TAG_Compound)t);
+                byte index = (byte)t["Y"];
+                if (index > highest)
+                    highest = index;
+                sections[index] = (TAG_Compound)t;
+
             }
 
             //chunk exists but all blocks are air
-            if (sections.Count == 0)
+            if (highest < 0)
                 return;
+
+            highest = ((highest + 1) * 16) - 1;
 
             for (int z = 0; z < 16; z++)
             {
                 for (int x = 0; x < 16; x++)
                 {
-                    int height = heightmap[z * 16 + x];
+                    int y = GetHeight(sections, x, z, highest);
+                    if (y < 0)
+                        continue;
+                    byte id, data;
+                    GetBlock(sections, x, y, z, out id, out data);
+                    byte biome = ((byte[])c.Root["Level"]["Biomes"])[x + z * 16];
 
-                    //trees runnning into the old height limit in converted worlds
-                    //seem to cause the heightmap entries for its columns to be -128;
-                    if (height < 0)
-                        height = 128;
+                    Color color = ColorPalette.Lookup(id, data, biome);
 
-                    int sectionIndex = (int)Math.Floor((height - 1) / 16.0);
-                    int sectionAboveIndex = (int)Math.Floor(height / 16.0);
-
-                    int block = -1, damage = -1;
-                    if (sections.ContainsKey(sectionIndex))
+                    y--;
+                    while (color.A < 255 && y >= 0)
                     {
-                        byte[] blocks = (byte[])sections[sectionIndex]["Blocks"];
-                        byte[] data = (byte[])sections[sectionIndex]["Data"];
-                        int blockOffset = ((((height - 1) % 16) * 16 + z) * 16 + x);
-                        block = blocks[blockOffset];
-                        damage = data[(int)Math.Floor(blockOffset / 2.0)];
-                        if (blockOffset % 2 == 1)
-                            damage = (damage >> 4) & 0x0F;
-                        else
-                            damage = damage & 0x0F;
+                        GetBlock(sections, x, y, z, out id, out data);
+                        Color c2 = ColorPalette.Lookup(id, data, biome);
+                        color = Blend(color, c2);
+                        y--;
                     }
-
-                    int blockAbove = block;
-                    if (sections.ContainsKey(sectionAboveIndex))
-                    {
-                        int blockAboveOffset = (((height % 16) * 16 + z) * 16 + x);
-                        byte[] blocksAbove = (byte[])sections[sectionAboveIndex]["Blocks"];
-                        blockAbove = blocksAbove[blockAboveOffset];
-                    }
-
-                    Color color = ColorLookup(block, damage, blockAbove);
 
                     //brighten/darken by height; arbitrary value, but /seems/ to look okay
-                    color = AddtoColor(color, (int)(height / 1.7 - 42));
-
+                    color = AddtoColor(color, (int)(y / 1.7 - 42));
+                    
                     b.SetPixel(offsetX + x, offsetY + z, color);
                 }
             }
@@ -216,332 +205,42 @@ namespace BiomePainter
                 brush.Dispose();
             }
         }
-       
-        private static Color ColorLookup(int block, int damage, int blockAbove)
+
+        private static int GetHeight(TAG_Compound[] sections, int x, int z, int yStart = 255)
         {
-            int ret = 0;
-
-            switch (blockAbove)
+            int h = yStart;
+            for (; h >= 0; h--)
             {
-                case 6: //sapling
-                    ret = 0x408f2f;
-                    break;
-                case 32: //dead bush
-                    ret = 0x946428;
-                    break;
-                case 37: //yellow flower
-                    ret = 0xf1f902;
-                    break;
-                case 38: //red flower
-                    ret = 0xf7070f;
-                    break;
-                case 54: //chest
-                    ret = 0x8e6525;
-                    break;
-                case 78: //snow cover
-                    ret = 0xf1fcfc;
-                    break;
-                case 81: //cactus
-                    ret = 0x0b5715;
-                    break;
-                case 83: //sugar cane
-                    ret = 0xa0e080;
-                    break;
-                case 85: //fence
-                case 107:
-                    ret = 0xa08250;
-                    break;
-                case 111: //lily pad
-                    ret = 0x13621c;
-                    break;
-                case 113: //nether fence
-                    ret = 0x2d171b;
-                    break;
-                default:
-                    ret = 0;
-                    break;
+                byte b = GetBlock(sections, x, h, z);
+                if (b != 0)
+                    return h;
             }
+            return -1;
+        }
 
-            if (ret != 0)
-                return Color.FromArgb(255, Color.FromArgb(ret));
+        private static byte GetBlock(TAG_Compound[] sections, int x, int y, int z)
+        {
+            byte id, data;
+            GetBlock(sections, x, y, z, out id, out data);
+            return id;
+        }
 
-            switch (block)
+        private static void GetBlock(TAG_Compound[] sections, int x, int y, int z, out byte id, out byte data)
+        {
+            id = 0;
+            data = 0;
+            int section = (int)Math.Floor(y / 16.0);
+
+            if (sections[section] != null)
             {
-                case 1: //stone
-                    ret = 0x7e7e7e;
-                    break;
-                case 2: //grass
-                    ret = 0x62a238;
-                    break;
-                case 3: //dirt
-                    ret = 0x866043;
-                    break;
-                case 4: //cobble
-                case 67:
-                    ret = 0x7c7c7c;
-                    break;
-                case 5: //planks
-                    if (damage == 1) //pine
-                        ret = 0x765834;
-                    else if (damage == 2) //birch
-                        ret = 0xd4c285;
-                    else if (damage == 3) //jungle
-                        ret = 0xa97b58;
-                    else
-                        ret = 0xa08250;
-                    break;
-                case 7: //bedrock
-                    ret = 0x323232;
-                    break;
-                case 8: //water
-                case 9:
-                    ret = 0x2a5fff;
-                    break;
-                case 10: //lava
-                case 11:
-                    ret = 0xf74700;
-                    break;
-                case 12: //sand
-                    ret = 0xdbd3a0;
-                    break;
-                case 13: //gravel
-                    ret = 0x857d7d;
-                    break;
-                case 14: //gold ore
-                    ret = 0x928e7d;
-                    break;
-                case 15: //iron ore
-                    ret = 0x89837f;
-                    break;
-                case 16: //coal ore
-                    ret = 0x727272;
-                    break;
-                case 17: //log
-                    ret = 0xa38452;
-                    break;
-                case 18: //leaves
-                    if (damage == 1 || damage == 5 || damage == 9) //pine
-                        ret = 0x2d472d;
-                    else if (damage == 2 || damage == 6 || damage == 10) //birch
-                        ret = 0x074b36;
-                    else if (damage == 3 || damage == 7 || damage == 11) //jungle
-                        ret = 0x1c6f02;
-                    else
-                        ret = 0x2c5619;
-                    break;
-                case 19: //sponge
-                    ret = 0xb5b538;
-                    break;
-                case 21: //lapis ore
-                    ret = 0x636f88;
-                    break;
-                case 22: //lapis block
-                    ret = 0x1d46a6;
-                    break;
-                case 23: //dispenser
-                    ret = 0x676767;
-                    break;
-                case 24: //sandstone
-                    ret = 0xdad29f;
-                    break;
-                case 25: //noteblock
-                    ret = 0x6c4734;
-                    break;
-                case 29: //sticky piston
-                    ret = 0x8d9462;
-                    break;
-                case 33: //piston
-                    ret = 0x9b8157;
-                    break;
-                case 35: //wool
-                    switch (damage)
-                    {
-                        case 1: //orange
-                            ret = 0xea8037;
-                            break;
-                        case 2: //magenta
-                            ret = 0xbf4cc9;
-                            break;
-                        case 3: //light blue
-                            ret = 0x688bd4;
-                            break;
-                        case 4: //yellow
-                            ret = 0xc2b51c;
-                            break;
-                        case 5: //lime green
-                            ret = 0x3bbd30;
-                            break;
-                        case 6: //pink
-                            ret = 0xd9849b;
-                            break;
-                        case 7: //dark gray
-                            ret = 0x434343;
-                            break;
-                        case 8: //light gray
-                            ret = 0x9ea6a6;
-                            break;
-                        case 9: //cyan
-                            ret = 0x277596;
-                            break;
-                        case 10: //purple
-                            ret = 0x8136c4;
-                            break;
-                        case 11: //blue
-                            ret = 0x27339a;
-                            break;
-                        case 12: //brown
-                            ret = 0x56331c;
-                            break;
-                        case 13: //green
-                            ret = 0x384d18;
-                            break;
-                        case 14: //red
-                            ret = 0xa42d29;
-                            break;
-                        case 15: //black
-                            ret = 0x1b1717;
-                            break;
-                        default: //white
-                            ret = 0xdfdfdf;
-                            break;
-                    }
-                    break;
-                case 41: //gold block
-                    ret = 0xfbf152;
-                    break;
-                case 42: //iron block
-                    ret = 0xe0e0e0;
-                    break;
-                case 43: //slabs
-                case 44:
-                    switch (damage)
-                    {
-                        case 1: //sandstone
-                        case 9:
-                            ret = 0xdad29f;
-                            break;
-                        case 2: //wood
-                        case 10:
-                            ret = 0xa08250;
-                            break;
-                        case 3: //cobble
-                        case 11:
-                            ret = 0x7c7c7c;
-                            break;
-                        case 4: //brick
-                        case 12:
-                            ret = 0x916052;
-                            break;
-                        case 5: //stone brick
-                        case 13:
-                            ret = 0x7d7d7d;
-                            break;
-                        default: //stone
-                            ret = 0xa3a3a3;
-                            break;
-                    }
-                    break;
-                case 45: //brick
-                case 108:
-                    ret = 0x916052;
-                    break;
-                case 46: //tnt
-                    ret = 0xad5238;
-                    break;
-                case 47: //bookshelve
-                    ret = 0xa08250;
-                    break;
-                case 48: //mossy cobble
-                    ret = 0x697b69;
-                    break;
-                case 49: //obsidian
-                    ret = 0x241351;
-                    break;
-                case 53: //wood stairs
-                    ret = 0xa08250;
-                    break;
-                case 54: //chest
-                    ret = 0x8e6525;
-                    break;
-                case 56: //diamond ore
-                    ret = 0x828f92;
-                    break;
-                case 57: //diamond block
-                    ret = 0x6fdfda;
-                    break;
-                case 58: //workbench
-                    ret = 0x764e2f;
-                    break;
-                case 60: //farmland
-                    ret = 0x724b2d;
-                    break;
-                case 61: //furnace
-                case 62:
-                    ret = 0x676767;
-                    break;
-                case 73: //redstone ore
-                case 74:
-                    ret = 0x866969;
-                    break;
-                case 80: //snow block
-                    ret = 0xf1fcfc;
-                    break;
-                case 79: //ice
-                    ret = 0x7eaeff;
-                    break;
-                case 82: //clay
-                    ret = 0x9fa4b1;
-                    break;
-                case 84: //jukebox
-                    ret = 0x734d39;
-                    break;
-                case 86: //pumpkin
-                case 91:
-                    ret = 0xc27816;
-                    break;
-                case 87: //netherrak
-                    ret = 0x703635;
-                    break;
-                case 88: //soul sand
-                    ret = 0x543f33;
-                    break;
-                case 89: //glowstone
-                    ret = 0x927848;
-                    break;
-                case 98: //stone brick
-                case 109:
-                    ret = 0x7d7d7d;
-                    break;
-                case 99: //huge brown mushroom
-                    ret = 0x8d6a53;
-                    break;
-                case 100: //huge red mushroom
-                    ret = 0xb72725;
-                    break;
-                case 103: //melon
-                    ret = 0x969925;
-                    break;
-                case 110: //mycelium
-                    ret = 0x6f6469;
-                    break;
-                case 112: //nether brick
-                case 114:
-                    ret = 0x2d171b;
-                    break;
-                case 121: //end stone
-                    ret = 0xdddfa5;
-                    break;
-                case 123: //redstone lamp off
-                    ret = 0x865536;
-                    break;
-                case  124: //redstone lamp on
-                    ret = 0xd0a26b;
-                    break;
-                default:
-                    ret = 0x000000;
-                    break;
+                int offset = ((y % 16) * 16 + z) * 16 + x;
+                id = ((byte[])sections[section]["Blocks"])[offset];
+                data = ((byte[])sections[section]["Data"])[offset >> 1];
+                if (offset % 2 == 0)
+                    data = (byte)(data & 0x0F);
+                else
+                    data = (byte)((data >> 4) & 0x0F);
             }
-            return Color.FromArgb(255, Color.FromArgb(ret));
         }
 
         private static Color AddtoColor(Color c, int diff)
@@ -562,6 +261,28 @@ namespace BiomePainter
             else if (blue < 0)
                 blue = 0;
             return Color.FromArgb(c.A, red, green, blue);
+        }
+
+        private static Color Blend(Color c1, Color c2)
+        {
+            if (c2.A == 0)
+                return c1;
+            else if (c1.A == 0)
+                return c2;
+
+            double a1 = c1.A / 255.0;
+            double a2 = c2.A / 255.0;
+            a2 *= (1.0 - a1);
+            double a = a1 + a2;
+
+            int r = (int)(c1.R * a1 + c2.R * a2);
+            int g = (int)(c1.G * a1 + c2.G * a2);
+            int b = (int)(c1.B * a1 + c2.B * a2);
+            a *= 255;
+
+            if (c1.A == 255 || c2.A == 255)
+                a = 255;
+            return Color.FromArgb((int)a, r, g, b);
         }
 
         private static void GetBiome(Object input, long seed, out byte? biomeId, out BiomeUtil biomeGen)
@@ -897,7 +618,7 @@ namespace BiomePainter
             using (Graphics g = Graphics.FromImage(b))
             {
                 g.Clear(Color.Black);
-                g.CompositingMode = CompositingMode.SourceCopy;
+                g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
                 Brush brushFill = new SolidBrush(Color.SlateGray);
                 Brush brushClear = new SolidBrush(Color.Transparent);
                 for (int chunkX = 0; chunkX < 32; chunkX++)

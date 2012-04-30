@@ -57,6 +57,9 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.setChunksInSelectionToBePopulatedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.unsetChunksInSelectionToBePopulatedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.allToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -119,9 +122,8 @@
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.cmbBiomeType = new System.Windows.Forms.ComboBox();
             this.imgRegion = new BitmapSelector.BitmapSelector();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -310,6 +312,8 @@
             this.toolStripSeparator5,
             this.setChunksInSelectionToBePopulatedToolStripMenuItem,
             this.unsetChunksInSelectionToBePopulatedToolStripMenuItem,
+            this.toolStripSeparator8,
+            this.redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem,
             this.toolStripSeparator7,
             this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem,
             this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem});
@@ -372,6 +376,25 @@
             this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Size = new System.Drawing.Size(405, 24);
             this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Text = "Unset Chunks in Selection to be Populated";
             this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Click += new System.EventHandler(this.unsetChunksInSelectionToBePopulatedToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(402, 6);
+            // 
+            // batchFillEntireWorldWithSelectedBiomeToolStripMenuItem
+            // 
+            this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem.Name = "batchFillEntireWorldWithSelectedBiomeToolStripMenuItem";
+            this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem.Size = new System.Drawing.Size(405, 24);
+            this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem.Text = "Batch Fill Entire World with Selected Biome";
+            this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem.Click += new System.EventHandler(this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem_Click);
+            // 
+            // batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem
+            // 
+            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Name = "batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem";
+            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Size = new System.Drawing.Size(405, 24);
+            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Text = "Batch Replace Entire World with Selected Biomes";
+            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Click += new System.EventHandler(this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem_Click);
             // 
             // selectToolStripMenuItem
             // 
@@ -1075,24 +1098,19 @@
             this.imgRegion.CustomBrushClick += new BitmapSelector.BitmapSelector.CustomBrushClickEventHandler(this.imgRegion_CustomBrushClick);
             this.imgRegion.SelectionChanged += new System.EventHandler(this.imgRegion_SelectionChanged);
             // 
-            // toolStripSeparator7
+            // toolStripSeparator8
             // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(402, 6);
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(402, 6);
             // 
-            // batchFillEntireWorldWithSelectedBiomeToolStripMenuItem
+            // redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem
             // 
-            this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem.Name = "batchFillEntireWorldWithSelectedBiomeToolStripMenuItem";
-            this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem.Size = new System.Drawing.Size(405, 24);
-            this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem.Text = "Batch Fill Entire World with Selected Biome";
-            this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem.Click += new System.EventHandler(this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem_Click);
-            // 
-            // batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem
-            // 
-            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Name = "batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem";
-            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Size = new System.Drawing.Size(405, 24);
-            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Text = "Batch Replace Entire World with Selected Biomes";
-            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Click += new System.EventHandler(this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem_Click);
+            this.redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.Checked = true;
+            this.redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.CheckOnClick = true;
+            this.redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.Name = "redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem";
+            this.redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.Size = new System.Drawing.Size(405, 24);
+            this.redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.Text = "Redraw Terrain Map After Each Biome Change";
             // 
             // Form1
             // 
@@ -1237,6 +1255,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem batchFillEntireWorldWithSelectedBiomeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem;
     }
 }
 

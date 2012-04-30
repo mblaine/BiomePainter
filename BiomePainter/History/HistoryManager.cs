@@ -156,7 +156,7 @@ namespace BiomePainter.History
             }
         }
 
-        private void ApplyBiomeState(BiomeAction action, RegionFile region, Bitmap biomeOverlay, ref String[,] tooltips, UpdateStatus updateStatus)
+        private void ApplyBiomeState(BiomeAction action, RegionFile region, Bitmap terrainOverlay, Bitmap biomeOverlay, ref String[,] tooltips, UpdateStatus updateStatus)
         {
             foreach (ChunkState state in action.Chunks)
             {
@@ -166,6 +166,11 @@ namespace BiomePainter.History
                 ((TAG_Byte_Array)c.Root["Level"]["Biomes"]).Payload = (byte[])state.Biomes.Clone();
             }
             tooltips = new String[biomeOverlay.Width, biomeOverlay.Height];
+            if (terrainOverlay != null)
+            {
+                updateStatus("Generating terrain map");
+                RegionUtil.RenderRegion(region, terrainOverlay);
+            }
             updateStatus("Generating biome map");
             RegionUtil.RenderRegionBiomes(region, biomeOverlay, tooltips);
             updateStatus("");
@@ -187,7 +192,7 @@ namespace BiomePainter.History
             RegionUtil.RenderRegionChunkstobePopulated(region, populateOverlay);
         }
 
-        public void Undo(Bitmap selection, RegionFile region, Bitmap biomeOverlay, ref String[,] tooltips, Bitmap populateOverlay, UpdateStatus updateStatus)
+        public void Undo(Bitmap selection, RegionFile region, Bitmap terrainOverlay, Bitmap biomeOverlay, ref String[,] tooltips, Bitmap populateOverlay, UpdateStatus updateStatus)
         {
             IAction previous = GetPreviousAction();
             if (previous == null)
@@ -202,7 +207,7 @@ namespace BiomePainter.History
             }
             else if (previous is BiomeAction)
             {
-                ApplyBiomeState((BiomeAction)previous, region, biomeOverlay, ref tooltips, updateStatus);
+                ApplyBiomeState((BiomeAction)previous, region, terrainOverlay, biomeOverlay, ref tooltips, updateStatus);
             }
             else if (previous is PopulateAction)
             {
@@ -212,7 +217,7 @@ namespace BiomePainter.History
             MovePrevious();
         }
 
-        public void Redo(Bitmap selection, RegionFile region, Bitmap biomeOverlay, ref String[,] tooltips, Bitmap populateOverlay, UpdateStatus updateStatus)
+        public void Redo(Bitmap selection, RegionFile region, Bitmap terrainOverlay, Bitmap biomeOverlay, ref String[,] tooltips, Bitmap populateOverlay, UpdateStatus updateStatus)
         {
             if (!MoveNext())
                 return;
@@ -227,7 +232,7 @@ namespace BiomePainter.History
             }
             else if (UndoStack.Last.Value is BiomeAction)
             {
-                ApplyBiomeState((BiomeAction)UndoStack.Last.Value, region, biomeOverlay, ref tooltips, updateStatus);
+                ApplyBiomeState((BiomeAction)UndoStack.Last.Value, region, terrainOverlay, biomeOverlay, ref tooltips, updateStatus);
             }
             else if (UndoStack.Last.Value is PopulateAction)
             {

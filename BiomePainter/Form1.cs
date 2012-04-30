@@ -777,7 +777,7 @@ namespace BiomePainter
         private void btnUndo_Click(object sender, EventArgs e)
         {
             String[,] tooltips = imgRegion.ToolTips;
-            history.Undo(imgRegion.Layers[SELECTIONLAYER].Image, region, imgRegion.Layers[BIOMELAYER].Image, ref tooltips, imgRegion.Layers[POPULATELAYER].Image, UpdateStatus);
+            history.Undo(imgRegion.Layers[SELECTIONLAYER].Image, region, redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.Checked ? imgRegion.Layers[MAPLAYER].Image : null, imgRegion.Layers[BIOMELAYER].Image, ref tooltips, imgRegion.Layers[POPULATELAYER].Image, UpdateStatus);
             imgRegion.ToolTips = tooltips;
             imgRegion.Redraw();
         }
@@ -785,7 +785,7 @@ namespace BiomePainter
         private void btnRedo_Click(object sender, EventArgs e)
         {
             String[,] tooltips = imgRegion.ToolTips;
-            history.Redo(imgRegion.Layers[SELECTIONLAYER].Image, region, imgRegion.Layers[BIOMELAYER].Image, ref tooltips, imgRegion.Layers[POPULATELAYER].Image, UpdateStatus);
+            history.Redo(imgRegion.Layers[SELECTIONLAYER].Image, region, redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.Checked ? imgRegion.Layers[MAPLAYER].Image : null, imgRegion.Layers[BIOMELAYER].Image, ref tooltips, imgRegion.Layers[POPULATELAYER].Image, UpdateStatus);
             imgRegion.ToolTips = tooltips;
             imgRegion.Redraw();
         }
@@ -828,6 +828,11 @@ namespace BiomePainter
 
             UpdateStatus("Filling selected area");
             RegionUtil.Fill(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, cmbFill.SelectedItem, world.Seed);
+            if (redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.Checked)
+            {
+                UpdateStatus("Generating terrain map");
+                RegionUtil.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);
+            }
             UpdateStatus("Generating biome map");
             RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
             UpdateStatus("");
@@ -842,6 +847,11 @@ namespace BiomePainter
 
             UpdateStatus("Replacing in selected area");
             RegionUtil.Replace(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, ((BiomeType)cmbReplace1.SelectedItem).ID, cmbReplace2.SelectedItem, world.Seed);
+            if (redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.Checked)
+            {
+                UpdateStatus("Generating terrain map");
+                RegionUtil.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);
+            }
             UpdateStatus("Generating biome map");
             RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
             UpdateStatus("");
@@ -938,6 +948,11 @@ namespace BiomePainter
         {
             if (ClipboardManager.Paste(region, e.MouseX - RegionUtil.OFFSETX, e.MouseY - RegionUtil.OFFSETY))
             {
+                if (redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.Checked)
+                {
+                    UpdateStatus("Generating terrain map");
+                    RegionUtil.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);
+                }
                 UpdateStatus("Generating biome map");
                 RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
                 UpdateStatus("");
