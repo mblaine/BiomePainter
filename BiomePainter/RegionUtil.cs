@@ -16,33 +16,8 @@ namespace BiomePainter
         private const int HEIGHT = 512;
         private static readonly Rectangle CLIP = new Rectangle(OFFSETX, OFFSETY, WIDTH, HEIGHT);
 
-        internal static BiomeType[] Biomes = new BiomeType[256];
-
         private RegionUtil()
         {
-        }
-
-        public static void LoadBiomes(String path)
-        {
-            if (File.Exists(path))
-            {
-                Regex pattern = new Regex(@"^([0-9]+),([^,]+),([0-9a-fA-F]{6})$");
-                String[] lines = File.ReadAllLines(path);
-                foreach (String line in lines)
-                {
-                    Match m = pattern.Match(line);
-                    if (m.Groups.Count == 4)
-                    {
-                        byte id = byte.Parse(m.Groups[1].Value);
-                        if (id >= 0 && id < 255)
-                        {
-                            Biomes[id] = new BiomeType(id, m.Groups[2].Value, Convert.ToInt32(m.Groups[3].Value, 16));
-                        }
-                    }
-                }
-            }
-
-            Biomes[255] = new BiomeType(255, "Unspecified", 0x000000);
         }
 
         private static void RenderSurroundingRegion(RegionFile region, int chunkStartX, int chunkEndX, int chunkStartZ, int chunkEndZ, int offsetX, int offsetY, Bitmap map, Bitmap biomes, String[,] toolTips, Bitmap populate)
@@ -175,10 +150,10 @@ namespace BiomePainter
                 {
                     byte biome = biomes[x + z * 16];
                     Color color;
-                    if (Biomes[biome] != null)
+                    if (BiomeType.Biomes[biome] != null)
                     {
-                        color = Biomes[biome].Color;
-                        toolTips[offsetX + x, offsetY + z] = Biomes[biome].Name;
+                        color = BiomeType.Biomes[biome].Color;
+                        toolTips[offsetX + x, offsetY + z] = BiomeType.Biomes[biome].Name;
                     }
                     else
                     {

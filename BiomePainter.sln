@@ -24,7 +24,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minecraft.F11", "Minecraft.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{C7D34451-191E-4C60-8024-BA383104BF0D}"
 	ProjectSection(SolutionItems) = preProject
-		Biomes.txt = Biomes.txt
 		CHANGELOG.txt = CHANGELOG.txt
 		LICENSE.txt = LICENSE.txt
 		README.txt = README.txt

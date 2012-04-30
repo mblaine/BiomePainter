@@ -135,10 +135,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Biomes.txt">
-      <Link>Biomes.txt</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\CHANGELOG.txt">
       <Link>CHANGELOG.txt</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -155,6 +151,9 @@
     <None Include="Resources\brush-rectangle.png" />
     <None Include="Resources\brush-round.png" />
     <None Include="Resources\brush-square.png" />
+    <Content Include="Biomes.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\icon.ico" />
     <None Include="Resources\save.png" />
     <None Include="Resources\jump.png" />

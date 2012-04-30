@@ -52,8 +52,8 @@ namespace BiomePainter.Clipboard
                     byte biome = Biomes[x, z];
                     if (biome == 255)
                         c = Color.Transparent;
-                    else if (biome >= 0 && biome < 255 && RegionUtil.Biomes[biome] != null)
-                        c = RegionUtil.Biomes[biome].Color;
+                    else if (biome >= 0 && biome < 255 && BiomeType.Biomes[biome] != null)
+                        c = BiomeType.Biomes[biome].Color;
                     b.SetPixel(x, z, c);
                 }
             }

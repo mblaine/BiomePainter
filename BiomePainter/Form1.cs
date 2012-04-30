@@ -48,10 +48,8 @@ namespace BiomePainter
         {
             RegionUtil.RenderChunkBoundaries(imgRegion.Layers[CHUNKLAYER].Image);
 
-            RegionUtil.LoadBiomes(String.Format("{0}{1}Biomes.txt", Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), Path.DirectorySeparatorChar));
-
             List<BiomeType> biomes = new List<BiomeType>();
-            foreach (BiomeType b in RegionUtil.Biomes)
+            foreach (BiomeType b in BiomeType.Biomes)
             {
                 if (b == null || b.ID == 255)
                     continue;
