@@ -532,54 +532,31 @@ namespace BiomePainter
                 chunkOffset = new Coord(c.Coords.X - chunkOffset.X, c.Coords.Z - chunkOffset.Z);
                 chunkOffset.ChunktoAbsolute();
 
-                int[] heightmap = (int[])c.Root["Level"]["HeightMap"];
-                Dictionary<int, TAG_Compound> sections = new Dictionary<int, TAG_Compound>();
+                TAG_Compound[] sections = new TAG_Compound[16];
+                int highest = -1;
                 foreach (TAG t in (TAG[])c.Root["Level"]["Sections"])
                 {
-                    sections.Add((byte)t["Y"], (TAG_Compound)t);
+                    byte index = (byte)t["Y"];
+                    if (index > highest)
+                        highest = index;
+                    sections[index] = (TAG_Compound)t;
                 }
 
                 //chunk exists but all blocks are air
-                if (sections.Count == 0)
-                    continue;
+                if (highest < 0)
+                    return;
+
+                highest = ((highest + 1) * 16) - 1;
 
                 for (int z = 0; z < 16; z++)
                 {
                     for (int x = 0; x < 16; x++)
                     {
-                        int height = heightmap[z * 16 + x];
+                        int y = GetHeight(sections, x, z, highest);
+                        if (y < 0)
+                            continue;
 
-                        //trees runnning into the old height limit in converted worlds
-                        //seem to cause the heightmap entries for its columns to be -128;
-                        if (height < 0)
-                            height = 128;
-
-                        int sectionIndex = (int)Math.Floor((height - 1) / 16.0);
-                        int sectionAboveIndex = (int)Math.Floor(height / 16.0);
-
-                        int block = -1, damage = -1;
-                        if (sections.ContainsKey(sectionIndex))
-                        {
-                            byte[] blocks = (byte[])sections[sectionIndex]["Blocks"];
-                            byte[] data = (byte[])sections[sectionIndex]["Data"];
-                            int blockOffset = ((((height - 1) % 16) * 16 + z) * 16 + x);
-                            block = blocks[blockOffset];
-                            damage = data[(int)Math.Floor(blockOffset / 2.0)];
-                            if (blockOffset % 2 == 0)
-                                damage = (damage >> 4) & 0x0F;
-                            else
-                                damage = damage & 0x0F;
-                        }
-
-                        int blockAbove = block;
-                        if (sections.ContainsKey(sectionAboveIndex))
-                        {
-                            int blockAboveOffset = (((height % 16) * 16 + z) * 16 + x);
-                            byte[] blocksAbove = (byte[])sections[sectionAboveIndex]["Blocks"];
-                            blockAbove = blocksAbove[blockAboveOffset];
-                        }
-
-                        if(ids.Contains(blockAbove) || (blockAbove == 0 && ids.Contains(block)))
+                        if (ids.Contains(GetBlock(sections, x, y, z)))
                         {
                             b.SetPixel(OFFSETX + chunkOffset.X + x, OFFSETY + chunkOffset.Z + z, add ? selectionColor : Color.Transparent);
                         }
