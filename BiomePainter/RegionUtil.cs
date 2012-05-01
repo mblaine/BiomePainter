@@ -73,6 +73,13 @@ namespace BiomePainter
 
             }
 
+            if (c.ManualHeightmap == null)
+            {
+                c.ManualHeightmap = new int[256];
+                for (int i = 0; i < c.ManualHeightmap.Length; i++)
+                    c.ManualHeightmap[i] = -1;
+            }
+
             //chunk exists but all blocks are air
             if (highest < 0)
                 return;
@@ -83,7 +90,15 @@ namespace BiomePainter
             {
                 for (int x = 0; x < 16; x++)
                 {
-                    int y = GetHeight(sections, x, z, highest);
+                    int y;
+                    if (c.ManualHeightmap[x + z * 16] >= 0)
+                        y = c.ManualHeightmap[x + z * 16];
+                    else
+                    {
+                        y = GetHeight(sections, x, z, highest);
+                        c.ManualHeightmap[x + z * 16] = y;
+                    }
+                    
                     if (y < 0)
                         continue;
                     byte id, data;
@@ -552,7 +567,14 @@ namespace BiomePainter
                 {
                     for (int x = 0; x < 16; x++)
                     {
-                        int y = GetHeight(sections, x, z, highest);
+                        int y;
+                        if (c.ManualHeightmap[x + z * 16] >= 0)
+                            y = c.ManualHeightmap[x + z * 16];
+                        else
+                        {
+                            y = GetHeight(sections, x, z, highest);
+                            c.ManualHeightmap[x + z * 16] = y;
+                        }
                         if (y < 0)
                             continue;
 

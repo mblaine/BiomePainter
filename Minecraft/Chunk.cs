@@ -11,6 +11,7 @@ namespace Minecraft
         public bool Dirty = false;
         public byte CompressionType;
         public byte[] RawData = null;
+        public int[] ManualHeightmap = null;
 
         public override String ToString()
         {
