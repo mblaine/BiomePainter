@@ -1,19 +1,19 @@
 ﻿0;00000000 #air
 1;7e7e7e #stone
-2,31;0,7,9;55773f #grass, tall grass (Ocean)
-2,31;1,16;688f35 #grass, tall grass (Plains)
-2,31;2,8,17;7a8f35 #grass, tall grass (Desert)
-2,31;3,20;638a61 #grass, tall grass (Mountains)
+2,31;0,7,9;62844c #grass, tall grass (Ocean)
+2,31;1,16;65873a #grass, tall grass (Plains)
+2,31;2,8,17;898238 #grass, tall grass (Desert)
+2,31;3,20;60815f #grass, tall grass (Mountains)
 2,31;4,18;4f8c34 #grass, tall grass (Forest)
-2,31;5,19;4d745f #grass, tall grass (Taiga)
-2,31;10,11,12,13;4c7362 #grass, tall grass (Snow)
-2,31;14,15;2b8319 #grass, tall grass (Mushroom)
-2,31;21,22;309916 #grass, tall grass (Jungle)
-2,31;6;39452e #grass, tall grass (Swamp)
-2,31;62a238 #grass, tall grass (default (Forest))
+2,31;5,19;5a8167 #grass, tall grass (Taiga)
+2,31;10,11,12,13;59806a #grass, tall grass (Snow)
+2,31;14,15;389026 #grass, tall grass (Mushroom)
+2,31;21,22;369120 #grass, tall grass (Jungle)
+2,31;6;3c4633 #grass, tall grass (Swamp)
+2,31;4f8c34 #grass, tall grass (default (Forest))
 3;866043 #dirt
 4;7c7c7c #cobble
-5,34,47,64,85,96,107;a08250 #planks, piston extension, wood door, bookshelf, fence, hatch, gate
+5,33:1,34,47,64,85,96,107;a08250 #planks, normal piston up, piston extension (normal/not up), wood door, bookshelf, fence, hatch, gate
 5:1,125:1,126:1,126:9;765834 #pine planks, slabs
 5:2,125:2,126:2,126:10;d4c285 #birch planks, slabs
 5:3,125:3,126:3,126:11;a97b58 #jungle planks, slabs
@@ -35,7 +35,7 @@
 18;4,18;27610b #leaves (Forest)
 18;5,19;2d583a #leaves (Taiga)
 18;10,11,12,13;2b583e #leaves (Snow)
-18;14,15;769000 #leaves (Mushroom)
+18;14,15;076900 #leaves (Mushroom)
 18;21,22;066a00 #leaves (Jungle)
 18;6;1c2c10 #leaves (Swamp)
 18;27610b #leaves (default (Forest))
@@ -46,16 +46,15 @@
 20,102;88ffffff #glass, panes
 21;636f88 #lapis ore
 22;1d46a6 #lapis block
-23;676767 #dispenser
+23,29,33,61,62;676767 #dispenser, piston box (extended/not up), furnace
 24;dad29f #sandstone
 25;6c4734 #noteblock
 26:0,26:1,26:2,26:3;8F0C13 #bed lower half
 26:8,26:9,26:10,26:11;B77C87 #bed higher half
 27;c9b26b #power rail
-29;8d9462 #sticky piston
+29:1,34:9;8d9462 #sticky piston up, extension up
 30;DCDCDC #cobweb
 32;946428 #dead bush
-33;9b8157 #piston
 35:0;dfdfdf #white wool
 35:1;ea8037 #orange
 35:2;bf4cc9 #magenta
@@ -113,7 +112,6 @@
 58;764e2f #workbench
 59;917B0E #wheat/seeds
 60;724b2d #farmland
-61,62;676767 #furnace
 63,68;77a08250 #sign
 65;00a08250 #ladder
 66,28;877c6a #rail, detector rail
@@ -132,7 +130,7 @@
 86,91;c27816 #pumpkin, jack-o-lantern
 87;983936 #netherrack
 88;543f33 #soul sand
-89;927848 #glowstone
+89;EDD118 #glowstone
 90;562d88 #nether portal
 92;e6b6b7 #cake
 93;996D6D #repeater off
