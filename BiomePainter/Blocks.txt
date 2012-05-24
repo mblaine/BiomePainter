@@ -47,7 +47,7 @@
 21;636f88 #lapis ore
 22;1d46a6 #lapis block
 23,29,33,61,62;676767 #dispenser, piston box (extended/not up), furnace
-24;dad29f #sandstone
+24,128;dad29f #sandstone, stairs
 25;6c4734 #noteblock
 26:0,26:1,26:2,26:3;8F0C13 #bed lower half
 26:8,26:9,26:10,26:11;B77C87 #bed higher half
@@ -153,3 +153,6 @@
 122;281132 #dragon egg
 123;865536 #redstone lamp off
 124;d0a26b #redstone lamp on
+127;a96f20 #cocoa plant
+129;728376 #emerald ore
+130;2f3c43 #ender chest
