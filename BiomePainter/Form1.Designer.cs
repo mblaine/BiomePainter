@@ -46,6 +46,10 @@
             this.overworldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.netherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.endToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuRecentWorlds = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuRecentWorldsSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.menuClearRecentWorlds = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,6 +61,8 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.setChunksInSelectionToBePopulatedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.unsetChunksInSelectionToBePopulatedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuRedrawTerrainMap = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -122,8 +128,6 @@
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.cmbBiomeType = new System.Windows.Forms.ComboBox();
             this.imgRegion = new BitmapSelector.BitmapSelector();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -164,6 +168,8 @@
             this.overworldToolStripMenuItem,
             this.netherToolStripMenuItem,
             this.endToolStripMenuItem,
+            this.toolStripSeparator9,
+            this.menuRecentWorlds,
             this.toolStripSeparator6,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -289,6 +295,32 @@
             this.endToolStripMenuItem.Text = "End";
             this.endToolStripMenuItem.Click += new System.EventHandler(this.endToolStripMenuItem_Click);
             // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(276, 6);
+            // 
+            // menuRecentWorlds
+            // 
+            this.menuRecentWorlds.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuRecentWorldsSeparator,
+            this.menuClearRecentWorlds});
+            this.menuRecentWorlds.Name = "menuRecentWorlds";
+            this.menuRecentWorlds.Size = new System.Drawing.Size(279, 24);
+            this.menuRecentWorlds.Text = "Recent &worlds";
+            // 
+            // menuRecentWorldsSeparator
+            // 
+            this.menuRecentWorldsSeparator.Name = "menuRecentWorldsSeparator";
+            this.menuRecentWorldsSeparator.Size = new System.Drawing.Size(225, 6);
+            // 
+            // menuClearRecentWorlds
+            // 
+            this.menuClearRecentWorlds.Name = "menuClearRecentWorlds";
+            this.menuClearRecentWorlds.Size = new System.Drawing.Size(228, 24);
+            this.menuClearRecentWorlds.Text = "&Clear recent worlds list";
+            this.menuClearRecentWorlds.Click += new System.EventHandler(this.menuClearRecentWorlds_Click);
+            // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
@@ -313,7 +345,7 @@
             this.setChunksInSelectionToBePopulatedToolStripMenuItem,
             this.unsetChunksInSelectionToBePopulatedToolStripMenuItem,
             this.toolStripSeparator8,
-            this.redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem,
+            this.menuRedrawTerrainMap,
             this.toolStripSeparator7,
             this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem,
             this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem});
@@ -376,6 +408,20 @@
             this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Size = new System.Drawing.Size(405, 24);
             this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Text = "Unset Chunks in Selection to be Populated";
             this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Click += new System.EventHandler(this.unsetChunksInSelectionToBePopulatedToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(402, 6);
+            // 
+            // menuRedrawTerrainMap
+            // 
+            this.menuRedrawTerrainMap.Checked = true;
+            this.menuRedrawTerrainMap.CheckOnClick = true;
+            this.menuRedrawTerrainMap.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuRedrawTerrainMap.Name = "menuRedrawTerrainMap";
+            this.menuRedrawTerrainMap.Size = new System.Drawing.Size(405, 24);
+            this.menuRedrawTerrainMap.Text = "Redraw Terrain Map After Each Biome Change";
             // 
             // toolStripSeparator7
             // 
@@ -1098,20 +1144,6 @@
             this.imgRegion.CustomBrushClick += new BitmapSelector.BitmapSelector.CustomBrushClickEventHandler(this.imgRegion_CustomBrushClick);
             this.imgRegion.SelectionChanged += new System.EventHandler(this.imgRegion_SelectionChanged);
             // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(402, 6);
-            // 
-            // redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem
-            // 
-            this.redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.Checked = true;
-            this.redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.CheckOnClick = true;
-            this.redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.Name = "redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem";
-            this.redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.Size = new System.Drawing.Size(405, 24);
-            this.redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.Text = "Redraw Terrain Map After Each Biome Change";
-            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1256,7 +1288,11 @@
         private System.Windows.Forms.ToolStripMenuItem batchFillEntireWorldWithSelectedBiomeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.ToolStripMenuItem redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuRedrawTerrainMap;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripMenuItem menuRecentWorlds;
+        private System.Windows.Forms.ToolStripSeparator menuRecentWorldsSeparator;
+        private System.Windows.Forms.ToolStripMenuItem menuClearRecentWorlds;
     }
 }
 

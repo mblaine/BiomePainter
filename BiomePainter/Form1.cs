@@ -46,6 +46,9 @@ namespace BiomePainter
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.menuRedrawTerrainMap.Checked = Settings.RedrawTerrainMap;
+            FillRecentWorldsList();
+
             RegionUtil.RenderChunkBoundaries(imgRegion.Layers[CHUNKLAYER].Image);
 
             List<BiomeType> biomes = new List<BiomeType>();
@@ -87,6 +90,11 @@ namespace BiomePainter
         {
             if (!SaveIfNecessary())
                 e.Cancel = true;
+            else
+            {
+                Settings.RedrawTerrainMap = this.menuRedrawTerrainMap.Checked;
+                Settings.Save();
+            }
         }
 
         private void ResetControls()
@@ -179,6 +187,55 @@ namespace BiomePainter
 
         }
 
+        private void FillRecentWorldsList(bool justClear = false)
+        {
+            for (int i = menuRecentWorlds.DropDownItems.Count - 1; i >= 0; i--)
+            {
+                if (menuRecentWorlds.DropDownItems[i] != menuRecentWorldsSeparator && menuRecentWorlds.DropDownItems[i] != menuClearRecentWorlds)
+                    menuRecentWorlds.DropDownItems.RemoveAt(i);
+            }
+
+            if (justClear)
+            {
+                Settings.ClearRecentWorlds();
+                return;
+            }
+
+            List<String> worlds = new List<string>();
+
+            for (int i = 0; i < Settings.RecentWorlds.Count; i++)
+            {
+                worlds.Add(String.Format("&{0} {1} ({2})", worlds.Count + 1, Regex.Replace(Settings.RecentWorlds[i].Path, @"^.*([\/\\][^\/\\]+[\/\\]level.dat)$", "...$1"), Settings.RecentWorlds[i].Name));
+            }
+
+            for (int i = 0; i < worlds.Count; i++)
+            {
+                menuRecentWorlds.DropDownItems.Insert(i, new ToolStripMenuItem(worlds[i], null, menuRecentWorldItem_Click));
+            }
+
+        }
+
+        public void OpenWorld(String path)
+        {
+            ResetControls();
+
+            lastPath = Path.GetDirectoryName(path);
+            world = new World(path);
+
+            String[] regions = world.GetRegionPaths();
+            if (regions.Length == 0)
+            {
+                MessageBox.Show(this, "No region files (*.mca) found. Be sure to convert a world to the Anvil format by first opening it in Minecraft 1.2 or later.", "Open", MessageBoxButtons.OK);
+                world = null;
+                return;
+            }
+            foreach (String r in regions)
+                lstRegions.Items.Add(RegionFile.ToString(r));
+
+            Settings.AddRecentWorld(path, world.WorldName);
+            FillRecentWorldsList();
+        }
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             switch (keyData)
@@ -224,20 +281,7 @@ namespace BiomePainter
             if (dialog.ShowDialog() != DialogResult.OK)
                 return;
 
-            ResetControls();
-
-            lastPath = Path.GetDirectoryName(dialog.FileName);
-            world = new World(dialog.FileName);
-
-            String[] regions = world.GetRegionPaths();
-            if (regions.Length == 0)
-            {
-                MessageBox.Show(this, "No region files (*.mca) found. Be sure to convert a world to the Anvil format by first opening it in Minecraft 1.2 or later.", "Open", MessageBoxButtons.OK);
-                world = null;
-                return;
-            }
-            foreach(String r in regions)
-                lstRegions.Items.Add(RegionFile.ToString(r));
+            OpenWorld(dialog.FileName);
         }
 
         private void closeWorldToolStripMenuItem_Click(object sender, EventArgs e)
@@ -311,6 +355,21 @@ namespace BiomePainter
         private void endToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SwitchDimension(Dimension.End);
+        }
+
+        private void menuClearRecentWorlds_Click(object sender, EventArgs e)
+        {
+            FillRecentWorldsList(true);
+        }
+
+        private void menuRecentWorldItem_Click(object sender, EventArgs e)
+        {
+            if (!SaveIfNecessary())
+                return;
+
+            ToolStripMenuItem item = (ToolStripMenuItem)sender;
+            int index = int.Parse(Regex.Match(item.Text, @"^&(\d+) ").Groups[1].Value) - 1;
+            OpenWorld(Settings.RecentWorlds[index].Path);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -777,7 +836,7 @@ namespace BiomePainter
         private void btnUndo_Click(object sender, EventArgs e)
         {
             String[,] tooltips = imgRegion.ToolTips;
-            history.Undo(imgRegion.Layers[SELECTIONLAYER].Image, region, redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.Checked ? imgRegion.Layers[MAPLAYER].Image : null, imgRegion.Layers[BIOMELAYER].Image, ref tooltips, imgRegion.Layers[POPULATELAYER].Image, UpdateStatus);
+            history.Undo(imgRegion.Layers[SELECTIONLAYER].Image, region, menuRedrawTerrainMap.Checked ? imgRegion.Layers[MAPLAYER].Image : null, imgRegion.Layers[BIOMELAYER].Image, ref tooltips, imgRegion.Layers[POPULATELAYER].Image, UpdateStatus);
             imgRegion.ToolTips = tooltips;
             imgRegion.Redraw();
         }
@@ -785,7 +844,7 @@ namespace BiomePainter
         private void btnRedo_Click(object sender, EventArgs e)
         {
             String[,] tooltips = imgRegion.ToolTips;
-            history.Redo(imgRegion.Layers[SELECTIONLAYER].Image, region, redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.Checked ? imgRegion.Layers[MAPLAYER].Image : null, imgRegion.Layers[BIOMELAYER].Image, ref tooltips, imgRegion.Layers[POPULATELAYER].Image, UpdateStatus);
+            history.Redo(imgRegion.Layers[SELECTIONLAYER].Image, region, menuRedrawTerrainMap.Checked ? imgRegion.Layers[MAPLAYER].Image : null, imgRegion.Layers[BIOMELAYER].Image, ref tooltips, imgRegion.Layers[POPULATELAYER].Image, UpdateStatus);
             imgRegion.ToolTips = tooltips;
             imgRegion.Redraw();
         }
@@ -828,7 +887,7 @@ namespace BiomePainter
 
             UpdateStatus("Filling selected area");
             RegionUtil.Fill(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, cmbFill.SelectedItem, world.Seed);
-            if (redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.Checked)
+            if (menuRedrawTerrainMap.Checked)
             {
                 UpdateStatus("Generating terrain map");
                 RegionUtil.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);
@@ -847,7 +906,7 @@ namespace BiomePainter
 
             UpdateStatus("Replacing in selected area");
             RegionUtil.Replace(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, ((BiomeType)cmbReplace1.SelectedItem).ID, cmbReplace2.SelectedItem, world.Seed);
-            if (redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.Checked)
+            if (menuRedrawTerrainMap.Checked)
             {
                 UpdateStatus("Generating terrain map");
                 RegionUtil.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);
@@ -948,7 +1007,7 @@ namespace BiomePainter
         {
             if (ClipboardManager.Paste(region, e.MouseX - RegionUtil.OFFSETX, e.MouseY - RegionUtil.OFFSETY))
             {
-                if (redrawTerrainMapAfterEachBiomeChangeToolStripMenuItem.Checked)
+                if (menuRedrawTerrainMap.Checked)
                 {
                     UpdateStatus("Generating terrain map");
                     RegionUtil.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);

@@ -10,6 +10,7 @@ namespace Minecraft
     {
         public long Seed;
         public String WorldDir;
+        public String WorldName;
         private int Version;
 
         public World(String path)
@@ -29,6 +30,7 @@ namespace Minecraft
 
             Seed = (long)data["Data"]["RandomSeed"];
             Version = (int)data["Data"]["version"];
+            WorldName = (String)data["Data"]["LevelName"];
             WorldDir = Path.GetDirectoryName(path);
         }
 
