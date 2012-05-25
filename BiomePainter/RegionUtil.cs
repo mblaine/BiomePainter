@@ -86,6 +86,9 @@ namespace BiomePainter
 
             highest = ((highest + 1) * 16) - 1;
 
+            TAG biomes = null;
+            c.Root["Level"].TryGetValue("Biomes", out biomes);
+
             for (int z = 0; z < 16; z++)
             {
                 for (int x = 0; x < 16; x++)
@@ -103,7 +106,7 @@ namespace BiomePainter
                         continue;
                     byte id, data;
                     GetBlock(sections, x, y, z, out id, out data);
-                    byte biome = ((byte[])c.Root["Level"]["Biomes"])[x + z * 16];
+                    byte biome = biomes != null? ((byte[])biomes)[x + z * 16] : (byte)Biome.Unspecified;
 
                     Color color = ColorPalette.Lookup(id, data, biome);
 
@@ -146,26 +149,41 @@ namespace BiomePainter
 
         private static void RenderChunkBiomes(Chunk c, Bitmap b, String[,] toolTips, int offsetX, int offsetY)
         {
-            byte[] biomes = (byte[])c.Root["Level"]["Biomes"];
-
-            for (int z = 0; z < 16; z++)
+            TAG t = null;
+            if (c.Root["Level"].TryGetValue("Biomes", out t))
             {
-                for (int x = 0; x < 16; x++)
-                {
-                    byte biome = biomes[x + z * 16];
-                    Color color;
-                    if (BiomeType.Biomes[biome] != null)
-                    {
-                        color = BiomeType.Biomes[biome].Color;
-                        toolTips[offsetX + x, offsetY + z] = BiomeType.Biomes[biome].Name;
-                    }
-                    else
-                    {
-                        color = Color.Black;
-                        toolTips[offsetX + x, offsetY + z] = String.Format("Unknown biome: {0}", biome);
-                    }
-                    b.SetPixel(offsetX + x, offsetY + z, color);
+                byte[] biomes = (byte[])t;
 
+                for (int z = 0; z < 16; z++)
+                {
+                    for (int x = 0; x < 16; x++)
+                    {
+                        byte biome = biomes[x + z * 16];
+                        Color color;
+                        if (BiomeType.Biomes[biome] != null)
+                        {
+                            color = BiomeType.Biomes[biome].Color;
+                            toolTips[offsetX + x, offsetY + z] = BiomeType.Biomes[biome].Name;
+                        }
+                        else
+                        {
+                            color = Color.Black;
+                            toolTips[offsetX + x, offsetY + z] = String.Format("Unknown biome: {0}", biome);
+                        }
+                        b.SetPixel(offsetX + x, offsetY + z, color);
+
+                    }
+                }
+            }
+            else
+            {
+                for (int z = 0; z < 16; z++)
+                {
+                    for (int x = 0; x < 16; x++)
+                    {
+                        toolTips[offsetX + x, offsetY + z] = BiomeType.Biomes[(int)Biome.Unspecified].Name;
+                        b.SetPixel(offsetX + x, offsetY + z, BiomeType.Biomes[(int)Biome.Unspecified].Color);
+                    }
                 }
             }
         }

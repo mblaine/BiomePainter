@@ -43,6 +43,11 @@ namespace Minecraft
             }
         }
 
+        public virtual bool TryGetValue(String key, out TAG value)
+        {
+            throw new NotImplementedException("Indexing only possible with TAG_Compound");
+        }
+
         public static explicit operator byte(TAG tag)
         {
             if (tag is TAG_Byte)
@@ -862,6 +867,20 @@ namespace Minecraft
                 }
                 Payload[key] = value;
             }
+        }
+
+        public override bool TryGetValue(String key, out TAG value)
+        {
+            if (IsRoot && (!IsNamed || Name.Length.Payload == 0) && Payload.Count == 1)
+            {
+                var temp = Payload.GetEnumerator();
+                temp.MoveNext();
+                if (temp.Current.Value is TAG_Compound)
+                {
+                    return temp.Current.Value.TryGetValue(key, out value);
+                }
+            }
+            return Payload.TryGetValue(key, out value);
         }
 
         public override void Read(Stream data)
