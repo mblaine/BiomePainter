@@ -197,8 +197,12 @@ namespace BiomePainter
 
             if (justClear)
             {
-                Settings.ClearRecentWorlds();
-                return;
+                DialogResult res = MessageBox.Show(this, "Are you sure you want to clear the list of recent worlds?", "Clear", MessageBoxButtons.YesNo, MessageBoxIcon.None, MessageBoxDefaultButton.Button2);
+                if (res == DialogResult.Yes)
+                {
+                    Settings.ClearRecentWorlds();
+                    return;
+                }
             }
 
             List<String> worlds = new List<string>();
@@ -368,8 +372,18 @@ namespace BiomePainter
                 return;
 
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
-            int index = int.Parse(Regex.Match(item.Text, @"^&(\d+) ").Groups[1].Value) - 1;
-            OpenWorld(Settings.RecentWorlds[index].Path);
+            String path = Settings.RecentWorlds[int.Parse(Regex.Match(item.Text, @"^&(\d+) ").Groups[1].Value) - 1].Path;
+            if (File.Exists(path))
+                OpenWorld(path);
+            else
+            {
+                DialogResult res = MessageBox.Show(this, String.Format("Unable to open \"{0}\", file not found. Would you like to remove it from the recent worlds list?", path), "Open", MessageBoxButtons.YesNo, MessageBoxIcon.None, MessageBoxDefaultButton.Button2);
+                if (res == DialogResult.Yes)
+                {
+                    Settings.RemoveRecentWorld(path);
+                    FillRecentWorldsList();
+                }
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

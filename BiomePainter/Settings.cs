@@ -136,5 +136,14 @@ namespace BiomePainter
             if (recentWorlds.Count > MAXWORLDS)
                 recentWorlds.RemoveRange(MAXWORLDS, recentWorlds.Count - MAXWORLDS);
         }
+
+        public static void RemoveRecentWorld(String path)
+        {
+            for (int i = recentWorlds.Count - 1; i > 0; i--)
+            {
+                if (recentWorlds[i].Path == path)
+                    recentWorlds.RemoveAt(i);
+            }
+        }
     }
 }
