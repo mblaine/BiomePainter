@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using Minecraft;
 
 namespace BiomePainter
 {
@@ -81,11 +82,11 @@ namespace BiomePainter
             String idBiome = String.Format("{0}b{1}", block, biome);
             String id = block.ToString();
 
-            if (blockTable.ContainsKey(idDataBiome))
+            if (biome != (byte)Biome.Unspecified && blockTable.ContainsKey(idDataBiome))
                 return blockTable[idDataBiome];
             else if (blockTable.ContainsKey(idData))
                 return blockTable[idData];
-            else if (blockTable.ContainsKey(idBiome))
+            else if (biome != (byte)Biome.Unspecified && blockTable.ContainsKey(idBiome))
                 return blockTable[idBiome];
             else if (blockTable.ContainsKey(id))
                 return blockTable[id];

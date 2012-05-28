@@ -106,18 +106,25 @@ namespace BiomePainter
                         continue;
                     byte id, data;
                     GetBlock(sections, x, y, z, out id, out data);
-                    byte biome = biomes != null? ((byte[])biomes)[x + z * 16] : (byte)Biome.Unspecified;
+                    byte biome = (byte)Biome.Unspecified;
+                    if(biomes != null && Settings.BiomeFoliage)
+                        biome = ((byte[])biomes)[x + z * 16];
 
                     Color color = ColorPalette.Lookup(id, data, biome);
 
-                    y--;
-                    while (color.A < 255 && y >= 0)
+                    if (Settings.Transparency)
                     {
-                        GetBlock(sections, x, y, z, out id, out data);
-                        Color c2 = ColorPalette.Lookup(id, data, biome);
-                        color = Blend(color, c2);
                         y--;
+                        while (color.A < 255 && y >= 0)
+                        {
+                            GetBlock(sections, x, y, z, out id, out data);
+                            Color c2 = ColorPalette.Lookup(id, data, biome);
+                            color = Blend(color, c2);
+                            y--;
+                        }
                     }
+                    else
+                        color = Color.FromArgb(255, color.R, color.G, color.B);
 
                     //brighten/darken by height; arbitrary value, but /seems/ to look okay
                     color = AddtoColor(color, (int)(y / 1.7 - 42));

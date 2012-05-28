@@ -20,7 +20,7 @@
 6;408f2f #sapling
 7;323232 #bedrock
 8,9;6;665e86b4 #water (Swamp)
-8,9;665e86ff #water (default (Forest))
+8,9;66265BFB #water (default (Forest))
 10,11;f74700 #lava
 12;dbd3a0 #sand
 13;857d7d #gravel
