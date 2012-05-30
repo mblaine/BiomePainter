@@ -504,6 +504,11 @@ namespace BiomePainter
             Settings.Transparency = menuTransparency.Checked;
         }
 
+        private void openSettingsFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "BiomePainter"));
+        }
+
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try

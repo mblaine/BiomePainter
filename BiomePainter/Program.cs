@@ -45,7 +45,9 @@ namespace BiomePainter
                 using (StreamWriter sw = new StreamWriter(path, true))
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.AppendFormat("{0} version {1} - {2:M/d/yyy h:mm:ss tt}{3}{3}", Assembly.GetExecutingAssembly().Location, FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion, dt, Environment.NewLine);
+                    String assembly = Assembly.GetExecutingAssembly().Location;
+                    sb.AppendFormat("Biome Painter version {0}, modified {1:M/d/yyy h:mm:ss tt}{2}", FileVersionInfo.GetVersionInfo(assembly).FileVersion, File.GetLastWriteTime(assembly), Environment.NewLine);
+                    sb.AppendFormat("Time: {0:M/d/yyy h:mm:ss tt}{1}{1}", dt, Environment.NewLine);
 
                     Regex pattern = new Regex(@"^(.* in )(.*)(\:line.*)$");
                     String[] lines = ex.ToString().Split('\r', '\n');
@@ -70,8 +72,7 @@ namespace BiomePainter
             }
             catch (Exception e)
             {
-                StackTrace st = new StackTrace(e, false);
-                MessageBox.Show("Error saving error log: " + st.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error saving error log: " + e.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

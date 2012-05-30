@@ -130,6 +130,8 @@
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.cmbBiomeType = new System.Windows.Forms.ComboBox();
             this.imgRegion = new BitmapSelector.BitmapSelector();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.openSettingsFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -477,7 +479,9 @@
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuRedrawTerrainMap,
             this.menuBiomeFoliage,
-            this.menuTransparency});
+            this.menuTransparency,
+            this.toolStripSeparator7,
+            this.openSettingsFolderToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(74, 24);
             this.settingsToolStripMenuItem.Text = "Se&ttings";
@@ -489,7 +493,7 @@
             this.menuRedrawTerrainMap.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuRedrawTerrainMap.Name = "menuRedrawTerrainMap";
             this.menuRedrawTerrainMap.Size = new System.Drawing.Size(378, 24);
-            this.menuRedrawTerrainMap.Text = "Re&draw terrain map after each biome change";
+            this.menuRedrawTerrainMap.Text = "&Redraw terrain map after each biome change";
             this.menuRedrawTerrainMap.Click += new System.EventHandler(this.menuRedrawTerrainMap_Click);
             // 
             // menuBiomeFoliage
@@ -499,7 +503,7 @@
             this.menuBiomeFoliage.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuBiomeFoliage.Name = "menuBiomeFoliage";
             this.menuBiomeFoliage.Size = new System.Drawing.Size(378, 24);
-            this.menuBiomeFoliage.Text = "Use biome colors for grass and trees";
+            this.menuBiomeFoliage.Text = "Use &biome colors for grass and trees";
             this.menuBiomeFoliage.Click += new System.EventHandler(this.menuBiomeFoliage_Click);
             // 
             // menuTransparency
@@ -509,7 +513,7 @@
             this.menuTransparency.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuTransparency.Name = "menuTransparency";
             this.menuTransparency.Size = new System.Drawing.Size(378, 24);
-            this.menuTransparency.Text = "Show transparency for blocks";
+            this.menuTransparency.Text = "Show &transparency for blocks";
             this.menuTransparency.ToolTipText = "This may make the terrain map take longer to render.";
             this.menuTransparency.Click += new System.EventHandler(this.menuTransparency_Click);
             // 
@@ -1172,6 +1176,18 @@
             this.imgRegion.CustomBrushClick += new BitmapSelector.BitmapSelector.CustomBrushClickEventHandler(this.imgRegion_CustomBrushClick);
             this.imgRegion.SelectionChanged += new System.EventHandler(this.imgRegion_SelectionChanged);
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(375, 6);
+            // 
+            // openSettingsFolderToolStripMenuItem
+            // 
+            this.openSettingsFolderToolStripMenuItem.Name = "openSettingsFolderToolStripMenuItem";
+            this.openSettingsFolderToolStripMenuItem.Size = new System.Drawing.Size(378, 24);
+            this.openSettingsFolderToolStripMenuItem.Text = "&Open settings folder";
+            this.openSettingsFolderToolStripMenuItem.Click += new System.EventHandler(this.openSettingsFolderToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1323,6 +1339,8 @@
         private System.Windows.Forms.ToolStripMenuItem menuBiomeFoliage;
         private System.Windows.Forms.ToolStripMenuItem menuTransparency;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem openSettingsFolderToolStripMenuItem;
     }
 }
 
