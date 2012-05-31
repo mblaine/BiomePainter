@@ -156,3 +156,6 @@
 127;a96f20 #cocoa plant
 129;728376 #emerald ore
 130;2f3c43 #ender chest
+131;9a8462 #tripwire hook
+132;949595 #tripwire
+133;4fcd73 #emerald block
