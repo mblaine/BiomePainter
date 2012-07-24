@@ -336,6 +336,9 @@ namespace BiomePainter
             {
                 switch ((String)input)
                 {
+                    case "Minecraft Beta 1.3_01":
+                        biomeGen = new Minecraft.B13.MobSpawnerBase(seed);
+                        break;
                     case "Minecraft Beta 1.7.3":
                         biomeGen = new Minecraft.B17.BiomeGenBase(seed);
                         break;

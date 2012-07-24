@@ -112,6 +112,10 @@
       <Project>{CEEE1FCF-DCC6-49C7-AFF1-25C7D8E9A619}</Project>
       <Name>BitmapSelector</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Minecraft.B13\Minecraft.B13.csproj">
+      <Project>{3794538B-B1FE-4F88-AD6E-E5ACE1B3E145}</Project>
+      <Name>Minecraft.B13</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Minecraft.B17\Minecraft.B17.csproj">
       <Project>{E9C6575E-CAFA-482F-87CE-FC9DB81B34B9}</Project>
       <Name>Minecraft.B17</Name>
