@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{64CD1F85-B07E-4B9F-B370-5617A14DD261}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Minecraft.BiomeGen</RootNamespace>
+    <AssemblyName>Minecraft.BiomeGen</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="B13\MobSpawnerBase.cs" />
+    <Compile Include="B13\NoiseGenerator.cs" />
+    <Compile Include="B13\NoiseGenerator2.cs" />
+    <Compile Include="B13\NoiseGeneratorOctaves2.cs" />
+    <Compile Include="B13\WorldChunkManager.cs" />
+    <Compile Include="B17\BiomeGenBase.cs" />
+    <Compile Include="B17\NoiseGenerator.cs" />
+    <Compile Include="B17\NoiseGenerator2.cs" />
+    <Compile Include="B17\NoiseGeneratorOctaves.cs" />
+    <Compile Include="B17\NoiseGeneratorOctaves2.cs" />
+    <Compile Include="B17\NoiseGeneratorPerlin.cs" />
+    <Compile Include="B17\WorldChunkManager.cs" />
+	<Compile Include="B18\BiomeCache.cs" />
+    <Compile Include="B18\BiomeCacheBlock.cs" />
+    <Compile Include="B18\BiomeGenBase.cs" />
+    <Compile Include="B18\GenLayer.cs" />
+    <Compile Include="B18\GenLayerDownfall.cs" />
+    <Compile Include="B18\GenLayerDownfallMix.cs" />
+    <Compile Include="B18\GenLayerIsland.cs" />
+    <Compile Include="B18\GenLayerRiver.cs" />
+    <Compile Include="B18\GenLayerRiverInit.cs" />
+    <Compile Include="B18\GenLayerRiverMix.cs" />
+    <Compile Include="B18\GenLayerSmooth.cs" />
+    <Compile Include="B18\GenLayerSmoothZoom.cs" />
+    <Compile Include="B18\GenLayerTemperature.cs" />
+    <Compile Include="B18\GenLayerTemperatureMix.cs" />
+    <Compile Include="B18\GenLayerVillageLandscape.cs" />
+    <Compile Include="B18\GenLayerZoom.cs" />
+    <Compile Include="B18\GenLayerZoomFuzzy.cs" />
+    <Compile Include="B18\GenLayerZoomVoronoi.cs" />
+    <Compile Include="B18\IntCache.cs" />
+    <Compile Include="B18\LayerIsland.cs" />
+    <Compile Include="B18\LongHashMap.cs" />
+    <Compile Include="B18\LongHashMapEntry.cs" />
+    <Compile Include="B18\WorldChunkManager.cs" />
+	<Compile Include="F10\BiomeCache.cs" />
+    <Compile Include="F10\BiomeCacheBlock.cs" />
+    <Compile Include="F10\BiomeGenBase.cs" />
+    <Compile Include="F10\GenLayer.cs" />
+    <Compile Include="F10\GenLayerDownfall.cs" />
+    <Compile Include="F10\GenLayerDownfallMix.cs" />
+    <Compile Include="F10\GenLayerIsland.cs" />
+    <Compile Include="F10\GenLayerMushroomIsland.cs" />
+    <Compile Include="F10\GenLayerRiver.cs" />
+    <Compile Include="F10\GenLayerRiverInit.cs" />
+    <Compile Include="F10\GenLayerRiverMix.cs" />
+    <Compile Include="F10\GenLayerShore.cs" />
+    <Compile Include="F10\GenLayerSmooth.cs" />
+    <Compile Include="F10\GenLayerSmoothZoom.cs" />
+    <Compile Include="F10\GenLayerSnow.cs" />
+    <Compile Include="F10\GenLayerTemperature.cs" />
+    <Compile Include="F10\GenLayerTemperatureMix.cs" />
+    <Compile Include="F10\GenLayerVillageLandscape.cs" />
+    <Compile Include="F10\GenLayerZoom.cs" />
+    <Compile Include="F10\GenLayerZoomFuzzy.cs" />
+    <Compile Include="F10\GenLayerZoomVoronoi.cs" />
+    <Compile Include="F10\IntCache.cs" />
+    <Compile Include="F10\LayerIsland.cs" />
+    <Compile Include="F10\LongHashMap.cs" />
+    <Compile Include="F10\LongHashMapEntry.cs" />
+    <Compile Include="F10\WorldChunkManager.cs" />
+    <Compile Include="F11\BiomeCache.cs" />
+    <Compile Include="F11\BiomeCacheBlock.cs" />
+    <Compile Include="F11\BiomeGenBase.cs" />
+    <Compile Include="F11\GenLayer.cs" />
+    <Compile Include="F11\GenLayerDownfall.cs" />
+    <Compile Include="F11\GenLayerDownfallMix.cs" />
+    <Compile Include="F11\GenLayerHills.cs" />
+    <Compile Include="F11\GenLayerIsland.cs" />
+    <Compile Include="F11\GenLayerMushroomIsland.cs" />
+    <Compile Include="F11\GenLayerRiver.cs" />
+    <Compile Include="F11\GenLayerRiverInit.cs" />
+    <Compile Include="F11\GenLayerRiverMix.cs" />
+    <Compile Include="F11\GenLayerShore.cs" />
+    <Compile Include="F11\GenLayerSmooth.cs" />
+    <Compile Include="F11\GenLayerSmoothZoom.cs" />
+    <Compile Include="F11\GenLayerSnow.cs" />
+    <Compile Include="F11\GenLayerSwampRivers.cs" />
+    <Compile Include="F11\GenLayerTemperature.cs" />
+    <Compile Include="F11\GenLayerTemperatureMix.cs" />
+    <Compile Include="F11\GenLayerVillageLandscape.cs" />
+    <Compile Include="F11\GenLayerZoom.cs" />
+    <Compile Include="F11\GenLayerZoomFuzzy.cs" />
+    <Compile Include="F11\GenLayerZoomVoronoi.cs" />
+    <Compile Include="F11\IntCache.cs" />
+    <Compile Include="F11\LayerIsland.cs" />
+    <Compile Include="F11\LongHashMap.cs" />
+    <Compile Include="F11\LongHashMapEntry.cs" />
+    <Compile Include="F11\WorldChunkManager.cs" />
+    <Compile Include="F12\BiomeCache.cs" />
+    <Compile Include="F12\BiomeCacheBlock.cs" />
+    <Compile Include="F12\BiomeGenBase.cs" />
+    <Compile Include="F12\GenLayer.cs" />
+    <Compile Include="F12\GenLayerAddIsland.cs" />
+    <Compile Include="F12\GenLayerAddMushroomIsland.cs" />
+    <Compile Include="F12\GenLayerAddSnow.cs" />
+    <Compile Include="F12\GenLayerBiome.cs" />
+    <Compile Include="F12\GenLayerFuzzyZoom.cs" />
+    <Compile Include="F12\GenLayerHills.cs" />
+    <Compile Include="F12\GenLayerIsland.cs" />
+    <Compile Include="F12\GenLayerRiver.cs" />
+    <Compile Include="F12\GenLayerRiverInit.cs" />
+    <Compile Include="F12\GenLayerRiverMix.cs" />
+    <Compile Include="F12\GenLayerShore.cs" />
+    <Compile Include="F12\GenLayerSmooth.cs" />
+    <Compile Include="F12\GenLayerSwampRivers.cs" />
+    <Compile Include="F12\GenLayerVoronoiZoom.cs" />
+    <Compile Include="F12\GenLayerZoom.cs" />
+    <Compile Include="F12\IntCache.cs" />
+    <Compile Include="F12\LongHashMap.cs" />
+    <Compile Include="F12\LongHashMapEntry.cs" />
+    <Compile Include="F12\WorldChunkManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Minecraft\Minecraft.csproj">
+      <Project>{973C46F6-1CF8-402B-BBAC-74999E3D2900}</Project>
+      <Name>Minecraft</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

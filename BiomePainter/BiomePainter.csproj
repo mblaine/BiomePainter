@@ -57,6 +57,15 @@
       <DependentUpon>Batch.cs</DependentUpon>
     </Compile>
     <Compile Include="BiomeType.cs" />
+    <Compile Include="BitmapSelector\BitmapSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BitmapSelector\BitmapSelector.Designer.cs">
+      <DependentUpon>BitmapSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BitmapSelector\BrushType.cs" />
+    <Compile Include="BitmapSelector\EventArgs.cs" />
+    <Compile Include="BitmapSelector\Layer.cs" />
     <Compile Include="Clipboard\BiomeCopy.cs" />
     <Compile Include="Clipboard\ClipboardManager.cs" />
     <Compile Include="ColorPalette.cs" />
@@ -84,6 +93,9 @@
     <EmbeddedResource Include="Batch.resx">
       <DependentUpon>Batch.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BitmapSelector\BitmapSelector.resx">
+      <DependentUpon>BitmapSelector.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -108,33 +120,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BitmapSelector\BitmapSelector.csproj">
-      <Project>{CEEE1FCF-DCC6-49C7-AFF1-25C7D8E9A619}</Project>
-      <Name>BitmapSelector</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Minecraft.B13\Minecraft.B13.csproj">
-      <Project>{3794538B-B1FE-4F88-AD6E-E5ACE1B3E145}</Project>
-      <Name>Minecraft.B13</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Minecraft.B17\Minecraft.B17.csproj">
-      <Project>{E9C6575E-CAFA-482F-87CE-FC9DB81B34B9}</Project>
-      <Name>Minecraft.B17</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Minecraft.B18\Minecraft.B18.csproj">
-      <Project>{22BEDDF9-7578-475B-A2DF-9CA0FB60EC7A}</Project>
-      <Name>Minecraft.B18</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Minecraft.F10\Minecraft.F10.csproj">
-      <Project>{5B006CEA-8025-48BD-9AD5-111AD0C1F877}</Project>
-      <Name>Minecraft.F10</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Minecraft.F11\Minecraft.F11.csproj">
-      <Project>{D16E3586-17A5-4C63-AB10-625F57803524}</Project>
-      <Name>Minecraft.F11</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Minecraft.F12\Minecraft.F12.csproj">
-      <Project>{81119EC7-5966-43C0-98DF-F3AB25BA90E6}</Project>
-      <Name>Minecraft.F12</Name>
+    <ProjectReference Include="..\Minecraft.BiomeGen\Minecraft.BiomeGen.csproj">
+      <Project>{64CD1F85-B07E-4B9F-B370-5617A14DD261}</Project>
+      <Name>Minecraft.BiomeGen</Name>
     </ProjectReference>
     <ProjectReference Include="..\Minecraft\Minecraft.csproj">
       <Project>{973C46F6-1CF8-402B-BBAC-74999E3D2900}</Project>
