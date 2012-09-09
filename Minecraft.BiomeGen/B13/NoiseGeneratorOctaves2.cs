@@ -1,5 +1,5 @@
 ﻿
-namespace Minecraft.B13
+namespace Minecraft.BiomeGen.B13
 {
     public class NoiseGeneratorOctaves2
     {

@@ -1,4 +1,4 @@
-﻿namespace BitmapSelector
+﻿namespace BiomePainter.BitmapSelector
 {
     partial class BitmapSelector
     {

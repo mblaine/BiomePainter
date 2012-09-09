@@ -1,5 +1,5 @@
 ﻿
-namespace Minecraft.F12
+namespace Minecraft.BiomeGen.F12
 {
     public class GenLayerIsland : GenLayer
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace BitmapSelector
+namespace BiomePainter.BitmapSelector
 {
     public class Layer : IDisposable
     {

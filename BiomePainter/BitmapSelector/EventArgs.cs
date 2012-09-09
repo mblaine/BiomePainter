@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BitmapSelector
+namespace BiomePainter.BitmapSelector
 {
     public class ZoomEventArgs : EventArgs
     {

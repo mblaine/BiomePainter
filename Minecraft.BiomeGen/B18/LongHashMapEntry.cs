@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Minecraft.B18
+namespace Minecraft.BiomeGen.B18
 {
     public class LongHashMapEntry
     {

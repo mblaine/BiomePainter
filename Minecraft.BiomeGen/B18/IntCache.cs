@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace Minecraft.B18
+namespace Minecraft.BiomeGen.B18
 {
     public class IntCache
     {

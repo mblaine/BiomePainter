@@ -129,7 +129,7 @@
             this.cmbBlockType = new System.Windows.Forms.ComboBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.cmbBiomeType = new System.Windows.Forms.ComboBox();
-            this.imgRegion = new BitmapSelector.BitmapSelector();
+            this.imgRegion = new BiomePainter.BitmapSelector.BitmapSelector();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.openSettingsFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
@@ -1171,9 +1171,9 @@
             this.imgRegion.SelectionBounds = new System.Drawing.Rectangle(32, 32, 512, 512);
             this.imgRegion.Size = new System.Drawing.Size(576, 576);
             this.imgRegion.TabIndex = 2;
-            this.imgRegion.ZoomEvent += new BitmapSelector.BitmapSelector.ZoomEventHandler(this.imgRegion_ZoomEvent);
-            this.imgRegion.BrushDiameterChanged += new BitmapSelector.BitmapSelector.BrushDiameterEventHandler(this.imgRegion_BrushDiameterChanged);
-            this.imgRegion.CustomBrushClick += new BitmapSelector.BitmapSelector.CustomBrushClickEventHandler(this.imgRegion_CustomBrushClick);
+            this.imgRegion.ZoomEvent += new BiomePainter.BitmapSelector.BitmapSelector.ZoomEventHandler(this.imgRegion_ZoomEvent);
+            this.imgRegion.BrushDiameterChanged += new BiomePainter.BitmapSelector.BitmapSelector.BrushDiameterEventHandler(this.imgRegion_BrushDiameterChanged);
+            this.imgRegion.CustomBrushClick += new BiomePainter.BitmapSelector.BitmapSelector.CustomBrushClickEventHandler(this.imgRegion_CustomBrushClick);
             this.imgRegion.SelectionChanged += new System.EventHandler(this.imgRegion_SelectionChanged);
             // 
             // toolStripSeparator7
@@ -1243,7 +1243,7 @@
         private System.Windows.Forms.ToolStripMenuItem openWorldToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ListBox lstRegions;
-        private BitmapSelector.BitmapSelector imgRegion;
+        private BiomePainter.BitmapSelector.BitmapSelector imgRegion;
         private System.Windows.Forms.CheckBox chkShowMap;
         private System.Windows.Forms.CheckBox chkShowBiomes;
         private System.Windows.Forms.CheckBox chkShowSelection;

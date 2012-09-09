@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using BiomePainter.Clipboard;
 using BiomePainter.History;
-using BitmapSelector;
+using BiomePainter.BitmapSelector;
 using Minecraft;
 
 namespace BiomePainter
@@ -38,10 +38,10 @@ namespace BiomePainter
             InitializeComponent();
             SELECTIONLAYER = imgRegion.SelectionLayerIndex;
             BRUSHLAYER = imgRegion.BrushLayerIndex;
-            POPULATELAYER = imgRegion.AddLayer(new BitmapSelector.Layer(imgRegion.Width, imgRegion.Height, 0.6f, false, false)); //chunks to be populated
-            CHUNKLAYER = imgRegion.AddLayer(new BitmapSelector.Layer(imgRegion.Width, imgRegion.Height, 0.3f, true, false)); //chunk boundaries
-            BIOMELAYER = imgRegion.AddLayer(new BitmapSelector.Layer(imgRegion.Width, imgRegion.Height, 0.5f)); //biome
-            MAPLAYER = imgRegion.AddLayer(new BitmapSelector.Layer(imgRegion.Width, imgRegion.Height, 1.0f)); //map
+            POPULATELAYER = imgRegion.AddLayer(new Layer(imgRegion.Width, imgRegion.Height, 0.6f, false, false)); //chunks to be populated
+            CHUNKLAYER = imgRegion.AddLayer(new Layer(imgRegion.Width, imgRegion.Height, 0.3f, true, false)); //chunk boundaries
+            BIOMELAYER = imgRegion.AddLayer(new Layer(imgRegion.Width, imgRegion.Height, 0.5f)); //biome
+            MAPLAYER = imgRegion.AddLayer(new Layer(imgRegion.Width, imgRegion.Height, 1.0f)); //map
         }
 
         private void Form1_Load(object sender, EventArgs e)

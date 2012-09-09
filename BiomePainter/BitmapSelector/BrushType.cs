@@ -1,5 +1,5 @@
 ﻿
-namespace BitmapSelector
+namespace BiomePainter.BitmapSelector
 {
     public enum BrushType
     {

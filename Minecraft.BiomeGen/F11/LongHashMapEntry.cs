@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Minecraft.F11
+namespace Minecraft.BiomeGen.F11
 {
     public class LongHashMapEntry
     {

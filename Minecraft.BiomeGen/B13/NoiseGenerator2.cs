@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Minecraft.B13
+namespace Minecraft.BiomeGen.B13
 {
     class NoiseGenerator2
     {

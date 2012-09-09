@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-namespace Minecraft.F10
+namespace Minecraft.BiomeGen.F10
 {
     public class BiomeCache
     {

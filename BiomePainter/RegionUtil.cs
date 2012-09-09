@@ -337,23 +337,23 @@ namespace BiomePainter
                 switch ((String)input)
                 {
                     case "Minecraft Beta 1.3_01":
-                        biomeGen = new Minecraft.B13.MobSpawnerBase(seed);
+                        biomeGen = new Minecraft.BiomeGen.B13.MobSpawnerBase(seed);
                         break;
                     case "Minecraft Beta 1.7.3":
-                        biomeGen = new Minecraft.B17.BiomeGenBase(seed);
+                        biomeGen = new Minecraft.BiomeGen.B17.BiomeGenBase(seed);
                         break;
                     case "Minecraft Beta 1.8.1":
-                        biomeGen = new Minecraft.B18.WorldChunkManager(seed);
+                        biomeGen = new Minecraft.BiomeGen.B18.WorldChunkManager(seed);
                         break;
                     case "Minecraft 1.0.0":
-                        biomeGen = new Minecraft.F10.WorldChunkManager(seed);
+                        biomeGen = new Minecraft.BiomeGen.F10.WorldChunkManager(seed);
                         break;
                     case "Minecraft 1.1.0":
-                        biomeGen = new Minecraft.F11.WorldChunkManager(seed);
+                        biomeGen = new Minecraft.BiomeGen.F11.WorldChunkManager(seed);
                         break;
                     case "Minecraft 1.2.5":
                     default:
-                        biomeGen = new Minecraft.F12.WorldChunkManager(seed);
+                        biomeGen = new Minecraft.BiomeGen.F12.WorldChunkManager(seed);
                         break;
                 }
             }

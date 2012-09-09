@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Minecraft.F10
+namespace Minecraft.BiomeGen.F10
 {
     public class LongHashMap
     {

@@ -6,7 +6,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
-namespace BitmapSelector
+namespace BiomePainter.BitmapSelector
 {
     public partial class BitmapSelector : UserControl
     {

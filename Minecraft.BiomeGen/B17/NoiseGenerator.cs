@@ -1,4 +1,4 @@
-﻿namespace Minecraft.B17
+﻿namespace Minecraft.BiomeGen.B17
 {
     public class NoiseGenerator
     {
