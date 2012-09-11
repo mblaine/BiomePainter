@@ -41,11 +41,11 @@ namespace BiomePainter
             try
             {
                 DateTime dt = DateTime.Now;
-                String path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "BiomePainter", String.Format("exception-{0:yyyy-MM-dd-HH-mm-ss}.txt", dt));
+                String assembly = Assembly.GetExecutingAssembly().Location;
+                String path = String.Format("{0}{1}exception-{2:yyyy-MM-dd-HH-mm-ss}.txt", Path.GetDirectoryName(assembly), Path.DirectorySeparatorChar, dt);
                 using (StreamWriter sw = new StreamWriter(path, true))
                 {
-                    StringBuilder sb = new StringBuilder();
-                    String assembly = Assembly.GetExecutingAssembly().Location;
+                    StringBuilder sb = new StringBuilder();    
                     sb.AppendFormat("Biome Painter version {0}, modified {1:M/d/yyy h:mm:ss tt}{2}", FileVersionInfo.GetVersionInfo(assembly).FileVersion, File.GetLastWriteTime(assembly), Environment.NewLine);
                     sb.AppendFormat("Time: {0:M/d/yyy h:mm:ss tt}{1}{1}", dt, Environment.NewLine);
 
@@ -68,7 +68,7 @@ namespace BiomePainter
                     sw.Close();
                 }
                 
-                MessageBox.Show(null, String.Format("Biome Painter has encountered an unexpected error. The log has been saved to \"{0}\". To open the log, click \"Help\". Otherwise click \"OK\" to continue.", path), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, 0, path);
+                MessageBox.Show(null, String.Format("Biome Painter has encountered an unexpected error. The log has been saved to \"{0}\". To open the log, click \"Help\". Otherwise click \"OK\" to continue, though it may be best to close and restart the application.", path), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, 0, path);
             }
             catch (Exception e)
             {

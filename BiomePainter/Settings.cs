@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Xml;
 
 namespace BiomePainter
@@ -15,7 +16,7 @@ namespace BiomePainter
     {
         private static bool read = false;
 
-        private static String path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "BiomePainter", "settings.xml");
+        private static String path = String.Format("{0}{1}settings.xml", Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), Path.DirectorySeparatorChar);
 
         private const int MAXWORLDS = 10;
 
@@ -25,7 +26,7 @@ namespace BiomePainter
             get { if (!read) Read(); return Settings.recentWorlds; }
         }
 
-        private static bool redrawTerrainMap = true;
+        private static bool redrawTerrainMap = false;
         public static bool RedrawTerrainMap
         {
             get { if (!read) Read(); return Settings.redrawTerrainMap; }
@@ -40,7 +41,7 @@ namespace BiomePainter
             set { if (!read) Read(); Settings.transparency = value; }
         }
 
-        private static bool biomeFoliage = true;
+        private static bool biomeFoliage = false;
         public static bool BiomeFoliage
         {
             get { if (!read) Read(); return Settings.biomeFoliage; }
@@ -77,6 +78,7 @@ namespace BiomePainter
                 Directory.CreateDirectory(Path.GetDirectoryName(path));
 
             XmlDocument doc = new XmlDocument();
+            doc.AppendChild(doc.CreateXmlDeclaration("1.0", null, null));
             XmlNode settings = doc.CreateElement("settings");
             XmlNode node = doc.CreateElement("worlds");
             XmlAttribute attr;
