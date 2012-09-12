@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
@@ -46,7 +47,7 @@
     <Compile Include="B17\NoiseGeneratorOctaves2.cs" />
     <Compile Include="B17\NoiseGeneratorPerlin.cs" />
     <Compile Include="B17\WorldChunkManager.cs" />
-	<Compile Include="B18\BiomeCache.cs" />
+    <Compile Include="B18\BiomeCache.cs" />
     <Compile Include="B18\BiomeCacheBlock.cs" />
     <Compile Include="B18\BiomeGenBase.cs" />
     <Compile Include="B18\GenLayer.cs" />
@@ -69,7 +70,7 @@
     <Compile Include="B18\LongHashMap.cs" />
     <Compile Include="B18\LongHashMapEntry.cs" />
     <Compile Include="B18\WorldChunkManager.cs" />
-	<Compile Include="F10\BiomeCache.cs" />
+    <Compile Include="F10\BiomeCache.cs" />
     <Compile Include="F10\BiomeCacheBlock.cs" />
     <Compile Include="F10\BiomeGenBase.cs" />
     <Compile Include="F10\GenLayer.cs" />
@@ -146,6 +147,29 @@
     <Compile Include="F12\LongHashMap.cs" />
     <Compile Include="F12\LongHashMapEntry.cs" />
     <Compile Include="F12\WorldChunkManager.cs" />
+    <Compile Include="F13\BiomeCache.cs" />
+    <Compile Include="F13\BiomeCacheBlock.cs" />
+    <Compile Include="F13\BiomeGenBase.cs" />
+    <Compile Include="F13\GenLayer.cs" />
+    <Compile Include="F13\GenLayerAddIsland.cs" />
+    <Compile Include="F13\GenLayerAddMushroomIsland.cs" />
+    <Compile Include="F13\GenLayerAddSnow.cs" />
+    <Compile Include="F13\GenLayerBiome.cs" />
+    <Compile Include="F13\GenLayerFuzzyZoom.cs" />
+    <Compile Include="F13\GenLayerHills.cs" />
+    <Compile Include="F13\GenLayerIsland.cs" />
+    <Compile Include="F13\GenLayerRiver.cs" />
+    <Compile Include="F13\GenLayerRiverInit.cs" />
+    <Compile Include="F13\GenLayerRiverMix.cs" />
+    <Compile Include="F13\GenLayerShore.cs" />
+    <Compile Include="F13\GenLayerSmooth.cs" />
+    <Compile Include="F13\GenLayerSwampRivers.cs" />
+    <Compile Include="F13\GenLayerVoronoiZoom.cs" />
+    <Compile Include="F13\GenLayerZoom.cs" />
+    <Compile Include="F13\IntCache.cs" />
+    <Compile Include="F13\LongHashMap.cs" />
+    <Compile Include="F13\LongHashMapEntry.cs" />
+    <Compile Include="F13\WorldChunkManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +178,7 @@
       <Name>Minecraft</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
