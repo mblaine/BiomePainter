@@ -35,11 +35,6 @@ For example, after changing an area from taiga or ice plains to another biome
 such as forest, existing ice and snow cover will remain until removed using 
 another tool such as MCEdit or removed manually in Minecraft. 
 
-* The outermost two chunks (32 blocks) along the edge of the image are from the
-regions adjacent to the currently loaded one and read-only. Thier purpose is to
-help with lining up changes to biomes along the border between two regions. To
-edit those blocks you need to switch to the region that contains them.
-
 * If, however, you use the "Set Chunks in Selection to be Populated" option
 under the Edit menu, the next time the specified chunks are loaded in Minecraft
 it will fill them with trees, snow cover, water, lava, and ores depending on
@@ -50,19 +45,24 @@ with ores, dirt, or gravel. I strongly suggest that if you decide to use this
 feature you make sure you have a current backup copy of your world before
 proceeding.
 
+* The outermost two chunks (32 blocks) along the edge of the image are from the
+regions adjacent to the currently loaded one and read-only. Thier purpose is to
+help with lining up changes to biomes along the border between two regions. To
+edit those blocks you need to switch to the region that contains them.
+
 * If a world was created before Minecraft 1.2 and needed to be converted, 
 Minecraft will have populated each chunk's biome information based on the biome 
 generation from version 1.1. Minecraft will still use the latest biome 
 generation code for newly generated chunks in any world whether it was orignally 
 converted or not. 
 
-* When filling a selection with biomes based on Minecraft Beta 1.7 please 
-remember that not all biomes in that version exist in the current version of 
-Minecraft. As such, areas that would have been shrubland or seasonal forest are 
-all set to forest, for example. Areas that would have been swampland in Beta 1.7 
-are set to forest in order to look a close as possible to how they would have in 
-the past. Additionally the Beta 1.7 biome rainforest is set to yield the 
-Minecraft 1.2 biome jungle. 
+* When filling a selection with biomes based on Minecraft Beta 1.7 or earlier 
+please remember that not all biomes in that version exist in the current 
+version of Minecraft. As such, areas that would have been shrubland or 
+seasonal forest are all set to forest, for example. Areas that would have been 
+swampland in Beta 1.7 are set to forest in order to look a close as possible 
+to how they would have in the past. Additionally the Beta 1.7 biome rainforest 
+is set to yield the Minecraft 1.2 biome jungle. 
 
 << Source >> 
 

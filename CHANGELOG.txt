@@ -1,3 +1,27 @@
+0.9 - 9/12/2012
+    * Terrain map layer now supports transparent blocks and biome colors for
+      grass and leaves. These both make rendering the map slower, however.
+      Options to enable or disable these features can be found under the new
+      "Settings" menu. Addtionally there's an option to control whether the
+      terrain map should be re-generated after every biome change, though would
+      be unnecessary without the biome foliage option enabled.
+    * A list of the ten most recently opened worlds can be found under the File
+      menu.
+        - Settings and recent worlds are stored in settings.xml, wherever
+          BiomePainter.exe is located.
+    * Block colors used in the terrain map are read from a file, Blocks.txt.
+      Each line should is formatted:
+        - blockId[:dataValue][,additionalIds];[optional comma-separated biome
+          ids;]6-8 digit hex color code [aa]rrggbb #optional comment
+    * Errors are logged to text files saved wherever BiomePainter.exe is found.
+      Nothing is transmitted automatically, however these could be useful in
+      reporting any crashes.
+    * Ability to fill or replace with biomes from Minecraft 1.3.2.
+        - Separate Minecraft 1.3.2 large biomes option.
+        - Also added biome generation from BETA 1.3_01 per request. Sorry it
+          took so long.
+    * Program components combined into fewer, larger DLLs.
+
 0.8 - 4/20/2012
     * Batch processing of an entire dimension of an entire world can now be
       done from the Edit menu after opening a world and selecting biomes from

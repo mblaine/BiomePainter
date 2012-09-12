@@ -141,7 +141,7 @@ namespace BiomePainter
 
         public static void RemoveRecentWorld(String path)
         {
-            for (int i = recentWorlds.Count - 1; i > 0; i--)
+            for (int i = recentWorlds.Count - 1; i >= 0; i--)
             {
                 if (recentWorlds[i].Path == path)
                     recentWorlds.RemoveAt(i);
