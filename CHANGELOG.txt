@@ -3,14 +3,14 @@
       grass and leaves. These both make rendering the map slower, however.
       Options to enable or disable these features can be found under the new
       "Settings" menu. Addtionally there's an option to control whether the
-      terrain map should be re-generated after every biome change, though would
-      be unnecessary without the biome foliage option enabled.
+      terrain map should be re-generated after every biome change, though that
+      would be unnecessary without the biome foliage option enabled.
     * A list of the ten most recently opened worlds can be found under the File
       menu.
         - Settings and recent worlds are stored in settings.xml, wherever
           BiomePainter.exe is located.
     * Block colors used in the terrain map are read from a file, Blocks.txt.
-      Each line should is formatted:
+      Each line should be formatted:
         - blockId[:dataValue][,additionalIds];[optional comma-separated biome
           ids;]6-8 digit hex color code [aa]rrggbb #optional comment
     * Errors are logged to text files saved wherever BiomePainter.exe is found.
