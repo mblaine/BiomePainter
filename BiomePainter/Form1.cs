@@ -33,7 +33,9 @@ namespace BiomePainter
         private readonly int BIOMELAYER;
         private readonly int MAPLAYER;
 
-        public Form1()
+        private String[] args;
+
+        public Form1(String[] args)
         {
             InitializeComponent();
             SELECTIONLAYER = imgRegion.SelectionLayerIndex;
@@ -42,6 +44,7 @@ namespace BiomePainter
             CHUNKLAYER = imgRegion.AddLayer(new Layer(imgRegion.Width, imgRegion.Height, 0.3f, true, false)); //chunk boundaries
             BIOMELAYER = imgRegion.AddLayer(new Layer(imgRegion.Width, imgRegion.Height, 0.5f)); //biome
             MAPLAYER = imgRegion.AddLayer(new Layer(imgRegion.Width, imgRegion.Height, 1.0f)); //map
+            this.args = args;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -87,6 +90,14 @@ namespace BiomePainter
             history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
         }
 
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            imgRegion.Focus(); //otherwise the undo button was starting highlighted
+            if (args != null && args.Length > 0 && !String.IsNullOrWhiteSpace(args[0]))
+            {
+                OpenWorld(args[0]);
+            }
+        }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -225,14 +236,31 @@ namespace BiomePainter
         {
             ResetControls();
 
+            try
+            {
+                world = new World(path);
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show(this, String.Format("The file \"{0}\" could not be found. Unable to open world.", path), "Open", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                world = null;
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(this, String.Format("The file \"{0}\" could not be parsed. Please be sure that it is a valid Minecraft level.dat.", path), "Open", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                world = null;
+                return;
+            }
+
             lastPath = Path.GetDirectoryName(path);
-            world = new World(path);
 
             String[] regions = world.GetRegionPaths();
             if (regions.Length == 0)
             {
                 MessageBox.Show(this, "No region files (*.mca) found. Be sure to convert a world to the Anvil format by first opening it in Minecraft 1.2 or later.", "Open", MessageBoxButtons.OK);
                 world = null;
+                this.Text = "Biome Painter";
                 return;
             }
             foreach (String r in regions)
@@ -240,6 +268,7 @@ namespace BiomePainter
 
             Settings.AddRecentWorld(path, world.WorldName);
             FillRecentWorldsList();
+            this.Text = world.WorldName + " - Biome Painter";
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -296,6 +325,7 @@ namespace BiomePainter
                 return;
 
             world = null;
+            this.Text = "Biome Painter";
             ResetControls();
         }
 
@@ -1051,6 +1081,7 @@ namespace BiomePainter
             }
         }
         #endregion
+
     }
 
 }
