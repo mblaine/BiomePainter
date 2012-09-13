@@ -45,6 +45,7 @@ namespace BiomePainter
             BIOMELAYER = imgRegion.AddLayer(new Layer(imgRegion.Width, imgRegion.Height, 0.5f)); //biome
             MAPLAYER = imgRegion.AddLayer(new Layer(imgRegion.Width, imgRegion.Height, 1.0f)); //map
             this.args = args;
+            Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
         }
 
         private void Form1_Load(object sender, EventArgs e)
