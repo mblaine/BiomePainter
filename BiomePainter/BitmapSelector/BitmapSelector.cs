@@ -19,7 +19,8 @@ namespace BiomePainter.BitmapSelector
         public delegate void CustomBrushClickEventHandler(Object sender, CustomBrushClickEventArgs e);
         public event CustomBrushClickEventHandler CustomBrushClick;
 
-        public event EventHandler SelectionChanged;
+        public delegate void SelectionChangedEventHandler(Object sender, SelectionChangedEventArgs e);
+        public event SelectionChangedEventHandler SelectionChanged;
 
         private BufferedGraphicsContext backbufferContext;
         private BufferedGraphics backbufferGraphics;
@@ -283,6 +284,7 @@ namespace BiomePainter.BitmapSelector
             else if (e.Button == MouseButtons.Right)
                 mouse2Down = false;
 
+            String description = "";
             if (Brush == BrushType.Rectangle)
             {
                 if (mouseDownLast.X != -1 && mouseDownLast.Y != -1)
@@ -299,12 +301,15 @@ namespace BiomePainter.BitmapSelector
                     }
                     RedrawBrushLayer(new Point(), true);
                     Redraw();
+                    description = "Rectangle ";
                 }
             }
+            else if (Brush == BrushType.Fill)
+                description = "Fill ";
 
             mouseDownLast.X = -1;
             mouseDownLast.Y = -1;
-            OnSelectionChanged();
+            OnSelectionChanged(description + (e.Button == MouseButtons.Left ? "Select" : "Deselect"));
             if(!cursorVisible)
             {
                 Cursor.Show();
@@ -314,8 +319,17 @@ namespace BiomePainter.BitmapSelector
 
         private void BitmapSelector_MouseCaptureChanged(object sender, EventArgs e)
         {
-            if(mouse1Down || mouse2Down)
-                OnSelectionChanged();
+            if (mouse1Down || mouse2Down)
+            {
+                String description;
+                if (Brush == BrushType.Rectangle)
+                    description = "Rectangle ";
+                else if (Brush == BrushType.Fill)
+                    description = "Fill ";
+                else
+                    description = "";
+                OnSelectionChanged(description + (mouse1Down ? "Select" : "Deselect"));
+            }
             mouse1Down = false;
             mouse2Down = false;
             mouseDownLast.X = -1;
@@ -594,7 +608,7 @@ namespace BiomePainter.BitmapSelector
             Redraw();
 
             if (!Layers[SelectionLayerIndex].SaveContentsOnReset)
-                OnSelectionChanged();
+                OnSelectionChanged("Reset Selection");
         }
 
         public void SelectAll()
@@ -606,7 +620,7 @@ namespace BiomePainter.BitmapSelector
                 g.Clear(SelectionColor);
             }
 
-            OnSelectionChanged();
+            OnSelectionChanged("Select All");
         }
 
         public void SelectNone()
@@ -618,7 +632,7 @@ namespace BiomePainter.BitmapSelector
                 g.Clear(Color.Transparent);
             }
 
-            OnSelectionChanged();
+            OnSelectionChanged("Select None");
         }
 
         public void InvertSelection()
@@ -647,7 +661,7 @@ namespace BiomePainter.BitmapSelector
                 }
             }
 
-            OnSelectionChanged();
+            OnSelectionChanged("Invert Selection");
         }
 
         private void scrollVertical_Scroll(object sender, ScrollEventArgs e)
@@ -725,10 +739,10 @@ namespace BiomePainter.BitmapSelector
                 BrushDiameterChanged(this, e);
         }
 
-        protected virtual void OnSelectionChanged()
+        protected virtual void OnSelectionChanged(String description)
         {
             if (SelectionChanged != null)
-                SelectionChanged(this, new EventArgs());
+                SelectionChanged(this, new SelectionChangedEventArgs(description));
         }
 
         protected virtual void OnCustomBrushClick(CustomBrushClickEventArgs e)

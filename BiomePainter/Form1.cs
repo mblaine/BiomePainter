@@ -87,8 +87,8 @@ namespace BiomePainter
             cmbBlockType.Items.AddRange(new String[] { "Cacti & Dead Bushes", "Dirt & Grass", "Flowers & Tall Grass", "Gravel", "Lily Pads & Vines", "Leaves & Logs", "Ice", "Sand", "Snow", "Stone", "Water", "Input Block ID" });
             cmbBlockType.SelectedIndex = 0;
 
-            history = new HistoryManager();
-            history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
+            history = new HistoryManager(HistoryChange);
+            history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image, "Initial Selection");
         }
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -122,14 +122,47 @@ namespace BiomePainter
             endToolStripMenuItem.Checked = false;
             if (history != null)
                 history.Dispose();
-            history = new HistoryManager();
-            history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
+            history = new HistoryManager(HistoryChange);
+            history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image, "Initial State");
         }
 
         private void UpdateStatus(String status)
         {
             lblStatus.Text = status;
             lblStatus.Refresh();
+        }
+
+        private void HistoryChange(String undoDescription, String redoDescription)
+        {
+            if (undoDescription != null)
+            {
+                undoToolStripMenuItem.Text = "&Undo " + undoDescription;
+                undoToolStripMenuItem.Enabled = true;
+                toolTip.SetToolTip(btnUndo, String.Format("Undo {0} (Ctrl+Z)", undoDescription));
+                btnUndo.Enabled = true;
+            }
+            else
+            {
+                undoToolStripMenuItem.Text = "&Undo";
+                undoToolStripMenuItem.Enabled = false;
+                toolTip.SetToolTip(btnUndo, "Undo (Ctrl+Z)");
+                btnUndo.Enabled = false;
+            }
+
+            if (redoDescription != null)
+            {
+                redoToolStripMenuItem.Text = "&Redo " + redoDescription;
+                redoToolStripMenuItem.Enabled = true;
+                toolTip.SetToolTip(btnRedo, String.Format("Redo {0} (Ctrl+Y)", redoDescription));
+                btnRedo.Enabled = true;
+            }
+            else
+            {
+                redoToolStripMenuItem.Text = "&Redo";
+                redoToolStripMenuItem.Enabled = false;
+                toolTip.SetToolTip(btnRedo, "Redo (Ctrl+Y)");
+                btnRedo.Enabled = false;
+            }
         }
 
         private void TrySwitchRegion(int x, int z)
@@ -342,8 +375,8 @@ namespace BiomePainter
 
             UpdateStatus("Reading region file");
             region = new RegionFile(region.Path);
-            history.RecordBiomeState(region);
-            history.RecordPopulateState(region);
+            history.RecordBiomeState(region, "Reload Biomes");
+            history.RecordPopulateState(region, "Reload Populate Flags");
             history.SetLastSaveActions();
             UpdateStatus("Generating terrain map");
             RegionUtil.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);
@@ -463,7 +496,7 @@ namespace BiomePainter
             RegionUtil.SetChunkstobePopulated(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, 0);
             RegionUtil.RenderRegionChunkstobePopulated(region, imgRegion.Layers[POPULATELAYER].Image);
             imgRegion.Redraw();
-            history.RecordPopulateState(region);
+            history.RecordPopulateState(region, "Set Populate Flags");
         }
 
         private void unsetChunksInSelectionToBePopulatedToolStripMenuItem_Click(object sender, EventArgs e)
@@ -477,7 +510,7 @@ namespace BiomePainter
             RegionUtil.SetChunkstobePopulated(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, 1);
             RegionUtil.RenderRegionChunkstobePopulated(region, imgRegion.Layers[POPULATELAYER].Image);
             imgRegion.Redraw();
-            history.RecordPopulateState(region);
+            history.RecordPopulateState(region, "Unset Populate Flags");
         }
 
         private void batchFillEntireWorldWithSelectedBiomeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -797,7 +830,7 @@ namespace BiomePainter
             RegionUtil.SelectChunks(imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor);
             UpdateStatus("");
             imgRegion.Redraw();
-            history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
+            history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image, "Select Chunks");
         }
 
         private void btnAddorRemovebyBlocks_Click(object sender, EventArgs e)
@@ -879,7 +912,7 @@ namespace BiomePainter
                 RegionUtil.AddorRemoveBlocksSelection(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, blockIds, add);
                 UpdateStatus("");
                 imgRegion.Redraw();
-                history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
+                history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image, add ? "Select by Block" : "Deselect by Block");
             }
         }
 
@@ -892,7 +925,7 @@ namespace BiomePainter
             RegionUtil.AddorRemoveBiomesSelection(region, imgRegion.Layers[SELECTIONLAYER].Image, imgRegion.SelectionColor, ((BiomeType)cmbBiomeType.SelectedItem).ID, add);
             UpdateStatus("");
             imgRegion.Redraw();
-            history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
+            history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image, add ? "Select by Biome" : "Deselect by Biome");
         }
 
         private void btnUndo_Click(object sender, EventArgs e)
@@ -958,7 +991,7 @@ namespace BiomePainter
             RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
             UpdateStatus("");
             imgRegion.Redraw();
-            history.RecordBiomeState(region);
+            history.RecordBiomeState(region, "Fill Biomes");
         }
 
         private void btnReplace_Click(object sender, EventArgs e)
@@ -977,7 +1010,7 @@ namespace BiomePainter
             RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
             UpdateStatus("");
             imgRegion.Redraw();
-            history.RecordBiomeState(region);
+            history.RecordBiomeState(region, "Replace Biomes");
         }
 
         #endregion
@@ -1005,8 +1038,8 @@ namespace BiomePainter
 
             UpdateStatus("Reading region file");
             region = new RegionFile(String.Format(pathFormat, x, z));
-            history.RecordBiomeState(region);
-            history.RecordPopulateState(region);
+            history.RecordBiomeState(region, "Initial Biomes");
+            history.RecordPopulateState(region, "Initial Populate Flags");
             history.SetLastSaveActions();
             imgRegion.Reset();
             UpdateStatus("Generating terrain map");
@@ -1059,9 +1092,9 @@ namespace BiomePainter
             trackBrushDiameter.Value = e.NewBrushDiameter;
         }
 
-        private void imgRegion_SelectionChanged(object sender, EventArgs e)
+        private void imgRegion_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image);
+            history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image, e.Description);
         }
 
 
@@ -1078,7 +1111,7 @@ namespace BiomePainter
                 RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
                 UpdateStatus("");
                 imgRegion.Redraw();
-                history.RecordBiomeState(region);
+                history.RecordBiomeState(region, "Paste Biomes");
             }
         }
         #endregion

@@ -25,15 +25,6 @@ namespace BiomePainter.BitmapSelector
             Image = new Bitmap(width, height);
         }
 
-        ~Layer()
-        {
-            if (Image != null)
-            {
-                Image.Dispose();
-                Image = null;
-            }
-        }
-
         public void Dispose()
         {
             if (Image != null)

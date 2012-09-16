@@ -39,4 +39,14 @@ namespace BiomePainter.BitmapSelector
             MouseY = mouseY;
         }
     }
+
+    public class SelectionChangedEventArgs : EventArgs
+    {
+        public String Description;
+
+        public SelectionChangedEventArgs(String description)
+        {
+            Description = description;
+        }
+    }
 }

@@ -1166,7 +1166,7 @@
             this.imgRegion.ZoomEvent += new BiomePainter.BitmapSelector.BitmapSelector.ZoomEventHandler(this.imgRegion_ZoomEvent);
             this.imgRegion.BrushDiameterChanged += new BiomePainter.BitmapSelector.BitmapSelector.BrushDiameterEventHandler(this.imgRegion_BrushDiameterChanged);
             this.imgRegion.CustomBrushClick += new BiomePainter.BitmapSelector.BitmapSelector.CustomBrushClickEventHandler(this.imgRegion_CustomBrushClick);
-            this.imgRegion.SelectionChanged += new System.EventHandler(this.imgRegion_SelectionChanged);
+            this.imgRegion.SelectionChanged += new BiomePainter.BitmapSelector.BitmapSelector.SelectionChangedEventHandler(this.imgRegion_SelectionChanged);
             // 
             // Form1
             // 

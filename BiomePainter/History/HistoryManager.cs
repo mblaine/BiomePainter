@@ -10,51 +10,80 @@ namespace BiomePainter.History
     {
         public delegate void UpdateStatus(String status);
 
-        private LinkedList<IAction> UndoStack = new LinkedList<IAction>();
-        private LinkedList<IAction> RedoStack = new LinkedList<IAction>();
+        public delegate void ChangeCallback(String undoDescription, String redoDescription);
 
+        private ChangeCallback change;
+
+        private LinkedList<IAction> undoStack = new LinkedList<IAction>();
+        private LinkedList<IAction> redoStack = new LinkedList<IAction>();
+
+        //the actions at the last point the region was saved
         private BiomeAction lastBiomeAction;
         private PopulateAction lastPopulateAction;
 
-        ~HistoryManager()
-        {
-            if (UndoStack != null)
-                foreach (IAction action in UndoStack)
-                    action.Dispose();
-            UndoStack = null;
 
-            if (RedoStack != null)
-                foreach (IAction action in RedoStack)
-                    action.Dispose();
-            RedoStack = null;
+        //the original state of things
+        private SelectionAction firstSelectionAction = null;
+        private BiomeAction firstBiomeAction = null;
+        private PopulateAction firstPopulateAction = null;
+
+
+        public HistoryManager(ChangeCallback change)
+        {
+            this.change = change;
         }
 
         public void Dispose()
         {
-            if (UndoStack != null)
-                foreach (IAction action in UndoStack)
+            if (undoStack != null)
+                foreach (IAction action in undoStack)
                     action.Dispose();
-            UndoStack = null;
+            undoStack = null;
 
-            if (RedoStack != null)
-                foreach (IAction action in RedoStack)
+            if (redoStack != null)
+                foreach (IAction action in redoStack)
                     action.Dispose();
-            RedoStack = null;
+            redoStack = null;
         }
 
         public void Add(IAction action)
         {
-            UndoStack.AddLast(action);
-            foreach (IAction a in RedoStack)
+            if(action.GetType() == typeof(SelectionAction) && firstSelectionAction == null)
+                firstSelectionAction = (SelectionAction)action;
+            else if (action.GetType() == typeof(BiomeAction) && firstBiomeAction == null)
+                firstBiomeAction = (BiomeAction)action;
+            else if (action.GetType() == typeof(PopulateAction) && firstPopulateAction == null)
+                firstPopulateAction = (PopulateAction)action;
+            
+            //ensure the first action of each type isn't lost when the redo stack is emptied
+            if(firstSelectionAction != null && action != firstSelectionAction && redoStack.Contains(firstSelectionAction))
+            {
+                redoStack.Remove(firstSelectionAction);
+                undoStack.AddLast(firstSelectionAction);
+            }
+            if (firstBiomeAction != null && action != firstBiomeAction && redoStack.Contains(firstBiomeAction))
+            {
+                redoStack.Remove(firstBiomeAction);
+                undoStack.AddLast(firstBiomeAction);
+            }
+            if (firstPopulateAction != null && action != firstPopulateAction && redoStack.Contains(firstPopulateAction))
+            {
+                redoStack.Remove(firstPopulateAction);
+                undoStack.AddLast(firstPopulateAction);
+            }
+
+            action.PreviousAction = GetPreviousAction(undoStack.Last, action.GetType());
+            undoStack.AddLast(action);
+            foreach (IAction a in redoStack)
                 a.Dispose();
-            RedoStack.Clear();
+            redoStack.Clear();
         }
 
         public void FilterOutType(Type type)
         {
             LinkedList<IAction> newUndo = new LinkedList<IAction>();
 
-            foreach (IAction action in UndoStack)
+            foreach (IAction action in undoStack)
             {
                 if (type.Equals(action.GetType()))
                     action.Dispose();
@@ -62,11 +91,11 @@ namespace BiomePainter.History
                     newUndo.AddLast(action);
             }
 
-            UndoStack = newUndo;
+            undoStack = newUndo;
 
             LinkedList<IAction> newRedo = new LinkedList<IAction>();
 
-            foreach (IAction action in RedoStack)
+            foreach (IAction action in redoStack)
             {
                 if (type.Equals(action.GetType()))
                     action.Dispose();
@@ -74,35 +103,48 @@ namespace BiomePainter.History
                     newRedo.AddLast(action);
             }
 
-            RedoStack = newRedo;
+            redoStack = newRedo;
         }
 
         public bool MovePrevious()
         {
-            if (UndoStack.Count <= 1)
+            if (undoStack.Count == 0)
                 return false;
-            RedoStack.AddLast(UndoStack.Last.Value);
-            UndoStack.RemoveLast();
-            return true;
+
+            do
+            {
+                redoStack.AddLast(undoStack.Last.Value);
+                undoStack.RemoveLast();
+            }
+            while (undoStack.Count > 0 && undoStack.Last.Value.PreviousAction == null);
+
+            return undoStack.Count > 0;
         }
 
         private bool MoveNext()
         {
-            if (RedoStack.Count == 0)
+            if (redoStack.Count == 0)
                 return false;
-            UndoStack.AddLast(RedoStack.Last.Value);
-            RedoStack.RemoveLast();
+
+            do
+            {
+                undoStack.AddLast(redoStack.Last.Value);
+                redoStack.RemoveLast();
+            }
+            while (redoStack.Count > 0 && undoStack.Last.Value.PreviousAction == null);
+
             return true;
         }
 
-        public void RecordSelectionState(Bitmap selection)
+        public void RecordSelectionState(Bitmap selection, String description)
         {
-            Add(new SelectionAction(new Bitmap(selection)));
+            Add(new SelectionAction(new Bitmap(selection), description));
+            OnChange();
         }
 
-        public void RecordBiomeState(RegionFile region)
+        public void RecordBiomeState(RegionFile region, String description)
         {
-            BiomeAction action = new BiomeAction();
+            BiomeAction action = new BiomeAction(description);
             for (int chunkX = 0; chunkX < 32; chunkX++)
             {
                 for(int chunkZ = 0; chunkZ < 32; chunkZ++)
@@ -128,11 +170,12 @@ namespace BiomePainter.History
                 }
             }
             Add(action);
+            OnChange();
         }
 
-        public void RecordPopulateState(RegionFile region)
+        public void RecordPopulateState(RegionFile region, String description)
         {
-            PopulateAction action = new PopulateAction();
+            PopulateAction action = new PopulateAction(description);
             for (int chunkX = 0; chunkX < 32; chunkX++)
             {
                 for (int chunkZ = 0; chunkZ < 32; chunkZ++)
@@ -145,6 +188,7 @@ namespace BiomePainter.History
                 }
             }
             Add(action);
+            OnChange();
         }
 
         private void ApplySelectionState(SelectionAction action, Bitmap selection)
@@ -194,11 +238,12 @@ namespace BiomePainter.History
 
         public void Undo(Bitmap selection, RegionFile region, Bitmap terrainOverlay, Bitmap biomeOverlay, ref String[,] tooltips, Bitmap populateOverlay, UpdateStatus updateStatus)
         {
-            IAction previous = GetPreviousAction();
+            if (undoStack.Count == 0)
+                return;
+            IAction previous = undoStack.Last.Value.PreviousAction;
             if (previous == null)
             {
-                MovePrevious();
-                return;
+                throw new Exception("Undo sanity check failed.");
             }
 
             if (previous is SelectionAction)
@@ -215,6 +260,7 @@ namespace BiomePainter.History
             }
 
             MovePrevious();
+            OnChange();
         }
 
         public void Redo(Bitmap selection, RegionFile region, Bitmap terrainOverlay, Bitmap biomeOverlay, ref String[,] tooltips, Bitmap populateOverlay, UpdateStatus updateStatus)
@@ -222,29 +268,32 @@ namespace BiomePainter.History
             if (!MoveNext())
                 return;
 
-            //if the first action of it's type, there should be nothing to overwrite
-            if (GetPreviousAction(UndoStack.Last.Previous, UndoStack.Last.Value.GetType()) == null)
-                return;
+            if (undoStack.Last.Value.PreviousAction == null)
+            {
+                throw new Exception("Redo sanity check failed.");
+            }
 
-            if (UndoStack.Last.Value is SelectionAction)
+            if (undoStack.Last.Value is SelectionAction)
             {
-                ApplySelectionState((SelectionAction)UndoStack.Last.Value, selection);
+                ApplySelectionState((SelectionAction)undoStack.Last.Value, selection);
             }
-            else if (UndoStack.Last.Value is BiomeAction)
+            else if (undoStack.Last.Value is BiomeAction)
             {
-                ApplyBiomeState((BiomeAction)UndoStack.Last.Value, region, terrainOverlay, biomeOverlay, ref tooltips, updateStatus);
+                ApplyBiomeState((BiomeAction)undoStack.Last.Value, region, terrainOverlay, biomeOverlay, ref tooltips, updateStatus);
             }
-            else if (UndoStack.Last.Value is PopulateAction)
+            else if (undoStack.Last.Value is PopulateAction)
             {
-                ApplyPopulateState((PopulateAction)UndoStack.Last.Value, region, populateOverlay);
+                ApplyPopulateState((PopulateAction)undoStack.Last.Value, region, populateOverlay);
             }
+
+            OnChange();
         }
 
         private IAction GetPreviousAction()
         {
-            if (UndoStack.Count == 0)
+            if (undoStack.Count == 0)
                 return null;
-            return GetPreviousAction(UndoStack.Last.Previous, UndoStack.Last.Value.GetType());
+            return GetPreviousAction(undoStack.Last.Previous, undoStack.Last.Value.GetType());
         }
 
         private IAction GetPreviousAction(LinkedListNode<IAction> start, Type t)
@@ -261,8 +310,8 @@ namespace BiomePainter.History
 
         public void SetLastSaveActions()
         {
-            lastBiomeAction = (BiomeAction)GetPreviousAction(UndoStack.Last, typeof(BiomeAction));
-            lastPopulateAction = (PopulateAction)GetPreviousAction(UndoStack.Last, typeof(PopulateAction));
+            lastBiomeAction = (BiomeAction)GetPreviousAction(undoStack.Last, typeof(BiomeAction));
+            lastPopulateAction = (PopulateAction)GetPreviousAction(undoStack.Last, typeof(PopulateAction));
         }
 
         public void SetDirtyFlags(RegionFile region)
@@ -328,6 +377,36 @@ namespace BiomePainter.History
                     return false;
             }
             return true;
+        }
+
+        private void OnChange()
+        {
+            if (change != null)
+            {
+                //the top action on a stack may be the first of its kind and therefore
+                //needs to be skipped over; the first action of a kind is only needed
+                //when undoing the second action of that kind, via it's PreviousAction
+                //property
+                String redoDescription = null;
+                if(redoStack.Count > 0)
+                {
+                    LinkedListNode<IAction> redo = redoStack.Last;
+                    while (redo != null && redo.Value.PreviousAction == null)
+                        redo = redo.Previous;
+                    if (redo != null)
+                        redoDescription = redo.Value.Description;
+                }
+                String undoDescription = null;
+                if (undoStack.Count > 0)
+                {
+                    LinkedListNode<IAction> undo = undoStack.Last;
+                    while (undo != null && undo.Value.PreviousAction == null)
+                        undo = undo.Previous;
+                    if (undo != null)
+                        undoDescription = undo.Value.Description;
+                }
+                change(undoDescription, redoDescription);
+            }
         }
     }
 }
