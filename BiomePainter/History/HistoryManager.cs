@@ -103,6 +103,13 @@ namespace BiomePainter.History
                     newRedo.AddLast(action);
             }
 
+            if (firstBiomeAction != null && type == typeof(BiomeAction))
+                firstBiomeAction = null;
+            if (firstPopulateAction != null && type == typeof(PopulateAction))
+                firstPopulateAction = null;
+            if (firstSelectionAction != null && type == typeof(SelectionAction))
+                firstSelectionAction = null;
+
             redoStack = newRedo;
         }
 
@@ -238,8 +245,15 @@ namespace BiomePainter.History
 
         public void Undo(Bitmap selection, RegionFile region, Bitmap terrainOverlay, Bitmap biomeOverlay, ref String[,] tooltips, Bitmap populateOverlay, UpdateStatus updateStatus)
         {
+            while (undoStack.Count > 0 && undoStack.Last.Value.PreviousAction == null)
+            {
+                redoStack.AddLast(undoStack.Last.Value);
+                undoStack.RemoveLast();
+            }
+
             if (undoStack.Count == 0)
                 return;
+
             IAction previous = undoStack.Last.Value.PreviousAction;
             if (previous == null)
             {
