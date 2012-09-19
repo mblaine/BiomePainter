@@ -266,7 +266,7 @@ namespace BiomePainter
 
         }
 
-        public void OpenWorld(String path)
+        private void OpenWorld(String path)
         {
             ResetControls();
 
@@ -529,6 +529,15 @@ namespace BiomePainter
                 return;
 
             Batch form = new Batch(world.GetRegionDirectory(dim), Path.GetFileName(world.WorldDir), dim.ToString(), true, cmbReplace1.SelectedItem, cmbReplace2.SelectedItem, world.Seed);
+            form.ShowDialog(this);
+            form.Dispose();
+        }
+
+        private void editWorldSeedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (world == null)
+                return;
+            Seed form = new Seed(world);
             form.ShowDialog(this);
             form.Dispose();
         }
@@ -1115,7 +1124,6 @@ namespace BiomePainter
             }
         }
         #endregion
-
     }
 
 }

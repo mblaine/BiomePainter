@@ -64,6 +64,8 @@
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.editWorldSeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.allToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -349,7 +351,9 @@
             this.unsetChunksInSelectionToBePopulatedToolStripMenuItem,
             this.toolStripSeparator8,
             this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem,
-            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem});
+            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem,
+            this.toolStripSeparator7,
+            this.editWorldSeedToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
             this.editToolStripMenuItem.Text = "&Edit";
@@ -428,6 +432,18 @@
             this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Size = new System.Drawing.Size(396, 24);
             this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Text = "Batch r&eplace entire world with selected biomes";
             this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Click += new System.EventHandler(this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(393, 6);
+            // 
+            // editWorldSeedToolStripMenuItem
+            // 
+            this.editWorldSeedToolStripMenuItem.Name = "editWorldSeedToolStripMenuItem";
+            this.editWorldSeedToolStripMenuItem.Size = new System.Drawing.Size(396, 24);
+            this.editWorldSeedToolStripMenuItem.Text = "E&dit world seed";
+            this.editWorldSeedToolStripMenuItem.Click += new System.EventHandler(this.editWorldSeedToolStripMenuItem_Click);
             // 
             // selectToolStripMenuItem
             // 
@@ -1320,6 +1336,8 @@
         private System.Windows.Forms.ToolStripMenuItem menuBiomeFoliage;
         private System.Windows.Forms.ToolStripMenuItem menuTransparency;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem editWorldSeedToolStripMenuItem;
     }
 }
 

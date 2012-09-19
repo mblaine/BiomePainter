@@ -160,6 +160,8 @@ namespace BiomePainter
             }
 
             lblStatus.Text = s;
+            if(s == "Done")//cheap I know, but simple
+                btnCancel.Text = "Close";
         }
 
         private void UpdateProgress(int value, int max)

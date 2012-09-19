@@ -9,13 +9,16 @@ namespace Minecraft
     public class World
     {
         public long Seed;
+        public long OriginalSeed;
         public String WorldDir;
         public String WorldName;
         private int Version;
+        private String LevelDatPath;
 
         public World(String path)
         {
             TAG_Compound data;
+            LevelDatPath = path;
 
             using (FileStream level = new FileStream(path, FileMode.Open))
             {
@@ -29,6 +32,7 @@ namespace Minecraft
             }
 
             Seed = (long)data["Data"]["RandomSeed"];
+            OriginalSeed = Seed;
             Version = (int)data["Data"]["version"];
             WorldName = (String)data["Data"]["LevelName"];
             WorldDir = Path.GetDirectoryName(path);
@@ -102,6 +106,35 @@ namespace Minecraft
                 else
                     return 0;
             }
+        }
+
+        public void Write()
+        {
+            TAG_Compound data;
+
+            using (FileStream level = new FileStream(LevelDatPath, FileMode.Open))
+            {
+                using (GZipStream decompress = new GZipStream(level, CompressionMode.Decompress))
+                {
+                    MemoryStream mem = new MemoryStream();
+                    decompress.CopyTo(mem);
+                    mem.Seek(0, SeekOrigin.Begin);
+                    data = new TAG_Compound(mem);
+                }
+            }
+
+            ((TAG_Long)data["Data"]["RandomSeed"]).Payload = Seed;
+
+            using (FileStream level = new FileStream(LevelDatPath, FileMode.Truncate))
+            {
+                    MemoryStream mem = new MemoryStream();
+                    GZipStream compress = new GZipStream(mem, CompressionMode.Compress);
+                    data.Write(compress);
+                    compress.Close();
+                    byte[] buffer = mem.ToArray();
+                    level.Write(buffer, 0, buffer.Length);
+            }
+
         }
     }
 }
