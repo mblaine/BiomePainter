@@ -40,15 +40,25 @@ namespace BiomePainter
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
+        private int hash(String s)
+        {
+            int ret = 0;
+            for (int i = 0; i < s.Length; i++)
+                ret = ret * 31 + s[i];
+            return ret;
+        }
+
         private void btnTemporary_Click(object sender, EventArgs e)
         {
-            world.Seed = long.Parse(txtNewSeed.Text);
+            if (!long.TryParse(txtNewSeed.Text, out world.Seed))
+                world.Seed = hash(txtNewSeed.Text);
             Close();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            world.Seed = long.Parse(txtNewSeed.Text);
+            if (!long.TryParse(txtNewSeed.Text, out world.Seed))
+                world.Seed = hash(txtNewSeed.Text);
             world.Write();
             Close();
         }
