@@ -12,15 +12,21 @@ namespace BiomePainter
     {
         private static Dictionary<String, Color> blockTable = null;
 
-        private static String path = String.Format("{0}{1}Blocks.txt", Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), Path.DirectorySeparatorChar);
+        private static String pathDefault = String.Format("{0}{1}Blocks.default.txt", Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), Path.DirectorySeparatorChar);
+        private static String pathUser = String.Format("{0}{1}Blocks.user.txt", Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), Path.DirectorySeparatorChar);
 
         private static void LoadBlockTable()
         {
             blockTable = new Dictionary<String, Color>();
 
-            if (!File.Exists(path))
-                return;
+            if(File.Exists(pathDefault))
+                Parse(pathDefault);
+            if(File.Exists(pathUser))
+                Parse(pathUser);
+        }
 
+        private static void Parse(String path)
+        {
             Regex linePattern = new Regex(@"^([0-9:,]+);(?:([0-9,]+);)?([0-9a-fA-F]{6,8})\s*(?:#.*)?$");
             Regex idPattern = new Regex(@"^\d+(:?\:\d+)?$");
             Regex biomePattern = new Regex(@"^\d+$");
@@ -55,10 +61,22 @@ namespace BiomePainter
                             if (append.Count > 0)
                             {
                                 foreach (String s in append)
-                                    blockTable.Add(String.Format("{0}b{1}", id, s), color);
+                                {
+                                    String key = String.Format("{0}b{1}", id, s);
+
+                                    if (!blockTable.ContainsKey(key))
+                                        blockTable.Add(key, color);
+                                    else
+                                        blockTable[key] = color;
+                                }
                             }
                             else
-                                blockTable.Add(id, color);
+                            {
+                                if (!blockTable.ContainsKey(id))
+                                    blockTable.Add(id, color);
+                                else
+                                    blockTable[id] = color;
+                            }
                         }
                     }
                 }

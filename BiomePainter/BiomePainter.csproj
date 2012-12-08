@@ -156,10 +156,16 @@
     <None Include="Resources\brush-rectangle.png" />
     <None Include="Resources\brush-round.png" />
     <None Include="Resources\brush-square.png" />
-    <Content Include="Biomes.txt">
+    <Content Include="Biomes.default.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Blocks.txt">
+    <Content Include="Blocks.default.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Blocks.user.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Biomes.user.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\icon.ico" />
