@@ -5,7 +5,7 @@
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="Biome Painter : Edit your Minecraft world's biomes" />
-
+	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
     <title>Biome Painter</title>
@@ -18,6 +18,7 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/mblaine/BiomePainter">View on GitHub</a>
 
+		  <img class="plain" style="float:left;width:128px;height:128px;border:0;margin-right:15px" src="images/icon128.png" alt="Biome Painter"/>
           <h1 id="project_title">Biome Painter</h1>
           <h2 id="project_tagline">Edit your Minecraft world's biomes</h2>
 
@@ -41,6 +42,9 @@
 
 <p>In addition to arbitrary biomes, the biome generation from various versions of Minecraft can be used to populate the selected area with the biomes that would have been at those particular coordinates while playing that version.</p>
 
+<a href="images/scr1.png"><img src="images/scr1_thumb.png" style="width:325px;height:229px" alt=""/></a>
+<a href="images/scr2.png"><img src="images/scr2_thumb.png" style="width:325px;height:229px" alt=""/></a>
+
 <h1>Download</h1>
 
 <p>Biome Painter requires the .NET Framework 4.0 (Client Profile) to run and has only been tested on Windows.</p>
@@ -53,6 +57,14 @@
 
 <p>Please view LICENSE.txt at <a href="https://github.com/mblaine/BiomePainter/blob/master/LICENSE.txt">https://github.com/mblaine/BiomePainter/blob/master/LICENSE.txt</a>.</p>
 
+<h1>Changelog</h1>
+
+<p>Please view CHANGELOG.txt at <a href="https://github.com/mblaine/BiomePainter/blob/master/CHANGELOG.txt">https://github.com/mblaine/BiomePainter/blob/master/CHANGELOG.txt</a>.</p>
+
+<h1>Source</h1>
+
+<p>The source for Biome Painter is available at <a href="https://github.com/mblaine/BiomePainter">https://github.com/mblaine/BiomePainter</a>.</p>
+
 <h1>Points of Confusion</h1>
 
 <ul>
@@ -62,13 +74,7 @@
 <li>The outermost two chunks (32 blocks) along the edge of the image are from the regions adjacent to the currently loaded one and read-only. Their purpose is to help with lining up changes to biomes along the border between two regions. To edit those blocks you need to switch to the region that contains them.</li>
 <li>If a world was created before Minecraft 1.2 and needed to be converted, Minecraft will have populated each chunk's biome information based on the biome generation from version 1.1. Minecraft will still use the latest biome generation code for newly generated chunks in any world whether it was originally converted or not.</li>
 <li>When filling a selection with biomes based on Minecraft Beta 1.7 or earlier please remember that not all biomes in that version exist in the current version of Minecraft. As such, areas that would have been shrubland or seasonal forest are all set to forest, for example. Areas that would have been swampland in Beta 1.7 are set to forest in order to look a close as possible to how they would have in the past. Additionally the Beta 1.7 biome rainforest is set to yield the Minecraft 1.2 biome jungle.</li>
-</ul><h1>Changelog</h1>
-
-<p>Please view CHANGELOG.txt at <a href="https://github.com/mblaine/BiomePainter/blob/master/CHANGELOG.txt">https://github.com/mblaine/BiomePainter/blob/master/CHANGELOG.txt</a>.</p>
-
-<h1>Source</h1>
-
-<p>The source for Biome Painter is available at <a href="https://github.com/mblaine/BiomePainter">https://github.com/mblaine/BiomePainter</a>.</p>
+</ul>
       </section>
     </div>
 

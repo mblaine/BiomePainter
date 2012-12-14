@@ -158,6 +158,16 @@ img {
   -ms-box-shadow: 0 0 5px #ebebeb;
 }
 
+img.plain
+{
+  border: none;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -o-box-shadow: none;
+  -ms-box-shadow: none;
+}
+
 pre, code {
   width: 100%;
   color: #222;
@@ -272,7 +282,7 @@ Full-Width Styles
 
 .inner {
   position: relative;
-  max-width: 640px;
+  max-width: 730px;
   padding: 20px 10px;
   margin: 0 auto;
 }
