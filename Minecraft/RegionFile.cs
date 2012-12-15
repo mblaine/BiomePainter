@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.IO.MemoryMappedFiles;
 using System.Text;
 using System.Text.RegularExpressions;
 using Ionic.Zlib;
@@ -49,85 +50,87 @@ namespace Minecraft
                 return;
 
             byte[] header = new byte[8192];
-
-            using (BinaryReader file = new BinaryReader(File.Open(path, FileMode.Open)))
+            
+            using (MemoryMappedFile file = MemoryMappedFile.CreateFromFile(path, FileMode.Open))
             {
-                file.Read(header, 0, 8192);
-
-                for (int chunkZ = startZ; chunkZ <= endZ; chunkZ++)
+                using (MemoryMappedViewStream reader = file.CreateViewStream())
                 {
-                    for (int chunkX = startX; chunkX <= endX; chunkX++)
+                    reader.Read(header, 0, 8192);
+
+                    for (int chunkZ = startZ; chunkZ <= endZ; chunkZ++)
                     {
-                        Chunk c = new Chunk();
-                        c.Coords.X = Coords.X;
-                        c.Coords.Z = Coords.Z;
-                        c.Coords.RegiontoChunk();
-                        c.Coords.Add(chunkX, chunkZ);
-
-
-                        int i = 4 * (chunkX + chunkZ * 32);
-
-                        byte[] temp = new byte[4];
-                        temp[0] = 0;
-                        Array.Copy(header, i, temp, 1, 3);
-                        if (BitConverter.IsLittleEndian)
-                            Array.Reverse(temp);
-                        long offset = ((long)BitConverter.ToInt32(temp, 0)) * 4096;
-                        int length = header[i + 3] * 4096;
-
-                        temp = new byte[4];
-                        Array.Copy(header, i + 4096, temp, 0, 4);
-                        if (BitConverter.IsLittleEndian)
-                            Array.Reverse(temp);
-                        c.Timestamp = BitConverter.ToInt32(temp, 0);
-
-                        if (offset == 0 && length == 0)
+                        for (int chunkX = startX; chunkX <= endX; chunkX++)
                         {
+                            Chunk c = new Chunk();
+                            c.Coords.X = Coords.X;
+                            c.Coords.Z = Coords.Z;
+                            c.Coords.RegiontoChunk();
+                            c.Coords.Add(chunkX, chunkZ);
+
+
+                            int i = 4 * (chunkX + chunkZ * 32);
+
+                            byte[] temp = new byte[4];
+                            temp[0] = 0;
+                            Array.Copy(header, i, temp, 1, 3);
+                            if (BitConverter.IsLittleEndian)
+                                Array.Reverse(temp);
+                            long offset = ((long)BitConverter.ToInt32(temp, 0)) * 4096;
+                            int length = header[i + 3] * 4096;
+
+                            temp = new byte[4];
+                            Array.Copy(header, i + 4096, temp, 0, 4);
+                            if (BitConverter.IsLittleEndian)
+                                Array.Reverse(temp);
+                            c.Timestamp = BitConverter.ToInt32(temp, 0);
+
+                            if (offset == 0 && length == 0)
+                            {
+                                Chunks[chunkX, chunkZ] = c;
+                                continue;
+                            }
+
+                            reader.Seek(offset, SeekOrigin.Begin);
+
+                            temp = new byte[4];
+                            reader.Read(temp, 0, 4);
+                            if (BitConverter.IsLittleEndian)
+                                Array.Reverse(temp);
+                            int exactLength = BitConverter.ToInt32(temp, 0);
+
+                            c.CompressionType = (byte)reader.ReadByte();
+                            if (c.CompressionType == 1) //GZip
+                            {
+                                c.RawData = new byte[exactLength - 1];
+                                reader.Read(c.RawData, 0, exactLength - 1);
+
+                                GZipStream decompress = new GZipStream(new MemoryStream(c.RawData), CompressionMode.Decompress);
+                                MemoryStream mem = new MemoryStream();
+                                decompress.CopyTo(mem);
+                                mem.Seek(0, SeekOrigin.Begin);
+                                c.Root = new TAG_Compound(mem);
+                            }
+                            else if (c.CompressionType == 2) //Zlib
+                            {
+                                c.RawData = new byte[exactLength - 1];
+                                reader.Read(c.RawData, 0, exactLength - 1);
+
+                                ZlibStream decompress = new ZlibStream(new MemoryStream(c.RawData), CompressionMode.Decompress);
+                                MemoryStream mem = new MemoryStream();
+                                decompress.CopyTo(mem);
+                                mem.Seek(0, SeekOrigin.Begin);
+                                c.Root = new TAG_Compound(mem);
+                            }
+                            else
+                            {
+                                throw new Exception("Unrecognized compression type");
+                            }
+
                             Chunks[chunkX, chunkZ] = c;
-                            continue;
                         }
-
-                        file.BaseStream.Seek(offset, SeekOrigin.Begin);
-
-                        temp = new byte[4];
-                        file.Read(temp, 0, 4);
-                        if (BitConverter.IsLittleEndian)
-                            Array.Reverse(temp);
-                        int exactLength = BitConverter.ToInt32(temp, 0);
-
-                        c.CompressionType = file.ReadByte();
-                        if (c.CompressionType == 1) //GZip
-                        {
-                            c.RawData = new byte[exactLength - 1];
-                            file.Read(c.RawData, 0, exactLength - 1);
-
-                            GZipStream decompress = new GZipStream(new MemoryStream(c.RawData), CompressionMode.Decompress);
-                            MemoryStream mem = new MemoryStream();
-                            decompress.CopyTo(mem);
-                            mem.Seek(0, SeekOrigin.Begin);
-                            c.Root = new TAG_Compound(mem);
-                        }
-                        else if (c.CompressionType == 2) //Zlib
-                        {
-                            c.RawData = new byte[exactLength - 1];
-                            file.Read(c.RawData, 0, exactLength - 1);
-
-                            ZlibStream decompress = new ZlibStream(new MemoryStream(c.RawData), CompressionMode.Decompress);
-                            MemoryStream mem = new MemoryStream();
-                            decompress.CopyTo(mem);
-                            mem.Seek(0, SeekOrigin.Begin);
-                            c.Root = new TAG_Compound(mem);
-                        }
-                        else
-                        {
-                            throw new Exception("Unrecognized compression type");
-                        }
-
-                        Chunks[chunkX, chunkZ] = c;
                     }
+                    reader.Close();
                 }
-
-                file.Close();
             }
         }
 
