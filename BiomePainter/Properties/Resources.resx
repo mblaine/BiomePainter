@@ -196,4 +196,13 @@
   <data name="brush_square" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\brush-square.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="icon64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="biomes_default" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\biomes-default.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="blocks_default" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\blocks-default.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

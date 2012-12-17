@@ -94,6 +94,12 @@
       <DependentUpon>Seed.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="Update.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Update.Designer.cs">
+      <DependentUpon>Update.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
@@ -118,6 +124,9 @@
     </Compile>
     <EmbeddedResource Include="Seed.resx">
       <DependentUpon>Seed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Update.resx">
+      <DependentUpon>Update.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -152,6 +161,7 @@
       <Link>README.txt</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\icon64.png" />
     <None Include="Resources\brush-fill.png" />
     <None Include="Resources\brush-rectangle.png" />
     <None Include="Resources\brush-round.png" />
@@ -168,6 +178,8 @@
     <Content Include="Biomes.user.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\biomes-default.png" />
+    <None Include="Resources\blocks-default.png" />
     <Content Include="Resources\icon.ico" />
     <None Include="Resources\save.png" />
     <None Include="Resources\jump.png" />

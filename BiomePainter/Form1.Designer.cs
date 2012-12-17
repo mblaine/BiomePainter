@@ -132,6 +132,9 @@
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.cmbBiomeType = new System.Windows.Forms.ComboBox();
             this.imgRegion = new BiomePainter.BitmapSelector.BitmapSelector();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.editCustomBlockColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editCustomBiomeDefinitionsAndColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -155,7 +158,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1040, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1040, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -178,14 +181,14 @@
             this.toolStripSeparator6,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(44, 24);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // openWorldToolStripMenuItem
             // 
             this.openWorldToolStripMenuItem.Name = "openWorldToolStripMenuItem";
             this.openWorldToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openWorldToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
+            this.openWorldToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.openWorldToolStripMenuItem.Text = "&Open world";
             this.openWorldToolStripMenuItem.Click += new System.EventHandler(this.openWorldToolStripMenuItem_Click);
             // 
@@ -193,20 +196,20 @@
             // 
             this.closeWorldToolStripMenuItem.Name = "closeWorldToolStripMenuItem";
             this.closeWorldToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.closeWorldToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
+            this.closeWorldToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.closeWorldToolStripMenuItem.Text = "&Close world";
             this.closeWorldToolStripMenuItem.Click += new System.EventHandler(this.closeWorldToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(276, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(231, 6);
             // 
             // saveCurrentRegionToolStripMenuItem
             // 
             this.saveCurrentRegionToolStripMenuItem.Name = "saveCurrentRegionToolStripMenuItem";
             this.saveCurrentRegionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveCurrentRegionToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
+            this.saveCurrentRegionToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.saveCurrentRegionToolStripMenuItem.Text = "&Save current region";
             this.saveCurrentRegionToolStripMenuItem.Click += new System.EventHandler(this.saveCurrentRegionToolStripMenuItem_Click);
             // 
@@ -214,7 +217,7 @@
             // 
             this.reloadCurrentRegionToolStripMenuItem.Name = "reloadCurrentRegionToolStripMenuItem";
             this.reloadCurrentRegionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.reloadCurrentRegionToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
+            this.reloadCurrentRegionToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.reloadCurrentRegionToolStripMenuItem.Text = "&Reload current region";
             this.reloadCurrentRegionToolStripMenuItem.Click += new System.EventHandler(this.reloadCurrentRegionToolStripMenuItem_Click);
             // 
@@ -226,14 +229,14 @@
             this.leftOfCurrentToolStripMenuItem,
             this.rightOfCurrentToolStripMenuItem});
             this.loadRegionToolStripMenuItem.Name = "loadRegionToolStripMenuItem";
-            this.loadRegionToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
+            this.loadRegionToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.loadRegionToolStripMenuItem.Text = "Load &next region";
             // 
             // aboveCurrentToolStripMenuItem
             // 
             this.aboveCurrentToolStripMenuItem.Name = "aboveCurrentToolStripMenuItem";
             this.aboveCurrentToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Up)));
-            this.aboveCurrentToolStripMenuItem.Size = new System.Drawing.Size(258, 24);
+            this.aboveCurrentToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
             this.aboveCurrentToolStripMenuItem.Text = "&Above current";
             this.aboveCurrentToolStripMenuItem.Click += new System.EventHandler(this.aboveCurrentToolStripMenuItem_Click);
             // 
@@ -241,7 +244,7 @@
             // 
             this.belowCurrentToolStripMenuItem.Name = "belowCurrentToolStripMenuItem";
             this.belowCurrentToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Down)));
-            this.belowCurrentToolStripMenuItem.Size = new System.Drawing.Size(258, 24);
+            this.belowCurrentToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
             this.belowCurrentToolStripMenuItem.Text = "&Below current";
             this.belowCurrentToolStripMenuItem.Click += new System.EventHandler(this.belowCurrentToolStripMenuItem_Click);
             // 
@@ -249,7 +252,7 @@
             // 
             this.leftOfCurrentToolStripMenuItem.Name = "leftOfCurrentToolStripMenuItem";
             this.leftOfCurrentToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Left)));
-            this.leftOfCurrentToolStripMenuItem.Size = new System.Drawing.Size(258, 24);
+            this.leftOfCurrentToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
             this.leftOfCurrentToolStripMenuItem.Text = "&Left of current";
             this.leftOfCurrentToolStripMenuItem.Click += new System.EventHandler(this.leftOfCurrentToolStripMenuItem_Click);
             // 
@@ -257,7 +260,7 @@
             // 
             this.rightOfCurrentToolStripMenuItem.Name = "rightOfCurrentToolStripMenuItem";
             this.rightOfCurrentToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Right)));
-            this.rightOfCurrentToolStripMenuItem.Size = new System.Drawing.Size(258, 24);
+            this.rightOfCurrentToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
             this.rightOfCurrentToolStripMenuItem.Text = "&Right of current";
             this.rightOfCurrentToolStripMenuItem.Click += new System.EventHandler(this.rightOfCurrentToolStripMenuItem_Click);
             // 
@@ -265,14 +268,14 @@
             // 
             this.loadRegionByCoordsToolStripMenuItem.Name = "loadRegionByCoordsToolStripMenuItem";
             this.loadRegionByCoordsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.loadRegionByCoordsToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
+            this.loadRegionByCoordsToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.loadRegionByCoordsToolStripMenuItem.Text = "Load region by &coords";
             this.loadRegionByCoordsToolStripMenuItem.Click += new System.EventHandler(this.loadRegionByCoordsToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(276, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(231, 6);
             // 
             // overworldToolStripMenuItem
             // 
@@ -280,7 +283,7 @@
             this.overworldToolStripMenuItem.CheckOnClick = true;
             this.overworldToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.overworldToolStripMenuItem.Name = "overworldToolStripMenuItem";
-            this.overworldToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
+            this.overworldToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.overworldToolStripMenuItem.Text = "Overworld";
             this.overworldToolStripMenuItem.Click += new System.EventHandler(this.overworldToolStripMenuItem_Click);
             // 
@@ -288,7 +291,7 @@
             // 
             this.netherToolStripMenuItem.CheckOnClick = true;
             this.netherToolStripMenuItem.Name = "netherToolStripMenuItem";
-            this.netherToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
+            this.netherToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.netherToolStripMenuItem.Text = "Nether";
             this.netherToolStripMenuItem.Click += new System.EventHandler(this.netherToolStripMenuItem_Click);
             // 
@@ -296,14 +299,14 @@
             // 
             this.endToolStripMenuItem.CheckOnClick = true;
             this.endToolStripMenuItem.Name = "endToolStripMenuItem";
-            this.endToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
+            this.endToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.endToolStripMenuItem.Text = "End";
             this.endToolStripMenuItem.Click += new System.EventHandler(this.endToolStripMenuItem_Click);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(276, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(231, 6);
             // 
             // menuRecentWorlds
             // 
@@ -311,30 +314,30 @@
             this.menuRecentWorldsSeparator,
             this.menuClearRecentWorlds});
             this.menuRecentWorlds.Name = "menuRecentWorlds";
-            this.menuRecentWorlds.Size = new System.Drawing.Size(279, 24);
+            this.menuRecentWorlds.Size = new System.Drawing.Size(234, 22);
             this.menuRecentWorlds.Text = "Recent &worlds";
             // 
             // menuRecentWorldsSeparator
             // 
             this.menuRecentWorldsSeparator.Name = "menuRecentWorldsSeparator";
-            this.menuRecentWorldsSeparator.Size = new System.Drawing.Size(225, 6);
+            this.menuRecentWorldsSeparator.Size = new System.Drawing.Size(190, 6);
             // 
             // menuClearRecentWorlds
             // 
             this.menuClearRecentWorlds.Name = "menuClearRecentWorlds";
-            this.menuClearRecentWorlds.Size = new System.Drawing.Size(228, 24);
+            this.menuClearRecentWorlds.Size = new System.Drawing.Size(193, 22);
             this.menuClearRecentWorlds.Text = "&Clear recent worlds list";
             this.menuClearRecentWorlds.Click += new System.EventHandler(this.menuClearRecentWorlds_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(276, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(231, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(279, 24);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -355,14 +358,14 @@
             this.toolStripSeparator7,
             this.editWorldSeedToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "&Edit";
             // 
             // undoToolStripMenuItem
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(396, 24);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(325, 22);
             this.undoToolStripMenuItem.Text = "&Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
@@ -370,20 +373,20 @@
             // 
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(396, 24);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(325, 22);
             this.redoToolStripMenuItem.Text = "&Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(393, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(322, 6);
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(396, 24);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(325, 22);
             this.copyToolStripMenuItem.Text = "&Copy";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
@@ -391,57 +394,57 @@
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(396, 24);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(325, 22);
             this.pasteToolStripMenuItem.Text = "&Paste";
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(393, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(322, 6);
             // 
             // setChunksInSelectionToBePopulatedToolStripMenuItem
             // 
             this.setChunksInSelectionToBePopulatedToolStripMenuItem.Name = "setChunksInSelectionToBePopulatedToolStripMenuItem";
-            this.setChunksInSelectionToBePopulatedToolStripMenuItem.Size = new System.Drawing.Size(396, 24);
+            this.setChunksInSelectionToBePopulatedToolStripMenuItem.Size = new System.Drawing.Size(325, 22);
             this.setChunksInSelectionToBePopulatedToolStripMenuItem.Text = "&Set chunks in selection to be populated";
             this.setChunksInSelectionToBePopulatedToolStripMenuItem.Click += new System.EventHandler(this.setChunksInSelectionToBePopulatedToolStripMenuItem_Click);
             // 
             // unsetChunksInSelectionToBePopulatedToolStripMenuItem
             // 
             this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Name = "unsetChunksInSelectionToBePopulatedToolStripMenuItem";
-            this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Size = new System.Drawing.Size(396, 24);
+            this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Size = new System.Drawing.Size(325, 22);
             this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Text = "U&nset chunks in selection to be populated";
             this.unsetChunksInSelectionToBePopulatedToolStripMenuItem.Click += new System.EventHandler(this.unsetChunksInSelectionToBePopulatedToolStripMenuItem_Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(393, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(322, 6);
             // 
             // batchFillEntireWorldWithSelectedBiomeToolStripMenuItem
             // 
             this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem.Name = "batchFillEntireWorldWithSelectedBiomeToolStripMenuItem";
-            this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem.Size = new System.Drawing.Size(396, 24);
+            this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem.Size = new System.Drawing.Size(325, 22);
             this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem.Text = "Batch &fill entire world with selected biome";
             this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem.Click += new System.EventHandler(this.batchFillEntireWorldWithSelectedBiomeToolStripMenuItem_Click);
             // 
             // batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem
             // 
             this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Name = "batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem";
-            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Size = new System.Drawing.Size(396, 24);
+            this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Size = new System.Drawing.Size(325, 22);
             this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Text = "Batch r&eplace entire world with selected biomes";
             this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem.Click += new System.EventHandler(this.batchReplaceEntireWorldWithSelectedBiomesToolStripMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(393, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(322, 6);
             // 
             // editWorldSeedToolStripMenuItem
             // 
             this.editWorldSeedToolStripMenuItem.Name = "editWorldSeedToolStripMenuItem";
-            this.editWorldSeedToolStripMenuItem.Size = new System.Drawing.Size(396, 24);
+            this.editWorldSeedToolStripMenuItem.Size = new System.Drawing.Size(325, 22);
             this.editWorldSeedToolStripMenuItem.Text = "E&dit world seed";
             this.editWorldSeedToolStripMenuItem.Click += new System.EventHandler(this.editWorldSeedToolStripMenuItem_Click);
             // 
@@ -453,14 +456,14 @@
             this.invertToolStripMenuItem,
             this.chunksToolStripMenuItem});
             this.selectToolStripMenuItem.Name = "selectToolStripMenuItem";
-            this.selectToolStripMenuItem.Size = new System.Drawing.Size(61, 24);
+            this.selectToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.selectToolStripMenuItem.Text = "&Select";
             // 
             // allToolStripMenuItem
             // 
             this.allToolStripMenuItem.Name = "allToolStripMenuItem";
             this.allToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.allToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.allToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.allToolStripMenuItem.Text = "&All";
             this.allToolStripMenuItem.Click += new System.EventHandler(this.allToolStripMenuItem_Click);
             // 
@@ -469,7 +472,7 @@
             this.noneToolStripMenuItem.Name = "noneToolStripMenuItem";
             this.noneToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.A)));
-            this.noneToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.noneToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.noneToolStripMenuItem.Text = "&None";
             this.noneToolStripMenuItem.Click += new System.EventHandler(this.noneToolStripMenuItem_Click);
             // 
@@ -477,14 +480,14 @@
             // 
             this.invertToolStripMenuItem.Name = "invertToolStripMenuItem";
             this.invertToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.invertToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.invertToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.invertToolStripMenuItem.Text = "&Invert";
             this.invertToolStripMenuItem.Click += new System.EventHandler(this.invertToolStripMenuItem_Click);
             // 
             // chunksToolStripMenuItem
             // 
             this.chunksToolStripMenuItem.Name = "chunksToolStripMenuItem";
-            this.chunksToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.chunksToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.chunksToolStripMenuItem.Text = "&Chunks";
             this.chunksToolStripMenuItem.Click += new System.EventHandler(this.chunksToolStripMenuItem_Click);
             // 
@@ -493,16 +496,19 @@
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuRedrawTerrainMap,
             this.menuBiomeFoliage,
-            this.menuTransparency});
+            this.menuTransparency,
+            this.toolStripSeparator10,
+            this.editCustomBlockColorsToolStripMenuItem,
+            this.editCustomBiomeDefinitionsAndColorsToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(74, 24);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Se&ttings";
             // 
             // menuRedrawTerrainMap
             // 
             this.menuRedrawTerrainMap.CheckOnClick = true;
             this.menuRedrawTerrainMap.Name = "menuRedrawTerrainMap";
-            this.menuRedrawTerrainMap.Size = new System.Drawing.Size(378, 24);
+            this.menuRedrawTerrainMap.Size = new System.Drawing.Size(311, 22);
             this.menuRedrawTerrainMap.Text = "&Redraw terrain map after each biome change";
             this.menuRedrawTerrainMap.Click += new System.EventHandler(this.menuRedrawTerrainMap_Click);
             // 
@@ -510,7 +516,7 @@
             // 
             this.menuBiomeFoliage.CheckOnClick = true;
             this.menuBiomeFoliage.Name = "menuBiomeFoliage";
-            this.menuBiomeFoliage.Size = new System.Drawing.Size(378, 24);
+            this.menuBiomeFoliage.Size = new System.Drawing.Size(311, 22);
             this.menuBiomeFoliage.Text = "Use &biome colors for grass and trees";
             this.menuBiomeFoliage.Click += new System.EventHandler(this.menuBiomeFoliage_Click);
             // 
@@ -520,7 +526,7 @@
             this.menuTransparency.CheckOnClick = true;
             this.menuTransparency.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuTransparency.Name = "menuTransparency";
-            this.menuTransparency.Size = new System.Drawing.Size(378, 24);
+            this.menuTransparency.Size = new System.Drawing.Size(311, 22);
             this.menuTransparency.Text = "Show &transparency for blocks";
             this.menuTransparency.ToolTipText = "This may make the terrain map take longer to render.";
             this.menuTransparency.Click += new System.EventHandler(this.menuTransparency_Click);
@@ -532,25 +538,25 @@
             this.toolStripSeparator4,
             this.aboutBiomePainterToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
             // checkForUpdatesToolStripMenuItem
             // 
             this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
-            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(216, 24);
+            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.checkForUpdatesToolStripMenuItem.Text = "Check for &updates";
             this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(213, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(181, 6);
             // 
             // aboutBiomePainterToolStripMenuItem
             // 
             this.aboutBiomePainterToolStripMenuItem.Name = "aboutBiomePainterToolStripMenuItem";
-            this.aboutBiomePainterToolStripMenuItem.Size = new System.Drawing.Size(216, 24);
+            this.aboutBiomePainterToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.aboutBiomePainterToolStripMenuItem.Text = "&About Biome Painter";
             this.aboutBiomePainterToolStripMenuItem.Click += new System.EventHandler(this.aboutBiomePainterToolStripMenuItem_Click);
             // 
@@ -560,10 +566,9 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lstRegions.FormattingEnabled = true;
             this.lstRegions.HorizontalScrollbar = true;
-            this.lstRegions.ItemHeight = 16;
             this.lstRegions.Location = new System.Drawing.Point(12, 77);
             this.lstRegions.Name = "lstRegions";
-            this.lstRegions.Size = new System.Drawing.Size(240, 532);
+            this.lstRegions.Size = new System.Drawing.Size(240, 524);
             this.lstRegions.TabIndex = 1;
             this.lstRegions.SelectedIndexChanged += new System.EventHandler(this.lstRegions_SelectedIndexChanged);
             // 
@@ -808,7 +813,7 @@
             this.lblBrushDiameter.AutoSize = true;
             this.lblBrushDiameter.Location = new System.Drawing.Point(6, 64);
             this.lblBrushDiameter.Name = "lblBrushDiameter";
-            this.lblBrushDiameter.Size = new System.Drawing.Size(122, 17);
+            this.lblBrushDiameter.Size = new System.Drawing.Size(91, 13);
             this.lblBrushDiameter.TabIndex = 13;
             this.lblBrushDiameter.Text = "Brush Diameter: 1";
             // 
@@ -844,7 +849,7 @@
             this.lblMagnification.AutoSize = true;
             this.lblMagnification.Location = new System.Drawing.Point(6, 18);
             this.lblMagnification.Name = "lblMagnification";
-            this.lblMagnification.Size = new System.Drawing.Size(113, 17);
+            this.lblMagnification.Size = new System.Drawing.Size(87, 13);
             this.lblMagnification.TabIndex = 1;
             this.lblMagnification.Text = "Magnification: 1x";
             // 
@@ -895,7 +900,7 @@
             this.cmbReplace2.FormattingEnabled = true;
             this.cmbReplace2.Location = new System.Drawing.Point(455, 21);
             this.cmbReplace2.Name = "cmbReplace2";
-            this.cmbReplace2.Size = new System.Drawing.Size(174, 24);
+            this.cmbReplace2.Size = new System.Drawing.Size(174, 21);
             this.cmbReplace2.TabIndex = 4;
             // 
             // cmbReplace1
@@ -904,7 +909,7 @@
             this.cmbReplace1.FormattingEnabled = true;
             this.cmbReplace1.Location = new System.Drawing.Point(275, 21);
             this.cmbReplace1.Name = "cmbReplace1";
-            this.cmbReplace1.Size = new System.Drawing.Size(174, 24);
+            this.cmbReplace1.Size = new System.Drawing.Size(174, 21);
             this.cmbReplace1.TabIndex = 3;
             // 
             // btnFill
@@ -925,7 +930,7 @@
             this.cmbFill.FormattingEnabled = true;
             this.cmbFill.Location = new System.Drawing.Point(6, 21);
             this.cmbFill.Name = "cmbFill";
-            this.cmbFill.Size = new System.Drawing.Size(174, 24);
+            this.cmbFill.Size = new System.Drawing.Size(174, 21);
             this.cmbFill.TabIndex = 1;
             // 
             // label3
@@ -1145,7 +1150,7 @@
             this.cmbBlockType.FormattingEnabled = true;
             this.cmbBlockType.Location = new System.Drawing.Point(6, 22);
             this.cmbBlockType.Name = "cmbBlockType";
-            this.cmbBlockType.Size = new System.Drawing.Size(178, 24);
+            this.cmbBlockType.Size = new System.Drawing.Size(178, 21);
             this.cmbBlockType.TabIndex = 0;
             // 
             // groupBox9
@@ -1169,7 +1174,7 @@
             this.cmbBiomeType.FormattingEnabled = true;
             this.cmbBiomeType.Location = new System.Drawing.Point(6, 22);
             this.cmbBiomeType.Name = "cmbBiomeType";
-            this.cmbBiomeType.Size = new System.Drawing.Size(178, 24);
+            this.cmbBiomeType.Size = new System.Drawing.Size(178, 21);
             this.cmbBiomeType.TabIndex = 0;
             // 
             // imgRegion
@@ -1183,6 +1188,23 @@
             this.imgRegion.BrushDiameterChanged += new BiomePainter.BitmapSelector.BitmapSelector.BrushDiameterEventHandler(this.imgRegion_BrushDiameterChanged);
             this.imgRegion.CustomBrushClick += new BiomePainter.BitmapSelector.BitmapSelector.CustomBrushClickEventHandler(this.imgRegion_CustomBrushClick);
             this.imgRegion.SelectionChanged += new BiomePainter.BitmapSelector.BitmapSelector.SelectionChangedEventHandler(this.imgRegion_SelectionChanged);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(308, 6);
+            // 
+            // editCustomBlockColorsToolStripMenuItem
+            // 
+            this.editCustomBlockColorsToolStripMenuItem.Name = "editCustomBlockColorsToolStripMenuItem";
+            this.editCustomBlockColorsToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.editCustomBlockColorsToolStripMenuItem.Text = "Edit custom b&lock colors";
+            // 
+            // editCustomBiomeDefinitionsAndColorsToolStripMenuItem
+            // 
+            this.editCustomBiomeDefinitionsAndColorsToolStripMenuItem.Name = "editCustomBiomeDefinitionsAndColorsToolStripMenuItem";
+            this.editCustomBiomeDefinitionsAndColorsToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.editCustomBiomeDefinitionsAndColorsToolStripMenuItem.Text = "Edit custom b&iome definitions and colors";
             // 
             // Form1
             // 
@@ -1338,6 +1360,9 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem editWorldSeedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripMenuItem editCustomBlockColorsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editCustomBiomeDefinitionsAndColorsToolStripMenuItem;
     }
 }
 

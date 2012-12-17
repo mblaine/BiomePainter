@@ -579,6 +579,8 @@ namespace BiomePainter
 
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            new Update().ShowDialog();
+            return;
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.github.com/repos/mblaine/BiomePainter/tags");
