@@ -34,7 +34,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnBiomes = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnProgram = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -57,6 +57,7 @@
             this.btnBlocks.TabIndex = 0;
             this.btnBlocks.Text = "Check for updates to default block colors";
             this.btnBlocks.UseVisualStyleBackColor = true;
+            this.btnBlocks.Click += new System.EventHandler(this.btnBlocks_Click);
             // 
             // label1
             // 
@@ -90,6 +91,7 @@
             this.btnBiomes.TabIndex = 3;
             this.btnBiomes.Text = "Check for updates to biome definitions and colors";
             this.btnBiomes.UseVisualStyleBackColor = true;
+            this.btnBiomes.Click += new System.EventHandler(this.btnBiomes_Click);
             // 
             // label3
             // 
@@ -102,16 +104,17 @@
             this.label3.Text = "New versions of Biome Painter won\'t be downloaded automatically, but here you can" +
     " check for an update and open the download page in your web browser.";
             // 
-            // button1
+            // btnProgram
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.btnProgram.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(75, 199);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(508, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Check for Biome Painter program updates";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnProgram.Location = new System.Drawing.Point(75, 199);
+            this.btnProgram.Name = "btnProgram";
+            this.btnProgram.Size = new System.Drawing.Size(508, 23);
+            this.btnProgram.TabIndex = 5;
+            this.btnProgram.Text = "Check for Biome Painter program updates";
+            this.btnProgram.UseVisualStyleBackColor = true;
+            this.btnProgram.Click += new System.EventHandler(this.btnProgram_Click);
             // 
             // label4
             // 
@@ -192,7 +195,7 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnProgram);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnBiomes);
             this.Controls.Add(this.label2);
@@ -219,7 +222,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnBiomes;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnProgram;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;

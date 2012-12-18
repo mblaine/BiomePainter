@@ -75,6 +75,9 @@
             this.menuRedrawTerrainMap = new System.Windows.Forms.ToolStripMenuItem();
             this.menuBiomeFoliage = new System.Windows.Forms.ToolStripMenuItem();
             this.menuTransparency = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.editCustomBlockColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editCustomBiomeDefinitionsAndColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -132,9 +135,6 @@
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.cmbBiomeType = new System.Windows.Forms.ComboBox();
             this.imgRegion = new BiomePainter.BitmapSelector.BitmapSelector();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.editCustomBlockColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editCustomBiomeDefinitionsAndColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -530,6 +530,25 @@
             this.menuTransparency.Text = "Show &transparency for blocks";
             this.menuTransparency.ToolTipText = "This may make the terrain map take longer to render.";
             this.menuTransparency.Click += new System.EventHandler(this.menuTransparency_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(308, 6);
+            // 
+            // editCustomBlockColorsToolStripMenuItem
+            // 
+            this.editCustomBlockColorsToolStripMenuItem.Name = "editCustomBlockColorsToolStripMenuItem";
+            this.editCustomBlockColorsToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.editCustomBlockColorsToolStripMenuItem.Text = "Edit custom b&lock colors";
+            this.editCustomBlockColorsToolStripMenuItem.Click += new System.EventHandler(this.editCustomBlockColorsToolStripMenuItem_Click);
+            // 
+            // editCustomBiomeDefinitionsAndColorsToolStripMenuItem
+            // 
+            this.editCustomBiomeDefinitionsAndColorsToolStripMenuItem.Name = "editCustomBiomeDefinitionsAndColorsToolStripMenuItem";
+            this.editCustomBiomeDefinitionsAndColorsToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.editCustomBiomeDefinitionsAndColorsToolStripMenuItem.Text = "Edit custom b&iome definitions and colors";
+            this.editCustomBiomeDefinitionsAndColorsToolStripMenuItem.Click += new System.EventHandler(this.editCustomBiomeDefinitionsAndColorsToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -1188,23 +1207,6 @@
             this.imgRegion.BrushDiameterChanged += new BiomePainter.BitmapSelector.BitmapSelector.BrushDiameterEventHandler(this.imgRegion_BrushDiameterChanged);
             this.imgRegion.CustomBrushClick += new BiomePainter.BitmapSelector.BitmapSelector.CustomBrushClickEventHandler(this.imgRegion_CustomBrushClick);
             this.imgRegion.SelectionChanged += new BiomePainter.BitmapSelector.BitmapSelector.SelectionChangedEventHandler(this.imgRegion_SelectionChanged);
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(308, 6);
-            // 
-            // editCustomBlockColorsToolStripMenuItem
-            // 
-            this.editCustomBlockColorsToolStripMenuItem.Name = "editCustomBlockColorsToolStripMenuItem";
-            this.editCustomBlockColorsToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
-            this.editCustomBlockColorsToolStripMenuItem.Text = "Edit custom b&lock colors";
-            // 
-            // editCustomBiomeDefinitionsAndColorsToolStripMenuItem
-            // 
-            this.editCustomBiomeDefinitionsAndColorsToolStripMenuItem.Name = "editCustomBiomeDefinitionsAndColorsToolStripMenuItem";
-            this.editCustomBiomeDefinitionsAndColorsToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
-            this.editCustomBiomeDefinitionsAndColorsToolStripMenuItem.Text = "Edit custom b&iome definitions and colors";
             // 
             // Form1
             // 
