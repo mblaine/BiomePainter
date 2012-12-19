@@ -90,6 +90,11 @@ namespace BiomePainter
             }
         }
 
+        public static void Reset()
+        {
+            blockTable = null;
+        }
+
         public static Color Lookup(int block, int data, byte biome)
         {
             if (blockTable == null)

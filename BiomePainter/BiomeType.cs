@@ -61,6 +61,10 @@ namespace BiomePainter
             }
         }
 
+        public static void Reset()
+        {
+            biomes = null;
+        }
 
         public BiomeType(byte id, String name, int color)
         {

@@ -57,35 +57,7 @@ namespace BiomePainter
 
             RegionUtil.RenderChunkBoundaries(imgRegion.Layers[CHUNKLAYER].Image);
 
-            List<BiomeType> biomes = new List<BiomeType>();
-            foreach (BiomeType b in BiomeType.Biomes)
-            {
-                if (b == null || b.ID == 255)
-                    continue;
-
-                biomes.Add(b);
-            }
-
-            biomes.Sort();
-            BiomeType[] temp = biomes.ToArray();
-            
-            cmbFill.Items.AddRange(temp);
-            cmbReplace1.Items.AddRange(temp);
-            cmbReplace2.Items.AddRange(temp);
-            cmbBiomeType.Items.AddRange(temp);
-
-            String[] versions = { "Minecraft Beta 1.3_01", "Minecraft Beta 1.7.3", "Minecraft Beta 1.8.1", "Minecraft 1.0.0", "Minecraft 1.1.0", "Minecraft 1.2.5", "Minecraft 1.3.2", "MC 1.3.2 (large biomes)" };
-
-            cmbFill.Items.AddRange(versions);
-            cmbReplace2.Items.AddRange(versions);
-
-            cmbFill.SelectedIndex = 0;
-            cmbReplace1.SelectedIndex = 0;
-            cmbReplace2.SelectedIndex = 0;
-            cmbBiomeType.SelectedIndex = 0;
-
-            cmbBlockType.Items.AddRange(new String[] { "Cacti & Dead Bushes", "Dirt & Grass", "Flowers & Tall Grass", "Gravel", "Lily Pads & Vines", "Leaves & Logs", "Ice", "Sand", "Snow", "Stone", "Water", "Input Block ID" });
-            cmbBlockType.SelectedIndex = 0;
+            FillLists();
 
             history = new HistoryManager(HistoryChange);
             history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image, "Initial Selection");
@@ -124,6 +96,46 @@ namespace BiomePainter
                 history.Dispose();
             history = new HistoryManager(HistoryChange);
             history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image, "Initial State");
+        }
+
+        public void FillLists()
+        {
+            List<BiomeType> biomes = new List<BiomeType>();
+            foreach (BiomeType b in BiomeType.Biomes)
+            {
+                if (b == null || b.ID == 255)
+                    continue;
+
+                biomes.Add(b);
+            }
+
+            biomes.Sort();
+            BiomeType[] temp = biomes.ToArray();
+
+            cmbFill.Items.Clear();
+            cmbReplace1.Items.Clear();
+            cmbReplace2.Items.Clear();
+            cmbBiomeType.Items.Clear();
+            cmbBlockType.Items.Clear();
+
+            cmbFill.Items.AddRange(temp);
+            cmbReplace1.Items.AddRange(temp);
+            cmbReplace2.Items.AddRange(temp);
+            cmbBiomeType.Items.AddRange(temp);
+
+            String[] versions = { "Minecraft Beta 1.3_01", "Minecraft Beta 1.7.3", "Minecraft Beta 1.8.1", "Minecraft 1.0.0", "Minecraft 1.1.0", "Minecraft 1.2.5", "Minecraft 1.3.2", "MC 1.3.2 (large biomes)" };
+
+            cmbFill.Items.AddRange(versions);
+            cmbReplace2.Items.AddRange(versions);
+
+            cmbFill.SelectedIndex = 0;
+            cmbReplace1.SelectedIndex = 0;
+            cmbReplace2.SelectedIndex = 0;
+            cmbBiomeType.SelectedIndex = 0;
+
+            cmbBlockType.Items.AddRange(new String[] { "Cacti & Dead Bushes", "Dirt & Grass", "Flowers & Tall Grass", "Gravel", "Lily Pads & Vines", "Leaves & Logs", "Ice", "Sand", "Snow", "Stone", "Water", "Input Block ID" });
+            cmbBlockType.SelectedIndex = 0;
+
         }
 
         private void UpdateStatus(String status)
@@ -603,7 +615,7 @@ namespace BiomePainter
 
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new Update().ShowDialog();
+            new Update().ShowDialog(this);
         }
 
         private void aboutBiomePainterToolStripMenuItem_Click(object sender, EventArgs e)

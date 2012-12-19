@@ -39,7 +39,7 @@ namespace BiomePainter
             Close();
         }
 
-        void enableButtons(bool enable)
+        private void enableButtons(bool enable)
         {
             btnBlocks.Enabled = enable ? shouldBeEnabled[Blocks] : false;
             btnBiomes.Enabled = enable ? shouldBeEnabled[Biomes] : false;
@@ -47,46 +47,52 @@ namespace BiomePainter
             btnClose.Enabled = enable;
         }
 
-        private void btnBlocks_Click(object sender, EventArgs e)
+        private void updateTextFile(int buttonId, String url, String path, String filename, String description, Button button, ref String newContents)
         {
             enableButtons(false);
-            shouldBeEnabled[Blocks] = false;
+            shouldBeEnabled[buttonId] = false;
 
-            String path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Blocks.default.txt");
-
-            if (readyToGo[Blocks])
+            if (readyToGo[buttonId])
             {
-                readyToGo[Blocks] = false;
+                readyToGo[buttonId] = false;
 
-                if (blockContents == null)
+                if (newContents == null)
                 {
                     MessageBox.Show(this, "Sorry, no data found. Please close the update window and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     enableButtons(true);
                     return;
                 }
 
-                btnBlocks.Text = "Writing updates to Blocks.default.txt.";
-                btnBlocks.Refresh();
+                button.Text = String.Format("Writing updates to {0}.", filename);
+                button.Refresh();
 
                 using (StreamWriter sw = new StreamWriter(path, false))
                 {
-                    sw.Write(blockContents);
+                    sw.Write(newContents);
                     sw.Close();
                 }
 
-                btnBlocks.Text = "You now have the latest block color listing.";
-
+                button.Text = String.Format("You now have the latest {0}.", description);
+                
+                if(buttonId == Blocks)
+                    ColorPalette.Reset();
+                else if (buttonId == Biomes)
+                {
+                    BiomeType.Reset();
+                    ((Form1)Owner).FillLists();
+                }
+                
                 enableButtons(true);
                 return;
             }
 
             enableButtons(false);
-            shouldBeEnabled[Blocks] = false;
-            btnBlocks.Text = "Checking for updates to Blocks.default.txt.";
-            btnBlocks.Refresh();
+            shouldBeEnabled[buttonId] = false;
+            button.Text = String.Format("Checking for updates to {0}.", filename);
+            button.Refresh();
 
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.github.com/repos/mblaine/BiomePainter/contents/BiomePainter/Blocks.default.txt");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "GET";
             request.Headers["Accept-Encoding"] = "gzip,deflate";
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
@@ -108,30 +114,34 @@ namespace BiomePainter
             raw.CopyTo(combined, head.Length);
 
             SHA1 sha1 = new SHA1CryptoServiceProvider();
-            String localSha = BitConverter.ToString(sha1.ComputeHash(combined)).Replace("-","").ToLower();
+            String localSha = BitConverter.ToString(sha1.ComputeHash(combined)).Replace("-", "").ToLower();
 
             if (serverSha == localSha)
             {
-                btnBlocks.Text = "You have the latest block color listing. No action is necessary.";
-                shouldBeEnabled[Blocks] = false;
-                readyToGo[Blocks] = false;
+                button.Text = String.Format("You have the latest {0}. No action is necessary.", description);
+                shouldBeEnabled[buttonId] = false;
+                readyToGo[buttonId] = false;
                 enableButtons(true);
             }
             else
             {
-                blockContents = new Regex("[\"']content[\"']: ?\"([^\"']+)[\"']", RegexOptions.IgnoreCase | RegexOptions.Multiline).Match(json).Groups[1].Value;
-                blockContents = Encoding.UTF8.GetString(Convert.FromBase64String(blockContents));
-                btnBlocks.Text = "Updated block color listing available! Click to download new copy of Blocks.default.txt.";
-                shouldBeEnabled[Blocks] = true;
-                readyToGo[Blocks] = true;
+                newContents = new Regex("[\"']content[\"']: ?\"([^\"']+)[\"']", RegexOptions.IgnoreCase | RegexOptions.Multiline).Match(json).Groups[1].Value;
+                newContents = Encoding.UTF8.GetString(Convert.FromBase64String(newContents));
+                button.Text = String.Format("Updated {0} available! Click to save a new copy of {1}.", description, filename);
+                shouldBeEnabled[buttonId] = true;
+                readyToGo[buttonId] = true;
                 enableButtons(true);
             }
-            
+        }
+
+        private void btnBlocks_Click(object sender, EventArgs e)
+        {
+            updateTextFile(Blocks, "https://api.github.com/repos/mblaine/BiomePainter/contents/BiomePainter/Blocks.default.txt", Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Blocks.default.txt"), "Blocks.default.txt", "block color listing", btnBlocks, ref blockContents);            
         }
 
         private void btnBiomes_Click(object sender, EventArgs e)
         {
-
+            updateTextFile(Biomes, "https://api.github.com/repos/mblaine/BiomePainter/contents/BiomePainter/Biomes.default.txt", Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Biomes.default.txt"), "Biomes.default.txt", "biome definitions", btnBiomes, ref biomeContents);            
         }
 
         private void btnProgram_Click(object sender, EventArgs e)
@@ -186,7 +196,7 @@ namespace BiomePainter
                         latestSubminor = tagSubminor;
                     }
                 }
-                latestMajor = -1;
+
                 if (latestMajor == -1)
                 {
                     btnProgram.Text = "Unable to determine latest version. Click to open the list of downloads in your web browser.";
