@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.Net;
-using System.IO;
-using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.IO;
+using System.Net;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace BiomePainter
 {
@@ -22,6 +18,9 @@ namespace BiomePainter
 
         private bool[] shouldBeEnabled;
         private bool[] readyToGo;
+
+        private String blockContents = null;
+        private String biomeContents = null;
 
         public Update()
         {
@@ -50,11 +49,47 @@ namespace BiomePainter
 
         private void btnBlocks_Click(object sender, EventArgs e)
         {
+            enableButtons(false);
+            shouldBeEnabled[Blocks] = false;
+
+            String path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Blocks.default.txt");
+
+            if (readyToGo[Blocks])
+            {
+                readyToGo[Blocks] = false;
+
+                if (blockContents == null)
+                {
+                    MessageBox.Show(this, "Sorry, no data found. Please close the update window and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    enableButtons(true);
+                    return;
+                }
+
+                btnBlocks.Text = "Writing updates to Blocks.default.txt.";
+                btnBlocks.Refresh();
+
+                using (StreamWriter sw = new StreamWriter(path, false))
+                {
+                    sw.Write(blockContents);
+                    sw.Close();
+                }
+
+                btnBlocks.Text = "You now have the latest block color listing.";
+
+                enableButtons(true);
+                return;
+            }
+
+            enableButtons(false);
+            shouldBeEnabled[Blocks] = false;
+            btnBlocks.Text = "Checking for updates to Blocks.default.txt.";
+            btnBlocks.Refresh();
+
+
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.github.com/repos/mblaine/BiomePainter/contents/BiomePainter/Blocks.default.txt");
             request.Method = "GET";
             request.Headers["Accept-Encoding"] = "gzip,deflate";
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             StreamReader responseStream = new StreamReader(response.GetResponseStream());
@@ -64,9 +99,34 @@ namespace BiomePainter
 
             json = json.Replace("\\n", "");
 
-            String content = new Regex("[\"']content[\"']: ?\"([^\"']+)[\"']", RegexOptions.IgnoreCase | RegexOptions.Multiline).Match(json).Groups[1].Value;
-            content = Encoding.UTF8.GetString(Convert.FromBase64String(content));
-            String sha = new Regex("[\"']sha[\"']: ?\"([^\"']+)[\"']", RegexOptions.IgnoreCase | RegexOptions.Multiline).Match(json).Groups[1].Value;
+            String serverSha = new Regex("[\"']sha[\"']: ?\"([^\"']+)[\"']", RegexOptions.IgnoreCase | RegexOptions.Multiline).Match(json).Groups[1].Value;
+
+            byte[] raw = File.ReadAllBytes(path);
+            byte[] head = Encoding.UTF8.GetBytes("blob " + raw.Length.ToString() + "\0");
+            byte[] combined = new byte[head.Length + raw.Length];
+            head.CopyTo(combined, 0);
+            raw.CopyTo(combined, head.Length);
+
+            SHA1 sha1 = new SHA1CryptoServiceProvider();
+            String localSha = BitConverter.ToString(sha1.ComputeHash(combined)).Replace("-","").ToLower();
+
+            if (serverSha == localSha)
+            {
+                btnBlocks.Text = "You have the latest block color listing. No action is necessary.";
+                shouldBeEnabled[Blocks] = false;
+                readyToGo[Blocks] = false;
+                enableButtons(true);
+            }
+            else
+            {
+                blockContents = new Regex("[\"']content[\"']: ?\"([^\"']+)[\"']", RegexOptions.IgnoreCase | RegexOptions.Multiline).Match(json).Groups[1].Value;
+                blockContents = Encoding.UTF8.GetString(Convert.FromBase64String(blockContents));
+                btnBlocks.Text = "Updated block color listing available! Click to download new copy of Blocks.default.txt.";
+                shouldBeEnabled[Blocks] = true;
+                readyToGo[Blocks] = true;
+                enableButtons(true);
+            }
+            
         }
 
         private void btnBiomes_Click(object sender, EventArgs e)
