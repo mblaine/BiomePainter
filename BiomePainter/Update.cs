@@ -96,7 +96,8 @@ namespace BiomePainter
             request.Method = "GET";
             request.Headers["Accept-Encoding"] = "gzip,deflate";
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
+            request.Proxy = null;
+            
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             StreamReader responseStream = new StreamReader(response.GetResponseStream());
             String json = responseStream.ReadToEnd();
@@ -162,6 +163,7 @@ namespace BiomePainter
                 request.Method = "GET";
                 request.Headers["Accept-Encoding"] = "gzip,deflate";
                 request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+                request.Proxy = null;
 
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 StreamReader responseStream = new StreamReader(response.GetResponseStream());
