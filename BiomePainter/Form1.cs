@@ -123,7 +123,7 @@ namespace BiomePainter
             cmbReplace2.Items.AddRange(temp);
             cmbBiomeType.Items.AddRange(temp);
 
-            String[] versions = { "Minecraft Beta 1.3_01", "Minecraft Beta 1.7.3", "Minecraft Beta 1.8.1", "Minecraft 1.0.0", "Minecraft 1.1.0", "Minecraft 1.2.5", "Minecraft 1.3.2", "MC 1.3.2 (large biomes)" };
+            String[] versions = { "Minecraft 1.4.6", "MC 1.4.6 (large biomes)", "Minecraft 1.3.2", "MC 1.3.2 (large biomes)", "Minecraft 1.2.5", "Minecraft 1.1.0", "Minecraft 1.0.0", "Minecraft Beta 1.8.1", "Minecraft Beta 1.7.3", "Minecraft Beta 1.3_01" };
 
             cmbFill.Items.AddRange(versions);
             cmbReplace2.Items.AddRange(versions);

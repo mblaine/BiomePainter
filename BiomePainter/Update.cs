@@ -90,20 +90,32 @@ namespace BiomePainter
             shouldBeEnabled[buttonId] = false;
             button.Text = String.Format("Checking for updates to {0}.", filename);
             button.Refresh();
-
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "GET";
-            request.Headers["Accept-Encoding"] = "gzip,deflate";
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            request.Proxy = null;
             
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            StreamReader responseStream = new StreamReader(response.GetResponseStream());
-            String json = responseStream.ReadToEnd();
-            response.Close();
-            responseStream.Close();
+            String json = null;
+            
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Method = "GET";
+                request.Headers["Accept-Encoding"] = "gzip,deflate";
+                request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+                request.Proxy = null;
 
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                StreamReader responseStream = new StreamReader(response.GetResponseStream());
+                json = responseStream.ReadToEnd();
+                response.Close();
+                responseStream.Close();
+            }
+            catch (Exception)
+            {
+                button.Text = "Unable to connect to GitHub. Please try again later.";
+                shouldBeEnabled[buttonId] = true;
+                readyToGo[buttonId] = false;
+                enableButtons(true);
+                return;
+            }
+            
             json = json.Replace("\\n", "");
 
             String serverSha = new Regex("[\"']sha[\"']: ?\"([^\"']+)[\"']", RegexOptions.IgnoreCase | RegexOptions.Multiline).Match(json).Groups[1].Value;
