@@ -304,13 +304,14 @@ namespace BiomePainter
             String[] regions = world.GetRegionPaths();
             if (regions.Length == 0)
             {
-                MessageBox.Show(this, "No region files (*.mca) found. Be sure to convert a world to the Anvil format by first opening it in Minecraft 1.2 or later.", "Open", MessageBoxButtons.OK);
-                world = null;
+                MessageBox.Show(this, "No region files (*.mca) found in the main, overworld dimension. If the world is older than March 2012 open it in Minecraft 1.2 or later to convert to the Anvil format. Otherwise try switching dimensions from the file menu.", "Open", MessageBoxButtons.OK);
                 this.Text = "Biome Painter";
-                return;
             }
-            foreach (String r in regions)
-                lstRegions.Items.Add(RegionFile.ToString(r));
+            else
+            {
+                foreach (String r in regions)
+                    lstRegions.Items.Add(RegionFile.ToString(r));
+            }
 
             Settings.AddRecentWorld(path, world.WorldName);
             FillRecentWorldsList();
