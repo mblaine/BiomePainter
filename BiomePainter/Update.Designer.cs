@@ -73,9 +73,9 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(448, 32);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Blocks.default.txt contains colors used when the overhead terrain map is generate" +
-    "d. Please see Blocks.user.txt wherever Biome Painter is installed to add custom " +
-    "color changes.";
+            this.label1.Text = "Blocks.default.txt contains colors used in the overhead terrain map. Please add c" +
+    "ustom color settings to Blocks.user.txt which can be opened from the Settings me" +
+    "nu.";
             // 
             // label2
             // 

@@ -1,0 +1,5 @@
+# Custom biome definitions and their colors used in the region map are defined here. The format is:
+# [biome id (0-255)],[biome display name],[6-digit hexadecimal color code for the overlay map rrggbb]
+# Example: 21,Jungle,32CD32
+# For more examples see Biomes.default.txt. You can download updates for that file from "Check for
+# updates" under the Help menu. Entries here will always override entries in the default file.

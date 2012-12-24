@@ -1,4 +1,10 @@
-﻿0;00000000 #air
+﻿# Block colors used in the overhead terrain map for a region are defined here. Please add any
+# custom changes you wish to make to Blocks.user.txt. Updates to this file (default) can be
+# downloaded from the "Check for updates" menu under Help. Definitions in the custom file (user)
+# will always override those in this file, so you can have up-to-date colors for the blocks as
+# they're added to Minecraft without overwriting any changes you make yourself (in Blocks.user.txt).
+
+0;00000000 #air
 1;7e7e7e #stone
 2,31;0,7,9;62844c #grass, tall grass (Ocean)
 2,31;1,16;65873a #grass, tall grass (Plains)
@@ -14,9 +20,9 @@
 3;866043 #dirt
 4;7c7c7c #cobble
 5,33:1,34,47,64,85,96,107;a08250 #planks, normal piston up, piston extension (normal/not up), wood door, bookshelf, fence, hatch, gate
-5:1,125:1,126:1,126:9;765834 #pine planks, slabs
-5:2,125:2,126:2,126:10;d4c285 #birch planks, slabs
-5:3,125:3,126:3,126:11;a97b58 #jungle planks, slabs
+5:1,125:1,126:1,126:9,134;765834 #pine planks, slabs, stairs
+5:2,125:2,126:2,126:10,135;d4c285 #birch planks, slabs, stairs
+5:3,125:3,126:3,126:11,136;a97b58 #jungle planks, slabs, stairs
 6;408f2f #sapling
 7;323232 #bedrock
 8,9;6;665e86b4 #water (Swamp)
@@ -80,12 +86,12 @@
 43:0,44:0,44:8;a3a3a3 #stone slabs
 43:1,44:1,44:9;dad29f #sandstone slabs
 43:2,44:2,44:10,53,125:0,126:0,126:8;a08250 #wood slabs, stairs, new slabs
-43:3,44:3,44:11,67;7c7c7c #cobble slabs, stairs
+43:3,44:3,44:11,67,139;7c7c7c #cobble slabs, stairs, wall
 43:4,44:4,44:12,108;916052 #bricks slabs, stairs
 43:5,44:5,44:13,109;7d7d7d #stone brick slabs, stairs
 45;916052 #brick
 46;C13C17 #tnt
-48;697b69 #mossy cobble
+48,139:1;697b69 #mossy cobble, wall
 49;241351 #obsidian
 50;88FFF032 #torch
 51;FC7800 #fire
@@ -115,7 +121,7 @@
 63,68;77a08250 #sign
 65;00a08250 #ladder
 66,28;877c6a #rail, detector rail
-69,77;447e7e7e #lever, button
+69,77;447e7e7e #lever, stone button
 70;7e7e7e #stone pressure plate
 72;a08250 #wooden pressure plate
 73,74;866969 #redstone ore
@@ -138,10 +144,10 @@
 98;7d7d7d #stone brick
 103;969925 #melon
 104,105;3380b654 #pumpkin stem, melon stem
-106;003b9314 #vines
+106;113b9314 #vines
 110;6f6469 #mycelium
 111;13621c #lily pad
-112,113;2d171b #nether brick, fence
+112,113,43:6,44:6,44:14;2d171b #nether brick, fence, slabs
 114;2d171b #netherbrick stairs
 115;81080A #netherwart
 116;822846 #enchantment table
@@ -159,3 +165,11 @@
 131;9a8462 #tripwire hook
 132;949595 #tripwire
 133;4fcd73 #emerald block
+137;c77e4f #command block
+138;68dbd4 #beacon
+140;aa844a39 #flower pot
+141;156303 #carrots
+142;258921 #potatos
+143;44a08250 #wood button
+144;aa3b3b3b #head
+145;494949 #anvil

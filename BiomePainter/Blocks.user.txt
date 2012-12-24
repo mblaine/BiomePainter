@@ -1,1 +1,5 @@
-﻿
+﻿# Custom block colors to be used in the terrain map for a region are defined here. The format is:
+# blockId[:dataValue][,additionalIds];[optional comma-separated biome ids;]6-8 digit hex color code [aa]rrggbb #optional comment
+# Example: 43:1,44:1,44:9;dad29f #sandstone slabs
+# For more examples see Blocks.default.txt. You can download updates for that file from "Check for
+# updates" under the Help menu. Entries here will always override entries in the default file.

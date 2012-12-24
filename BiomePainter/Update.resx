@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="label2.Text" xml:space="preserve">
-    <value>Biomes.default.txt contains definitions for biomes available in drop down lists to fill or replace with as well as their colors on the biome map layer. Please see Biomes.user.txt wherever Biome Painter is installed to add custom biome definitions.</value>
+    <value>Biomes.default.txt contains definitions for biomes available to fill or replace with as well as their colors on the biome map layer. Please add custom biome definitions to Biomes.user.txt which can be opened from the Settings menu.</value>
   </data>
 </root>

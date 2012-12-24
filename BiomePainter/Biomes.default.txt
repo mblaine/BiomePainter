@@ -1,3 +1,9 @@
+# Biomes and the colors used to highlight them on the map are defined here. Please add any custom
+# biomes you wish to add to Biomes.user.txt. Updates to this file (default) can be downloaded from
+# the "Check for updates" menu under Help. Definitions in the custom file (user) will always
+# override those in this file, so you can have an up-to-date list of biomes in vanilla Minecraft
+# without overwriting any changes you make yourself make yourself (in Biomes.user.txt).
+
 0,Ocean,0000FF
 1,Plains,98FB98
 2,Desert,DEB887

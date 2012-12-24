@@ -53,7 +53,7 @@ namespace BiomePainter
                 #if DEBUG
                 else
                 {
-                    if (line.Trim().Length > 0)
+                    if (line.Trim().Length > 0 && line[0] != '#')
                         throw new Exception(String.Format("Malformed line:\"{0}\"", line));
                 }
                 #endif
