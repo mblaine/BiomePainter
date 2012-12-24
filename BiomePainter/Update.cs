@@ -47,7 +47,7 @@ namespace BiomePainter
             btnClose.Enabled = enable;
         }
 
-        private void updateTextFile(int buttonId, String url, String path, String filename, String description, Button button, ref String newContents)
+        private void updateTextFile(int buttonId, String url, String path, String filename, String description, Button button, PictureBox pic, ref String newContents)
         {
             enableButtons(false);
             shouldBeEnabled[buttonId] = false;
@@ -60,6 +60,7 @@ namespace BiomePainter
                 {
                     MessageBox.Show(this, "Sorry, no data found. Please close the update window and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     enableButtons(true);
+                    pic.Image = Properties.Resources.x;
                     return;
                 }
 
@@ -73,7 +74,7 @@ namespace BiomePainter
                 }
 
                 button.Text = String.Format("You now have the latest {0}.", description);
-                
+                pic.Image = Properties.Resources.check;
                 if(buttonId == Blocks)
                     ColorPalette.Reset();
                 else if (buttonId == Biomes)
@@ -113,6 +114,7 @@ namespace BiomePainter
                 shouldBeEnabled[buttonId] = true;
                 readyToGo[buttonId] = false;
                 enableButtons(true);
+                pic.Image = Properties.Resources.x;
                 return;
             }
             
@@ -135,6 +137,7 @@ namespace BiomePainter
                 shouldBeEnabled[buttonId] = false;
                 readyToGo[buttonId] = false;
                 enableButtons(true);
+                pic.Image = Properties.Resources.check;
             }
             else
             {
@@ -144,17 +147,18 @@ namespace BiomePainter
                 shouldBeEnabled[buttonId] = true;
                 readyToGo[buttonId] = true;
                 enableButtons(true);
+                pic.Image = Properties.Resources.bang;
             }
         }
 
         private void btnBlocks_Click(object sender, EventArgs e)
         {
-            updateTextFile(Blocks, "https://api.github.com/repos/mblaine/BiomePainter/contents/BiomePainter/Blocks.default.txt", Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Blocks.default.txt"), "Blocks.default.txt", "block color listing", btnBlocks, ref blockContents);            
+            updateTextFile(Blocks, "https://api.github.com/repos/mblaine/BiomePainter/contents/BiomePainter/Blocks.default.txt", Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Blocks.default.txt"), "Blocks.default.txt", "block color listing", btnBlocks, picBlocks, ref blockContents);            
         }
 
         private void btnBiomes_Click(object sender, EventArgs e)
         {
-            updateTextFile(Biomes, "https://api.github.com/repos/mblaine/BiomePainter/contents/BiomePainter/Biomes.default.txt", Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Biomes.default.txt"), "Biomes.default.txt", "biome definitions", btnBiomes, ref biomeContents);            
+            updateTextFile(Biomes, "https://api.github.com/repos/mblaine/BiomePainter/contents/BiomePainter/Biomes.default.txt", Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Biomes.default.txt"), "Biomes.default.txt", "biome definitions", btnBiomes, picBiomes, ref biomeContents);            
         }
 
         private void btnProgram_Click(object sender, EventArgs e)
@@ -217,6 +221,7 @@ namespace BiomePainter
                     shouldBeEnabled[Program] = true;
                     readyToGo[Program] = true;
                     enableButtons(true);
+                    picProgram.Image = Properties.Resources.x;
                     return;
                 }
 
@@ -236,6 +241,7 @@ namespace BiomePainter
                         shouldBeEnabled[Program] = true;
                         readyToGo[Program] = true;
                         enableButtons(true);
+                        picProgram.Image = Properties.Resources.bang;
                         return;
                     }
                     else
@@ -244,6 +250,7 @@ namespace BiomePainter
                         shouldBeEnabled[Program] = false;
                         readyToGo[Program] = false;
                         enableButtons(true);
+                        picProgram.Image = Properties.Resources.check;
                         return;
                     }
                 }
@@ -253,6 +260,7 @@ namespace BiomePainter
                     shouldBeEnabled[Program] = true;
                     readyToGo[Program] = true;
                     enableButtons(true);
+                    picProgram.Image = Properties.Resources.x;
                     return;
                 }
             }
@@ -262,6 +270,7 @@ namespace BiomePainter
                 shouldBeEnabled[Program] = true;
                 readyToGo[Program] = true;
                 enableButtons(true);
+                picProgram.Image = Properties.Resources.x;
                 return;
             }
         }

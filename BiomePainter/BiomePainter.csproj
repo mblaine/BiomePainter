@@ -161,6 +161,8 @@
       <Link>README.txt</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\x.png" />
+    <None Include="Resources\q.png" />
     <None Include="Resources\icon64.png" />
     <None Include="Resources\brush-fill.png" />
     <None Include="Resources\brush-rectangle.png" />
@@ -180,6 +182,8 @@
     </Content>
     <None Include="Resources\biomes-default.png" />
     <None Include="Resources\blocks-default.png" />
+    <None Include="Resources\bang.png" />
+    <None Include="Resources\check.png" />
     <Content Include="Resources\icon.ico" />
     <None Include="Resources\save.png" />
     <None Include="Resources\jump.png" />
