@@ -50,6 +50,11 @@ regions adjacent to the currently loaded one and read-only. Thier purpose is to
 help with lining up changes to biomes along the border between two regions. To
 edit those blocks you need to switch to the region that contains them.
 
+* Custom block color and biome definitions should be added to Blocks.user.txt
+and Biomes.user.txt respectively. The other two files, Blocks.default.txt and
+Biomes.default.txt can be kept up to date from "Check for updates" under the
+Help menu. Entries in the user files always override entries in the default.
+
 * If a world was created before Minecraft 1.2 and needed to be converted, 
 Minecraft will have populated each chunk's biome information based on the biome 
 generation from version 1.1. Minecraft will still use the latest biome 

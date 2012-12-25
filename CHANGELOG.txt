@@ -1,8 +1,45 @@
+1.0 - 12/25/2012
+    * Check for updates window now has separate options for block colors, biome
+      definitions, and the program itself. The first two can download updates on
+      demand. The last will open a web page with links to download the updated
+      version.
+    * Block colors are now split between two files: Blocks.default.txt and
+      Blocks.user.txt. The former shouldn't be edited manually. Updated
+      versions of the file can be downloaded from the "Check for updates"
+      option in the Help menu. This checks the Blocks.default.txt file on
+      GitHub.com, which will be updated with new blocks as they're added to the
+      game. Entries in Blocks.user.txt will never be overwritten by Biome
+      Painter and always override values in Blocks.default.txt.
+    * Biome definitions and colors are now split between two files:
+      Biomes.default.txt and Biomes.user.txt. See the description of the new
+      separate files for block colors, above.
+    * A save's level.dat can now be "open[ed] with" Biome Painter.
+        - After this has been done at least once, worlds opened with Biome
+          Painter from the file system or through the standard open file window
+          from within the program will be automatically added to the program's
+          jump list and list of recent files in the start menu in Windows 7 or
+          later. Other platforms are not affected.
+    * Undo and redo buttons and menu items are now disabled when there's nothing
+      for them to do. The buttons also have a tooltip when hovering over them
+      describing what they would undo or redo when clicked.
+    * A world's seed can be changed from the file menu. This affects filling or
+      replacing with biomes from a given version of Minecraft.
+        - A different seed can be used temporarily while the world is open in
+          Biome Painter with the option to also save the new seed to level.dat.
+    * Display world name in program title bar
+    * Ability to fill or replace with biomes from Minecraft 1.4.6.
+        - Separate Minecraft 1.4.6 large biomes option.
+        - Minecraft versions now in descending order in drop down lists.
+    * Checking for updates now faster.
+    * Reading region files now faster.
+    * More robust searching for directories containing region files and
+      handling dimensions that have none.
+
 0.9 - 9/12/2012
     * Terrain map layer now supports transparent blocks and biome colors for
       grass and leaves. These both make rendering the map slower, however.
       Options to enable or disable these features can be found under the new
-      "Settings" menu. Addtionally there's an option to control whether the
+      "Settings" menu. Additionally there's an option to control whether the
       terrain map should be re-generated after every biome change, though that
       would be unnecessary without the biome foliage option enabled.
     * A list of the ten most recently opened worlds can be found under the File
@@ -26,9 +63,9 @@
     * Batch processing of an entire dimension of an entire world can now be
       done from the Edit menu after opening a world and selecting biomes from
       the drop down lists at the bottom of the main window.
-        - Biomes to be used are taken from the exisitng drop down lists at the
+        - Biomes to be used are taken from the existing drop down lists at the
           bottom of the main window.
-        - When cancelling a job in progress, if a region has begun to be saved
+        - When canceling a job in progress, if a region has begun to be saved
           it is allowed to finish before everything is stopped in order to
           prevent corrupting save files.
     * Pasting now allows mousing over and clicking on the region to place the
@@ -47,7 +84,7 @@
       positive.
     * Brush layer now displayed on top of selection layer.
     * Max brush diameter increased from 50 pixels to 100.
-    * Tooltips now hidden when drawing, in addtion to mouse cursor.
+    * Tooltips now hidden when drawing, in addition to mouse cursor.
     * Added support for upcoming changes to world directory structure.
     * Added colors for some additional block types for terrain map.
     * Fixed data values for blocks on terrain map being read incorrectly.
@@ -74,7 +111,7 @@
       area that is currently taiga to the current selection.
     * Number keys now toggle layers on and off.
     * While zoomed in, use Alt + Mouse Wheel to pan up and down, and Shift +
-      Mosue Wheel to pan left and right. As before, Ctrl + Mouse Wheel
+      Mouse Wheel to pan left and right. As before, Ctrl + Mouse Wheel
       adjusts brush size and Mouse Wheel by itself adjusts magnification.
     * Mouse cursor is now hidden while drawing or erasing.
     * Fixed panning left or up not working when viewing the bottom-right corner
@@ -98,9 +135,9 @@
       time they are loaded in Minecraft. May damage existing structures in
       affected chunks, please see README.txt, the section "Points of Confusion"
       for more information.
-    * Save times dramatically improved. Saving all chunks in a reigon down
+    * Save times dramatically improved. Saving all chunks in a region down
       from 60 seconds to ~7 seconds in my tests.
-    * Overhead map indicates hight by making higher areas lighter in color.
+    * Overhead map indicates height by making higher areas lighter in color.
     * Brush visible when mousing over region map. Brush size can now be changed
       with Ctrl + Mouse Wheel.
     * More shortcut keys.
