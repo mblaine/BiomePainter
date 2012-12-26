@@ -17,17 +17,22 @@
     <div id="header_wrap" class="outer">
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/mblaine/BiomePainter">View on GitHub</a>
-
-		  <img class="plain" style="float:left;width:128px;height:128px;border:0;margin-right:15px" src="images/icon128.png" alt="Biome Painter"/>
+		<a href="http://mblaine.github.com/BiomePainter/">
+		  <img class="plain icon" src="images/icon128.png" alt="Biome Painter"/>
           <h1 id="project_title">Biome Painter</h1>
-          <h2 id="project_tagline">Edit your Minecraft world's biomes</h2>
+          <h2 id="project_tagline">Edit your Minecraft world's biomes</h2></a>
 
             <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/mblaine/BiomePainter/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/mblaine/BiomePainter/tarball/master">Download this project as a tar.gz file</a>
+              <a class="zip_download_link" title="Download source code archive" href="https://github.com/mblaine/BiomePainter/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" title="Download source code archive" href="https://github.com/mblaine/BiomePainter/tarball/master">Download this project as a tar.gz file</a>
             </section>
         </header>
     </div>
+	<div class="outer" style="background-color:#111">
+	<nav  class="inner" style="color:white;padding:0;margin-top:0">
+		<a href="http://mblaine.github.com/BiomePainter/" class="current">Main</a><a href="http://mblaine.github.com/BiomePainter/downloads">Download</a><a href="https://github.com/mblaine/BiomePainter/">Source</a><a href="http://www.minecraftforum.net/topic/1119044-biome-painter/">Forum<img src="images/extern-gray.png" class="plain ext"/></a>
+	</nav>
+	</div>
 
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
@@ -47,11 +52,11 @@
 
 <h1>Download</h1>
 
-<p>Biome Painter requires the .NET Framework 4.0 (Client Profile) to run and has only been tested on Windows.</p>
+<p>Biome Painter requires the .NET Framework 4.0 (Client Profile) or better to run on Windows. It is possible to <a href="http://www.minecraftforum.net/topic/1119044-tool-biome-painter-09-edit-your-minecraft-worlds-biomes/page__st__160#entry18708397" class="ext">run it on Mac</a> with the <a href="http://www.mono-project.com/Main_Page" class="ext">Mono platform</a>.</p>
 
-<p><a href="https://github.com/downloads/mblaine/BiomePainter/BiomePainter-0.9-bin.zip">Biome Painter 0.9, September 12, 2012 (direct link)</a></p>
+<p><a href="https://s3-us-west-2.amazonaws.com/biomepainter/BiomePainter-1.0-bin.zip" class="latest">Biome Painter 1.0, December 25, 2012 (direct link)</a></p>
 
-<p>All binary downloads can be found at <a href="https://github.com/mblaine/BiomePainter/downloads">https://github.com/mblaine/BiomePainter/downloads</a>.</p>
+<p><a href="downloads">View all binary downloads.</a></p>
 
 <h1>License</h1>
 
@@ -72,6 +77,7 @@
 <li>This program only alters biomes, which affect the shade of grass, water, and the sky, what mobs can spawn in an area, and whether rain or snow is possible. For example, after changing an area from taiga or ice plains to another biome such as forest, existing ice and snow cover will remain until removed using another tool such as MCEdit or removed manually in Minecraft.</li>
 <li>If, however, you use the "Set Chunks in Selection to be Populated" option under the Edit menu, the next time the specified chunks are loaded in Minecraft it will fill them with trees, snow cover, water, lava, and ores depending on the biome(s) the chunk is in. If that chunk has already been populated or already has player-made structures in it, you may find it clogged with more foliage than you wanted. Also smooth stone in your structures may be replaced with ores, dirt, or gravel. I strongly suggest that if you decide to use this feature you make sure you have a current backup copy of your world before proceeding.</li>
 <li>The outermost two chunks (32 blocks) along the edge of the image are from the regions adjacent to the currently loaded one and read-only. Their purpose is to help with lining up changes to biomes along the border between two regions. To edit those blocks you need to switch to the region that contains them.</li>
+<li>Custom block color and biome definitions should be added to Blocks.user.txt and Biomes.user.txt respectively. The other two files, Blocks.default.txt and Biomes.default.txt can be kept up to date from "Check for updates" under the Help menu. Entries in the user files always override entries in the default.</li>
 <li>If a world was created before Minecraft 1.2 and needed to be converted, Minecraft will have populated each chunk's biome information based on the biome generation from version 1.1. Minecraft will still use the latest biome generation code for newly generated chunks in any world whether it was originally converted or not.</li>
 <li>When filling a selection with biomes based on Minecraft Beta 1.7 or earlier please remember that not all biomes in that version exist in the current version of Minecraft. As such, areas that would have been shrubland or seasonal forest are all set to forest, for example. Areas that would have been swampland in Beta 1.7 are set to forest in order to look a close as possible to how they would have in the past. Additionally the Beta 1.7 biome rainforest is set to yield the Minecraft 1.2 biome jungle.</li>
 </ul>
