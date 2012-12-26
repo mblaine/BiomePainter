@@ -165,7 +165,7 @@ namespace BiomePainter
         {
             if (readyToGo[Program])
             {
-                Process.Start("https://github.com/mblaine/BiomePainter/downloads");
+                Process.Start("http://mblaine.github.com/BiomePainter/downloads");
                 return;
             }
 
