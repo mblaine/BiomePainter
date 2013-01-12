@@ -81,8 +81,8 @@
 38;f7070f #red flower
 39,99;8d6a53 #brown mushroom, huge
 40,100;b72725 #red mushroom, huge
-41;fbf152 #gold block
-42,71,101;e0e0e0 #iron block, door, bars
+41,147;fbf152 #gold block, pressure plate
+42,71,101,148;e0e0e0 #iron block, door, bars, plate
 43:0,44:0,44:8;a3a3a3 #stone slabs
 43:1,44:1,44:9;dad29f #sandstone slabs
 43:2,44:2,44:10,53,125:0,126:0,126:8;a08250 #wood slabs, stairs, new slabs
@@ -96,7 +96,7 @@
 50;88FFF032 #torch
 51;FC7800 #fire
 52;375063 #spawner
-54;8e6525 #chest
+54,146;8e6525 #chest, trapped chest
 55:0;500000 #redstone wire, power: 0
 55:1;5A0000 #redstone wire, power: 1
 55:2;640000 #redstone wire, power: 2
@@ -120,7 +120,7 @@
 60;724b2d #farmland
 63,68;77a08250 #sign
 65;00a08250 #ladder
-66,28;877c6a #rail, detector rail
+66,28,157;877c6a #rail, detector, activator
 69,77;447e7e7e #lever, stone button
 70;7e7e7e #stone pressure plate
 72;a08250 #wooden pressure plate
@@ -139,8 +139,8 @@
 89;EDD118 #glowstone
 90;562d88 #nether portal
 92;e6b6b7 #cake
-93;996D6D #repeater off
-94;FF6363 #repeater on
+93,149;996D6D #repeater off, comparator
+94,150;FF6363 #repeater on, comparator
 98;7d7d7d #stone brick
 103;969925 #melon
 104,105;3380b654 #pumpkin stem, melon stem
@@ -152,7 +152,7 @@
 115;81080A #netherwart
 116;822846 #enchantment table
 117;A0A06E #brewing stand
-118;424242 #cauldron
+118,154;424242 #cauldron, hopper
 119;142139 #end portal
 120;647c65 #end portal frame
 121;dddfa5 #end stone
@@ -173,3 +173,7 @@
 143;44a08250 #wood button
 144;aa3b3b3b #head
 145;494949 #anvil
+151;726552 #daylight sensor
+152;c5210a #redstone block
+153;984745 #nether quartz ore
+155,156,43:7,44:7,44:15;ece9e3 #quartz block, stairs, slabs
