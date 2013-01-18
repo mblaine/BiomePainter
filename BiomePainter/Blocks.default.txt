@@ -52,7 +52,7 @@
 20,102;88ffffff #glass, panes
 21;636f88 #lapis ore
 22;1d46a6 #lapis block
-23,29,33,61,62;676767 #dispenser, piston box (extended/not up), furnace
+23,29,33,61,62,158;676767 #dispenser, piston box (extended/not up), furnace, dropper
 24,128;dad29f #sandstone, stairs
 25;6c4734 #noteblock
 26:0,26:1,26:2,26:3;8F0C13 #bed lower half
