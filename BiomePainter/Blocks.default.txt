@@ -179,3 +179,4 @@
 155,156,43:7,43:15,44:7,44:15;ece9e3 #quartz block, stairs, slabs
 170;cca913 #hay bale, top
 170:4,170:8;c9a713 #hay bale, side
+172;965c43 #hardened clay
