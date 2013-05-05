@@ -22,6 +22,8 @@ namespace BiomePainter
         private String blockContents = null;
         private String biomeContents = null;
 
+        private static String userAgent = "BiomePainter/1.1 (http://mblaine.github.io/BiomePainter)";
+
         public Update()
         {
             InitializeComponent();
@@ -100,6 +102,7 @@ namespace BiomePainter
                 request.Method = "GET";
                 request.Headers["Accept-Encoding"] = "gzip,deflate";
                 request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+                request.UserAgent = userAgent;
                 request.Proxy = null;
 
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
@@ -165,7 +168,7 @@ namespace BiomePainter
         {
             if (readyToGo[Program])
             {
-                Process.Start("http://mblaine.github.com/BiomePainter/downloads");
+                Process.Start("http://mblaine.github.io/BiomePainter/downloads");
                 return;
             }
 
@@ -179,6 +182,7 @@ namespace BiomePainter
                 request.Method = "GET";
                 request.Headers["Accept-Encoding"] = "gzip,deflate";
                 request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+                request.UserAgent = userAgent;
                 request.Proxy = null;
 
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
