@@ -10,8 +10,8 @@ Please see CHANGELOG.txt.
 
 << About >> 
 
-This program is meant to allow editing of biome information in Minecraft save 
-files using the Anvil file format introduced in Minecraft 1.2. 
+Biome Painter is a stand-alone program for editing biome information in 
+Minecraft save files using the Anvil file format introduced in Minecraft 1.2. 
 
 After loading a region, left click to paint your selection over the map of the 
 region and right click to erase. 

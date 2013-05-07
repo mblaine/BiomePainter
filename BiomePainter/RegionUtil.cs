@@ -358,17 +358,25 @@ namespace BiomePainter
                         Minecraft.BiomeGen.F13.WorldChunkManager.LargeBiomes = false;
                         biomeGen = new Minecraft.BiomeGen.F13.WorldChunkManager(seed);
                         break;
-                    case "MC 1.3.2 (large biomes)":
+                    case "MC 1.3.2 (Large biomes)":
                         Minecraft.BiomeGen.F13.WorldChunkManager.LargeBiomes = true;
                         biomeGen = new Minecraft.BiomeGen.F13.WorldChunkManager(seed);
                         break;
-                    case "Minecraft 1.4.6":
+                    case "Minecraft 1.4.7":
                         Minecraft.BiomeGen.F14.WorldChunkManager.LargeBiomes = false;
                         biomeGen = new Minecraft.BiomeGen.F14.WorldChunkManager(seed);
                         break;
-                    case "MC 1.4.6 (large biomes)":
+                    case "MC 1.4.7 (Large biomes)":
                         Minecraft.BiomeGen.F14.WorldChunkManager.LargeBiomes = true;
                         biomeGen = new Minecraft.BiomeGen.F14.WorldChunkManager(seed);
+                        break;
+                    case "Minecraft 1.5.2":
+                        Minecraft.BiomeGen.F15.WorldChunkManager.LargeBiomes = false;
+                        biomeGen = new Minecraft.BiomeGen.F15.WorldChunkManager(seed);
+                        break;
+                    case "MC 1.5.2 (Large biomes)":
+                        Minecraft.BiomeGen.F15.WorldChunkManager.LargeBiomes = true;
+                        biomeGen = new Minecraft.BiomeGen.F15.WorldChunkManager(seed);
                         break;
                     default:
                         throw new Exception("Unrecognized Minecraft version: " + (String)input);

@@ -194,6 +194,29 @@
     <Compile Include="F14\LongHashMap.cs" />
     <Compile Include="F14\LongHashMapEntry.cs" />
     <Compile Include="F14\WorldChunkManager.cs" />
+    <Compile Include="F15\BiomeCache.cs" />
+    <Compile Include="F15\BiomeCacheBlock.cs" />
+    <Compile Include="F15\BiomeGenBase.cs" />
+    <Compile Include="F15\GenLayer.cs" />
+    <Compile Include="F15\GenLayerAddIsland.cs" />
+    <Compile Include="F15\GenLayerAddMushroomIsland.cs" />
+    <Compile Include="F15\GenLayerAddSnow.cs" />
+    <Compile Include="F15\GenLayerBiome.cs" />
+    <Compile Include="F15\GenLayerFuzzyZoom.cs" />
+    <Compile Include="F15\GenLayerHills.cs" />
+    <Compile Include="F15\GenLayerIsland.cs" />
+    <Compile Include="F15\GenLayerRiver.cs" />
+    <Compile Include="F15\GenLayerRiverInit.cs" />
+    <Compile Include="F15\GenLayerRiverMix.cs" />
+    <Compile Include="F15\GenLayerShore.cs" />
+    <Compile Include="F15\GenLayerSmooth.cs" />
+    <Compile Include="F15\GenLayerSwampRivers.cs" />
+    <Compile Include="F15\GenLayerVoronoiZoom.cs" />
+    <Compile Include="F15\GenLayerZoom.cs" />
+    <Compile Include="F15\IntCache.cs" />
+    <Compile Include="F15\LongHashMap.cs" />
+    <Compile Include="F15\LongHashMapEntry.cs" />
+    <Compile Include="F15\WorldChunkManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
