@@ -3,6 +3,7 @@ using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using Ionic.Zlib;
 
 namespace Minecraft
@@ -13,6 +14,9 @@ namespace Minecraft
         public Coord Coords;
         public String Path;
         public bool Dirty = false;
+
+        private int taskCount = 0;
+        private ManualResetEvent signal = null;
 
         public RegionFile()
         {
@@ -49,6 +53,9 @@ namespace Minecraft
             if (!File.Exists(path))
                 return;
 
+            signal = new ManualResetEvent(false);
+            taskCount = (endX - startX + 1) * (endZ - startZ + 1);
+
             byte[] header = new byte[8192];
             
             using (MemoryMappedFile file = MemoryMappedFile.CreateFromFile(path, FileMode.Open))
@@ -66,8 +73,7 @@ namespace Minecraft
                             c.Coords.Z = Coords.Z;
                             c.Coords.RegiontoChunk();
                             c.Coords.Add(chunkX, chunkZ);
-
-
+                            
                             int i = 4 * (chunkX + chunkZ * 32);
 
                             byte[] temp = new byte[4];
@@ -87,6 +93,8 @@ namespace Minecraft
                             if (offset == 0 && length == 0)
                             {
                                 Chunks[chunkX, chunkZ] = c;
+                                if (Interlocked.Decrement(ref taskCount) == 0)
+                                    signal.Set();
                                 continue;
                             }
 
@@ -99,39 +107,51 @@ namespace Minecraft
                             int exactLength = BitConverter.ToInt32(temp, 0);
 
                             c.CompressionType = (byte)reader.ReadByte();
-                            if (c.CompressionType == 1) //GZip
-                            {
-                                c.RawData = new byte[exactLength - 1];
-                                reader.Read(c.RawData, 0, exactLength - 1);
 
-                                GZipStream decompress = new GZipStream(new MemoryStream(c.RawData), CompressionMode.Decompress);
-                                MemoryStream mem = new MemoryStream();
-                                decompress.CopyTo(mem);
-                                mem.Seek(0, SeekOrigin.Begin);
-                                c.Root = new TAG_Compound(mem);
-                            }
-                            else if (c.CompressionType == 2) //Zlib
-                            {
-                                c.RawData = new byte[exactLength - 1];
-                                reader.Read(c.RawData, 0, exactLength - 1);
-
-                                ZlibStream decompress = new ZlibStream(new MemoryStream(c.RawData), CompressionMode.Decompress);
-                                MemoryStream mem = new MemoryStream();
-                                decompress.CopyTo(mem);
-                                mem.Seek(0, SeekOrigin.Begin);
-                                c.Root = new TAG_Compound(mem);
-                            }
-                            else
-                            {
-                                throw new Exception("Unrecognized compression type");
-                            }
+                            c.RawData = new byte[exactLength - 1];
+                            reader.Read(c.RawData, 0, exactLength - 1);
 
                             Chunks[chunkX, chunkZ] = c;
+
+                            ThreadPool.QueueUserWorkItem(Decompress, c);
+
                         }
                     }
                     reader.Close();
                 }
             }
+            signal.WaitOne();
+            signal.Dispose();
+            signal = null;
+        }
+
+        private void Decompress(Object state)
+        {            
+            Chunk c = (Chunk)state;
+
+            if (c.CompressionType == 1) //GZip
+            {
+                GZipStream decompress = new GZipStream(new MemoryStream(c.RawData), CompressionMode.Decompress);
+                MemoryStream mem = new MemoryStream();
+                decompress.CopyTo(mem);
+                mem.Seek(0, SeekOrigin.Begin);
+                c.Root = new TAG_Compound(mem);
+            }
+            else if (c.CompressionType == 2) //Zlib
+            {
+                ZlibStream decompress = new ZlibStream(new MemoryStream(c.RawData), CompressionMode.Decompress);
+                MemoryStream mem = new MemoryStream();
+                decompress.CopyTo(mem);
+                mem.Seek(0, SeekOrigin.Begin);
+                c.Root = new TAG_Compound(mem);
+            }
+            else
+            {
+                throw new Exception("Unrecognized compression type");
+            }
+
+            if (Interlocked.Decrement(ref taskCount) == 0)
+                signal.Set();
         }
 
         //DO NOT write region if reading less than the entire thing
