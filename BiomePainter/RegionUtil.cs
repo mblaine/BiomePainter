@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
 using Minecraft;
 
 namespace BiomePainter
@@ -13,53 +14,44 @@ namespace BiomePainter
         private const int HEIGHT = 512;
         private static readonly Rectangle CLIP = new Rectangle(OFFSETX, OFFSETY, WIDTH, HEIGHT);
 
+        private static int taskCount = 0;
+        private static ManualResetEvent signal = null;
+        private static Mutex mutex = null;
+
         private RegionUtil()
         {
         }
 
-        private static void RenderSurroundingRegion(RegionFile region, int chunkStartX, int chunkEndX, int chunkStartZ, int chunkEndZ, int offsetX, int offsetY, Bitmap map, Bitmap biomes, String[,] toolTips, Bitmap populate)
+        private static void RenderSurroundingRegion(RegionFile region, int chunkStartX, int chunkEndX, int chunkStartZ, int chunkEndZ, int offsetX, int offsetY, Bitmap terrain, Bitmap biomes, String[,] toolTips, Bitmap populate)
         {
-            using (Graphics g = Graphics.FromImage(populate))
-            {
-                Brush brush = new SolidBrush(Color.Yellow);
-                for (int x = chunkStartX; x <= chunkEndX; x++)
-                {
-                    for (int z = chunkStartZ; z <= chunkEndZ; z++)
-                    {
-                        Chunk c = region.Chunks[x, z];
-                        if (c == null || c.Root == null)
-                            continue;
-                        Coord chunkOffset = new Coord(c.Coords);
-                        chunkOffset.ChunktoRegionRelative();
-                        chunkOffset = new Coord(chunkOffset.X - chunkStartX, chunkOffset.Z - chunkStartZ);
-                        chunkOffset.ChunktoAbsolute();
-                        chunkOffset.Add(offsetX, offsetY);
-
-                        RenderChunk(c, map, chunkOffset.X, chunkOffset.Z);
-                        RenderChunkBiomes(c, biomes, toolTips, chunkOffset.X, chunkOffset.Z);
-                        RenderChunktobePopulated(c, g, brush, chunkOffset.X, chunkOffset.Z);
-                    }
-                }
-                brush.Dispose();
-            }
+            RenderRegionTerrain(region, chunkStartX, chunkEndX, chunkStartZ, chunkEndZ, offsetX, offsetY, terrain);
+            RenderRegionBiomes(region, chunkStartX, chunkEndX, chunkStartZ, chunkEndZ, offsetX, offsetY, biomes, toolTips);
+            RenderRegionChunkstobePopulated(region, chunkStartX, chunkEndX, chunkStartZ, chunkEndZ, offsetX, offsetY, populate);
         }
 
-        public static void RenderSurroundingRegions(RegionFile[,] regions, Bitmap map, Bitmap biomes, String[,] toolTips, Bitmap populate)
+        public static void RenderSurroundingRegions(RegionFile[,] regions, Bitmap terrain, Bitmap biomes, String[,] toolTips, Bitmap populate)
         {
-            RenderSurroundingRegion(regions[0, 0], 30, 31, 30, 31, 0, 0, map, biomes, toolTips, populate);
-            RenderSurroundingRegion(regions[1, 0], 0, 31, 30, 31, OFFSETX, 0, map, biomes, toolTips, populate);
-            RenderSurroundingRegion(regions[2, 0], 0, 1, 30, 31, OFFSETX + WIDTH, 0, map, biomes, toolTips, populate);
-            RenderSurroundingRegion(regions[0, 1], 30, 31, 0, 31, 0, OFFSETY, map, biomes, toolTips, populate);
+            RenderSurroundingRegion(regions[0, 0], 30, 31, 30, 31, 0, 0, terrain, biomes, toolTips, populate);
+            RenderSurroundingRegion(regions[1, 0], 0, 31, 30, 31, OFFSETX, 0, terrain, biomes, toolTips, populate);
+            RenderSurroundingRegion(regions[2, 0], 0, 1, 30, 31, OFFSETX + WIDTH, 0, terrain, biomes, toolTips, populate);
+            RenderSurroundingRegion(regions[0, 1], 30, 31, 0, 31, 0, OFFSETY, terrain, biomes, toolTips, populate);
 
-            RenderSurroundingRegion(regions[2, 1], 0, 1, 0, 31, OFFSETX + WIDTH, OFFSETY, map, biomes, toolTips, populate);
-            RenderSurroundingRegion(regions[0, 2], 30, 31, 0, 1, 0, OFFSETY + HEIGHT, map, biomes, toolTips, populate);
-            RenderSurroundingRegion(regions[1, 2], 0, 31, 0, 1, OFFSETX, OFFSETY + HEIGHT, map, biomes, toolTips, populate);
-            RenderSurroundingRegion(regions[2, 2], 0, 1, 0, 1, OFFSETX + WIDTH, OFFSETY + HEIGHT, map, biomes, toolTips, populate);
+            RenderSurroundingRegion(regions[2, 1], 0, 1, 0, 31, OFFSETX + WIDTH, OFFSETY, terrain, biomes, toolTips, populate);
+            RenderSurroundingRegion(regions[0, 2], 30, 31, 0, 1, 0, OFFSETY + HEIGHT, terrain, biomes, toolTips, populate);
+            RenderSurroundingRegion(regions[1, 2], 0, 31, 0, 1, OFFSETX, OFFSETY + HEIGHT, terrain, biomes, toolTips, populate);
+            RenderSurroundingRegion(regions[2, 2], 0, 1, 0, 1, OFFSETX + WIDTH, OFFSETY + HEIGHT, terrain, biomes, toolTips, populate);
 
         }
 
-        private static void RenderChunk(Chunk c, Bitmap b, int offsetX, int offsetY)
+        private static void RenderChunkTerrain(Object state)
         {
+            Object[] parameters = (Object[])state;
+
+            Chunk c = (Chunk)parameters[0];
+            Bitmap b = (Bitmap)parameters[1];
+            int offsetX = (int)parameters[2];
+            int offsetY = (int)parameters[3];
+
             TAG_Compound[] sections = new TAG_Compound[16];
             int highest = -1;
             foreach (TAG t in (TAG[])c.Root["Level"]["Sections"])
@@ -80,7 +72,13 @@ namespace BiomePainter
 
             //chunk exists but all blocks are air
             if (highest < 0)
+            {
+                if (Interlocked.Decrement(ref taskCount) == 0)
+                    signal.Set();
                 return;
+            }
+
+            Color[,] pixels = new Color[16, 16];
 
             highest = ((highest + 1) * 16) - 1;
 
@@ -126,13 +124,65 @@ namespace BiomePainter
 
                     //brighten/darken by height; arbitrary value, but /seems/ to look okay
                     color = AddtoColor(color, (int)(y / 1.7 - 42));
-                    
-                    b.SetPixel(offsetX + x, offsetY + z, color);
+
+                    pixels[x, z] = color;
                 }
             }
+
+            mutex.WaitOne();
+            for (int z = 0; z < 16; z++)
+            {
+                for (int x = 0; x < 16; x++)
+                {
+                    b.SetPixel(offsetX + x, offsetY + z, pixels[x, z]);
+                }
+            }
+            mutex.ReleaseMutex();
+
+            if (Interlocked.Decrement(ref taskCount) == 0)
+                signal.Set();
         }
 
-        public static void RenderRegion(RegionFile region, Bitmap b, bool clip = true)
+        private static void RenderRegionTerrain(RegionFile region, int chunkStartX, int chunkEndX, int chunkStartZ, int chunkEndZ, int offsetX, int offsetY, Bitmap map)
+        {
+            if (signal != null || mutex != null || taskCount > 0)
+                throw new Exception("RenderRegionTerrain re-entered, shouldn't be possible.");
+
+            signal = new ManualResetEvent(false);
+            taskCount = (chunkEndX - chunkStartX + 1) * (chunkEndZ - chunkStartZ + 1);
+            mutex = new Mutex();
+
+            for (int x = chunkStartX; x <= chunkEndX; x++)
+            {
+                for (int z = chunkStartZ; z <= chunkEndZ; z++)
+                {
+                    Chunk c = region.Chunks[x, z];
+                    if (c == null || c.Root == null)
+                    {
+                        if (Interlocked.Decrement(ref taskCount) == 0)
+                            signal.Set();
+                        continue;
+                    }
+                    Coord chunkOffset = new Coord(c.Coords);
+                    chunkOffset.ChunktoRegionRelative();
+                    chunkOffset = new Coord(chunkOffset.X - chunkStartX, chunkOffset.Z - chunkStartZ);
+                    chunkOffset.ChunktoAbsolute();
+                    chunkOffset.Add(offsetX, offsetY);
+
+                    ThreadPool.QueueUserWorkItem(RenderChunkTerrain, new Object[]{c, map, chunkOffset.X, chunkOffset.Z});
+                }
+            }
+
+            signal.WaitOne();
+            signal.Dispose();
+            signal = null;
+            mutex.WaitOne();
+            mutex.ReleaseMutex();
+            mutex.Dispose();
+            mutex = null;
+        }
+
+        public static void RenderRegionTerrain(RegionFile region, Bitmap b, bool clip = true)
         {
             using (Graphics g = Graphics.FromImage(b))
             {
@@ -141,15 +191,7 @@ namespace BiomePainter
                 g.Clear(Color.Black);
             }
 
-            foreach (Chunk c in region.Chunks)
-            {
-                if (c == null || c.Root == null)
-                    continue;
-                Coord chunkOffset = new Coord(c.Coords);
-                chunkOffset.ChunktoRegionRelative();
-                chunkOffset.ChunktoAbsolute();
-                RenderChunk(c, b, OFFSETX + chunkOffset.X, OFFSETY + chunkOffset.Z);
-            }
+            RenderRegionTerrain(region, 0, 31, 0, 31, OFFSETX, OFFSETY, b);
         }
 
         private static void RenderChunkBiomes(Chunk c, Bitmap b, String[,] toolTips, int offsetX, int offsetY)
@@ -193,6 +235,26 @@ namespace BiomePainter
             }
         }
 
+        private static void RenderRegionBiomes(RegionFile region, int chunkStartX, int chunkEndX, int chunkStartZ, int chunkEndZ, int offsetX, int offsetY, Bitmap biomes, String[,] toolTips)
+        {
+            for (int x = chunkStartX; x <= chunkEndX; x++)
+            {
+                for (int z = chunkStartZ; z <= chunkEndZ; z++)
+                {
+                    Chunk c = region.Chunks[x, z];
+                    if (c == null || c.Root == null)
+                        continue;
+                    Coord chunkOffset = new Coord(c.Coords);
+                    chunkOffset.ChunktoRegionRelative();
+                    chunkOffset = new Coord(chunkOffset.X - chunkStartX, chunkOffset.Z - chunkStartZ);
+                    chunkOffset.ChunktoAbsolute();
+                    chunkOffset.Add(offsetX, offsetY);
+
+                    RenderChunkBiomes(c, biomes, toolTips, chunkOffset.X, chunkOffset.Z);
+                }
+            }
+        }
+
         public static void RenderRegionBiomes(RegionFile region, Bitmap b, String[,] toolTips, bool clip = true)
         {
             using (Graphics g = Graphics.FromImage(b))
@@ -202,18 +264,10 @@ namespace BiomePainter
                 g.Clear(Color.Black);
             }
 
-            foreach (Chunk c in region.Chunks)
-            {
-                if (c == null || c.Root == null)
-                    continue;
-                Coord chunkOffset = new Coord(c.Coords);
-                chunkOffset.ChunktoRegionRelative();
-                chunkOffset.ChunktoAbsolute();
-                RenderChunkBiomes(c, b, toolTips, OFFSETX + chunkOffset.X, OFFSETY + chunkOffset.Z);
-            }
+            RenderRegionBiomes(region, 0, 31, 0, 31, OFFSETX, OFFSETY, b, toolTips);
         }
 
-        public static void RenderChunktobePopulated(Chunk c, Graphics g, Brush brush, int offsetX, int offsetY)
+        private static void RenderChunktobePopulated(Chunk c, Graphics g, Brush brush, int offsetX, int offsetY)
         {
             if (((byte)c.Root["Level"]["TerrainPopulated"]) == 0)
             {
@@ -221,27 +275,41 @@ namespace BiomePainter
             }
         }
 
-        public static void RenderRegionChunkstobePopulated(RegionFile region, Bitmap b, bool clip = true)
+        private static void RenderRegionChunkstobePopulated(RegionFile region, int chunkStartX, int chunkEndX, int chunkStartZ, int chunkEndZ, int offsetX, int offsetY, Bitmap populate)
         {
-            using (Graphics g = Graphics.FromImage(b))
+            using (Graphics g = Graphics.FromImage(populate))
             {
-                if(clip)
-                    g.SetClip(CLIP);
-                g.Clear(Color.Transparent);
-
                 Brush brush = new SolidBrush(Color.Yellow);
-                for (int chunkX = 0; chunkX < 32; chunkX++)
+                for (int x = chunkStartX; x <= chunkEndX; x++)
                 {
-                    for (int chunkZ = 0; chunkZ < 32; chunkZ++)
+                    for (int z = chunkStartZ; z <= chunkEndZ; z++)
                     {
-                        Chunk c = region.Chunks[chunkX, chunkZ];
+                        Chunk c = region.Chunks[x, z];
                         if (c == null || c.Root == null)
                             continue;
-                        RenderChunktobePopulated(c, g, brush, OFFSETX + chunkX * 16, OFFSETY + chunkZ * 16);
+                        Coord chunkOffset = new Coord(c.Coords);
+                        chunkOffset.ChunktoRegionRelative();
+                        chunkOffset = new Coord(chunkOffset.X - chunkStartX, chunkOffset.Z - chunkStartZ);
+                        chunkOffset.ChunktoAbsolute();
+                        chunkOffset.Add(offsetX, offsetY);
+
+                        RenderChunktobePopulated(c, g, brush, chunkOffset.X, chunkOffset.Z);
                     }
                 }
                 brush.Dispose();
             }
+        }
+        
+        public static void RenderRegionChunkstobePopulated(RegionFile region, Bitmap b, bool clip = true)
+        {
+            using (Graphics g = Graphics.FromImage(b))
+            {
+                if (clip)
+                    g.SetClip(CLIP);
+                g.Clear(Color.Transparent);
+            }
+
+            RenderRegionChunkstobePopulated(region, 0, 31, 0, 31, OFFSETX, OFFSETY, b);
         }
 
         private static int GetHeight(TAG_Compound[] sections, int x, int z, int yStart = 255)

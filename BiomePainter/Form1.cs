@@ -58,6 +58,7 @@ namespace BiomePainter
             RegionUtil.RenderChunkBoundaries(imgRegion.Layers[CHUNKLAYER].Image);
 
             FillLists();
+            ColorPalette.Preload(); //matters to multi-threaded chunk rendering
 
             history = new HistoryManager(HistoryChange);
             history.RecordSelectionState(imgRegion.Layers[SELECTIONLAYER].Image, "Initial Selection");
@@ -392,7 +393,7 @@ namespace BiomePainter
             history.RecordPopulateState(region, "Reload Populate Flags");
             history.SetLastSaveActions();
             UpdateStatus("Generating terrain map");
-            RegionUtil.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);
+            RegionUtil.RenderRegionTerrain(region, imgRegion.Layers[MAPLAYER].Image);
             UpdateStatus("Generating biome map");
             RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
             UpdateStatus("");
@@ -956,7 +957,7 @@ namespace BiomePainter
             if (Settings.RedrawTerrainMap)
             {
                 UpdateStatus("Generating terrain map");
-                RegionUtil.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);
+                RegionUtil.RenderRegionTerrain(region, imgRegion.Layers[MAPLAYER].Image);
             }
             UpdateStatus("Generating biome map");
             RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
@@ -975,7 +976,7 @@ namespace BiomePainter
             if (Settings.RedrawTerrainMap)
             {
                 UpdateStatus("Generating terrain map");
-                RegionUtil.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);
+                RegionUtil.RenderRegionTerrain(region, imgRegion.Layers[MAPLAYER].Image);
             }
             UpdateStatus("Generating biome map");
             RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);
@@ -1014,7 +1015,7 @@ namespace BiomePainter
             history.SetLastSaveActions();
             imgRegion.Reset();
             UpdateStatus("Generating terrain map");
-            RegionUtil.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image, false);
+            RegionUtil.RenderRegionTerrain(region, imgRegion.Layers[MAPLAYER].Image, false);
             UpdateStatus("Generating biome map");
             RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips, false);
             UpdateStatus("");
@@ -1076,7 +1077,7 @@ namespace BiomePainter
                 if (Settings.RedrawTerrainMap)
                 {
                     UpdateStatus("Generating terrain map");
-                    RegionUtil.RenderRegion(region, imgRegion.Layers[MAPLAYER].Image);
+                    RegionUtil.RenderRegionTerrain(region, imgRegion.Layers[MAPLAYER].Image);
                 }
                 UpdateStatus("Generating biome map");
                 RegionUtil.RenderRegionBiomes(region, imgRegion.Layers[BIOMELAYER].Image, imgRegion.ToolTips);

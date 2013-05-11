@@ -77,8 +77,11 @@ namespace BiomePainter
 
                 button.Text = String.Format("You now have the latest {0}.", description);
                 pic.Image = Properties.Resources.check;
-                if(buttonId == Blocks)
+                if (buttonId == Blocks)
+                {
                     ColorPalette.Reset();
+                    ColorPalette.Preload();
+                }
                 else if (buttonId == Biomes)
                 {
                     BiomeType.Reset();

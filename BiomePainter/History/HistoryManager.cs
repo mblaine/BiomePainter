@@ -220,7 +220,7 @@ namespace BiomePainter.History
             if (terrainOverlay != null)
             {
                 updateStatus("Generating terrain map");
-                RegionUtil.RenderRegion(region, terrainOverlay);
+                RegionUtil.RenderRegionTerrain(region, terrainOverlay);
             }
             updateStatus("Generating biome map");
             RegionUtil.RenderRegionBiomes(region, biomeOverlay, tooltips);
