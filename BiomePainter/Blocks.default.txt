@@ -177,6 +177,23 @@
 152;c5210a #redstone block
 153;984745 #nether quartz ore
 155,156,43:7,43:15,44:7,44:15;ece9e3 #quartz block, stairs, slabs
+159:0;d2b2a1 #white stained clay
+159:1;a25426 #orange
+159:2;96586d #magenta
+159:3;716c8a #light blue
+159:4;ba8523 #yellow
+159:5;677535 #lime green
+159:6;a24e4f #pink
+159:7;3a2a24 #dark gray
+159:8;876b61 #light gray
+159:9;575b5b #cyan
+159:10;764656 #purple
+159:11;4a3c5b #blue
+159:12;4d3324 #brown
+159:13;4c532a #green
+159:14;8f3d2f #red
+159:15;251710 #black
 170;cca913 #hay bale, top
 170:4,170:8;c9a713 #hay bale, side
 172;965c43 #hardened clay
+173;151515 #coal block
