@@ -1,9 +1,9 @@
 Projects BiomePainter (BiomePainter.exe) and Minecraft (Minecraft.dll) are 
-copyright (c) 2012 Matthew Blaine and licensed under the terms of the MIT 
+copyright (c) 2013 Matthew Blaine and licensed under the terms of the MIT 
 License, provided below. 
 
 The project Minecraft.BiomeGen (Minecraft.BiomeGen.dll) contains code from 
-Minecraft which is copyright (c) 2009-2012 Mojang AB. For more information 
+Minecraft which is copyright (c) 2009-2013 Mojang AB. For more information 
 please see:
 Minecraft Terms of Use:
 http://www.minecraft.net/terms 
@@ -18,7 +18,7 @@ http://dotnetzip.codeplex.com/SourceControl/changeset/view/85217#1579682
 
 ==================================================== 
 
-Copyright (c) 2012 Matthew Blaine 
+Copyright (c) 2013 Matthew Blaine 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 
 this software and associated documentation files (the "Software"), to deal in 

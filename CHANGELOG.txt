@@ -1,3 +1,16 @@
+1.1 - 5/12/2013
+    * Fix checking for block color, biome color, and program updates no longer 
+      working.
+    * Include default block colors though Minecraft 1.5 and snapshot 13w19a.
+    * Chunk loading and terrain map rendering are now multi-threaded. On 
+      computers with multiple processor cores this can significantly speed 
+      things up. On systems with a single-core processor there should be no 
+      noticeable difference.
+    * Updated label for biome generation from Minecraft 1.4.1 to 1.4.2 since 
+      they're the same.
+        - Added option to fill/replace biomes with those from Minecraft 1.5.2, 
+          though it should be identical to 1.4 too.
+
 1.0 - 12/25/2012
     * Check for updates window now has separate options for block colors, biome
       definitions, and the program itself. The first two can download updates on
