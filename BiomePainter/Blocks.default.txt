@@ -6,45 +6,61 @@
 
 0;00000000 #air
 1;7e7e7e #stone
-2,31;0,7,9;62844c #grass, tall grass (Ocean)
-2,31;1,16;65873a #grass, tall grass (Plains)
-2,31;2,8,17;898238 #grass, tall grass (Desert)
-2,31;3,20;60815f #grass, tall grass (Mountains)
-2,31;4,18;4f8c34 #grass, tall grass (Forest)
-2,31;5,19;5a8167 #grass, tall grass (Taiga)
-2,31;10,11,12,13;59806a #grass, tall grass (Snow)
-2,31;14,15;389026 #grass, tall grass (Mushroom)
-2,31;21,22;369120 #grass, tall grass (Jungle)
-2,31;6;3c4633 #grass, tall grass (Swamp)
-2,31;4f8c34 #grass, tall grass (default (Forest))
-3;866043 #dirt
+2,31,175:3,175:2;0,7,9,24;62844c #grass, tall grass, large fern, double tall grass (Ocean)
+2,31,175:3,175:2;1,16,129;65873a #grass, tall grass (Plains)
+2,31,175:3,175:2;2,8,17,35,36,37,38,39,163,164,165,166,167,130;898238 #grass, tall grass (Desert, Savanna, Mesa)
+2,31,175:3,175:2;3,131,20,34,162;60815f #grass, tall grass (Mountains)
+2,31,175:3,175:2;4,18,132,27,28,29,155,156,157;4f8c34 #grass, tall grass (Forest)
+2,31,175:3,175:2;5,133,19,32,33,160,161;5a8167 #grass, tall grass (Taiga)
+2,31,175:3,175:2;10,11,12,13,140,30,31;59806a #grass, tall grass (Snow)
+2,31,175:3,175:2;14,15;389026 #grass, tall grass (Mushroom)
+2,31,175:3,175:2;21,22,149,23,151;369120 #grass, tall grass (Jungle)
+2,31,175:3,175:2;6,134;3c4633 #grass, tall grass (Swamp)
+2,31,175:3,175:2;4f8c34 #grass, tall grass (default (Forest))
+3,3:0,3:1;866043 #dirt
+3:2;59481c #podzol
 4;7c7c7c #cobble
 5,33:1,34,47,64,85,96,107;a08250 #planks, normal piston up, piston extension (normal/not up), wood door, bookshelf, fence, hatch, gate
 5:1,125:1,126:1,126:9,134;765834 #pine planks, slabs, stairs
 5:2,125:2,126:2,126:10,135;d4c285 #birch planks, slabs, stairs
 5:3,125:3,126:3,126:11,136;a97b58 #jungle planks, slabs, stairs
+5:4,125:4,126:4,126:12,163;c2693b #acadia planks, slabs, stairs
+5:5,125:5,126:5,126:13,164;593a1b #dark oak planks, slabs, stairs
 6;408f2f #sapling
 7;323232 #bedrock
 8,9;6;665e86b4 #water (Swamp)
 8,9;66265BFB #water (default (Forest))
 10,11;f74700 #lava
 12;dbd3a0 #sand
+12:1;b75d23 #red sand
 13;857d7d #gravel
 14;928e7d #gold ore
 15;89837f #iron ore
 16;727272 #coal ore
 17;755829 #log
-18;0,7,9;375c1e #leaves (Ocean)
-18;1,16;3a5e09 #leaves (Plains)
-18;2,8,17;615906 #leaves (Desert)
-18;3,20;345933 #leaves (Mountains)
-18;4,18;27610b #leaves (Forest)
-18;5,19;2d583a #leaves (Taiga)
-18;10,11,12,13;2b583e #leaves (Snow)
+17:0;9c7e4e #oak log top
+17:1;6a5230 #spruce log top
+17:2;beab7c #birch log top
+17:3;a68051 #jungle log top
+17:4,17:8,17:12;655031 #oak log side
+17:5,17:9,17:13;2e1d0d #spruce log side
+17:6,17:10,17:14;d4d3ce #birch log side
+17:7,17:11,17:15;5d491d #jungle log side
+162:0;af5c3b #acadia log top
+162:1;5a4830 #dark oak log top
+162:4,162:8,162:12;6b645a #acadia log side
+162:5,162:9,162:13;352918 #dark log side
+18;0,7,9,24;375c1e #leaves (Ocean)
+18;1,16,129;3a5e09 #leaves (Plains)
+18;2,8,17,35,36,37,38,39,163,164,165,166,167,130;615906 #leaves (Desert)
+18;3,131,20,34,162;345933 #leaves (Mountains)
+18;4,18,132,27,28,29,155,156,157;27610b #leaves (Forest)
+18;5,133,19,32,33,160,161;2d583a #leaves (Taiga)
+18;10,11,12,13,140,30,31;2b583e #leaves (Snow)
 18;14,15;076900 #leaves (Mushroom)
-18;21,22;066a00 #leaves (Jungle)
-18;6;1c2c10 #leaves (Swamp)
-18;27610b #leaves (default (Forest))
+18;21,22,149,23,151;066a00 #leaves (Jungle)
+18;6,134;1c2c10 #leaves (Swamp)
+18,161;27610b #leaves (default (Forest))
 18:1,18:5,18:9;2d472d #pine leaves
 18:2,18:6,18:10;074b36 #birch leaves
 18:3,18:7,18:11;1c6f02 #jungle leaves
@@ -78,7 +94,15 @@
 35:14,171:14;a42d29 #red
 35:15,171:15;1b1717 #black
 37;f1f902 #yellow flower
-38;f7070f #red flower
+38:0;f7070f #poppy
+38:1;28b3f3 #blue orchid
+38:2;c37efb #allium
+38:3;e3e8db #azure bluet
+38:4;c8310e #red tulip
+38:5;d5661a #orange tulip
+38:6;e3d5d2 #white tulip
+38:7;e4b1d3 #pink tulip
+38:8;dfda82 #oxeye daisy
 39,99;8d6a53 #brown mushroom, huge
 40,100;b72725 #red mushroom, huge
 41,147;fbf152 #gold block, pressure plate
@@ -141,6 +165,22 @@
 92;e6b6b7 #cake
 93,149;996D6D #repeater off, comparator
 94,150;FF6363 #repeater on, comparator
+95:0,160:0;88dfdfdf #white stained glass, panes
+95:1,160:1;88ea8037 #orange
+95:2,160:2;88bf4cc9 #magenta
+95:3,160:3;88688bd4 #light blue
+95:4,160:4;88c2b51c #yellow
+95:5,160:5;883bbd30 #lime
+95:6,160:6;88d9849b #pink
+95:7,160:7;88434343 #dark gray
+95:8,160:8;889ea6a6 #light gray
+95:9,160:9;88277596 #cyan
+95:10,160:10;888136c4 #purple
+95:11,160:11;8827339a #blue
+95:12,160:12;8856331c #brown
+95:13,160:13;88384d18 #green
+95:14,160:14;88a42d29 #red
+95:15,160:15;881b1717 #black
 98;7d7d7d #stone brick
 103;969925 #melon
 104,105;3380b654 #pumpkin stem, melon stem
@@ -197,3 +237,9 @@
 170:4,170:8;c9a713 #hay bale, side
 172;965c43 #hardened clay
 173;151515 #coal block
+174;9fbced #packed ice
+175:0,175:8;ebc722 #sunflower
+175:1,175:9;a08aa1 #lilac
+175:4,175:12;b80409 #rose bush
+175:5,175:13;e5bdf7 #peony
+175:8,175:9,175:10,175:11,175:12,175:13;00155f00 #top half of double plant

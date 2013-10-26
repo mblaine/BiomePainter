@@ -27,3 +27,42 @@
 20,Extreme Hills Edge,006400
 21,Jungle,32CD32
 22,Jungle Hills,32CD32
+23,Jungle Edge,000000
+24,Deep Ocean,000000
+25,Stone Beach,000000
+26,Cold Beach,000000
+27,Birch Forest,000000
+28,Birch Forest Hills,000000
+29,Roofed Forest,000000
+30,Cold Taiga,000000
+31,Cold Taiga Hills,000000
+32,Mega Taiga,000000
+33,Mega Taiga Hills,000000
+34,Extreme Hills+,000000
+35,Savanna,000000
+36,Savanna Plateau,000000
+37,Mesa,000000
+38,Mesa Plateau F,000000
+39,Mesa Plateau,000000
+129,Sunflower Plains,000000
+130,Desert M,000000
+131,Extreme Hills M,000000
+132,Flower Forest,000000
+133,Taiga M,000000
+134,Swampland M,000000
+140,Ice Plains Spikes,000000
+141,Ice Mountains Spikes,000000
+149,Jungle M,000000
+151,JungleEdge M,000000
+155,Birch Forest M,000000
+156,Birch Forest Hills M,000000
+157,Roofed Forest M,000000
+158,Cold Taiga M,000000
+160,Mega Spruce Taiga,000000
+161,Mega Spruce Taiga,000000
+162,Extreme Hills+ M,000000
+163,Savanna M,000000
+164,Savanna Plateau M,000000
+165,Mesa (Bryce),000000
+166,Mesa Plateau F M,000000
+167,Mesa Plateau M,000000
