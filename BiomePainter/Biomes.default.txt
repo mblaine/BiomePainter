@@ -6,11 +6,11 @@
 
 0,Ocean,0000FF
 1,Plains,98FB98
-2,Desert,DEB887
-3,Extreme Hills,006400
+2,Desert,D3A463
+3,Extreme Hills,0F554D
 4,Forest,008000
 5,Taiga,2E8B57
-6,Swampland,008B8B
+6,Swampland,32648B
 7,River,6495ED
 8,Hell,B22222
 9,Sky,808080
@@ -19,50 +19,50 @@
 12,Ice Plains,FFFFFF
 13,Ice Mountains,D3D3D3
 14,Mushroom Island,008080
-15,Mushroom Island Shore,008080
+15,Mushroom Island Shore,009F9F
 16,Beach,F5F5DC
 17,Desert Hills,DEB887
-18,Forest Hills,008000
-19,Taiga Hills,2E8B57
-20,Extreme Hills Edge,006400
+18,Forest Hills,009D00
+19,Taiga Hills,3DB673
+20,Extreme Hills Edge,157B6F
 21,Jungle,32CD32
-22,Jungle Hills,32CD32
-23,Jungle Edge,000000
-24,Deep Ocean,000000
-25,Stone Beach,000000
-26,Cold Beach,000000
-27,Birch Forest,000000
-28,Birch Forest Hills,000000
-29,Roofed Forest,000000
-30,Cold Taiga,000000
-31,Cold Taiga Hills,000000
-32,Mega Taiga,000000
-33,Mega Taiga Hills,000000
-34,Extreme Hills+,000000
-35,Savanna,000000
-36,Savanna Plateau,000000
-37,Mesa,000000
-38,Mesa Plateau F,000000
-39,Mesa Plateau,000000
-129,Sunflower Plains,000000
-130,Desert M,000000
-131,Extreme Hills M,000000
-132,Flower Forest,000000
-133,Taiga M,000000
-134,Swampland M,000000
-140,Ice Plains Spikes,000000
-141,Ice Mountains Spikes,000000
-149,Jungle M,000000
-151,JungleEdge M,000000
-155,Birch Forest M,000000
-156,Birch Forest Hills M,000000
-157,Roofed Forest M,000000
-158,Cold Taiga M,000000
-160,Mega Spruce Taiga,000000
-161,Mega Spruce Taiga,000000
-162,Extreme Hills+ M,000000
-163,Savanna M,000000
-164,Savanna Plateau M,000000
-165,Mesa (Bryce),000000
-166,Mesa Plateau F M,000000
-167,Mesa Plateau M,000000
+22,Jungle Hills,1EB51E
+23,Jungle Edge,73DD73
+24,Deep Ocean,000080
+25,Stone Beach,61645B
+26,Cold Beach,CACA9B
+27,Birch Forest,73864F
+28,Birch Forest Hills,92A769
+29,Roofed Forest,C60063
+30,Cold Taiga,FF00FF
+31,Cold Taiga Hills,FF71FF
+32,Mega Taiga,FF8000
+33,Mega Taiga Hills,FFA042
+34,Extreme Hills+,46828C
+35,Savanna,626200
+36,Savanna Plateau,987800
+37,Mesa,804000
+38,Mesa Plateau F,B75B00
+39,Mesa Plateau,E17100
+129,Sunflower Plains,FFFF0F
+130,Desert M,E8CEAC
+131,Extreme Hills M,145C78
+132,Flower Forest,FFFF66
+133,Taiga M,71D09C
+134,Swampland M,4386BC
+140,Ice Plains Spikes,E4E4E4
+141,Ice Mountains Spikes,BFBFBF
+149,Jungle M,16D341
+151,JungleEdge M,3FEB65
+155,Birch Forest M,3E4729
+156,Birch Forest Hills M,59683E
+157,Roofed Forest M,FF1188
+158,Cold Taiga M,FFA6FF
+160,Mega Spruce Taiga,E14400
+161,Mega Spruce Taiga Hills,FF601C
+162,Extreme Hills+ M,466B79
+163,Savanna M,535300
+164,Savanna Plateau M,B79300
+165,Mesa (Bryce),663300
+166,Mesa Plateau F M,532900
+167,Mesa Plateau M,D76B00
